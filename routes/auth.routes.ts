@@ -1,5 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { User } from '../models/User';
+import { AuthCtrl } from '../controllers/AuthController';
 import bcrypt from 'bcrypt';
 import { check, validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
@@ -17,38 +18,39 @@ router.post(
 			min: 6,
 		}),
 	],
-	async (req: Request, res: Response) => {
-		try {
-			const errors = validationResult(req);
+	AuthCtrl.signUp
+	// async (req: Request, res: Response) => {
+	// 	try {
+	// 		const errors = validationResult(req);
 
-			if (!errors.isEmpty()) {
-				return res.status(400).json({
-					errors: errors.array(),
-					message: 'Некорректные данные при регистрации',
-				});
-			}
-			const { email, password } = req.body;
+	// 		if (!errors.isEmpty()) {
+	// 			return res.status(400).json({
+	// 				errors: errors.array(),
+	// 				message: 'Некорректные данные при регистрации',
+	// 			});
+	// 		}
+	// 		const { email, password } = req.body;
 
-			const candidate = await User.findOne({ email });
+	// 		const candidate = await User.findOne({ email });
 
-			if (candidate) {
-				return res
-					.status(400)
-					.json({ message: 'Такой пользователь уже существует' });
-			}
+	// 		if (candidate) {
+	// 			return res
+	// 				.status(400)
+	// 				.json({ message: 'Такой пользователь уже существует' });
+	// 		}
 
-			const hashedPassword = await bcrypt.hash(password, 12);
-			const user = new User({ email, password: hashedPassword });
+	// 		const hashedPassword = await bcrypt.hash(password, 12);
+	// 		const user = new User({ email, password: hashedPassword });
 
-			await user.save();
+	// 		await user.save();
 
-			res.status(201).json({ message: 'Пользователь создан' });
-		} catch (e) {
-			res.status(500).json({
-				message: 'Что-то пошло не так!',
-			});
-		}
-	}
+	// 		res.status(201).json({ message: 'Пользователь создан' });
+	// 	} catch (e) {
+	// 		res.status(500).json({
+	// 			message: 'Что-то пошло не так!',
+	// 		});
+	// 	}
+	// }
 );
 
 router.post(

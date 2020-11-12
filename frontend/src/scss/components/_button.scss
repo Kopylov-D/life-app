@@ -1,0 +1,45 @@
+@import '../variables';
+
+.button {
+	min-width: 110px;
+	height: 40px;
+	background: $c-background-btn;
+	border-radius: 5px;
+	border: none;
+	color: $c-white;
+	font-size: 16px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	transition-duration: 0.4s;
+
+	div {
+		align-self: center;
+	}
+
+	&:focus {
+		box-shadow: 0 0 0 2px rgba(#45a5ff, $alpha: 0.5);
+	}
+
+	&:hover {
+		background: linear-gradient(
+				0deg,
+				rgba(255, 255, 255, 0.15),
+				rgba(255, 255, 255, 0.15)
+			),
+			linear-gradient(180deg, #45a6ff 0%, #0055fb 100%), #c4c4c4;
+		cursor: pointer;
+	}
+
+	&:active {
+		background: linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
+			linear-gradient(180deg, #45a6ff 0%, #0055fb 100%), #c4c4c4;
+	}
+
+	&:disabled {
+		background: linear-gradient(0deg, #c4c4c4, #c4c4c4),
+			linear-gradient(180deg, #45a6ff 0%, #0055fb 100%);
+	}
+}
