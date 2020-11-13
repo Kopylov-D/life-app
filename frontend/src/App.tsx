@@ -27,7 +27,7 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<div className="App">{routes}</div>
+			<div className="app">{routes}</div>
 		</BrowserRouter>
 	);
 }

@@ -1,7 +1,9 @@
-import React from 'react';
-import { validate } from '../utils/form';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { Input } from '../components/UI';
+
+import { validate } from '../utils/form';
+import { Button, Input, Toast } from '../components/UI';
+import Error from '../components/Error';
 import { useHttp } from '../hooks/http.hook';
 
 type IFormControl = {
@@ -50,7 +52,21 @@ const Auth = () => {
 		},
 	});
 
-	const { loading, request, error } = useHttp();
+	const { loading, request, error, clearError } = useHttp();
+	const [showMessage, setShowMessage] = useState<boolean>(false);
+
+	// useEffect(() => {
+	// 	setShowMessage(true)
+	// 	setTimeout(() => {
+	// 		setShowMessage(false);
+	// 		clearError()
+	// 	}, 2500);
+
+	// }, [error, clearError])
+
+	useEffect(() => {
+		clearError();
+	}, [error, clearError]);
 
 	const submitHandler = (event: React.SyntheticEvent): void => {
 		event.preventDefault();
@@ -152,7 +168,21 @@ const Auth = () => {
 				email: formControls.login.value,
 				password: formControls.password.value,
 			});
-			console.log(data)
+			console.log(data);
+			console.log('error', typeof error);
+			// message(data.message);
+		} catch (e) {
+			// console.log('error', error)
+		}
+	};
+
+	const loginHandler = async () => {
+		try {
+			const data = await request('/api/auth/login', 'POST', {
+				email: formControls.login.value,
+				password: formControls.password.value,
+			});
+			console.log(data);
 			// message(data.message);
 		} catch (e) {}
 	};
@@ -160,18 +190,29 @@ const Auth = () => {
 	return (
 		<div className={classNames('auth')}>
 			{/* <Logo /> */}
+			{/* {showMessage ? <Toast text={error}/> : null} */}
 			<form className={classNames('auth__main')} onSubmit={submitHandler}>
 				<header>LifeUp</header>
-				{/* {responseError ? <Error textError={responseError} /> : null} */}
+				{error ? <Error textError={error} /> : null}
 				{renderInputs()}
-				{/* <Button
-					disabled={!isFormValid}
-					onClick={loginHandler}
-					isLoading={isLoading}
-				> */}
-				{/* Войти
-				</Button> */}
-				<button onClick={registerHandler}>регистр</button>
+				<div className="auth__buttons">
+					<Button
+						disabled={!isFormValid}
+						type="primary"
+						onClick={loginHandler}
+						isLoading={loading}
+					>
+						Войти
+					</Button>
+					<Button
+						disabled={!isFormValid}
+						type="secondary"
+						onClick={registerHandler}
+						isLoading={loading}
+					>
+						Регистрация
+					</Button>
+				</div>
 			</form>
 		</div>
 	);
