@@ -3,16 +3,7 @@ import { model, Schema, Document, Types } from 'mongoose';
 export interface UserModelInterface {
 	_id?: string;
 	email: string;
-	// fullname: string;
-	// username: string;
 	password: string;
-	// confirmHash: string;
-	// confirmed?: boolean;
-	// location?: string;
-	// about?: string;
-  // website?: string;
-  
-  // finances?: any
 }
 
 const UserSchema: Schema = new Schema<UserModelInterface>({

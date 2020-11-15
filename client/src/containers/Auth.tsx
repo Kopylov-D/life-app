@@ -5,6 +5,9 @@ import { validate } from '../utils/form';
 import { Button, Input, Toast } from '../components/UI';
 import Error from '../components/Error';
 import { useHttp } from '../hooks/http.hook';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, register } from '../store/ducks/auth/actions';
+import { RootState } from '../store/rootReducer';
 
 type IFormControl = {
 	value: string;
@@ -54,6 +57,10 @@ const Auth = () => {
 
 	const { loading, request, error, clearError } = useHttp();
 	const [showMessage, setShowMessage] = useState<boolean>(false);
+	const { auth } = useSelector((state: RootState) => state);
+	const dispatch = useDispatch();
+
+	console.log(auth.errorMessage);
 
 	// useEffect(() => {
 	// 	setShowMessage(true)
@@ -65,7 +72,7 @@ const Auth = () => {
 	// }, [error, clearError])
 
 	useEffect(() => {
-		clearError();
+		// clearError();
 	}, [error, clearError]);
 
 	const submitHandler = (event: React.SyntheticEvent): void => {
@@ -163,28 +170,11 @@ const Auth = () => {
 	};
 
 	const registerHandler = async () => {
-		try {
-			const data = await request('/api/auth/register', 'POST', {
-				email: formControls.login.value,
-				password: formControls.password.value,
-			});
-			console.log(data);
-			console.log('error', typeof error);
-			// message(data.message);
-		} catch (e) {
-			// console.log('error', error)
-		}
+		dispatch(register(formControls.login.value, formControls.password.value));
 	};
 
 	const loginHandler = async () => {
-		try {
-			const data = await request('/api/auth/login', 'POST', {
-				email: formControls.login.value,
-				password: formControls.password.value,
-			});
-			console.log(data);
-			// message(data.message);
-		} catch (e) {}
+		dispatch(login(formControls.login.value, formControls.password.value));
 	};
 
 	return (
@@ -193,7 +183,7 @@ const Auth = () => {
 			{/* {showMessage ? <Toast text={error}/> : null} */}
 			<form className={classNames('auth__main')} onSubmit={submitHandler}>
 				<header>LifeUp</header>
-				{error ? <Error textError={error} /> : null}
+				{auth.errorMessage ? <Error textError={auth.errorMessage} /> : null}
 				{renderInputs()}
 				<div className="auth__buttons">
 					<Button

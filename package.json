@@ -2,13 +2,13 @@
 	"name": "life-app",
 	"version": "1.0.0",
 	"description": "LifeUp",
-	"main": "app.js",
+	"main": "app.ts",
 	"scripts": {
 		"start": "node app.ts",
 		"server": "nodemon app.ts",
-		"client": "npm run start --prefix frontend",
+		"client": "npm run start --prefix client",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
-		"buildts": "tsc -p ."
+		"buildTs": "tsc -p ."
 	},
 	"repository": {
 		"type": "git",

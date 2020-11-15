@@ -10,8 +10,6 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 
-
-
 const PORT: number = config.get('port') || 8000;
 const uri: string = config.get('mongoUri');
 

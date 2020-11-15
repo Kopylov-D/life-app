@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import config from 'config';
 
 class AuthController {
-	async signUp(req: Request, res: Response) {
+	async register(req: Request, res: Response) {
 		try {
 			console.log(req.body)
 			const errors = validationResult(req);
@@ -40,7 +40,7 @@ class AuthController {
 		}
 	}
 
-	async signIn(req: Request, res: Response) {
+	async login(req: Request, res: Response) {
 		try {
 			const errors = validationResult(req);
 
@@ -74,7 +74,7 @@ class AuthController {
 			res.json({ token, userId: user.id });
 		} catch (e) {
 			res.status(500).json({
-				message: 'Что-то пошло не так!',
+				message: 'Что-то пошло не так...',
 			});
 		}
 	}
