@@ -2,47 +2,11 @@ import {
 	AUTH_START,
 	AUTH_SUCCESS,
 	AUTH_ERROR,
-	// AUTH_LOGOUT,
+	AUTH_LOGOUT,
 } from './actionTypes';
 
-// export const useHttp = () => {
-// 	const [loading, setLoading] = useState<boolean>(false);
-// 	const [error, setError] = useState<string| null>(null);
-
-// 	const request = useCallback(
-// 		async (url, method = 'GET', body = null, headers = {}) => {
-// 			setLoading(true);
-// 			try {
-// 				if (body) {
-// 					body = JSON.stringify(body);
-// 					headers['Content-Type'] = 'application/json';
-// 				}
-
-// 				const response = await fetch(url, { method, body, headers });
-// 				const data = await response.json();
-
-// 				if (!response.ok) {
-// 					throw new Error(data.message || 'Что-то пошло не так');
-// 				}
-
-// 				setLoading(false);
-
-// 				return data;
-// 			} catch (e) {
-// 				setLoading(false);
-// 				setError(e.message);
-// 				throw e;
-// 			}
-// 		},
-// 		[]
-// 	);
-
-// 	const clearError = useCallback(() => setError(null), []);
-
-// 	return { loading, request, error, clearError };
-
 type AuthData = {
-	token: string;
+	jwtToken: string;
 	userId: string;
 };
 
@@ -67,13 +31,15 @@ export function register(email: any, password: any) {
 			if (!response.ok) {
 				throw new Error(data.message || 'Что-то пошло не так');
 			}
-			console.log('data', data);
+
+			console.log(data);
+
+			document.cookie = `jwtToken=${data.token}; max-age=36000`;
+			document.cookie = `userId=${data.userId}; max-age=36000`;
 			dispatch(authSuccess(data));
 		} catch (e) {
-			// throw new Error(e)
 			console.log(e);
-
-			// dispatch(authError(responseError));
+			dispatch(authError(e.message));
 		}
 	};
 }
@@ -98,12 +64,46 @@ export function login(email: any, password: any) {
 			if (!response.ok) {
 				throw new Error(data.message || 'Что-то пошло не так');
 			}
-			// console.log('loginData', data);
+
+			document.cookie = `jwtToken=${data.token}; max-age=36000`;
+			document.cookie = `userId=${data.userId}; max-age=36000`;
 			dispatch(authSuccess(data));
 		} catch (e) {
-			console.log(e.name);
-			dispatch(authError(e.message))
+			dispatch(authError(e.message));
 		}
+	};
+}
+
+export function autoLogin() {
+	return async (dispatch: any) => {
+		const jwtTokenCookie: RegExpMatchArray | null = document.cookie.match(
+			`(^|; )jwtToken=([^;]*)`
+		);
+		const userIdCookie: RegExpMatchArray | null = document.cookie.match(
+			`(^|; )userId=([^;]*)`
+		);
+
+		if (jwtTokenCookie) {
+			const jwtToken = jwtTokenCookie[2];
+			const userId = userIdCookie![2];
+
+			const authData: AuthData = {
+				jwtToken,
+				userId,
+			};
+
+			dispatch(authSuccess(authData));
+		} else {
+			dispatch(logout());
+		}
+	};
+}
+
+export function logout() {
+	document.cookie = `jwtToken=; max-age=-1`;
+	document.cookie = `userId=; max-age=-1`;
+	return {
+		type: AUTH_LOGOUT,
 	};
 }
 
@@ -117,12 +117,14 @@ type authSuccessType = {
 };
 
 type AuthErrorType = {
-	type: typeof AUTH_ERROR,
-	errorMessage: string
-}
+	type: typeof AUTH_ERROR;
+	errorMessage: string;
+};
 
 type AuthDataType = {
-	message: string;
+	message?: string;
+	jwtToken?: string | null;
+	userId?: string;
 };
 
 export function authStart(): authStartType {

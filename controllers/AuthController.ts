@@ -1,7 +1,7 @@
-import { Request, Response, Router } from 'express';
+import { Request, Response } from 'express';
 import { User } from '../models/User';
 import bcrypt from 'bcrypt';
-import { check, validationResult } from 'express-validator';
+import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import config from 'config';
 

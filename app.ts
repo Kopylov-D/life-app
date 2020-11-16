@@ -3,12 +3,14 @@ import mongoose from 'mongoose';
 import config from 'config';
 
 import { authRouter } from './routes';
+import budget from './routes/budget.routes'
 
 const app: express.Application = express();
 
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
+app.use('/api/budget', budget)
 
 const PORT: number = config.get('port') || 8000;
 const uri: string = config.get('mongoUri');
@@ -25,7 +27,7 @@ async function start() {
 		app.listen(PORT, () =>
 			console.log(`App has been started on port ${PORT}...`)
 		);
-		app.use((req: Request, res: Response, next: NextFunction) => {
+		app.use((req: Request, res: Response) => {
 			if (req.url === '/') {
 				res.status(204).send('all good');
 			}

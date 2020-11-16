@@ -6,7 +6,7 @@ import { Button, Input, Toast } from '../components/UI';
 import Error from '../components/Error';
 import { useHttp } from '../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register } from '../store/ducks/auth/actions';
+import { autoLogin, login, register } from '../store/ducks/auth/actions';
 import { RootState } from '../store/rootReducer';
 
 type IFormControl = {
@@ -49,7 +49,7 @@ const Auth = () => {
 			touched: false,
 			validation: {
 				required: true,
-				minLength: 8,
+				minLength: 6,
 				notCyrillic: true,
 			},
 		},
@@ -59,8 +59,6 @@ const Auth = () => {
 	const [showMessage, setShowMessage] = useState<boolean>(false);
 	const { auth } = useSelector((state: RootState) => state);
 	const dispatch = useDispatch();
-
-	console.log(auth.errorMessage);
 
 	// useEffect(() => {
 	// 	setShowMessage(true)
@@ -170,7 +168,8 @@ const Auth = () => {
 	};
 
 	const registerHandler = async () => {
-		dispatch(register(formControls.login.value, formControls.password.value));
+		// dispatch(register(formControls.login.value, formControls.password.value));
+		dispatch(autoLogin())
 	};
 
 	const loginHandler = async () => {
