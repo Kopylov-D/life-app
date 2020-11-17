@@ -1,12 +1,8 @@
 import { model, Schema, Document, Types } from 'mongoose';
+import { UserType } from '../types/types';
 
-export interface UserModelInterface {
-	_id?: string;
-	email: string;
-	password: string;
-}
 
-const UserSchema: Schema = new Schema<UserModelInterface>({
+const UserSchema: Schema = new Schema<UserType>({
   // _id: Types.ObjectId,
 	email: {
 		type: String,
@@ -27,7 +23,7 @@ const UserSchema: Schema = new Schema<UserModelInterface>({
 //   },
 // });
 
-export type UserModelDocumentInterface = UserModelInterface & Document
+export type UserModelDocumentInterface = UserType & Document
 
 export const User = model<UserModelDocumentInterface>('User', UserSchema);
 

@@ -2,15 +2,15 @@ import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import config from 'config';
 
-import { authRouter } from './routes';
-import budget from './routes/budget.routes'
+import { authRouter, budgetRouter } from './routes';
+// import budget from './routes/budget.routes'
 
 const app: express.Application = express();
 
 app.use(express.json());
 
 app.use('/api/auth', authRouter);
-app.use('/api/budget', budget)
+app.use('/api/budget', budgetRouter)
 
 const PORT: number = config.get('port') || 8000;
 const uri: string = config.get('mongoUri');

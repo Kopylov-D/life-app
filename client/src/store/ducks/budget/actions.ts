@@ -5,7 +5,8 @@ export function getData() {
   return async (dispatch: any) => {
     // dispatch(authStart());
 		try {
-			const {jwtToken} = getAuthData()
+			const jwtToken = getAuthData()
+			console.log(jwtToken)
 			const response = await fetch('/api/auth/register', {
 				method: 'POST',
 				headers: {
@@ -22,12 +23,12 @@ export function getData() {
 
 			console.log(data);
 
-			document.cookie = `jwtToken=${data.token}; max-age=36000`;
-			document.cookie = `userId=${data.userId}; max-age=36000`;
-			dispatch(authSuccess(data));
+			// document.cookie = `jwtToken=${data.token}; max-age=36000`;
+			// document.cookie = `userId=${data.userId}; max-age=36000`;
+			// dispatch(authSuccess(data));
 		} catch (e) {
 			console.log(e);
-			dispatch(authError(e.message));
+			// dispatch(authError(e.message));
 		}
   }
 }

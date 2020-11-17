@@ -6,8 +6,8 @@ import Loader from './Loader'
 type Props = {
 	onClick: () => void;
 	disabled: boolean;
-  isLoading: boolean;
-  type: string
+  isLoading?: boolean;
+  type: 'primary' | 'secondary'
 };
 const Button: React.FC<Props> = props => {
 	return (

@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Auth from './containers/Auth';
-import MainPage from './pages/MainPage';
-import AboutPage from './pages/AboutPage';
 import { RootState } from './store/rootReducer';
 import { autoLogin } from './store/ducks/auth/actions';
+
+import Main from './containers/Main';
+import { BudgetPage, NotesPage, TodosPage, StatisticPage } from './pages';
 
 import './scss/app.scss';
 
@@ -19,10 +20,12 @@ function App() {
 
 	let routes = (
 		<Switch>
-			<Route path="/main" component={MainPage} />
-			<Route path="/about" component={AboutPage} />
+			<Route path="/budget" component={BudgetPage} />
+			<Route path="/notes" component={NotesPage} />
+			<Route path="/todos" component={TodosPage} />
+			<Route path="/statistic" component={StatisticPage} />
 
-			<Redirect to="/main" />
+			<Redirect to="/budget" />
 		</Switch>
 	);
 
@@ -37,9 +40,7 @@ function App() {
 	}
 
 	return (
-		<BrowserRouter>
-			<div className="app">{routes}</div>
-		</BrowserRouter>
+		<BrowserRouter>{isAuth ? <Main>{routes}</Main> : <Auth />}</BrowserRouter>
 	);
 }
 

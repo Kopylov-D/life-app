@@ -1,3 +1,4 @@
+import { getAuthData } from '../../../api/httpApi';
 import {
 	AUTH_START,
 	AUTH_SUCCESS,
@@ -18,7 +19,6 @@ export function register(email: any, password: any) {
 				email,
 				password,
 			};
-			console.log(user);
 			const response = await fetch('/api/auth/register', {
 				method: 'POST',
 				headers: {
@@ -31,9 +31,7 @@ export function register(email: any, password: any) {
 			if (!response.ok) {
 				throw new Error(data.message || 'Что-то пошло не так');
 			}
-
-			console.log(data);
-
+			
 			document.cookie = `jwtToken=${data.token}; max-age=36000`;
 			document.cookie = `userId=${data.userId}; max-age=36000`;
 			dispatch(authSuccess(data));
@@ -65,8 +63,8 @@ export function login(email: any, password: any) {
 				throw new Error(data.message || 'Что-то пошло не так');
 			}
 
-			document.cookie = `jwtToken=${data.token}; max-age=36000`;
-			document.cookie = `userId=${data.userId}; max-age=36000`;
+			document.cookie = `jwtToken=${data.token}; max-age=360000`;
+			document.cookie = `userId=${data.userId}; max-age=360000`;
 			dispatch(authSuccess(data));
 		} catch (e) {
 			dispatch(authError(e.message));
@@ -76,22 +74,13 @@ export function login(email: any, password: any) {
 
 export function autoLogin() {
 	return async (dispatch: any) => {
-		const jwtTokenCookie: RegExpMatchArray | null = document.cookie.match(
-			`(^|; )jwtToken=([^;]*)`
-		);
-		const userIdCookie: RegExpMatchArray | null = document.cookie.match(
-			`(^|; )userId=([^;]*)`
-		);
+		const { jwtToken, userId } = getAuthData();
 
-		if (jwtTokenCookie) {
-			const jwtToken = jwtTokenCookie[2];
-			const userId = userIdCookie![2];
-
+		if (jwtToken && userId) {
 			const authData: AuthData = {
 				jwtToken,
 				userId,
 			};
-
 			dispatch(authSuccess(authData));
 		} else {
 			dispatch(logout());

@@ -68,7 +68,7 @@ class AuthController {
 			}
 
 			const token = jwt.sign({ userId: user.id }, config.get('jwtSecret'), {
-				expiresIn: '1h',
+				expiresIn: '24h',
 			});
 
 			res.json({ token, userId: user.id });
@@ -80,4 +80,4 @@ class AuthController {
 	}
 }
 
-export const AuthCtrl = new AuthController();
+export default new AuthController();

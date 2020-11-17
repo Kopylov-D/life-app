@@ -169,12 +169,16 @@ const Auth = () => {
 
 	const registerHandler = async () => {
 		// dispatch(register(formControls.login.value, formControls.password.value));
-		dispatch(autoLogin())
+		dispatch(autoLogin());
 	};
 
 	const loginHandler = async () => {
 		dispatch(login(formControls.login.value, formControls.password.value));
 	};
+
+	const testHandler = async () => {
+
+	}
 
 	return (
 		<div className={classNames('auth')}>
@@ -200,6 +204,14 @@ const Auth = () => {
 						isLoading={loading}
 					>
 						Регистрация
+					</Button>
+					<Button
+						disabled={false}
+						type='primary'
+						onClick={testHandler}
+						isLoading={loading}
+					>
+						Тест
 					</Button>
 				</div>
 			</form>
