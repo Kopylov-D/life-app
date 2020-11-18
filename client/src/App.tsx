@@ -40,7 +40,9 @@ function App() {
 	}
 
 	return (
-		<BrowserRouter>{isAuth ? <Main>{routes}</Main> : <Auth />}</BrowserRouter>
+		<div className="app">
+			<BrowserRouter>{isAuth ? <Main>{routes}</Main> : <Auth />}</BrowserRouter>
+		</div>
 	);
 }
 

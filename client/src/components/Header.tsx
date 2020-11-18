@@ -6,10 +6,10 @@ const Header = () => {
 		<header className="main__header">
 			<h1>LifeUp</h1>
 			<nav>
-				<NavLink to="/budget">Финансы</NavLink>
-				<NavLink to="/notes">Заметки</NavLink>
-				<NavLink to="/todos">Задачи</NavLink>
-				<NavLink to="/statistic">Статистика</NavLink>
+				<NavLink to="/budget" activeClassName='active'>Финансы</NavLink>
+				<NavLink to="/notes" activeClassName='active'>Заметки</NavLink>
+				<NavLink to="/todos" activeClassName='active'>Задачи</NavLink>
+				<NavLink to="/statistic" activeClassName='active'>Статистика</NavLink>
 			</nav>
 		</header>
 	);

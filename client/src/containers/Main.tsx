@@ -1,12 +1,41 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState } from 'react';
 import { getAuthData } from '../api/httpApi';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Menu from '../components/Menu';
 import { Button } from '../components/UI';
 import { useHttp } from '../hooks/http.hook';
 
 const Main = (props: any) => {
 	const { loading, request, error, clearError } = useHttp();
+
+	const [width, setWidth] = useState<number>(20);
+	const [X, setX] = useState<number>(0);
+	const [isResizing, setIsResizing] = useState<boolean>(false);
+	const [pxInPercent, setPxInPercent] = useState<number>(0);
+
+	function initialResize(e: React.MouseEvent) {
+		setIsResizing(true);
+		setX(e.clientX);
+		const docWidth = document.documentElement.scrollWidth - 6;
+		setPxInPercent(docWidth / 100);
+	}
+
+	function stopResize() {
+		if (isResizing) {
+			setIsResizing(false);
+			// setSavedWidth(width);
+		}
+	}
+
+	function resize(e: React.MouseEvent) {
+		if (isResizing) {
+			const currentX = e.clientX;
+			setX(currentX);
+			const delta = (currentX - X) / pxInPercent;
+			setWidth(width => width + delta);
+		}
+	}
 
 	const testHandler = async () => {
 		const { jwtToken } = getAuthData();
@@ -16,14 +45,27 @@ const Main = (props: any) => {
 		});
 		console.log(data);
 	};
+
+	console.log(props.children.props.children[0]);
+
 	return (
-		<div className="app">
+		<div className="main">
 			<Header />
-			<Button disabled={false} type="primary" onClick={testHandler}>
-				Тест
-			</Button>
-			<main>{props.children}</main>
-			<footer>Шкала</footer>
+			<main
+				className="main__content"
+				onMouseUp={stopResize}
+				onMouseMove={resize}
+			>
+				<Menu/>
+				{/* <Button disabled={false} type="primary" onClick={testHandler}>
+					Тест
+				</Button> */}
+				<div className="resizer" onMouseDown={initialResize}></div>
+
+				<div className="component-frame">{props.children}</div>
+			</main>
+
+			<Footer />
 		</div>
 	);
 };
