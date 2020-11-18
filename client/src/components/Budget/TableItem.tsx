@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Input } from '../UI';
 
 const TableItem = () => {
+	const [value, setValue] = useState<string>('')
+
+	const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+
+	}
+
 	return (
-		<tr className="table__item">
-			<td>Продукты</td>
-			<td>ввод</td>
-			<td>2000 руб.</td>
-			<td className='options'>
+		<div className='table-item'>
+			<div>Продукты</div>
+			<Input value={value} onChange={onChangeHandler} />
+			<div>2000 руб.</div>
+			<div className='options'>
 				<div>date</div>
 				<div>gear</div>
 				<div>del</div>
-			</td>
-		</tr>
+			</div>
+		</div>
 	);
 };
 

@@ -2,6 +2,24 @@ interface IValidation {
 	required: boolean;
 	minLength?: number;
 	notCyrillic?: boolean;
+	isPositiveNum?: number | typeof NaN
+}
+
+interface IConfig {
+	noErrorMessage?: boolean
+}
+
+interface IControl extends IValidation, IConfig {
+
+}
+
+export function createControl(config: IConfig, validation: IValidation) {
+  return {
+    ...config,
+    validation,
+    valid: !validation,
+    touched: false,
+  };
 }
 
 export function validate(

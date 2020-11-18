@@ -4,10 +4,10 @@ import classnames from 'classnames';
 type Props = {
 	value: string;
 	type: string;
-	label: string;
-	valid: boolean;
+	label?: string;
+	valid?: boolean;
 	shouldValidate: boolean;
-	touched: boolean;
+	touched?: boolean;
 
 	// optionalLabel: string;
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;
