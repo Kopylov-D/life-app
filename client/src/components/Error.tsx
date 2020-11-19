@@ -8,7 +8,6 @@ type Props = {
 const Error: React.FC<Props> = props => {
 	return (
 		<div className={classNames('error')}>
-				<div>Ошибка!</div>
 				<footer>{props.textError}</footer>
 		</div>
 	);

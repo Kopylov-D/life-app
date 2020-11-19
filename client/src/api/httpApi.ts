@@ -1,41 +1,4 @@
-// import { useState, useCallback } from 'react';
-
-// export const useHttp = () => {
-// 	const [loading, setLoading] = useState<boolean>(false);
-// 	const [error, setError] = useState<string | null>(null);
-
-// 	const request = useCallback(
-// 		async (url, method = 'GET', body = null, headers = {}) => {
-// 			setLoading(true);
-// 			try {
-// 				if (body) {
-// 					body = JSON.stringify(body);
-// 					headers['Content-Type'] = 'application/json';
-// 				}
-
-// 				const response = await fetch(url, { method, body, headers });
-// 				const data = await response.json();
-
-// 				if (!response.ok) {
-// 					throw new Error(data.message || 'Что-то пошло не так');
-// 				}
-
-// 				setLoading(false);
-
-// 				return data;
-// 			} catch (e) {
-// 				setLoading(false);
-// 				setError(e.message);
-// 				throw e;
-// 			}
-// 		},
-// 		[]
-// 	);
-
-// 	const clearError = useCallback(() => setError(null), []);
-
-// 	return { loading, request, error, clearError };
-// };
+import axios from 'axios';
 
 export const getAuthData = () => {
 	const jwtTokenCookie: RegExpMatchArray | null = document.cookie.match(
@@ -46,17 +9,61 @@ export const getAuthData = () => {
 	);
 
 	if (jwtTokenCookie) {
-		const jwtToken: string = jwtTokenCookie[2];
+		const token: string = jwtTokenCookie[2];
 		const userId: string = userIdCookie![2];
 
 		return {
-			jwtToken,
+			token,
 			userId,
 		};
 	}
 
 	return {
-		jwtToken: null,
+		token: null,
 		userId: null,
 	};
 };
+
+axios.interceptors.request.use(config => {
+	config.headers['Authorization'] = `Bearer ${getAuthData().token}`;
+	return config;
+});
+
+// Сделать классом
+export const api = {
+	register: (email: string, password: string): any =>
+		axios
+			.post('/api/auth/register', {
+				email,
+				password,
+			})
+			.catch(e => {
+				throw new Error(e.response.data.message || 'Что-то пошло не так');
+			}),
+
+	login: (email: string, password: string): any =>
+		axios
+			.post('/api/auth/login', {
+				email,
+				password,
+			})
+			.catch(e => {
+				throw new Error(e.response.data.message || 'Что-то пошло не так');
+			}),
+
+	getUser: () =>
+		axios
+			.get('/api/budget/info')
+			.then(res => res.data.user)
+			.catch(e => {
+				throw new Error(e.response.data.message || 'Что-то пошло не так');
+			}),
+};
+
+// export const {jwtToken} = getAuthData()
+
+// const instance = axios.create({
+// 	headers: {
+// 		"Authorization": `Bearer ${getAuthData().jwtToken}`
+// }
+// })

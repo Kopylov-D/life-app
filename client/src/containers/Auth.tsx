@@ -1,125 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-import { validate } from '../utils/form';
+import { createControl, FormControl, validate } from '../utils/form';
 import { Button, Input, Toast } from '../components/UI';
 import Error from '../components/Error';
-import { useHttp } from '../hooks/http.hook';
 import { useDispatch, useSelector } from 'react-redux';
-import { autoLogin, login, register } from '../store/ducks/auth/actions';
+import { login, register } from '../store/ducks/auth/actions';
 import { RootState } from '../store/rootReducer';
 
-type IFormControl = {
-	value: string;
-	type: string;
-	label: string;
-	valid: boolean;
-	touched: boolean;
-	validation: {
-		required: boolean;
-		notCyrillic?: boolean;
-		minLength?: number;
-	};
-};
-
-type IFormControls = {
-	login: IFormControl;
-	password: IFormControl;
+type FormControls = {
+	login: FormControl;
+	password: FormControl;
 };
 
 const Auth = () => {
 	const [isFormValid, setIsFormValid] = React.useState<boolean>(false);
-	const [formControls, setFormControls] = React.useState<IFormControls>({
-		login: {
-			value: '',
-			type: 'login',
-			label: 'Логин',
-			valid: false,
-			touched: false,
-			validation: {
-				required: true,
-				notCyrillic: true,
-			},
-		},
-		password: {
-			value: '',
-			type: 'password',
-			label: 'Пароль',
-			valid: false,
-			touched: false,
-			validation: {
-				required: true,
-				minLength: 6,
-				notCyrillic: true,
-			},
-		},
+	const [formControls, setFormControls] = React.useState<FormControls>({
+		login: createControl(
+			{ type: 'text', label: 'Логин'},
+			{ required: true, notCyrillic: true }
+		),
+		password: createControl(
+			{ type: 'password', label: 'Пароль'},
+			{ required: true, minLength: 6, notCyrillic: true }
+		),
 	});
 
-	const { loading, request, error, clearError } = useHttp();
-	const [showMessage, setShowMessage] = useState<boolean>(false);
-	const { auth } = useSelector((state: RootState) => state);
+	const { isLoading, message } = useSelector((state: RootState) => state.auth);
 	const dispatch = useDispatch();
-
-	// useEffect(() => {
-	// 	setShowMessage(true)
-	// 	setTimeout(() => {
-	// 		setShowMessage(false);
-	// 		clearError()
-	// 	}, 2500);
-
-	// }, [error, clearError])
-
-	useEffect(() => {
-		// clearError();
-	}, [error, clearError]);
 
 	const submitHandler = (event: React.SyntheticEvent): void => {
 		event.preventDefault();
-	};
-
-	const onChangeHandler1 = (
-		event: React.ChangeEvent<HTMLInputElement>,
-		controlName: keyof typeof formControls
-	): void => {
-		const newFormControls = { ...formControls };
-		const control = { ...formControls[controlName] };
-
-		control.value = event.target.value;
-		control.touched = true;
-		control.valid = validate(control.value, control.validation);
-
-		newFormControls[controlName] = control;
-
-		let formValid = true;
-		(Object.keys(formControls) as Array<keyof typeof formControls>).forEach(
-			(name: keyof typeof formControls) => {
-				formValid = newFormControls[name].valid && formValid;
-			}
-		);
-
-		setFormControls(newFormControls);
-		setIsFormValid(formValid);
-	};
-
-	const onChangeHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
-		// controlName: keyof typeof formControls
-	): void => {
-		const newFormControls = { ...formControls };
-		const control = { ...formControls.login };
-
-		control.value = event.target.value;
-		control.touched = true;
-		control.valid = validate(control.value, control.validation);
-
-		newFormControls.login = control;
-
-		let formValid = true;
-
-		formValid = control.valid && formValid;
-
-		setFormControls(newFormControls);
-		setIsFormValid(formValid);
 	};
 
 	const renderInputs = () => {
@@ -154,12 +65,13 @@ const Auth = () => {
 					<Input
 						key={index}
 						label={control.label}
+						placeholder={control.placeholder}
+						// class={control.class}
 						type={control.type}
 						value={control.value}
 						valid={control.valid}
 						touched={control.touched}
 						shouldValidate={!!control.validation}
-						// optionalLabel={control.optionalLabel}
 						onChange={onChangeHandler2}
 					/>
 				);
@@ -168,32 +80,25 @@ const Auth = () => {
 	};
 
 	const registerHandler = async () => {
-		// dispatch(register(formControls.login.value, formControls.password.value));
-		dispatch(autoLogin());
+		dispatch(register(formControls.login.value, formControls.password.value));
 	};
 
 	const loginHandler = async () => {
 		dispatch(login(formControls.login.value, formControls.password.value));
 	};
 
-	const testHandler = async () => {
-
-	}
-
 	return (
 		<div className={classNames('auth')}>
-			{/* <Logo /> */}
-			{/* {showMessage ? <Toast text={error}/> : null} */}
 			<form className={classNames('auth__main')} onSubmit={submitHandler}>
 				<header>LifeUp</header>
-				{auth.errorMessage ? <Error textError={auth.errorMessage} /> : null}
+				{message ? <Error textError={message} /> : null}
 				{renderInputs()}
 				<div className="auth__buttons">
 					<Button
 						disabled={!isFormValid}
 						type="primary"
 						onClick={loginHandler}
-						isLoading={loading}
+						isLoading={isLoading}
 					>
 						Войти
 					</Button>
@@ -201,17 +106,9 @@ const Auth = () => {
 						disabled={!isFormValid}
 						type="secondary"
 						onClick={registerHandler}
-						isLoading={loading}
+						isLoading={isLoading}
 					>
 						Регистрация
-					</Button>
-					<Button
-						disabled={false}
-						type='primary'
-						onClick={testHandler}
-						isLoading={loading}
-					>
-						Тест
 					</Button>
 				</div>
 			</form>

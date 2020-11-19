@@ -9,6 +9,7 @@ type Props = {
   isLoading?: boolean;
   type: 'primary' | 'secondary'
 };
+
 const Button: React.FC<Props> = props => {
 	return (
 		<button

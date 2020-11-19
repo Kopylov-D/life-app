@@ -1,30 +1,46 @@
-interface IValidation {
-	required: boolean;
-	minLength?: number;
-	notCyrillic?: boolean;
-	isPositiveNum?: number | typeof NaN
-}
+export type FormControl = {
+	value: string;
+	type: 'text' | 'password' | 'checkbox';
+	label?: string;
+	valid: boolean;
+	touched: boolean;
+	validation?: {
+		required?: boolean;
+		notCyrillic?: boolean;
+		minLength?: number;
+	};
+	shouldValidate: boolean;
+	class?: string;
+	placeholder?: string;
+};
 
-interface IConfig {
-	noErrorMessage?: boolean
-}
+type Config = {
+	type: 'text' | 'password' | 'checkbox';
+	label?: string;
+	class?: string;
+	placeholder?: string;
+};
 
-interface IControl extends IValidation, IConfig {
-
-}
-
-export function createControl(config: IConfig, validation: IValidation) {
-  return {
-    ...config,
-    validation,
-    valid: !validation,
-    touched: false,
-  };
+export function createControl(
+	config: Config,
+	validation: FormControl['validation']
+): FormControl {
+	return {
+		...config,
+		validation,
+		value: '',
+		valid: !!validation,
+		touched: false,
+		// label: '',
+		shouldValidate: true,
+		// class: '',
+		// placeholder: '',
+	};
 }
 
 export function validate(
 	value: string,
-	validation: IValidation | null = null
+	validation: FormControl['validation']
 ): boolean {
 	if (!validation) {
 		return true;

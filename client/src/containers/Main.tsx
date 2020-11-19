@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getAuthData } from '../api/httpApi';
+import { api, getAuthData } from '../api/httpApi';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
@@ -38,12 +38,8 @@ const Main = (props: any) => {
 	}
 
 	const testHandler = async () => {
-		const { jwtToken } = getAuthData();
-		console.log(jwtToken);
-		const data = await request('/api/budget/info', 'GET', null, {
-			Authorization: `Bearer ${jwtToken}`,
-		});
-		console.log(data);
+		const user = await api.getUser()
+		console.log(user)
 	};
 
 	console.log(props.children.props.children[0]);
@@ -57,9 +53,9 @@ const Main = (props: any) => {
 				onMouseMove={resize}
 			>
 				<Menu/>
-				{/* <Button disabled={false} type="primary" onClick={testHandler}>
+				<Button disabled={false} type="primary" onClick={testHandler}>
 					Тест
-				</Button> */}
+				</Button>
 				<div className="resizer" onMouseDown={initialResize}></div>
 
 				<div className="component-frame">{props.children}</div>
