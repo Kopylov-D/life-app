@@ -3,16 +3,8 @@ import classnames from 'classnames';
 import { FormControl } from '../../utils/form';
 
 interface Props extends FormControl {
-	// value: string;
-	// type: string;
-	// label: string;
-	// valid: boolean;
-	// shouldValidate: boolean;
-	// touched: boolean;
-	// class: string
-
-	// optionalLabel: string;
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;
+	onKeyPress?(event: React.KeyboardEvent<HTMLInputElement>): void;
 }
 
 function isInvalid({ valid, shouldValidate, touched }: Props) {
@@ -29,12 +21,10 @@ const Input: React.FC<Props> = props => {
 				'--invalid': isInvalid(props),
 			})}
 		>
-			{/* <div className={classnames('input')}> */}
 			{props.label && (
 				<div>
 					<label htmlFor={htmlFor}>
 						<span>{props.label}</span>
-						{/* <span>{props.optionalLabel}</span> */}
 					</label>
 				</div>
 			)}
@@ -44,6 +34,7 @@ const Input: React.FC<Props> = props => {
 				type={inputType}
 				value={props.value}
 				onChange={event => props.onChange(event, props.value)}
+				onKeyPress={props.onKeyPress}
 				placeholder={props.placeholder}
 			/>
 		</div>

@@ -1,47 +1,42 @@
 import React from 'react';
+import { api } from '../../api/httpApi';
 import TableItem from './TableItem';
 
-// const Table = () => {
-// 	return (
-// 		<table className="table">
-// 			<thead className="table__header">
-// 				<tr>
-// 					<th>Категория</th>
-// 					<th>Ввод</th>
-// 					<th>Сумма</th>
-// 					<th>gecnj</th>
-// 				</tr>
-// 			</thead>
-// 			<tbody>
-// 				{/* <tr>
-// 					<td>Продукты</td>
-// 					<td>ввод</td>
-// 					<td>2000 руб.</td>
-// 					<td>dfgdfg</td>
-// 				</tr> */}
-// 				<TableItem /> 
-// 				<TableItem />
-// 				<TableItem />
-// 			</tbody>
-// 		</table>
-// 	);
-// };
-
 const Table = () => {
+
+	const testHandler1 = async () => {
+		try {
+			// const response = await api.getUser()
+			const response = await api.addTransaction()
+			console.log(response)
+		} catch(e) {
+			console.log(e)
+		}
+	}
+	const testHandler2 = async () => {
+		try {
+			const response = await api.getUser()
+			// const response = await api.addTransaction()
+			console.log(response)
+		} catch(e) {
+			console.log(e)
+		}
+	}
+
 	return (
 		<div className="table">
+			<header className="table__header" onClick={testHandler1}>
+				<div onClick={testHandler1}>Категория</div>
+				<div onClick={testHandler2}>Ввод</div>
+				<div>Сумма</div>
+				{/* <div></div> */}
+			</header>
 
-				<header className="header">
-					<div>Категория</div>
-					<div>Ввод</div>
-					<div>Сумма</div>
-					<div>gecnj</div>
-				</header>
-			<div className='tbody'>
-				<TableItem /> 
+			{/* <div className="table__body"> */}
 				<TableItem />
 				<TableItem />
-			</div>
+				<TableItem />
+			{/* </div> */}
 		</div>
 	);
 };

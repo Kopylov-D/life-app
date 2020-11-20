@@ -13,7 +13,7 @@ body {
 
 .app {
 	position: absolute;
-	min-width: 440px;
+	min-width: 540px;
 	min-height: 220px;
 	top: 0;
 	bottom: 0;
@@ -135,7 +135,7 @@ body {
 	}
 
 	&__menu {
-		width: 200px;
+		min-width: 200px;
 		background: $c-white;
 		border-radius: $block-radius;
 		margin-right: $gap;
@@ -154,17 +154,19 @@ body {
 		}
 	}
 
+	
+	&__component-frame {
+		background: $c-white;
+		border-radius: $block-radius;
+		flex-grow: 1;
+	}
+
 	& .resizer {
 		background: $c-secondary;
 		width: 10px;
 
 	}
 
-	& .component-frame {
-		background: $c-white;
-		border-radius: $block-radius;
-		flex-grow: 1;
-	}
 
 	&__footer {
 		position: absolute;

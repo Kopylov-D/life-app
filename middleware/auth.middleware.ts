@@ -29,7 +29,6 @@ export const auth = (
 			config.get('jwtSecret')
 		) as DataStoredInToken;
 
-		console.log('middleware', decoded.userId);
 		req.user = decoded.userId;
 
 		next();

@@ -61,12 +61,12 @@ const Auth = () => {
 					setFormControls(newFormControls);
 					setIsFormValid(formValid);
 				};
+				
 				return (
 					<Input
 						key={index}
 						label={control.label}
 						placeholder={control.placeholder}
-						// class={control.class}
 						type={control.type}
 						value={control.value}
 						valid={control.valid}

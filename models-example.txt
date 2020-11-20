@@ -1,0 +1,518 @@
+transactions {
+  "items": [
+    {
+      "id": 97114,
+      "amount": 323,
+      "description": null,
+      "dateAt": "2020-11-10",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    },
+    {
+      "id": 97113,
+      "amount": 2333,
+      "description": null,
+      "dateAt": "2020-11-10",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    }
+  ]
+} instrument.js:110:45
+{ items:projects { id name isHidden } } {
+  "items": []
+} instrument.js:110:45
+{
+      items:accounts { id name color isFavourite isHidden currency { name } }
+    } {
+  "items": [
+    {
+      "id": 161,
+      "name": "Наличные",
+      "color": "blue",
+      "isFavourite": false,
+      "isHidden": false,
+      "currency": {
+        "name": "RUB"
+      }
+    }
+  ]
+} instrument.js:110:45
+{ items:categories { id name color isFavourite isHidden } } {
+  "items": [
+    {
+      "id": 1080,
+      "name": "Автомобиль",
+      "color": "blue-grey",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1081,
+      "name": "Досуг",
+      "color": "purple",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1075,
+      "name": "Жилье",
+      "color": "cyan",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1076,
+      "name": "Заработная плата",
+      "color": "green",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1082,
+      "name": "Здоровье",
+      "color": "teal",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1083,
+      "name": "Инвестиции",
+      "color": "light-green",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1084,
+      "name": "Кредит",
+      "color": "pink",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1085,
+      "name": "Налоги",
+      "color": "indigo",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1086,
+      "name": "Образование",
+      "color": "orange",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1087,
+      "name": "Одежда",
+      "color": "brown",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1088,
+      "name": "Отпуск",
+      "color": "blue",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1089,
+      "name": "Подарки",
+      "color": "yellow",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1077,
+      "name": "Продукты",
+      "color": "red",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1078,
+      "name": "Связь, интернет",
+      "color": "lime",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1079,
+      "name": "Транспорт",
+      "color": "grey",
+      "isFavourite": true,
+      "isHidden": false
+    }
+  ]
+} instrument.js:110:45
+createTransaction {
+  "action": "97690"
+} instrument.js:110:45
+transactions {
+  "items": [
+    {
+      "id": 97690,
+      "amount": 232,
+      "description": null,
+      "dateAt": "2020-11-20",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    },
+    {
+      "id": 97114,
+      "amount": 323,
+      "description": null,
+      "dateAt": "2020-11-10",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    },
+    {
+      "id": 97113,
+      "amount": 2333,
+      "description": null,
+      "dateAt": "2020-11-10",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    }
+  ]
+} 3 instrument.js:110:45
+{ items:categories { id name color isFavourite isHidden } } {
+  "items": [
+    {
+      "id": 1080,
+      "name": "Автомобиль",
+      "color": "blue-grey",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1081,
+      "name": "Досуг",
+      "color": "purple",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1075,
+      "name": "Жилье",
+      "color": "cyan",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1076,
+      "name": "Заработная плата",
+      "color": "green",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1082,
+      "name": "Здоровье",
+      "color": "teal",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1083,
+      "name": "Инвестиции",
+      "color": "light-green",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1084,
+      "name": "Кредит",
+      "color": "pink",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1085,
+      "name": "Налоги",
+      "color": "indigo",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1086,
+      "name": "Образование",
+      "color": "orange",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1087,
+      "name": "Одежда",
+      "color": "brown",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1088,
+      "name": "Отпуск",
+      "color": "blue",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1089,
+      "name": "Подарки",
+      "color": "yellow",
+      "isFavourite": false,
+      "isHidden": false
+    },
+    {
+      "id": 1077,
+      "name": "Продукты",
+      "color": "red",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1078,
+      "name": "Связь, интернет",
+      "color": "lime",
+      "isFavourite": true,
+      "isHidden": false
+    },
+    {
+      "id": 1079,
+      "name": "Транспорт",
+      "color": "grey",
+      "isFavourite": true,
+      "isHidden": false
+    }
+  ]
+} instrument.js:110:45
+https://api.mybudget.ws/charts/balances?accounts=&categories=&projects=&months=12 [
+  [
+    "x",
+    "2020-11-10",
+    "2020-11-11",
+    "2020-11-12",
+    "2020-11-13",
+    "2020-11-14",
+    "2020-11-15",
+    "2020-11-16",
+    "2020-11-17",
+    "2020-11-18",
+    "2020-11-19",
+    "2020-11-20"
+  ],
+  [
+    "RUB",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2888.0"
+  ]
+] instrument.js:110:45
+{
+      items:accounts { id name color isFavourite isHidden balance currency { name } }
+    } {
+  "items": [
+    {
+      "id": 161,
+      "name": "Наличные",
+      "color": "blue",
+      "isFavourite": false,
+      "isHidden": false,
+      "balance": 2888,
+      "currency": {
+        "name": "RUB"
+      }
+    }
+  ]
+} instrument.js:110:45
+https://api.mybudget.ws/charts/balances?accounts=&categories=&projects=&months=12 [
+  [
+    "x",
+    "2020-11-10",
+    "2020-11-11",
+    "2020-11-12",
+    "2020-11-13",
+    "2020-11-14",
+    "2020-11-15",
+    "2020-11-16",
+    "2020-11-17",
+    "2020-11-18",
+    "2020-11-19",
+    "2020-11-20"
+  ],
+  [
+    "RUB",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2656.0",
+    "2888.0"
+  ]
+] instrument.js:110:45
+
+      {
+        items:goals {
+          id
+          name
+          accounts { id name color }
+          amount
+          amountPerMonth
+          currency { name }
+          dueDateOn
+          dueMonths
+          percentage
+          balance
+        }
+      }
+     {
+  "items": []
+} instrument.js:110:45
+
+      {
+        items:projects {
+          id
+          name
+          isHidden
+          color
+          balances {
+            amount
+            amountBase
+            currency { name }
+            currencyBase { name }
+          }
+        }
+      }
+     {
+  "items": []
+} instrument.js:110:45
+{
+      items:accounts { id name color isFavourite isHidden balance currency { name } }
+    } {
+  "items": [
+    {
+      "id": 161,
+      "name": "Наличные",
+      "color": "blue",
+      "isFavourite": false,
+      "isHidden": false,
+      "balance": 2888,
+      "currency": {
+        "name": "RUB"
+      }
+    }
+  ]
+} instrument.js:110:45
+transactions {
+  "items": [
+    {
+      "id": 97690,
+      "amount": 232,
+      "description": null,
+      "dateAt": "2020-11-20",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    },
+    {
+      "id": 97114,
+      "amount": 323,
+      "description": null,
+      "dateAt": "2020-11-10",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    },
+    {
+      "id": 97113,
+      "amount": 2333,
+      "description": null,
+      "dateAt": "2020-11-10",
+      "account": {
+        "id": 161,
+        "name": "Наличные",
+        "color": "blue",
+        "currency": {
+          "name": "RUB"
+        }
+      },
+      "categories": [],
+      "project": null,
+      "isTransfer": false
+    }
+  ]
+}

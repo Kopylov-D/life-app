@@ -9,3 +9,17 @@ export type UserType = {
 export interface RequestWithUser extends Request {
 	user?: string;
 }
+
+export type TransactionType = {
+	_id?: string;
+	userId: string;
+	amount: number;
+	date: Date;
+	category: CategoryType;
+};
+
+export type CategoryType = {
+	_id?: string;
+	name: string;
+	color: string;
+};

@@ -1,13 +1,41 @@
 import React, { useState } from 'react';
-import { createControl, FormControl } from '../../utils/form';
+import { api } from '../../api/httpApi';
+import { createControl, FormControl, validate } from '../../utils/form';
 import { Input } from '../UI';
 
 const TableItem = () => {
 	const [control, setControl] = useState<FormControl>(
-		createControl({ type: 'text', class: 'table-input' }, { required: true })
+		createControl(
+			{ type: 'text', class: 'table-input' },
+			{ required: true, isNumber: true, notNull: true }
+		)
 	);
 
-	const onChangeHandler = () => {};
+	const onChangeHandler = (
+		event: React.ChangeEvent<HTMLInputElement>
+	): void => {
+		const value = event.target.value;
+		setControl({
+			...control,
+			value,
+			valid: validate(value, control.validation),
+		});
+		event.target.value = '';
+	};
+
+	const onKeyEnter = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === 'Enter' && control.valid) {
+			const amount = control.value;
+			console.log(amount)
+			try {
+				// const response = await api.addTransaction(amount);
+				// console.log(response)
+
+			} catch(e) {
+				console.log('Ошибка транзакции', e)
+			}
+		}
+	};
 
 	return (
 		<div className="table__item">
@@ -15,13 +43,12 @@ const TableItem = () => {
 			<Input
 				value={control.value}
 				class={control.class}
-				// placeholder={control.placeholder}
-				// label={control.label}
 				type={control.type}
 				valid={control.valid}
 				touched={control.touched}
 				shouldValidate={!!control.validation}
 				onChange={onChangeHandler}
+				onKeyPress={onKeyEnter}
 			/>
 			<div>2000 руб.</div>
 			<div className="options">

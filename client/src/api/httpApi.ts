@@ -58,6 +58,14 @@ export const api = {
 			.catch(e => {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
+
+	addTransaction: (): any =>
+		axios
+			.get('/api/budget/tr')
+			.then(res => res)
+			.catch(e => {
+				throw new Error(e.response.data.message || 'Что-то пошло не так');
+			}),
 };
 
 // export const {jwtToken} = getAuthData()

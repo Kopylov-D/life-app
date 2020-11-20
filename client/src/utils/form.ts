@@ -8,6 +8,8 @@ export type FormControl = {
 		required?: boolean;
 		notCyrillic?: boolean;
 		minLength?: number;
+		isNumber?: boolean;
+		notNull?: boolean;
 	};
 	shouldValidate: boolean;
 	class?: string;
@@ -59,6 +61,14 @@ export function validate(
 	if (validation.notCyrillic) {
 		isValid = !value.match(/[а-я]/gi) && isValid;
 	}
+
+	if (validation.isNumber) {
+    isValid = Number.isNaN(+value) === false && isValid;
+  }
+
+  if (validation.notNull) {
+    isValid = +value !== 0 && isValid;
+  }
 
 	return isValid;
 }
