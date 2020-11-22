@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { FormControl } from '../../utils/form';
+import { FormControl } from '../../services/validations/form';
 
 interface Props extends FormControl {
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;

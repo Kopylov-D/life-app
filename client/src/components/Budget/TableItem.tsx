@@ -1,15 +1,28 @@
 import React, { useState } from 'react';
-import { api } from '../../api/httpApi';
-import { createControl, FormControl, validate } from '../../utils/form';
+import { useSelector, useDispatch } from 'react-redux';
+import { api } from '../../services/api';
+import { getTransactionsData } from '../../store/ducks/budget/actions';
+import { TransactionInterface } from '../../store/ducks/budget/types';
+import { RootState } from '../../store/rootReducer';
+import { createControl, FormControl, validate } from '../../services/validations/form';
 import { Input } from '../UI';
 
-const TableItem = () => {
+interface Props {
+	// key: string
+}
+
+const TableItem: React.FC<Props> = (props) => {
 	const [control, setControl] = useState<FormControl>(
 		createControl(
 			{ type: 'text', class: 'table-input' },
 			{ required: true, isNumber: true, notNull: true }
 		)
 	);
+
+	const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false)
+
+
+
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -25,15 +38,19 @@ const TableItem = () => {
 
 	const onKeyEnter = async (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && control.valid) {
-			const amount = control.value;
-			console.log(amount)
-			try {
-				// const response = await api.addTransaction(amount);
-				// console.log(response)
+			const amount = +control.value;
+			const categoryName = 'ПРОДУКТЫ'
+			setControl({ ...control, value: '' });
+			// try {
+			// 	const response = await api.addTransaction(amount, categoryName);
+			// 	console.log(response);
+			// } catch (e) {
+			// 	console.log('Ошибка транзакции', e);
+			// }
 
-			} catch(e) {
-				console.log('Ошибка транзакции', e)
-			}
+
+		} else if (event.key === 'Enter' && !control.valid) {
+			setControl({ ...control, value: '' });
 		}
 	};
 

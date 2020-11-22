@@ -59,13 +59,26 @@ export const api = {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
-	addTransaction: (): any =>
+	addTransaction: (amount: number, categoryName: string): any =>
 		axios
-			.get('/api/budget/tr')
-			.then(res => res)
+			.post('/api/budget/transactions/add-transaction', { amount, categoryName })
+			// .then(res => res)
 			.catch(e => {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
+
+	getTransactions: () =>
+		axios.get('/api/budget/transactions/get').catch(e => {
+			throw new Error(e.response.data.message || 'Что-то пошло не так');
+		}),
+
+	addCategory: (name: string, color: string): any =>
+		axios.post('/api/budget/transactions/add-category', {
+			name, color
+		})
+		// .catch(e => {
+		// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
+		// }),
 };
 
 // export const {jwtToken} = getAuthData()

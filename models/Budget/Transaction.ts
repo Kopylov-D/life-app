@@ -12,6 +12,11 @@ const TransactionSchema: Schema = new Schema<TransactionType>({
 		type: Number,
 		max: 999999999,
 	},
+	category: {
+		required: true,
+		ref: 'Category',
+		type: Types.ObjectId,
+	},
 	date: {
 		required: true,
 		type: Date,

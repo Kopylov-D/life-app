@@ -1,7 +1,11 @@
-import { Document, model, Schema } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 import { CategoryType } from '../../types/types';
 
 const CategorySchema: Schema = new Schema<CategoryType>({
+	// _id: {
+	// 	required: true,
+	// 	type: Types.ObjectId
+	// },
 	name: {
 		required: true,
 		type: String,

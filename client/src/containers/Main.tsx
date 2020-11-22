@@ -1,9 +1,20 @@
 import React from 'react';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import Expense from '../components/Budget/Expense';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
+import { BudgetPage } from '../pages';
 
 const Main = (props: any) => {
+	const routes = () => (
+		<Switch>
+			<Route path="/budget/expense" component={BudgetPage} />
+			<Route path="/budget/income" component={BudgetPage} />
+
+			<Redirect to="/budget"/>
+		</Switch>
+	);
 	return (
 		<div className="main">
 			<Header />

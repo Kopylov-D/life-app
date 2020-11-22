@@ -1,1 +1,6 @@
-export const type = 10
+export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+export const FETCH_START = 'FETCH_START';
+export const FETCH_SUCCESS = 'FETCH_SUCCESS';
+export const FETCH_ERROR = 'FETCH_ERROR';
+export const ADD_TRANSACTION = 'ADD_TRANSACTION';
+export const ADD_CATEGORY = 'ADD_CATEGORY';

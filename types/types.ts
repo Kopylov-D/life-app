@@ -19,7 +19,7 @@ export type TransactionType = {
 };
 
 export type CategoryType = {
-	_id?: string;
+	_id: string;
 	name: string;
 	color: string;
 };

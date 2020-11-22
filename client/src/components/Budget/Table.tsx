@@ -1,42 +1,46 @@
-import React from 'react';
-import { api } from '../../api/httpApi';
+import React, { useState } from 'react';
+import { api } from '../../services/api';
+import { TransactionInterface } from '../../store/ducks/budget/types';
 import TableItem from './TableItem';
 
-const Table = () => {
+type Props = {
+	// transactions: TransactionInterface[]
+}
 
-	const testHandler1 = async () => {
-		try {
-			// const response = await api.getUser()
-			const response = await api.addTransaction()
-			console.log(response)
-		} catch(e) {
-			console.log(e)
-		}
-	}
-	const testHandler2 = async () => {
-		try {
-			const response = await api.getUser()
-			// const response = await api.addTransaction()
-			console.log(response)
-		} catch(e) {
-			console.log(e)
-		}
-	}
+const Table = () => {
+	// const testHandler1 = async () => {
+	// 	try {
+	// 		// const response = await api.getUser()
+	// 		const response = await api.addTransaction(5)
+	// 		console.log(response)
+	// 	} catch(e) {
+	// 		console.log(e)
+	// 	}
+	// }
+	// const testHandler2 = async () => {
+	// 	try {
+	// 		const response = await api.getUser()
+	// 		// const response = await api.addTransaction()
+	// 		console.log(response)
+	// 	} catch(e) {
+	// 		console.log(e)
+	// 	}
+	// }
 
 	return (
 		<div className="table">
-			<header className="table__header" onClick={testHandler1}>
-				<div onClick={testHandler1}>Категория</div>
-				<div onClick={testHandler2}>Ввод</div>
+			<header className="table__header">
+				<div >Категория</div>
+				<div >Ввод</div>
 				<div>Сумма</div>
 				{/* <div></div> */}
 			</header>
 
-			{/* <div className="table__body"> */}
-				<TableItem />
-				<TableItem />
-				<TableItem />
-			{/* </div> */}
+			<div className="table__body">
+
+					 <TableItem/>
+
+			</div>
 		</div>
 	);
 };

@@ -13,6 +13,7 @@ import './scss/app.scss';
 function App() {
 	const { isAuth } = useSelector((state: RootState) => state.auth);
 	const dispatch = useDispatch();
+	
 
 	useEffect(() => {
 		dispatch(autoLogin());

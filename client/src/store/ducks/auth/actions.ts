@@ -1,4 +1,4 @@
-import { api, getAuthData } from '../../../api/httpApi';
+import { api, getAuthData } from '../../../services/api';
 import { AuthData } from '../../../types';
 import {
 	AUTH_START,
@@ -12,7 +12,6 @@ export function register(email: string, password: string) {
 		dispatch(authStart());
 		try {
 			const { data } = await api.register(email, password);
-
 			dispatch(authMessage(data.message));
 		} catch (e) {
 			console.log(e);
@@ -26,7 +25,6 @@ export function login(email: string, password: string) {
 		dispatch(authStart());
 		try {
 			const { data } = await api.login(email, password);
-
 			document.cookie = `jwtToken=${data.token}; max-age=360000`;
 			document.cookie = `userId=${data.userId}; max-age=360000`;
 			dispatch(authSuccess(data));
@@ -61,11 +59,11 @@ export function logout() {
 	};
 }
 
-type authStartType = {
+type AuthStartType = {
 	type: typeof AUTH_START;
 };
 
-type authSuccessType = {
+type AuthSuccessType = {
 	type: typeof AUTH_SUCCESS;
 	authData: AuthDataType;
 };
@@ -81,13 +79,13 @@ type AuthDataType = {
 	userId?: string;
 };
 
-export function authStart(): authStartType {
+export function authStart(): AuthStartType {
 	return {
 		type: AUTH_START,
 	};
 }
 
-export function authSuccess(authData: AuthDataType): authSuccessType {
+export function authSuccess(authData: AuthDataType): AuthSuccessType {
 	return {
 		type: AUTH_SUCCESS,
 		authData,

@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { createControl, FormControl, validate } from '../utils/form';
+import { createControl, FormControl, validate } from '../services/validations/form';
 import { Button, Input, Toast } from '../components/UI';
 import Error from '../components/Error';
 import { useDispatch, useSelector } from 'react-redux';

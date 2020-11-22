@@ -1,5 +1,5 @@
 {
-	"port": 8007,
+	"port": 8008,
   "mongoUri": "mongodb+srv://dmitrii:qazwsxqw@cluster0.6yisw.mongodb.net/lifeapp?retryWrites=true&w=majority",
   "jwtSecret": "lifeup key"
 }
