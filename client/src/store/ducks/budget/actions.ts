@@ -6,7 +6,7 @@ import {
 	FETCH_SUCCESS,
 	GET_TRANSACTIONS,
 	ADD_CATEGORY,
-} from './actionTypes';
+} from './contracts/actionTypes';
 import { TransactionInterface } from './types';
 
 const formArr = (cat: any, trans: any): any => {
@@ -28,8 +28,9 @@ const formArr = (cat: any, trans: any): any => {
 	});
 
 	console.log('arr', arr);
-	return arr;
+	return arr; 
 };
+
 
 export function getTransactionsData() {
 	return async (dispatch: any) => {

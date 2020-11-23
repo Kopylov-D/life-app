@@ -9,6 +9,8 @@ import { Input } from '../UI';
 
 interface Props {
 	// key: string
+	name: string
+	amount: number
 }
 
 const TableItem: React.FC<Props> = (props) => {
@@ -56,7 +58,7 @@ const TableItem: React.FC<Props> = (props) => {
 
 	return (
 		<div className="table__item">
-			<div>Продукты</div>
+			<div>{props.name}</div>
 			<Input
 				value={control.value}
 				class={control.class}
@@ -67,7 +69,7 @@ const TableItem: React.FC<Props> = (props) => {
 				onChange={onChangeHandler}
 				onKeyPress={onKeyEnter}
 			/>
-			<div>2000 руб.</div>
+			<div>{props.amount} руб.</div>
 			<div className="options">
 				<div>date</div>
 				<div>gear</div>
