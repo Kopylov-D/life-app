@@ -10,6 +10,7 @@
 	&__item {
 		display: grid;
 		gap: 10px;
+		align-items: center;
 
 		grid-template-columns:
 			minmax(50px, 2fr)
@@ -27,16 +28,24 @@
 	}
 	&__item {
 		border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
-
 		padding: 5px 15px;
+	}
 
-		& .input {
-			// margin-right: 30px;
-		}
+	&__input input {
+		height: 20px;
+		margin: 0;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 2px;
+		font-size: 14px;
 	}
 
 	& .options {
 		display: flex;
 		justify-content: flex-end;
+
+		& img {
+			margin-right: 5px;
+			cursor: pointer;
+		}
 	}
 }

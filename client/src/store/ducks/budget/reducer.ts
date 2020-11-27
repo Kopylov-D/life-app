@@ -3,6 +3,7 @@ import {
 	FETCH_SUCCESS,
 	GET_TRANSACTIONS,
 	ADD_CATEGORY,
+	UPDATE_CATEGORIES,
 } from './contracts/actionTypes';
 import { BudgetState } from './contracts/state';
 
@@ -42,13 +43,14 @@ const initialState: BudgetState = {
 		},
 	],
 	categories: [
-		{ _id: '1', color: 'red', type: 'expense', name: 'Одежда' },
-		{ _id: '2', color: 'green', type: 'expense', name: 'Разное' },
-		{ _id: '3', color: 'orange', type: 'expense', name: 'Счета' },
+		{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 200 },
+		{ _id: '2', color: 'green', type: 'expense', name: 'Разное', amount: 20 },
+		{ _id: '3', color: 'orange', type: 'expense', name: 'Счета', amount: 333 },
 	],
 	isLoading: true,
 	error: { name: '', message: '' },
 };
+
 const initial: BudgetState = {
 	items: [
 		{
@@ -85,38 +87,13 @@ const initial: BudgetState = {
 		},
 	],
 	categories: [
-		{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 0 },
-		{ _id: '2', color: 'green', type: 'expense', name: 'Разное' },
-		{ _id: '3', color: 'orange', type: 'expense', name: 'Счета' },
+		{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 20 },
+		{ _id: '2', color: 'green', type: 'expense', name: 'Разное', amount: 20 },
+		{ _id: '3', color: 'orange', type: 'expense', name: 'Счета', amount: 200 },
 	],
 	isLoading: true,
 	error: { name: '', message: '' },
 };
-
-const formArr = (cat: any, trans: any): any => {
-	let arr = [];
-
-	arr = cat.map((category: any) => {
-		console.log('category', category)
-		trans.forEach((transaction: any) => {
-			if (transaction.category === category._id) {
-				if (category.amount) {
-					category.amount += transaction.amount;
-					// console.log(cItem.amount)
-				} else {
-					category.amount = transaction.amount;
-					// console.log(cItem.amount)
-				}
-			}
-		});
-		return category;
-	});
-
-	console.log('arr', arr);
-	// return arr; 
-};
-
-formArr(initial.categories, initial.items);
 
 export const budgetReducer = (
 	state = initialState,
@@ -142,6 +119,11 @@ export const budgetReducer = (
 			return {
 				...state,
 				items: action.payload,
+			};
+		case UPDATE_CATEGORIES:
+			return {
+				...state,
+				categories: action.payload,
 			};
 		default:
 			return state;

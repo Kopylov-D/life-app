@@ -1,30 +1,34 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { api } from '../../services/api';
-import { getTransactionsData } from '../../store/ducks/budget/actions';
-import { TransactionInterface } from '../../store/ducks/budget/types';
-import { RootState } from '../../store/rootReducer';
-import { createControl, FormControl, validate } from '../../services/validations/form';
+
+import {
+	createControl,
+	FormControl,
+	validate,
+} from '../../services/validations/form';
 import { Input } from '../UI';
+import gear from '../../assets/img/gear.svg';
+import trash from '../../assets/img/trash.svg';
+import calendar from '../../assets/img/calendar.svg';
 
 interface Props {
 	// key: string
-	name: string
-	amount: number
+	_id: string;
+	name: string;
+	amount: number;
+	onOpenTransactions(): void;
+	onChangeCategory(e: React.MouseEvent, id: string): void;
+	onDeleteCategory(): void;
 }
 
-const TableItem: React.FC<Props> = (props) => {
+const TableItem: React.FC<Props> = props => {
 	const [control, setControl] = useState<FormControl>(
 		createControl(
-			{ type: 'text', class: 'table-input' },
+			{ type: 'text', class: 'table' },
 			{ required: true, isNumber: true, notNull: true }
 		)
 	);
 
-	const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false)
-
-
-
+	const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -41,7 +45,7 @@ const TableItem: React.FC<Props> = (props) => {
 	const onKeyEnter = async (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && control.valid) {
 			const amount = +control.value;
-			const categoryName = 'ПРОДУКТЫ'
+			const categoryName = 'ПРОДУКТЫ';
 			setControl({ ...control, value: '' });
 			// try {
 			// 	const response = await api.addTransaction(amount, categoryName);
@@ -49,8 +53,6 @@ const TableItem: React.FC<Props> = (props) => {
 			// } catch (e) {
 			// 	console.log('Ошибка транзакции', e);
 			// }
-
-
 		} else if (event.key === 'Enter' && !control.valid) {
 			setControl({ ...control, value: '' });
 		}
@@ -71,9 +73,13 @@ const TableItem: React.FC<Props> = (props) => {
 			/>
 			<div>{props.amount} руб.</div>
 			<div className="options">
-				<div>date</div>
-				<div>gear</div>
-				<div>del</div>
+				<img src={calendar} alt="" onClick={props.onOpenTransactions}></img>
+				<img
+					src={gear}
+					alt=""
+					onClick={e => props.onChangeCategory(e, props._id)}
+				></img>
+				<img src={trash} alt="" onClick={props.onDeleteCategory}></img>
 			</div>
 		</div>
 	);

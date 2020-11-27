@@ -1,26 +1,33 @@
-import classes from '*.module.css';
+import e from 'express';
 import React, { Fragment, useRef, useEffect, useState } from 'react';
 import { Input, Button } from '.';
-import { createControl, FormControl, validate } from '../../services/validations/form';
+import {
+	createControl,
+	FormControl,
+	validate,
+} from '../../services/validations/form';
+
+export interface Params {
+	value: string
+	color?: string
+}
 
 interface Props {
 	title: string;
-	onSubmit(): void;
-	onClick(): void;
+	// onSubmit(e: React.SyntheticEvent): void;
+	onClick(params: Params): void;
 	onCloseClick(): void;
 }
 
-const Modal: React.FC<Props> = props => {
+const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	const [control, setControl] = useState<FormControl>(
-		createControl({ type: 'text' }, { required: true })
+		createControl({ type: 'text', class: 'modal' }, { required: true })
 	);
 	// const refInput = useRef(null);
 
 	// useEffect(() => {
 	//   refInput.current.focus();
-  // }, []);
-  
-
+	// }, []);
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -34,14 +41,28 @@ const Modal: React.FC<Props> = props => {
 		event.target.value = '';
 	};
 
+	const onOkClickHandler = () => {
+		onClick({value: control.value});
+	};
+
+	const onEnterKeyPress = (e: React.KeyboardEvent) => {
+		if (e.key === 'Enter') {
+			onOkClickHandler()
+		}
+	}
+
+	const onSubmit = (e: React.SyntheticEvent) => {
+		e.preventDefault()
+	}
+
 	return (
 		<Fragment>
 			<div className="modal">
-				<label>{props.title}</label>
+				<label>{title}</label>
 				<form
-				// onSubmit={event => {
-				//   onSubmitModal(event);
-				// }}
+					onSubmit={e => {
+						onSubmit(e);
+					}}
 				>
 					<Input
 						// refInput={refInput}
@@ -52,13 +73,14 @@ const Modal: React.FC<Props> = props => {
 						touched={control.touched}
 						shouldValidate={!!control.validation}
 						onChange={onChangeHandler}
+						onKeyPress={e => onEnterKeyPress(e)}
 					/>
 				</form>
-				<div className={classes.buttons}>
-					<Button type="primary" disabled={false} onClick={props.onClick}>
+				<div className="modal__buttons">
+					<Button type="primary" disabled={false} onClick={onOkClickHandler}>
 						Ок
 					</Button>
-					<Button type="secondary" disabled={false} onClick={props.onCloseClick}>
+					<Button type="secondary" disabled={false} onClick={onCloseClick}>
 						Отмена
 					</Button>
 				</div>

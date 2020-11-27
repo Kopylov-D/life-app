@@ -4,7 +4,7 @@ export const selectCategories = (state: RootState) => {
 	const cat = state.budget.categories;
 	const tr = state.budget.items;
 
-	console.log('cat', cat)
+	// console.log('cat', cat)
 
 
 	let arr = [];

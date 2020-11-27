@@ -12,6 +12,6 @@ export interface CategoryInterface {
 	_id: string;
 	type: 'expense' | 'income',
 	name: string;
-	amount?: number;
+	amount: number;
 	color: string;
 }

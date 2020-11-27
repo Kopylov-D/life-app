@@ -13,6 +13,9 @@ const CategorySchema: Schema = new Schema<CategoryType>({
 	color: {
 		type: String,
 	},
+	transactions: {
+		type: Array
+	}
 });
 
 export type CategoryModelDocumentInterface = CategoryType & Document;

@@ -17,7 +17,7 @@ const Input: React.FC<Props> = props => {
 
 	return (
 		<div
-			className={classnames('input', `${props.class}`, {
+			className={classnames(`${props.class}__input`, 'input', {
 				'--invalid': isInvalid(props),
 			})}
 		>

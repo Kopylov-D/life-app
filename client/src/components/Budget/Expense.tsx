@@ -14,6 +14,11 @@ const Expense: React.FC<Props> = (props) => {
 
 	const dispatch = useDispatch()
 
+	const testHandler = async () => {
+		const res = await api.getUser()
+		console.log(res)
+	}
+
 	const addCategoryHandler = async () => {
 		// dispatch(addCategory('Новая категория', 'red'))
 
@@ -29,6 +34,7 @@ const Expense: React.FC<Props> = (props) => {
 		<div className="budget__expense">
 			<Table/>
 			<Button type='primary' disabled={false} onClick={addCategoryHandler}/>
+			<Button type='secondary' disabled={false} onClick={testHandler}/>
 		</div>
 	);
 };

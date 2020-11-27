@@ -9,7 +9,12 @@ class BudgetController {
 		try {
 			const existing = await User.findById(req.user);
 			if (existing) {
-				return res.json({ user: existing });
+				// return res.json({ user: existing });
+			
+				// const categories = await Category.find({}).populate('user')
+				// const categories = await Category.find({})
+				const transactions = await Transaction.find({}).populate('category')
+				return res.json({data: transactions})
 			}
 		} catch (e) {
 			res
@@ -21,12 +26,14 @@ class BudgetController {
 	async addTransaction(req: RequestWithUser, res: Response) {
 		try {
 			const { amount, categoryName } = req.body;
-			const category = await Category.findOne({ name: categoryName });
+			const category = await Category.findOne({ name: categoryName })
 			const transaction = new Transaction({
 				amount,
 				user: req.user,
 				category: category!._id,
 			});
+
+			await Category.updateOne({ name: categoryName }, {$push: {transactions: transaction}})
 
 			await transaction.save();
 			let transactions = await Transaction.find({
@@ -59,12 +66,19 @@ class BudgetController {
 
 	async getTransactions(req: RequestWithUser, res: Response) {
 		try {
-			// const transaction = new Transaction()
 			const transactions = await Transaction.find({ user: req.user });
 			const categories = await Category.find({ user: req.user });
 			res.json({ transactions, categories });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
+		}
+	}
+
+	async getCategories(req: RequestWithUser, res: Response) {
+		try {
+
+		} catch (e) {
+
 		}
 	}
 }

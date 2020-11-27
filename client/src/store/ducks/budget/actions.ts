@@ -6,8 +6,9 @@ import {
 	FETCH_SUCCESS,
 	GET_TRANSACTIONS,
 	ADD_CATEGORY,
+	UPDATE_CATEGORIES,
 } from './contracts/actionTypes';
-import { TransactionInterface } from './types';
+import { CategoryInterface, TransactionInterface } from './types';
 
 const formArr = (cat: any, trans: any): any => {
 	let arr = [];
@@ -28,9 +29,8 @@ const formArr = (cat: any, trans: any): any => {
 	});
 
 	console.log('arr', arr);
-	return arr; 
+	return arr;
 };
-
 
 export function getTransactionsData() {
 	return async (dispatch: any) => {
@@ -61,15 +61,35 @@ export function addTransaction(amount: number, categoryName: string) {
 export function addCategory(name: string, color: string) {
 	return async (dispatch: any) => {
 		try {
-			const response = await api.addCategory(name, color)
-			const category = response.data.category
-			console.log(category)
-		// dispatch({ type: ADD_CATEGORY });
-
+			const response = await api.addCategory(name, color);
+			const category = response.data.category;
+			console.log(category);
+			// dispatch({ type: ADD_CATEGORY });
 		} catch (e) {
-			console.log(e)
-			
+			console.log(e);
 		}
+	};
+}
+
+export function changeCategory(_id: string, name: string, color: string) {
+	return (dispatch: any, getState: any) => {
+		const state = getState();
+		const categories = state.budget.categories;
+
+		// console.log(state)
+		const newCAt = categories.map((item: any) => {
+			if (item._id === _id) {
+				if (name) {
+					item.name = name;
+				}
+				if (color) {
+					item.color = color;
+				}
+			}
+			return item;
+		});
+
+		dispatch(updateCategories(newCAt));
 	};
 }
 
@@ -113,6 +133,18 @@ type GetTransactions = {
 function getTransactions(payload: TransactionInterface[]): GetTransactions {
 	return {
 		type: GET_TRANSACTIONS,
+		payload,
+	};
+}
+
+type UpdateCategories = {
+	type: typeof UPDATE_CATEGORIES;
+	payload: CategoryInterface[];
+};
+
+function updateCategories(payload: CategoryInterface[]): UpdateCategories {
+	return {
+		type: UPDATE_CATEGORIES,
 		payload,
 	};
 }

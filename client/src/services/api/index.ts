@@ -61,7 +61,10 @@ export const api = {
 
 	addTransaction: (amount: number, categoryName: string): any =>
 		axios
-			.post('/api/budget/transactions/add-transaction', { amount, categoryName })
+			.post('/api/budget/transactions/add-transaction', {
+				amount,
+				categoryName,
+			})
 			// .then(res => res)
 			.catch(e => {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
@@ -72,13 +75,19 @@ export const api = {
 			throw new Error(e.response.data.message || 'Что-то пошло не так');
 		}),
 
+	getCategories: () =>
+		axios.get('/api/budget/transactions/get').catch(e => {
+			throw new Error(e.response.data.message || 'Что-то пошло не так');
+		}),
+
 	addCategory: (name: string, color: string): any =>
 		axios.post('/api/budget/transactions/add-category', {
-			name, color
-		})
-		// .catch(e => {
-		// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
-		// }),
+			name,
+			color,
+		}),
+	// .catch(e => {
+	// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
+	// }),
 };
 
 // export const {jwtToken} = getAuthData()
