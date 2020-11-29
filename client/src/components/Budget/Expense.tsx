@@ -1,40 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { api } from '../../services/api';
-import { addCategory } from '../../store/ducks/budget/actions';
+import {
+	addCategory,
+	getBudgetData,
+} from '../../store/ducks/budget/actions';
 import { TransactionInterface } from '../../store/ducks/budget/types';
 import { Button } from '../UI';
+import Select from '../UI/Select';
 import Table from './Table';
 
 type Props = {
-	data: TransactionInterface[]
-}
+	// data: TransactionInterface[];
+};
 
-const Expense: React.FC<Props> = (props) => {
+const Expense: React.FC<Props> = props => {
+	useEffect(() => {
+		dispatch(getBudgetData());
+	}, []);
 
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
 	const testHandler = async () => {
-		const res = await api.getUser()
-		console.log(res)
-	}
+		const res = await api.getUser();
+		console.log(res);
+	};
 
 	const addCategoryHandler = async () => {
-		// dispatch(addCategory('Новая категория', 'red'))
-
-		const res = await api.addCategory('Новая категория', 'red')
-
-		console.log(res)
-
-
-
-	}
+		dispatch(addCategory())
+	};
 
 	return (
 		<div className="budget__expense">
-			<Table/>
-			<Button type='primary' disabled={false} onClick={addCategoryHandler}/>
-			<Button type='secondary' disabled={false} onClick={testHandler}/>
+			<div className="budget__panel">
+				<Select/>
+			</div>
+			<Table />
+			<Button type="primary" disabled={false} onClick={addCategoryHandler}>+</Button>
+			<Button type="secondary" disabled={false} onClick={testHandler} />
 		</div>
 	);
 };

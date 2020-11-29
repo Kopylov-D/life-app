@@ -7,39 +7,19 @@ import {
 	GET_TRANSACTIONS,
 	ADD_CATEGORY,
 	UPDATE_CATEGORIES,
+	SET_CATEGORIES,
+	DELETE_CATEGORY,
+	ADD_TRANSACTION,
 } from './contracts/actionTypes';
 import { CategoryInterface, TransactionInterface } from './types';
 
-const formArr = (cat: any, trans: any): any => {
-	let arr = [];
-
-	arr = cat.map((cItem: any) => {
-		trans.forEach((t: any) => {
-			if (t.category === cItem._id) {
-				if (cItem.amount) {
-					cItem.amount += t.amount;
-					// console.log(cItem.amount)
-				} else {
-					cItem.amount = t.amount;
-					// console.log(cItem.amount)
-				}
-			}
-		});
-		return cItem;
-	});
-
-	console.log('arr', arr);
-	return arr;
-};
-
-export function getTransactionsData() {
+export function getBudgetData() {
 	return async (dispatch: any) => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await api.getTransactions();
-			const transactions = data.transactions;
+			const { data } = await api.fetchBudgetData('2019', '10');
 			dispatch(fetchSuccess());
-			dispatch(getTransactions(transactions));
+			dispatch(setTransactions(data));
 		} catch (e) {
 			console.log(e);
 			// dispatch(authError(e.message));
@@ -48,23 +28,23 @@ export function getTransactionsData() {
 	};
 }
 
-export function addTransaction(amount: number, categoryName: string) {
+export function addTransaction(id: string, amount: number, date: Date | Date[] | undefined = undefined) {
 	return async (dispatch: any) => {
 		try {
-			await api.addTransaction(amount, categoryName);
+			const { data } = await api.addTransaction(id, amount, date);
+			console.log(date)
+			dispatch({ type: ADD_TRANSACTION, payload: data.transaction });
 		} catch (e) {
 			console.log(e);
 		}
 	};
 }
 
-export function addCategory(name: string, color: string) {
+export function addCategory() {
 	return async (dispatch: any) => {
 		try {
-			const response = await api.addCategory(name, color);
-			const category = response.data.category;
-			console.log(category);
-			// dispatch({ type: ADD_CATEGORY });
+			const { data } = await api.addCategory();
+			dispatch({ type: ADD_CATEGORY, payload: data.category });
 		} catch (e) {
 			console.log(e);
 		}
@@ -72,7 +52,7 @@ export function addCategory(name: string, color: string) {
 }
 
 export function changeCategory(_id: string, name: string, color: string) {
-	return (dispatch: any, getState: any) => {
+	return async (dispatch: any, getState: any) => {
 		const state = getState();
 		const categories = state.budget.categories;
 
@@ -89,7 +69,17 @@ export function changeCategory(_id: string, name: string, color: string) {
 			return item;
 		});
 
+		const res = await api.changeCategory(_id, name, color);
+		console.log(res);
+
 		dispatch(updateCategories(newCAt));
+	};
+}
+
+export function deleteCategory(id: string) {
+	return async (dispatch: any) => {
+		await api.deleteCategory(id);
+		dispatch(delCategory(id));
 	};
 }
 
@@ -127,10 +117,15 @@ function fetchError(error: Error): FetchErrorType {
 
 type GetTransactions = {
 	type: typeof GET_TRANSACTIONS;
-	payload: TransactionInterface[];
+	payload: BudgetData;
 };
 
-function getTransactions(payload: TransactionInterface[]): GetTransactions {
+type BudgetData = {
+	transactions: TransactionInterface[];
+	categories: CategoryInterface[];
+};
+
+function setTransactions(payload: BudgetData): GetTransactions {
 	return {
 		type: GET_TRANSACTIONS,
 		payload,
@@ -148,6 +143,30 @@ function updateCategories(payload: CategoryInterface[]): UpdateCategories {
 		payload,
 	};
 }
+
+type DeleteCategory = {
+	type: typeof DELETE_CATEGORY;
+	payload: string;
+};
+
+function delCategory(payload: string): DeleteCategory {
+	return {
+		type: DELETE_CATEGORY,
+		payload,
+	};
+}
+
+type AddCategory = {
+	type: typeof ADD_CATEGORY;
+	payload: CategoryInterface;
+};
+
+// function Category(payload: string): DeleteCategory {
+// 	return {
+// 		type: DELETE_CATEGORY,
+// 		payload,
+// 	};
+// }
 
 // type AddCategory = {
 // 	type: typeof GET_TRANSACTIONS;

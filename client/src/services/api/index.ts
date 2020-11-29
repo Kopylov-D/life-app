@@ -51,43 +51,40 @@ export const api = {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
-	getUser: () =>
-		axios
-			.get('/api/budget/info')
-			.then(res => res.data.user)
-			.catch(e => {
-				throw new Error(e.response.data.message || 'Что-то пошло не так');
-			}),
+	getUser: () => axios.get('/api/budget/info'),
+	// .then(res => res.data.user)
+	// .catch(e => {
+	// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
+	// }),
 
-	addTransaction: (amount: number, categoryName: string): any =>
+	addTransaction: (id: string, amount: number, date: Date | Date[] | undefined): any =>
 		axios
-			.post('/api/budget/transactions/add-transaction', {
+			.post('/api/budget/transactions', {
+				id,
 				amount,
-				categoryName,
+				date
 			})
 			// .then(res => res)
 			.catch(e => {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
-	getTransactions: () =>
-		axios.get('/api/budget/transactions/get').catch(e => {
-			throw new Error(e.response.data.message || 'Что-то пошло не так');
-		}),
+	fetchBudgetData: (year: string, month: string) => axios.get(`/api/budget?year=${year}&month=${month}`),
 
 	getCategories: () =>
 		axios.get('/api/budget/transactions/get').catch(e => {
 			throw new Error(e.response.data.message || 'Что-то пошло не так');
 		}),
 
-	addCategory: (name: string, color: string): any =>
-		axios.post('/api/budget/transactions/add-category', {
+	addCategory: (): any => axios.post('/api/budget/categories'),
+
+	changeCategory: (_id: string, name: string, color: string) =>
+		axios.patch(`api/budget/categories/${_id}`, {
 			name,
 			color,
 		}),
-	// .catch(e => {
-	// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
-	// }),
+
+	deleteCategory: (_id: string): any => axios.delete(`api/budget/categories/${_id}`),
 };
 
 // export const {jwtToken} = getAuthData()

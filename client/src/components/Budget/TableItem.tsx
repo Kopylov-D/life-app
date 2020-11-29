@@ -15,9 +15,11 @@ interface Props {
 	_id: string;
 	name: string;
 	amount: number;
+	onToggleCalendar(): void;
 	onOpenTransactions(): void;
 	onChangeCategory(e: React.MouseEvent, id: string): void;
-	onDeleteCategory(): void;
+	onDeleteCategory(id: string): void;
+	onAddTransaction(id: string, amount: number): void;
 }
 
 const TableItem: React.FC<Props> = props => {
@@ -42,11 +44,13 @@ const TableItem: React.FC<Props> = props => {
 		event.target.value = '';
 	};
 
-	const onKeyEnter = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+	const onKeyEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter' && control.valid) {
 			const amount = +control.value;
-			const categoryName = 'ПРОДУКТЫ';
 			setControl({ ...control, value: '' });
+			props.onAddTransaction(props._id, amount);
+			// props.onToggleCalendar(false)
+
 			// try {
 			// 	const response = await api.addTransaction(amount, categoryName);
 			// 	console.log(response);
@@ -57,6 +61,10 @@ const TableItem: React.FC<Props> = props => {
 			setControl({ ...control, value: '' });
 		}
 	};
+
+	// const onToggleCalendarHandler = (toggle: boolean) => {
+	// 	props.onToggleCalendar(toggle)
+	// }
 
 	return (
 		<div className="table__item">
@@ -70,16 +78,21 @@ const TableItem: React.FC<Props> = props => {
 				shouldValidate={!!control.validation}
 				onChange={onChangeHandler}
 				onKeyPress={onKeyEnter}
+				// onClick={props.onToggleCalendar}
 			/>
 			<div>{props.amount} руб.</div>
 			<div className="options">
-				<img src={calendar} alt="" onClick={props.onOpenTransactions}></img>
+				<img src={calendar} alt="" onClick={props.onToggleCalendar}></img>
 				<img
 					src={gear}
 					alt=""
 					onClick={e => props.onChangeCategory(e, props._id)}
 				></img>
-				<img src={trash} alt="" onClick={props.onDeleteCategory}></img>
+				<img
+					src={trash}
+					alt=""
+					onClick={() => props.onDeleteCategory(props._id)}
+				></img>
 			</div>
 		</div>
 	);

@@ -18,6 +18,7 @@ const uri: string = config.get('mongoUri');
 async function start() {
 	try {
 		await mongoose.connect(uri, {
+			useFindAndModify: false,
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
 			useCreateIndex: true,

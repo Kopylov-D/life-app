@@ -10,11 +10,11 @@ class BudgetController {
 			const existing = await User.findById(req.user);
 			if (existing) {
 				// return res.json({ user: existing });
-			
+
 				// const categories = await Category.find({}).populate('user')
 				// const categories = await Category.find({})
-				const transactions = await Transaction.find({}).populate('category')
-				return res.json({data: transactions})
+				const transactions = await Transaction.find({}).populate('category');
+				return res.json({ data: transactions });
 			}
 		} catch (e) {
 			res
@@ -25,23 +25,16 @@ class BudgetController {
 
 	async addTransaction(req: RequestWithUser, res: Response) {
 		try {
-			const { amount, categoryName } = req.body;
-			const category = await Category.findOne({ name: categoryName })
+			const { amount, id, date } = req.body;
 			const transaction = new Transaction({
 				amount,
 				user: req.user,
-				category: category!._id,
+				category: id,
+				date
 			});
-
-			await Category.updateOne({ name: categoryName }, {$push: {transactions: transaction}})
 
 			await transaction.save();
-			let transactions = await Transaction.find({
-				user: req.user,
-				category: undefined,
-			});
-
-			res.status(201).json({ message: 'Транзакция добавлена', transactions });
+			res.status(201).json({ message: 'Транзакция добавлена', transaction });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -49,24 +42,37 @@ class BudgetController {
 
 	async addCategory(req: RequestWithUser, res: Response) {
 		try {
-			const {name, color} = req.body
-			console.log(req.body)
-			const category = new Category({
-				name,
-				color
-			})
-			await category.save()
-			console.log(category)
-			res.status(201).json({message: 'Категория создана'})
+			const category = new Category({ user: req.user });
+			await category.save();
+			res.status(201).json({ message: 'Категория создана', category });
 		} catch (e) {
-			console.log(e)
+			console.log(e);
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
 	}
 
-	async getTransactions(req: RequestWithUser, res: Response) {
+	async getBudgetData(req: RequestWithUser, res: Response) {
 		try {
-			const transactions = await Transaction.find({ user: req.user });
+			let { year, month } = req.query;
+			console.log(year, month);
+			// const formDate = (year: string, month: string) => {
+			// 	return `${year}-${month}-00T00:00:00.000Z`;
+			// };
+			const formDate = (year: any, month: any, to = 0) => {
+				if (year && month) {
+					return new Date(+year, +month + to, 1);
+				} else {
+					return new Date();
+				}
+			};
+			const transactions = await Transaction.find({
+				user: req.user,
+				date: {
+					$gte: formDate(year, month),
+					$lt: formDate(year, month, 1)
+				},
+			});
+			console.log(transactions);
 			const categories = await Category.find({ user: req.user });
 			res.json({ transactions, categories });
 		} catch (e) {
@@ -76,9 +82,31 @@ class BudgetController {
 
 	async getCategories(req: RequestWithUser, res: Response) {
 		try {
+		} catch (e) {}
+	}
 
-		} catch (e) {
+	async changeCategory(req: RequestWithUser, res: Response) {
+		try {
+			const { name, color } = req.body;
+			const { id } = req.params;
+			await Category.findByIdAndUpdate(id, { name, color });
+			res.json({ message: 'update' });
+		} catch (error) {
+			res.status(500).json({ message: 'Что-то пошло не так' });
+		}
+	}
 
+	async deleteCategory(req: RequestWithUser, res: Response) {
+		try {
+			const { id } = req.params;
+			console.log(req.params);
+			// if (!Types.ObjectId.isValid(_id)) return res.status(404).send(`No post with id: ${_id}`);
+			await Transaction.deleteMany({ category: id });
+			await Category.findByIdAndRemove(id);
+			res.json({ message: 'Категория удалена' });
+		} catch (error) {
+			console.log(error);
+			res.status(500).json(error);
 		}
 	}
 }

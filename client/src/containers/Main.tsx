@@ -7,14 +7,15 @@ import Menu from '../components/Menu';
 import { BudgetPage } from '../pages';
 
 const Main = (props: any) => {
-	const routes = () => (
-		<Switch>
-			<Route path="/budget/expense" component={BudgetPage} />
-			<Route path="/budget/income" component={BudgetPage} />
+	// const routes = () => (
+	// 	<Switch>
+	// 		<Route path="/budget/expense" component={BudgetPage} />
+	// 		<Route path="/budget/income" component={BudgetPage} />
 
-			<Redirect to="/budget"/>
-		</Switch>
-	);
+	// 		<Redirect to="/"/>
+	// 	</Switch>
+	// );
+
 	return (
 		<div className="main">
 			<Header />

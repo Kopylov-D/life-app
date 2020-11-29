@@ -5,8 +5,10 @@ import BudgetController from '../controllers/BudgetController';
 const router = Router();
 
 router.get('/info', auth, BudgetController.getInfo);
-router.post('/transactions/add-transaction', auth, BudgetController.addTransaction);
-router.get('/transactions/get', auth, BudgetController.getTransactions)
-router.post('/transactions/add-category', auth, BudgetController.addCategory)
+router.get('/', auth, BudgetController.getBudgetData)
+router.post('/transactions', auth, BudgetController.addTransaction);
+router.post('/categories', auth, BudgetController.addCategory)
+router.patch('/categories/:id', auth, BudgetController.changeCategory)
+router.delete('/categories/:id', auth, BudgetController.deleteCategory)
 
 export default router;

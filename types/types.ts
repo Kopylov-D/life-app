@@ -12,14 +12,18 @@ export interface RequestWithUser extends Request {
 
 export type TransactionType = {
 	_id?: string;
-	userId: string;
+	user: string;
 	amount: number;
 	date: Date;
-	category: CategoryType;
+	// category: CategoryType;
+	category: string
 };
 
 export type CategoryType = {
 	_id: string;
 	name: string;
+	user: string
 	color: string;
+	amount: number
+
 };

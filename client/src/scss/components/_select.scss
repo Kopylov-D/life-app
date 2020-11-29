@@ -1,0 +1,53 @@
+// @import
+
+.select {
+  min-width: 100px;
+  width: 100px;
+  position: relative;
+  z-index: 100;
+  user-select: none;
+  box-sizing: border-box;
+
+  
+	&__backdrop {
+    position: fixed;
+    // display: none;
+    z-index: -1;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: transparent;
+	}
+
+	&__input {
+		height: 20px;
+		border: 1px solid #ededf0;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 1rem;
+		cursor: pointer;
+	}
+
+	&__dropdown {
+    position: absolute;
+    background: $c-white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    top: 20px;
+    left: 0;
+    right: 0;
+    max-height: 400px;
+    // overflow-y: auto;
+    box-shadow: 2px 3px 5px rgba(0,0,0,.3);
+
+    & li {
+      list-style-type: none;
+      cursor: pointer;
+
+      margin-left: 1rem;
+    }
+	}
+}
