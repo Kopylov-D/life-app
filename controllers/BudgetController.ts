@@ -30,7 +30,7 @@ class BudgetController {
 				amount,
 				user: req.user,
 				category: id,
-				date
+				date,
 			});
 
 			await transaction.save();
@@ -69,12 +69,15 @@ class BudgetController {
 				user: req.user,
 				date: {
 					$gte: formDate(year, month),
-					$lt: formDate(year, month, 1)
+					$lt: formDate(year, month, 1),
 				},
 			});
-			console.log(transactions);
 			const categories = await Category.find({ user: req.user });
-			res.json({ transactions, categories });
+			const firstTr = await Transaction.find().sort({date: 1}).limit(1);
+			console.log(firstTr[0].date)
+			const date = firstTr[0].date
+			const startFrom = Date.parse(date.toISOString())
+			res.json({ transactions, categories, firstTr });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}

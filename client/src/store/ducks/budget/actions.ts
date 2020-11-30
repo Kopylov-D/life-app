@@ -1,4 +1,3 @@
-import c from 'config';
 import { api } from '../../../services/api';
 import {
 	FETCH_ERROR,
@@ -7,17 +6,17 @@ import {
 	GET_TRANSACTIONS,
 	ADD_CATEGORY,
 	UPDATE_CATEGORIES,
-	SET_CATEGORIES,
+	// SET_CATEGORIES,
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
 } from './contracts/actionTypes';
 import { CategoryInterface, TransactionInterface } from './types';
 
-export function getBudgetData() {
+export function getBudgetData(year: number, month: number) {
 	return async (dispatch: any) => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await api.fetchBudgetData('2019', '10');
+			const { data } = await api.fetchBudgetData(year, month);
 			dispatch(fetchSuccess());
 			dispatch(setTransactions(data));
 		} catch (e) {

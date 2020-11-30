@@ -28,7 +28,7 @@ const BudgetPage = () => {
 
 
 	return (
-		<div className="budget-page">
+		<div className="budget">
 			<Expense />
 		</div>
 	);

@@ -23,34 +23,6 @@ body {
 	margin: $gap;
 }
 
-// .logo {
-// 	display: flex;
-// 	margin: 0 auto;
-// 	position: relative;
-
-// 	& div {
-// 		height: 30px;
-// 		background: rgba(0, 0, 0, 0.2);
-// 		margin-right: 5px;
-// 	}
-
-// 	& div:nth-child(1) {
-// 		width: 30px;
-// 		border-radius: 50%;
-// 	}
-// 	& div:nth-child(2) {
-// 		width: 15px;
-// 	}
-// 	& div:nth-child(3) {
-// 		width: 30px;
-// 		border-radius: 50%;
-// 	}
-// 	& div:nth-child(4) {
-// 		width: 15px;
-// 		transform: skew(-25deg);
-// 	}
-// }
-
 .auth {
 	position: absolute;
 	// top: 50%;
@@ -155,7 +127,6 @@ body {
 		}
 	}
 
-	
 	&__component-frame {
 		background: $c-white;
 		border-radius: $block-radius;
@@ -165,9 +136,7 @@ body {
 	& .resizer {
 		background: $c-secondary;
 		width: 10px;
-
 	}
-
 
 	&__footer {
 		position: absolute;
@@ -182,17 +151,20 @@ body {
 }
 
 .calendar {
-	position: absolute;
-	left: 50%;
-	top: 30%;
-	transform: translate(-50%,-50%);
-  z-index: 100;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 
-	// display: flex;
-	// justify-content: center;
-	// align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
 	& .react-calendar {
 		border-radius: 4px;
+		z-index: 50;
 	}
 }
+
+

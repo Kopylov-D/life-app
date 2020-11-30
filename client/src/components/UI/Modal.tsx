@@ -86,6 +86,7 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 				</div>
 			</div>
 			{/* <Backdrop onClick={onCancelModalClick} onKeyPress={onKeyPress} /> */}
+			{/* <div className="backdrop backdrop__modal"></div> */}
 		</Fragment>
 	);
 	// return (

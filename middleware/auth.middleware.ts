@@ -30,7 +30,6 @@ export const auth = (
 		) as DataStoredInToken;
 
 		req.user = decoded.userId;
-		console.log(req.params)
 		next();
 	} catch (e) {
 		res.status(401).json({ message: 'Нет авторизации' });

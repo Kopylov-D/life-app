@@ -2,7 +2,7 @@
 @import './components/all';
 @import './variables';
 
-.budget-page {
+.budget {
   padding: 10px;
   &__expense {
     
@@ -10,6 +10,11 @@
 
   &__income {
 
+  }
+
+  &__panel {
+    display: flex;
+    margin: 1rem;
   }
 
 }

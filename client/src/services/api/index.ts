@@ -69,7 +69,7 @@ export const api = {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
-	fetchBudgetData: (year: string, month: string) => axios.get(`/api/budget?year=${year}&month=${month}`),
+	fetchBudgetData: (year: number, month: number) => axios.get(`/api/budget?year=${year}&month=${month}`),
 
 	getCategories: () =>
 		axios.get('/api/budget/transactions/get').catch(e => {

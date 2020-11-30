@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Calendar, { OnChangeDateCallback } from 'react-calendar';
+import Calendar from 'react-calendar';
 import {
 	addTransaction,
 	changeCategory,
@@ -115,7 +115,7 @@ const Table = () => {
 				<Fragment>
 					<div className="calendar">
 						<div
-							className="select__backdrop"
+							className="backdrop backdrop__modal"
 							onClick={onToggleCalendarHandler}
 						></div>
 						<Calendar value={currentDate} onChange={onChangeDateHandler} />

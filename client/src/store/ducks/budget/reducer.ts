@@ -52,6 +52,10 @@ const initialState: BudgetState = {
 	],
 	isLoading: true,
 	error: { name: '', message: '' },
+	date: {
+		year: 2020,
+		month: 10
+	}
 };
 
 export const budgetReducer = (
