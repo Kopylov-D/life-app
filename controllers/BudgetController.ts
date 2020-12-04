@@ -71,13 +71,14 @@ class BudgetController {
 					$gte: formDate(year, month),
 					$lt: formDate(year, month, 1),
 				},
-			});
+			}).populate('category', 'name');
 			const categories = await Category.find({ user: req.user });
 			const firstTr = await Transaction.find().sort({date: 1}).limit(1);
 			console.log(firstTr[0].date)
 			const date = firstTr[0].date
 			const startFrom = Date.parse(date.toISOString())
 			res.json({ transactions, categories, firstTr });
+			console.log(transactions)
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}

@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../../rootReducer';
+import { TransactionInterface } from './types';
 
-export const selectTransactions = (state: RootState) => state.budget.transactions;
+export const selectTransactions = (state: RootState): TransactionInterface[] =>
+	state.budget.transactions;
 export const selectCategories = (state: RootState) => state.budget.categories;
 
-export const categoriesWithAmount = createSelector(
+export const selectCategoriesWithAmount = createSelector(
 	selectTransactions,
 	selectCategories,
 	(transactions, categories) => {

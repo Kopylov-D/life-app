@@ -1,16 +1,19 @@
 export interface TransactionInterface {
 	_id: string;
-	category: string;
+	category: {
+		_id: string,
+		name: string
+	};
 	user: string,
 	amount: number;
 	date: string;
 	// date: Date;
-	__v: number;
+	__v?: number;
 }
 
 export interface CategoryInterface {
 	_id: string;
-	type: 'expense' | 'income',
+	// type: 'expense' | 'income',
 	name: string;
 	amount: number;
 	color: string;

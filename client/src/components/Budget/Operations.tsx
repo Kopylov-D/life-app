@@ -1,11 +1,17 @@
-import React from 'react'
+import React from 'react';
+import { TransactionInterface } from '../../store/ducks/budget/types';
+import OperationsTable from './OperationsTable';
 
-const Operations = () => {
-  return (
-    <div>
-      
-    </div>
-  )
+interface Props {
+	transactions: TransactionInterface[];
 }
 
-export default Operations
+const Operations: React.FC<Props> = ({ transactions }) => {
+	return (
+		<div>
+			<OperationsTable transactions={transactions} />
+		</div>
+	);
+};
+
+export default Operations;

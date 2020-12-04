@@ -6,30 +6,28 @@ import {
 	changeCategory,
 	deleteCategory,
 } from '../../store/ducks/budget/actions';
-import {
-
-	selectCategoriesWithAmount,
-	selectTransactions,
-} from '../../store/ducks/budget/selectors';
+import { selectTransactions } from '../../store/ducks/budget/selectors';
 import Modal, { Params } from '../UI/Modal';
 import TableItem from './TableItem';
-import { CategoryInterface } from '../../store/ducks/budget/types';
+import { CategoryInterface, TransactionInterface } from '../../store/ducks/budget/types';
+import NewTransaction from './NewTransaction';
+import Transaction from './Transaction';
 
 type Props = {
 	// transactions: TransactionInterface[]
-	// categories: CategoryInterface[]
+	transactions: TransactionInterface[];
 };
 
-const Table = () => {
+const OperationsTable: React.FC<Props> = ({transactions}) => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
 	const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
-	const data = useSelector(selectCategoriesWithAmount);
-
 
 	const dispatch = useDispatch();
 
+	// console.log('categories', categories)
+	// console.log('data', data)
 
 	const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
 		e.preventDefault();
@@ -76,24 +74,33 @@ const Table = () => {
 	return (
 		<div className="table">
 			<header className="table__header">
+				<div>Дата</div>
+				<div>Значение</div>
 				<div>Категория</div>
-				<div>Ввод</div>
-				<div>Сумма</div>
 			</header>
 
 			<div className="table__body">
-				{data.map(item => {
+				<NewTransaction
+					// onChangeCategory={onChangeCategoryHandler}
+					// onDeleteCategory={onDeleteCategoryHandler}
+					// onOpenTransactions={onOpenTransactionsHandler}
+					onToggleCalendar={onToggleCalendarHandler}
+					onAddTransaction={onAddTransactionHandler}
+				/>
+
+				{transactions.map(item => {
 					return (
-						<TableItem
+						<Transaction
 							key={item._id}
-							_id={item._id}
-							name={item.name}
+              _id={item._id}
+              // __v={item.__v}
+              category={item.category}
+              user={item.user}
+              date={item.date}
+							// name={item.name}
 							amount={item.amount}
-							onChangeCategory={onChangeCategoryHandler}
-							onDeleteCategory={onDeleteCategoryHandler}
-							onOpenTransactions={onOpenTransactionsHandler}
-							onToggleCalendar={onToggleCalendarHandler}
-							onAddTransaction={onAddTransactionHandler}
+							onChangeTransaction={onChangeCategoryHandler}
+							onDeleteTransaction={onDeleteCategoryHandler}
 						/>
 					);
 				})}
@@ -123,4 +130,4 @@ const Table = () => {
 	);
 };
 
-export default Table;
+export default OperationsTable;
