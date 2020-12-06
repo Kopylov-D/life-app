@@ -20,9 +20,10 @@ const Transaction: React.FC<Props> = ({
 }) => {
 	return (
 		<div className="table__item">
+			
 			<div>{date}</div>
 			<div>{amount} руб.</div>
-			<div>{category}</div>
+			<div>{category.name}</div>
 
 			<div className="options">
 				<img src={gear} alt="" onClick={e => onChangeTransaction(e, _id)}></img>

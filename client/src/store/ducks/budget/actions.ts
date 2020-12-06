@@ -9,6 +9,7 @@ import {
 	// SET_CATEGORIES,
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
+	DELETE_TRANSACTION
 } from './contracts/actionTypes';
 import { CategoryInterface, TransactionInterface } from './types';
 
@@ -33,6 +34,17 @@ export function addTransaction(id: string, amount: number, date: Date | Date[] |
 			const { data } = await api.addTransaction(id, amount, date);
 			console.log(date)
 			dispatch({ type: ADD_TRANSACTION, payload: data.transaction });
+		} catch (e) {
+			console.log(e);
+		}
+	};
+}
+
+export function deleteTransaction(id: string) {
+	return async (dispatch: any) => {
+		try {
+			await api.deleteTransaction(id);
+			dispatch({ type: DELETE_TRANSACTION, payload: id });
 		} catch (e) {
 			console.log(e);
 		}
@@ -151,6 +163,18 @@ type DeleteCategory = {
 function delCategory(payload: string): DeleteCategory {
 	return {
 		type: DELETE_CATEGORY,
+		payload,
+	};
+}
+
+type DeleteTransaction = {
+	type: typeof DELETE_TRANSACTION;
+	payload: string;
+};
+
+function delTransaction(payload: string): DeleteTransaction {
+	return {
+		type: DELETE_TRANSACTION,
 		payload,
 	};
 }

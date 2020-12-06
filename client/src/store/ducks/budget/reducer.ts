@@ -6,7 +6,8 @@ import {
 	UPDATE_CATEGORIES,
 	SET_CATEGORIES,
 	DELETE_CATEGORY,
-	ADD_TRANSACTION
+	ADD_TRANSACTION,
+	DELETE_TRANSACTION
 } from './contracts/actionTypes';
 import { BudgetState } from './contracts/state';
 
@@ -88,6 +89,11 @@ export const budgetReducer = (
 			return {
 				...state,
 				transactions: [...state.transactions, action.payload]
+			};
+		case DELETE_TRANSACTION:
+			return {
+				...state,
+				transactions: state.transactions.filter(item => item._id !== action.payload)
 			};
 		case UPDATE_CATEGORIES:
 			return {

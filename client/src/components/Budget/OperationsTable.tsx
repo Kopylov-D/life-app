@@ -16,9 +16,10 @@ import Transaction from './Transaction';
 type Props = {
 	// transactions: TransactionInterface[]
 	transactions: TransactionInterface[];
+	onDeleteHandler(id: string): void
 };
 
-const OperationsTable: React.FC<Props> = ({transactions}) => {
+const OperationsTable: React.FC<Props> = ({transactions, onDeleteHandler}) => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
@@ -26,24 +27,13 @@ const OperationsTable: React.FC<Props> = ({transactions}) => {
 
 	const dispatch = useDispatch();
 
-	// console.log('categories', categories)
-	// console.log('data', data)
-
 	const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
 		e.preventDefault();
 		setCurrentCategoryId(id);
 		setModalIsOpen(true);
 	};
-	const onDeleteCategoryHandler = async (id: string) => {
-		dispatch(deleteCategory(id));
-		// const res = await api.deleteCategory(id)
-		// console.log(res)
-	};
-	const onOpenTransactionsHandler = () => {};
 
 	const onOkModalClick = (params: Params): void => {
-		console.log('Modal okClick', params, currentCategoryId);
-
 		dispatch(changeCategory(currentCategoryId, params.value, 'red'));
 		setModalIsOpen(false);
 	};
@@ -100,7 +90,7 @@ const OperationsTable: React.FC<Props> = ({transactions}) => {
 							// name={item.name}
 							amount={item.amount}
 							onChangeTransaction={onChangeCategoryHandler}
-							onDeleteTransaction={onDeleteCategoryHandler}
+							onDeleteTransaction={onDeleteHandler}
 						/>
 					);
 				})}

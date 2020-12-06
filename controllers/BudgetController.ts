@@ -40,6 +40,16 @@ class BudgetController {
 		}
 	}
 
+	async deleteTransaction(req: RequestWithUser, res: Response) {
+		try {
+			const { id } = req.params;
+			await Transaction.findByIdAndDelete(id);
+			res.status(201).json({ message: 'Транзакция удалена' });
+		} catch (e) {
+			res.status(500).json({ message: 'Что-то пошло не так' });
+		}
+	}
+
 	async addCategory(req: RequestWithUser, res: Response) {
 		try {
 			const category = new Category({ user: req.user });
@@ -73,12 +83,11 @@ class BudgetController {
 				},
 			}).populate('category', 'name');
 			const categories = await Category.find({ user: req.user });
-			const firstTr = await Transaction.find().sort({date: 1}).limit(1);
-			console.log(firstTr[0].date)
-			const date = firstTr[0].date
-			const startFrom = Date.parse(date.toISOString())
+			const firstTr = await Transaction.find().sort({ date: 1 }).limit(1);
+			console.log(firstTr[0].date);
+			const date = firstTr[0].date;
+			const startFrom = Date.parse(date.toISOString());
 			res.json({ transactions, categories, firstTr });
-			console.log(transactions)
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}

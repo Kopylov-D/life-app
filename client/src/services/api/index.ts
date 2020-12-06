@@ -69,6 +69,8 @@ export const api = {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
+	deleteTransaction: (_id: string): any => axios.delete(`api/budget/transactions/${_id}`),
+
 	fetchBudgetData: (year: number, month: number) => axios.get(`/api/budget?year=${year}&month=${month}`),
 
 	getCategories: () =>
