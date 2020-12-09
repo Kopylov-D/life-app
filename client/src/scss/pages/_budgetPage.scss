@@ -3,19 +3,25 @@
 @import './variables';
 
 .budget {
-  padding: 10px;
-  overflow: auto;
-  &__expense {
-    
-  }
+	padding: 10px;
+	overflow: auto;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+	// display: flex;
+	left: $menu-width + $gap;
+	background: $c-white;
+  border-radius: $block-radius;
+  
+	&__expense {
+	}
 
-  &__income {
+	&__income {
+	}
 
-  }
-
-  &__panel {
-    display: flex;
-    margin: 1rem;
-  }
-
+	&__panel {
+		display: flex;
+		margin: 1rem;
+	}
 }

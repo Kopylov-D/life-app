@@ -57,12 +57,13 @@ export const api = {
 	// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
 	// }),
 
-	addTransaction: (id: string, amount: number, date: Date | Date[] | undefined): any =>
+	addTransaction: (id: string, amount: number, date: Date | Date[] | undefined, isExpense: boolean): any =>
 		axios
 			.post('/api/budget/transactions', {
 				id,
 				amount,
-				date
+				date,
+				isExpense
 			})
 			// .then(res => res)
 			.catch(e => {
@@ -71,7 +72,7 @@ export const api = {
 
 	deleteTransaction: (_id: string): any => axios.delete(`api/budget/transactions/${_id}`),
 
-	fetchBudgetData: (year: number, month: number) => axios.get(`/api/budget?year=${year}&month=${month}`),
+	fetchBudgetData: (year: string, month: string) => axios.get(`/api/budget?year=${year}&month=${month}`),
 
 	getCategories: () =>
 		axios.get('/api/budget/transactions/get').catch(e => {

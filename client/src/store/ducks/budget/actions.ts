@@ -13,7 +13,7 @@ import {
 } from './contracts/actionTypes';
 import { CategoryInterface, TransactionInterface } from './types';
 
-export function getBudgetData(year: number, month: number) {
+export function getBudgetData(year: string, month: string) {
 	return async (dispatch: any) => {
 		dispatch(fetchStart());
 		try {
@@ -28,11 +28,14 @@ export function getBudgetData(year: number, month: number) {
 	};
 }
 
-export function addTransaction(id: string, amount: number, date: Date | Date[] | undefined = undefined) {
+export function addTransaction(id: string, amount: number, date: Date | Date[] | undefined = undefined, isExpense: boolean) {
 	return async (dispatch: any) => {
 		try {
-			const { data } = await api.addTransaction(id, amount, date);
-			console.log(date)
+			const { data } = await api.addTransaction(id, amount, date, isExpense);
+			const transaction = {
+				...data.transaction,
+			}
+			console.log(transaction)
 			dispatch({ type: ADD_TRANSACTION, payload: data.transaction });
 		} catch (e) {
 			console.log(e);

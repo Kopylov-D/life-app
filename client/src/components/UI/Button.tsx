@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-
 import Loader from './Loader'
 
 type Props = {

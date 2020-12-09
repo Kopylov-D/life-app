@@ -1,31 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Expense from '../components/Budget/Expense';
 import Operations from '../components/Budget/Operations';
+import Menu from '../components/Menu';
 import { getBudgetData } from '../store/ducks/budget/actions';
-import { selectCategoriesWithAmount, selectTransactions } from '../store/ducks/budget/selectors';
-import { TransactionInterface } from '../store/ducks/budget/types';
-import { RootState } from '../store/rootReducer';
 
-const BudgetPage = () => {
-	const dispatch = useDispatch();
-	const transactions = useSelector(selectTransactions)
-	// const categoriesWithAmount = useSelector(selectCategoriesWithAmount);
+const menuItems = [
+	{ to: '/budget/expense', title: 'Расходы', component: Expense },
+	{ to: '/budget/income', title: 'Доходы', component: Expense },
+	{ to: '/budget/operation', title: 'Операции', component: Operations },
+];
 
-	const [month, setMonth] = useState<number>(new Date().getMonth());
-	const [year, setYear] = useState<number>(new Date().getFullYear());
+const BudgetPage: React.FC<any> = props => {
+	// const dispatch = useDispatch();
+	// const [month, setMonth] = useState<number>(new Date().getMonth());
+	// const [year, setYear] = useState<number>(new Date().getFullYear());
 
-	useEffect(() => {
-		dispatch(getBudgetData(2020, 10));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [year, month]);
+	// useEffect(() => {
+	// dispatch(getBudgetData('2020', '11'));
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [year, month]);
+
+	let routes = (
+		<Switch>
+			{menuItems.map(item => (
+				<Route path={item.to} component={item.component} />
+			))}
+		</Switch>
+	);
 
 	return (
-		<div className="budget">
-			{/* <Expense /> */}
-			<Operations transactions={transactions}/>
-		</div>
+		<BrowserRouter>
+			<Menu items={menuItems} />
+			<div className="budget">{routes}</div>
+		</BrowserRouter>
 	);
 };
 

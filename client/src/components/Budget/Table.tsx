@@ -2,46 +2,33 @@ import React, { Fragment, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Calendar from 'react-calendar';
 import {
-	addTransaction,
 	changeCategory,
 	deleteCategory,
 } from '../../store/ducks/budget/actions';
-import {
-
-	selectCategoriesWithAmount,
-	selectTransactions,
-} from '../../store/ducks/budget/selectors';
 import Modal, { Params } from '../UI/Modal';
 import TableItem from './TableItem';
 import { CategoryInterface } from '../../store/ducks/budget/types';
 
 type Props = {
 	// transactions: TransactionInterface[]
-	// categories: CategoryInterface[]
+	categories: CategoryInterface[];
 };
 
-const Table = () => {
+const Table: React.FC<Props> = ({ categories }) => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
-	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
 	const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
-	const data = useSelector(selectCategoriesWithAmount);
-
 
 	const dispatch = useDispatch();
-
 
 	const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
 		e.preventDefault();
 		setCurrentCategoryId(id);
 		setModalIsOpen(true);
 	};
+	
 	const onDeleteCategoryHandler = async (id: string) => {
 		dispatch(deleteCategory(id));
-		// const res = await api.deleteCategory(id)
-		// console.log(res)
 	};
-	const onOpenTransactionsHandler = () => {};
 
 	const onOkModalClick = (params: Params): void => {
 		console.log('Modal okClick', params, currentCategoryId);
@@ -53,19 +40,6 @@ const Table = () => {
 	const onCancelModalClick = () => {
 		setModalIsOpen(false);
 		console.log('Cancel modal');
-	};
-
-	const onAddTransactionHandler = (id: string, amount: number) => {
-		dispatch(addTransaction(id, amount, currentDate));
-	};
-
-	const onChangeDateHandler = (value: Date | Date[]) => {
-		setCurrentDate(value);
-		onToggleCalendarHandler();
-	};
-
-	const onToggleCalendarHandler = () => {
-		setCalendarIsOpen(isOpen => !isOpen);
 	};
 
 	// const onSubmitModalHandler = (e: React.SyntheticEvent) => {
@@ -82,7 +56,7 @@ const Table = () => {
 			</header>
 
 			<div className="table__body">
-				{data.map(item => {
+				{categories.map(item => {
 					return (
 						<TableItem
 							key={item._id}
@@ -91,9 +65,6 @@ const Table = () => {
 							amount={item.amount}
 							onChangeCategory={onChangeCategoryHandler}
 							onDeleteCategory={onDeleteCategoryHandler}
-							onOpenTransactions={onOpenTransactionsHandler}
-							onToggleCalendar={onToggleCalendarHandler}
-							onAddTransaction={onAddTransactionHandler}
 						/>
 					);
 				})}
@@ -106,18 +77,6 @@ const Table = () => {
 					onCloseClick={onCancelModalClick}
 					// onSubmit={onSubmitModalHandler}
 				/>
-			)}
-
-			{calendarIsOpen && (
-				<Fragment>
-					<div className="calendar">
-						<div
-							className="backdrop backdrop__modal"
-							onClick={onToggleCalendarHandler}
-						></div>
-						<Calendar value={currentDate} onChange={onChangeDateHandler} />
-					</div>
-				</Fragment>
 			)}
 		</div>
 	);

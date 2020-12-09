@@ -25,15 +25,17 @@ class BudgetController {
 
 	async addTransaction(req: RequestWithUser, res: Response) {
 		try {
-			const { amount, id, date } = req.body;
+			const { amount, id, date, isExpense } = req.body;
 			const transaction = new Transaction({
 				amount,
 				user: req.user,
 				category: id,
 				date,
+				isExpense
 			});
 
 			await transaction.save();
+			// const newTran = await transaction.populate('category', 'name');
 			res.status(201).json({ message: 'Транзакция добавлена', transaction });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
@@ -102,6 +104,7 @@ class BudgetController {
 		try {
 			const { name, color } = req.body;
 			const { id } = req.params;
+			console.log(id)
 			await Category.findByIdAndUpdate(id, { name, color });
 			res.json({ message: 'update' });
 		} catch (error) {

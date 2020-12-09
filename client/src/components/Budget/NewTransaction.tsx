@@ -1,22 +1,26 @@
-import React, { useState } from 'react';
-
+import React, { Fragment, useEffect, useState } from 'react';
 import {
 	createControl,
 	FormControl,
 	validate,
 } from '../../services/validations/form';
 import { Input } from '../UI';
-import gear from '../../assets/img/gear.svg';
-import trash from '../../assets/img/trash.svg';
 import calendar from '../../assets/img/calendar.svg';
-import { TransactionInterface } from '../../store/ducks/budget/types';
+import Select from '../UI/Select';
+import { CategoryInterface } from '../../store/ducks/budget/types';
+import classNames from 'classnames';
+import Calendar from 'react-calendar';
+import { formatDate } from '../../services/utils/dateUtils';
 
 interface Props {
-	onToggleCalendar(): void;
-	// onOpenTransactions(): void;
-	// onChangeTransaction(e: React.MouseEvent, id: string): void;
-	// onDeleteTransaction(id: string): void;
-	onAddTransaction(id: string, amount: number): void;
+	categories: CategoryInterface[];
+	currentCategory: CategoryInterface;
+	onAddTransaction(
+		id: string,
+		amount: number,
+		isExpense: boolean,
+		currentDate: Date | Date[]
+	): void;
 }
 
 const NewTransaction: React.FC<Props> = props => {
@@ -27,9 +31,14 @@ const NewTransaction: React.FC<Props> = props => {
 		)
 	);
 
-	const _id = '1'
+	const [categoryId, setCategoryId] = useState<string>('');
+	const [isExpense, setIsExpense] = useState<boolean>(true);
+	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
+	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
 
-	const [modalIsOpen, setmodalIsOpen] = useState<boolean>(false);
+	useEffect(() => {
+		setCategoryId(props.currentCategory._id);
+	}, []);
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -47,15 +56,28 @@ const NewTransaction: React.FC<Props> = props => {
 		if (event.key === 'Enter' && control.valid) {
 			const amount = +control.value;
 			setControl({ ...control, value: '' });
-			props.onAddTransaction(_id, amount);
+			props.onAddTransaction(categoryId, amount, isExpense, currentDate);
 		} else if (event.key === 'Enter' && !control.valid) {
 			setControl({ ...control, value: '' });
 		}
 	};
 
+	const setCurrentCategoryId = (id: string) => {
+		setCategoryId(id);
+	};
+
+	const onChangeDateHandler = (value: Date | Date[]) => {
+		setCurrentDate(value);
+		onToggleCalendarHandler();
+	};
+
+	const onToggleCalendarHandler = () => {
+		setCalendarIsOpen(isOpen => !isOpen);
+	};
+
 	return (
 		<div className="table__item">
-			<div>22/01/2222</div>
+			<div>{formatDate(currentDate)}</div>
 			<Input
 				value={control.value}
 				class={control.class}
@@ -65,12 +87,37 @@ const NewTransaction: React.FC<Props> = props => {
 				shouldValidate={!!control.validation}
 				onChange={onChangeHandler}
 				onKeyPress={onKeyEnter}
-				// onClick={props.onToggleCalendar}
 			/>
-			<div>Продукты</div>
+			<Select
+				categories={props.categories}
+				items={props.categories}
+				type="category"
+				initialId={categoryId}
+				onItemClick={setCurrentCategoryId}
+			/>
 			<div className="options">
-				<img src={calendar} alt="" onClick={props.onToggleCalendar}></img>
+				<div
+					className={classNames('expense-toggle', { active: isExpense })}
+					onClick={() => setIsExpense(true)}
+				></div>
+				<div
+					className={classNames('expense-toggle', { active: !isExpense })}
+					onClick={() => setIsExpense(false)}
+				></div>
+				<img src={calendar} alt="" onClick={onToggleCalendarHandler}></img>
 			</div>
+
+			{calendarIsOpen && (
+				<Fragment>
+					<div className="calendar">
+						<div
+							className="backdrop backdrop__modal"
+							onClick={onToggleCalendarHandler}
+						></div>
+						<Calendar value={currentDate} onChange={onChangeDateHandler} />
+					</div>
+				</Fragment>
+			)}
 		</div>
 	);
 };

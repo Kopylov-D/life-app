@@ -16,12 +16,14 @@ const Main = (props: any) => {
 	// 	</Switch>
 	// );
 
+	console.log(props.children)
+
 	return (
 		<div className="main">
 			<Header />
 			<main className="main__content">
-				<Menu />
-				<div className="main__component-frame">{props.children}</div>
+				{/* <Menu /> */}
+				{props.children}
 			</main>
 			<Footer />
 		</div>

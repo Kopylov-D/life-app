@@ -1,5 +1,4 @@
 import { Document, model, Schema, Types } from 'mongoose';
-import { type } from 'os';
 import { CategoryType } from '../../types/types';
 
 const CategorySchema: Schema = new Schema<CategoryType>({
@@ -10,26 +9,23 @@ const CategorySchema: Schema = new Schema<CategoryType>({
 	name: {
 		required: true,
 		type: String,
-		default: 'Новая категория'
+		default: 'Новая категория',
 	},
 	user: {
 		required: true,
 		ref: 'User',
-		type: Types.ObjectId
+		type: Types.ObjectId,
 	},
 	color: {
 		required: true,
 		type: String,
-		default: 'blue'
+		default: 'blue',
 	},
 	amount: {
 		required: true,
 		type: Number,
-		default: 0
-	}
-	// transactions: {
-	// 	type: Array
-	// }
+		default: 0,
+	},
 });
 
 export type CategoryModelDocumentInterface = CategoryType & Document;

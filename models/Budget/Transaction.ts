@@ -22,6 +22,10 @@ const TransactionSchema: Schema = new Schema<TransactionType>({
 		type: Date,
 		default: Date.now,
 	},
+	isExpense: {
+		required: true,
+		type: Boolean
+	}
 });
 
 export type TransactionModelDocumentInterface = TransactionType & Document;

@@ -1,12 +1,13 @@
 export interface TransactionInterface {
 	_id: string;
 	category: {
-		_id: string,
-		name: string
+		_id: string;
+		name: string;
 	};
-	user: string,
+	user: string;
 	amount: number;
 	date: string;
+	isExpense: boolean;
 	// date: Date;
 	__v?: number;
 }
@@ -17,4 +18,6 @@ export interface CategoryInterface {
 	name: string;
 	amount: number;
 	color: string;
+
+	isSelected?: boolean;
 }

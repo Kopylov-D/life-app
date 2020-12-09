@@ -7,4 +7,5 @@ export type BudgetState = {
 	isLoading: boolean;
 	error: Error;
 	date: CurrentDate
+	currentCategory: CategoryInterface
 };

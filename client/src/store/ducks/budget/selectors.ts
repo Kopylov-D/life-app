@@ -6,6 +6,13 @@ export const selectTransactions = (state: RootState): TransactionInterface[] =>
 	state.budget.transactions;
 export const selectCategories = (state: RootState) => state.budget.categories;
 
+export const selectCategoriesForDropdown = (state: RootState) => {
+	const categories = selectCategories(state)
+	return categories.map(item => item.isSelected = false)
+}
+
+export const selectCurrentCategory = ((state: RootState) => state.budget.currentCategory)
+
 export const selectCategoriesWithAmount = createSelector(
 	selectTransactions,
 	selectCategories,
@@ -13,7 +20,7 @@ export const selectCategoriesWithAmount = createSelector(
 		return categories.map((category: any) => {
 			category.amount = 0;
 			transactions.forEach((transaction: any) => {
-				if (transaction.category === category._id) {
+				if (transaction.category._id === category._id) {
 					category.amount += transaction.amount;
 				}
 			});
@@ -21,25 +28,6 @@ export const selectCategoriesWithAmount = createSelector(
 		});
 	}
 );
-
-// export const selectCategories = (state: RootState) => {
-// 	const categories = [...state.budget.categories];
-// 	const transactions = [...state.budget.items];
-
-// 	let arr = [];
-
-// 	arr = categories.map((category: any) => {
-// 		category.amount = 0;
-// 		transactions.forEach((transaction: any) => {
-// 			if (transaction.category === category._id) {
-// 				category.amount += transaction.amount;
-// 			}
-// 		});
-// 		return category;
-// 	});
-
-// 	return arr;
-// };
 
 export const selectExample = (state: RootState) => {
 	return state.budget.categories;

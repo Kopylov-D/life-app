@@ -7,7 +7,7 @@ import {
 	SET_CATEGORIES,
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
-	DELETE_TRANSACTION
+	DELETE_TRANSACTION,
 } from './contracts/actionTypes';
 import { BudgetState } from './contracts/state';
 
@@ -47,16 +47,17 @@ const initialState: BudgetState = {
 		// },
 	],
 	categories: [
-	// 	{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 200 },
-	// 	{ _id: '2', color: 'green', type: 'expense', name: 'Разное', amount: 20 },
-	// 	{ _id: '3', color: 'orange', type: 'expense', name: 'Счета', amount: 333 },
+		// 	{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 200 },
+		// 	{ _id: '2', color: 'green', type: 'expense', name: 'Разное', amount: 20 },
+		// 	{ _id: '3', color: 'orange', type: 'expense', name: 'Счета', amount: 333 },
 	],
 	isLoading: true,
 	error: { name: '', message: '' },
 	date: {
 		year: 2020,
-		month: 10
-	}
+		month: 10,
+	},
+	currentCategory: { _id: '', color: '', name: '', amount: 0 },
 };
 
 export const budgetReducer = (
@@ -78,22 +79,38 @@ export const budgetReducer = (
 			return {
 				...state,
 				transactions: action.payload.transactions,
-				categories: action.payload.categories
+				categories: action.payload.categories,
 			};
 		case ADD_CATEGORY:
 			return {
 				...state,
-				categories: [...state.categories, action.payload]
+				categories: [...state.categories, action.payload],
 			};
 		case ADD_TRANSACTION:
+			const transaction = action.payload;
+			const category = state.categories.find(
+				item => item._id === transaction.category
+			);
+
+			const newTransaction = {
+				...transaction,
+				category: {
+					_id: category!._id,
+					name: category!.name,
+				},
+			};
+
 			return {
 				...state,
-				transactions: [...state.transactions, action.payload]
+				transactions: [...state.transactions, newTransaction],
+				currentCategory: category!,
 			};
 		case DELETE_TRANSACTION:
 			return {
 				...state,
-				transactions: state.transactions.filter(item => item._id !== action.payload)
+				transactions: state.transactions.filter(
+					item => item._id !== action.payload
+				),
 			};
 		case UPDATE_CATEGORIES:
 			return {
@@ -108,7 +125,9 @@ export const budgetReducer = (
 		case DELETE_CATEGORY:
 			return {
 				...state,
-				categories: state.categories.filter(item => item._id !== action.payload),
+				categories: state.categories.filter(
+					item => item._id !== action.payload
+				),
 			};
 		default:
 			return state;

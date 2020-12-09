@@ -1,7 +1,9 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import gear from '../../assets/img/gear.svg';
 import trash from '../../assets/img/trash.svg';
+import { formatDate } from '../../services/utils/dateUtils';
 import { TransactionInterface } from '../../store/ducks/budget/types';
 
 interface Props extends TransactionInterface {
@@ -12,16 +14,15 @@ interface Props extends TransactionInterface {
 const Transaction: React.FC<Props> = ({
 	_id,
 	date,
-	user,
 	amount,
 	category,
+	isExpense,
 	onChangeTransaction,
 	onDeleteTransaction,
 }) => {
 	return (
-		<div className="table__item">
-			
-			<div>{date}</div>
+		<div className={classNames('table__item', {'expense': isExpense}, {'income': !isExpense})}>
+			<div>{formatDate(date)}</div>
 			<div>{amount} руб.</div>
 			<div>{category.name}</div>
 

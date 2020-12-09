@@ -2,16 +2,24 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import Expense from './Budget/Expense';
 
-// type Props = {
-// 	width: number;
-// };
+type Item = {
+	to: string;
+	title: string;
+	icon?: string;
+	component?: any;
+};
 
-const Menu: React.FC<any> = props => {
+type Props = {
+	items: Item[];
+};
+
+const Menu: React.FC<Props> = ({ items }) => {
 	return (
 		<div className="main__menu">
 			<ul>
-				<NavLink to='/budget/expense'>Расходы</NavLink>
-				<NavLink to='/budget/income'>Доходы</NavLink>
+				{items.map(item => (
+					<NavLink to={item.to}>{item.title}</NavLink>
+				))}
 			</ul>
 		</div>
 	);

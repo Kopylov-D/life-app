@@ -26,19 +26,19 @@ function App() {
 			<Route path="/todos" component={TodosPage} />
 			<Route path="/statistic" component={StatisticPage} />
 
-			<Redirect to="/" />
+			<Redirect to="/budget" />
 		</Switch>
 	);
 
-	if (!isAuth) {
-		routes = (
-			<Switch>
-				<Route path="/budget" component={Auth} exact />
+	// if (!isAuth) {
+	// 	routes = (
+	// 		<Switch>
+	// 			<Route path="/auth" component={Auth} exact />
 
-				<Redirect to="/" />
-			</Switch>
-		);
-	}
+	// 			<Redirect to="/" />
+	// 		</Switch>
+	// 	);
+	// }
 
 	return (
 		<div className="app">
