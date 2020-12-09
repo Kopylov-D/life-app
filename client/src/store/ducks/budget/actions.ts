@@ -46,7 +46,9 @@ export function addTransaction(id: string, amount: number, date: Date | Date[] |
 export function deleteTransaction(id: string) {
 	return async (dispatch: any) => {
 		try {
+			console.log(id)
 			await api.deleteTransaction(id);
+			console.log('id', id)
 			dispatch({ type: DELETE_TRANSACTION, payload: id });
 		} catch (e) {
 			console.log(e);

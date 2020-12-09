@@ -6,10 +6,10 @@ export const selectTransactions = (state: RootState): TransactionInterface[] =>
 	state.budget.transactions;
 export const selectCategories = (state: RootState) => state.budget.categories;
 
-export const selectCategoriesForDropdown = (state: RootState) => {
-	const categories = selectCategories(state)
-	return categories.map(item => item.isSelected = false)
-}
+// export const selectCategoriesForDropdown = (state: RootState) => {
+// 	const categories = selectCategories(state)
+// 	return categories.map(item => item.isSelected = false)
+// }
 
 export const selectCurrentCategory = ((state: RootState) => state.budget.currentCategory)
 

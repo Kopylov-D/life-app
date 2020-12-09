@@ -15,15 +15,15 @@ export type TransactionType = {
 	user: string;
 	amount: number;
 	date: Date;
-	// category: CategoryType;
-	category: string
+	category: string;
+	isExpense: boolean;
 };
 
 export type CategoryType = {
 	_id: string;
 	name: string;
-	user: string
+	user: string;
 	color: string;
-	amount: number
-
+	amount: number;
+	isExpense: boolean;
 };

@@ -26,6 +26,11 @@ const CategorySchema: Schema = new Schema<CategoryType>({
 		type: Number,
 		default: 0,
 	},
+	isExpense: {
+		required: true,
+		type: Boolean,
+		default: true
+	}
 });
 
 export type CategoryModelDocumentInterface = CategoryType & Document;

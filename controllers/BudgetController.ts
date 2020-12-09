@@ -66,7 +66,6 @@ class BudgetController {
 	async getBudgetData(req: RequestWithUser, res: Response) {
 		try {
 			let { year, month } = req.query;
-			console.log(year, month);
 			// const formDate = (year: string, month: string) => {
 			// 	return `${year}-${month}-00T00:00:00.000Z`;
 			// };
@@ -86,9 +85,9 @@ class BudgetController {
 			}).populate('category', 'name');
 			const categories = await Category.find({ user: req.user });
 			const firstTr = await Transaction.find().sort({ date: 1 }).limit(1);
-			console.log(firstTr[0].date);
-			const date = firstTr[0].date;
-			const startFrom = Date.parse(date.toISOString());
+			// console.log(firstTr[0].date);
+			// const date = firstTr[0].date;
+			// const startFrom = Date.parse(date.toISOString());
 			res.json({ transactions, categories, firstTr });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });

@@ -16,7 +16,7 @@ const Operations: React.FC<Props> = () => {
 	const categories = useSelector(selectCategories);
 	const currentCategory = useSelector(selectCurrentCategory);
 
-	const onDeleteTransactionHandler = async (id: string) => {
+	const onDeleteTransactionHandler = (id: string) => {
 		dispatch(deleteTransaction(id));
 	};
 
@@ -26,7 +26,7 @@ const Operations: React.FC<Props> = () => {
 				transactions={transactions}
 				categories={categories}
 				currentCategory={currentCategory}
-				onDeleteHandler={onDeleteTransactionHandler}
+				onDeleteTransaction={onDeleteTransactionHandler}
 			/>
 		</div>
 	);

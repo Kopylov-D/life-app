@@ -57,22 +57,31 @@ export const api = {
 	// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
 	// }),
 
-	addTransaction: (id: string, amount: number, date: Date | Date[] | undefined, isExpense: boolean): any =>
+	addTransaction: (
+		id: string,
+		amount: number,
+		date: Date | Date[] | undefined,
+		isExpense: boolean
+	): any =>
 		axios
 			.post('/api/budget/transactions', {
 				id,
 				amount,
 				date,
-				isExpense
+				isExpense,
 			})
 			// .then(res => res)
 			.catch(e => {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
-	deleteTransaction: (_id: string): any => axios.delete(`api/budget/transactions/${_id}`),
+	deleteTransaction: (_id: string): any =>
+		axios.delete(`api/budget/transactions/${_id}`).catch(e => {
+			throw new Error(e.response.data.message || 'Что-то пошло не так');
+		}),
 
-	fetchBudgetData: (year: string, month: string) => axios.get(`/api/budget?year=${year}&month=${month}`),
+	fetchBudgetData: (year: string, month: string) =>
+		axios.get(`/api/budget?year=${year}&month=${month}`),
 
 	getCategories: () =>
 		axios.get('/api/budget/transactions/get').catch(e => {
@@ -87,7 +96,8 @@ export const api = {
 			color,
 		}),
 
-	deleteCategory: (_id: string): any => axios.delete(`api/budget/categories/${_id}`),
+	deleteCategory: (_id: string): any =>
+		axios.delete(`api/budget/categories/${_id}`),
 };
 
 // export const {jwtToken} = getAuthData()

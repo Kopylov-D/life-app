@@ -18,14 +18,14 @@ type Props = {
 	transactions: TransactionInterface[];
 	categories: CategoryInterface[];
 	currentCategory: CategoryInterface;
-	onDeleteHandler(id: string): void;
+	onDeleteTransaction(id: string): void;
 };
 
 const OperationsTable: React.FC<Props> = ({
 	transactions,
 	categories,
 	currentCategory,
-	onDeleteHandler,
+	onDeleteTransaction,
 }) => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 	const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
@@ -83,7 +83,7 @@ const OperationsTable: React.FC<Props> = ({
 							amount={item.amount}
 							isExpense={item.isExpense}
 							onChangeTransaction={onChangeCategoryHandler}
-							onDeleteTransaction={onDeleteHandler}
+							onDeleteTransaction={onDeleteTransaction}
 						/>
 					);
 				})}

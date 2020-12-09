@@ -1,4 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import classNames from 'classnames';
+import Calendar from 'react-calendar';
 import {
 	createControl,
 	FormControl,
@@ -8,8 +10,6 @@ import { Input } from '../UI';
 import calendar from '../../assets/img/calendar.svg';
 import Select from '../UI/Select';
 import { CategoryInterface } from '../../store/ducks/budget/types';
-import classNames from 'classnames';
-import Calendar from 'react-calendar';
 import { formatDate } from '../../services/utils/dateUtils';
 
 interface Props {

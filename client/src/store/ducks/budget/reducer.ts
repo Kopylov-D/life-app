@@ -57,7 +57,7 @@ const initialState: BudgetState = {
 		year: 2020,
 		month: 10,
 	},
-	currentCategory: { _id: '', color: '', name: '', amount: 0 },
+	currentCategory: { _id: '', color: '', name: '', amount: 0, isExpense: true},
 };
 
 export const budgetReducer = (

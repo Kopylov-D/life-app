@@ -6,18 +6,18 @@ export interface TransactionInterface {
 	};
 	user: string;
 	amount: number;
-	date: string;
+	// date: string;
 	isExpense: boolean;
-	// date: Date;
+	date: Date;
 	__v?: number;
 }
 
 export interface CategoryInterface {
 	_id: string;
-	// type: 'expense' | 'income',
 	name: string;
 	amount: number;
 	color: string;
+	isExpense: boolean;
 
-	isSelected?: boolean;
+	// isSelected?: boolean;
 }

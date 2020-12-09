@@ -25,7 +25,7 @@ const BudgetPage: React.FC<any> = props => {
 	let routes = (
 		<Switch>
 			{menuItems.map(item => (
-				<Route path={item.to} component={item.component} />
+				<Route key={item.to} path={item.to} component={item.component} />
 			))}
 		</Switch>
 	);
