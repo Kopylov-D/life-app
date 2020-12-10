@@ -1,14 +1,13 @@
 import classNames from 'classnames';
 import React from 'react';
-
 import gear from '../../assets/img/gear.svg';
 import trash from '../../assets/img/trash.svg';
 import { formatDate } from '../../services/utils/dateUtils';
 import { TransactionInterface } from '../../store/ducks/budget/types';
 
 interface Props extends TransactionInterface {
-	onChangeTransaction(e: React.MouseEvent, id: string): void;
-	onDeleteTransaction(id: string): void;
+	onChangeTransaction(e: React.MouseEvent, _id: string): void;
+	onDeleteTransaction(_id: string): void;
 }
 
 const Transaction: React.FC<Props> = ({

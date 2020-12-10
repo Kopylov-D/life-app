@@ -52,52 +52,51 @@ export const api = {
 			}),
 
 	getUser: () => axios.get('/api/budget/info'),
-	// .then(res => res.data.user)
-	// .catch(e => {
-	// 	throw new Error(e.response.data.message || 'Что-то пошло не так');
-	// }),
+	test: (id: string) => axios.delete(`/api/budget/test/${id}`),
 
 	addTransaction: (
-		id: string,
+		categoryId: string,
 		amount: number,
-		date: Date | Date[] | undefined,
-		isExpense: boolean
+		isExpense: boolean,
+		date: Date | Date[] | undefined
 	): any =>
 		axios
 			.post('/api/budget/transactions', {
-				id,
+				categoryId,
 				amount,
 				date,
 				isExpense,
 			})
-			// .then(res => res)
 			.catch(e => {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
-
-	deleteTransaction: (_id: string): any =>
-		axios.delete(`api/budget/transactions/${_id}`).catch(e => {
+	//ошибка, когда не поставлен слеш перед началом
+	deleteTransaction: (_id: string) =>
+		axios.delete(`/api/budget/transactions/${_id}`).catch(e => {
 			throw new Error(e.response.data.message || 'Что-то пошло не так');
 		}),
 
 	fetchBudgetData: (year: string, month: string) =>
 		axios.get(`/api/budget?year=${year}&month=${month}`),
 
+	fetchTransactions: () =>
+		axios.get(`/api/budget/transactions`),
+
 	getCategories: () =>
 		axios.get('/api/budget/transactions/get').catch(e => {
 			throw new Error(e.response.data.message || 'Что-то пошло не так');
 		}),
 
-	addCategory: (): any => axios.post('/api/budget/categories'),
+	addCategory: (isExpense: boolean): any => axios.post('/api/budget/categories', {isExpense}),
 
 	changeCategory: (_id: string, name: string, color: string) =>
-		axios.patch(`api/budget/categories/${_id}`, {
+		axios.patch(`/api/budget/categories/${_id}`, {
 			name,
 			color,
 		}),
 
 	deleteCategory: (_id: string): any =>
-		axios.delete(`api/budget/categories/${_id}`),
+		axios.delete(`/api/budget/categories/${_id}`),
 };
 
 // export const {jwtToken} = getAuthData()

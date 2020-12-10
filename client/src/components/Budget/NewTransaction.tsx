@@ -16,14 +16,18 @@ interface Props {
 	categories: CategoryInterface[];
 	currentCategory: CategoryInterface;
 	onAddTransaction(
-		id: string,
+		categoryId: string,
 		amount: number,
 		isExpense: boolean,
 		currentDate: Date | Date[]
 	): void;
 }
 
-const NewTransaction: React.FC<Props> = props => {
+const NewTransaction: React.FC<Props> = ({
+	categories,
+	currentCategory,
+	onAddTransaction,
+}) => {
 	const [control, setControl] = useState<FormControl>(
 		createControl(
 			{ type: 'text', class: 'table' },
@@ -32,13 +36,18 @@ const NewTransaction: React.FC<Props> = props => {
 	);
 
 	const [categoryId, setCategoryId] = useState<string>('');
-	const [isExpense, setIsExpense] = useState<boolean>(true);
+	const [isExpense, setIsExpense] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
+	const [filtredCategories, setfiltredCategories] = useState<
+		CategoryInterface[]
+	>([]);
 
 	useEffect(() => {
-		setCategoryId(props.currentCategory._id);
-	}, []);
+		setCategoryId(currentCategory._id);
+		const cat = categories.filter(item => item.isExpense === isExpense);
+		setfiltredCategories(cat);
+	}, [currentCategory, categories, isExpense]);
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -56,7 +65,7 @@ const NewTransaction: React.FC<Props> = props => {
 		if (event.key === 'Enter' && control.valid) {
 			const amount = +control.value;
 			setControl({ ...control, value: '' });
-			props.onAddTransaction(categoryId, amount, isExpense, currentDate);
+			onAddTransaction(categoryId, amount, isExpense, currentDate);
 		} else if (event.key === 'Enter' && !control.valid) {
 			setControl({ ...control, value: '' });
 		}
@@ -89,10 +98,9 @@ const NewTransaction: React.FC<Props> = props => {
 				onKeyPress={onKeyEnter}
 			/>
 			<Select
-				categories={props.categories}
-				items={props.categories}
+				items={filtredCategories}
 				type="category"
-				initialId={categoryId}
+				initialId={currentCategory._id}
 				onItemClick={setCurrentCategoryId}
 			/>
 			<div className="options">

@@ -7,7 +7,7 @@ interface DataStoredInToken {
 	userId: string;
 }
 
-export const auth = (
+export const auth = async (
 	req: RequestWithUser,
 	res: Response,
 	next: NextFunction

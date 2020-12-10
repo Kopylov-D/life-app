@@ -1,6 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Calendar from 'react-calendar';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
 	changeCategory,
 	deleteCategory,
@@ -10,11 +9,12 @@ import TableItem from './TableItem';
 import { CategoryInterface } from '../../store/ducks/budget/types';
 
 type Props = {
+	isExpense: boolean;
 	// transactions: TransactionInterface[]
 	categories: CategoryInterface[];
 };
 
-const Table: React.FC<Props> = ({ categories }) => {
+const Table: React.FC<Props> = ({ categories, isExpense }) => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 	const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
 
@@ -25,7 +25,7 @@ const Table: React.FC<Props> = ({ categories }) => {
 		setCurrentCategoryId(id);
 		setModalIsOpen(true);
 	};
-	
+
 	const onDeleteCategoryHandler = async (id: string) => {
 		dispatch(deleteCategory(id));
 	};
@@ -57,16 +57,18 @@ const Table: React.FC<Props> = ({ categories }) => {
 
 			<div className="table__body">
 				{categories.map(item => {
-					return (
-						<TableItem
-							key={item._id}
-							_id={item._id}
-							name={item.name}
-							amount={item.amount}
-							onChangeCategory={onChangeCategoryHandler}
-							onDeleteCategory={onDeleteCategoryHandler}
-						/>
-					);
+					if (isExpense === item.isExpense) {
+						return (
+							<TableItem
+								key={item._id}
+								_id={item._id}
+								name={item.name}
+								amount={item.amount}
+								onChangeCategory={onChangeCategoryHandler}
+								onDeleteCategory={onDeleteCategoryHandler}
+							/>
+						);
+					} else return null;
 				})}
 			</div>
 

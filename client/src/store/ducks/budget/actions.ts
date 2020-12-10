@@ -3,14 +3,16 @@ import {
 	FETCH_ERROR,
 	FETCH_START,
 	FETCH_SUCCESS,
-	GET_TRANSACTIONS,
+	GET_BUDGETDATA,
 	ADD_CATEGORY,
 	UPDATE_CATEGORIES,
 	// SET_CATEGORIES,
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
-	DELETE_TRANSACTION
+	DELETE_TRANSACTION,
+	GET_TRANSACTIONS,
 } from './contracts/actionTypes';
+import { Options } from './contracts/state';
 import { CategoryInterface, TransactionInterface } from './types';
 
 export function getBudgetData(year: string, month: string) {
@@ -19,7 +21,7 @@ export function getBudgetData(year: string, month: string) {
 		try {
 			const { data } = await api.fetchBudgetData(year, month);
 			dispatch(fetchSuccess());
-			dispatch(setTransactions(data));
+			dispatch(setBudgetData(data));
 		} catch (e) {
 			console.log(e);
 			// dispatch(authError(e.message));
@@ -28,14 +30,37 @@ export function getBudgetData(year: string, month: string) {
 	};
 }
 
-export function addTransaction(id: string, amount: number, date: Date | Date[] | undefined = undefined, isExpense: boolean) {
+export function getTransactions() {
+	return async (dispatch: any) => {
+		dispatch(fetchStart());
+		try {
+			const { data } = await api.fetchTransactions();
+			console.log(data)
+			dispatch(setTransactions(data));
+		} catch (e) {
+			console.log(e);
+		}
+	};
+}
+
+export function addTransaction(
+	categoryId: string,
+	amount: number,
+	isExpense: boolean,
+	date: Date | Date[] | undefined = undefined
+) {
 	return async (dispatch: any) => {
 		try {
-			const { data } = await api.addTransaction(id, amount, date, isExpense);
+			const { data } = await api.addTransaction(
+				categoryId,
+				amount,
+				isExpense,
+				date
+			);
 			const transaction = {
 				...data.transaction,
-			}
-			console.log(transaction)
+			};
+			console.log(transaction);
 			dispatch({ type: ADD_TRANSACTION, payload: data.transaction });
 		} catch (e) {
 			console.log(e);
@@ -43,23 +68,21 @@ export function addTransaction(id: string, amount: number, date: Date | Date[] |
 	};
 }
 
-export function deleteTransaction(id: string) {
+export function deleteTransaction(_id: string) {
 	return async (dispatch: any) => {
 		try {
-			console.log(id)
-			await api.deleteTransaction(id);
-			console.log('id', id)
-			dispatch({ type: DELETE_TRANSACTION, payload: id });
+			await api.deleteTransaction(_id);
+			dispatch({ type: DELETE_TRANSACTION, payload: _id });
 		} catch (e) {
 			console.log(e);
 		}
 	};
 }
 
-export function addCategory() {
+export function addCategory(isExpense: boolean) {
 	return async (dispatch: any) => {
 		try {
-			const { data } = await api.addCategory();
+			const { data } = await api.addCategory(isExpense);
 			dispatch({ type: ADD_CATEGORY, payload: data.category });
 		} catch (e) {
 			console.log(e);
@@ -133,17 +156,30 @@ function fetchError(error: Error): FetchErrorType {
 
 type GetTransactions = {
 	type: typeof GET_TRANSACTIONS;
+	payload: TransactionInterface[];
+};
+
+function setTransactions(payload: TransactionInterface[]): GetTransactions {
+	return {
+		type: GET_TRANSACTIONS,
+		payload,
+	};
+}
+
+type getBudgetData = {
+	type: typeof GET_BUDGETDATA;
 	payload: BudgetData;
 };
 
 type BudgetData = {
 	transactions: TransactionInterface[];
 	categories: CategoryInterface[];
+	options: Options;
 };
 
-function setTransactions(payload: BudgetData): GetTransactions {
+function setBudgetData(payload: BudgetData): getBudgetData {
 	return {
-		type: GET_TRANSACTIONS,
+		type: GET_BUDGETDATA,
 		payload,
 	};
 }

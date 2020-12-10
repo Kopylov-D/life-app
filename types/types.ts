@@ -27,3 +27,8 @@ export type CategoryType = {
 	amount: number;
 	isExpense: boolean;
 };
+
+export type FiltredDateType = {
+	$gte: Date,
+	$lt: Date,
+}

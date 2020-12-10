@@ -8,3 +8,7 @@ export const formatDate = (date: Date | Date[] | string): string => {
 		day: '2-digit',
 	});
 };
+
+export const parseToDate = (date: string) => {
+	return new Date(Date.parse(date))
+}

@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils';
 import {
 	FETCH_START,
 	FETCH_SUCCESS,
@@ -8,6 +9,7 @@ import {
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
 	DELETE_TRANSACTION,
+	GET_BUDGETDATA,
 } from './contracts/actionTypes';
 import { BudgetState } from './contracts/state';
 
@@ -21,35 +23,9 @@ const initialState: BudgetState = {
 		// 	__v: 0,
 		// 	_id: '5fb7cad19cd9171bd081598c',
 		// },
-		// {
-		// 	amount: 100,
-		// 	date: '2020-11-20T13:55:29.402Z',
-		// 	user: '5fb250b7e6ab891d20b020c9',
-		// 	category: '1',
-		// 	__v: 0,
-		// 	_id: '5fb7cad19cd9171bd081598c',
-		// },
-		// {
-		// 	amount: 300,
-		// 	date: '2020-11-20T13:55:29.402Z',
-		// 	user: '5fb250b7e6ab891d20b020c9',
-		// 	category: '2',
-		// 	__v: 0,
-		// 	_id: '5fb7cad19cd9171bd081598c',
-		// },
-		// {
-		// 	amount: 500,
-		// 	date: '2020-11-20T13:55:29.402Z',
-		// 	user: '5fb250b7e6ab891d20b020c9',
-		// 	category: '3',
-		// 	__v: 0,
-		// 	_id: '5fb7cad19cd9171bd081598c',
-		// },
 	],
 	categories: [
 		// 	{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 200 },
-		// 	{ _id: '2', color: 'green', type: 'expense', name: 'Разное', amount: 20 },
-		// 	{ _id: '3', color: 'orange', type: 'expense', name: 'Счета', amount: 333 },
 	],
 	isLoading: true,
 	error: { name: '', message: '' },
@@ -57,7 +33,10 @@ const initialState: BudgetState = {
 		year: 2020,
 		month: 10,
 	},
-	currentCategory: { _id: '', color: '', name: '', amount: 0, isExpense: true},
+	currentCategory: { _id: '', color: '', name: '', amount: 0, isExpense: true },
+	options: {
+		startDate: '',
+	},
 };
 
 export const budgetReducer = (
@@ -78,8 +57,15 @@ export const budgetReducer = (
 		case GET_TRANSACTIONS:
 			return {
 				...state,
+				transactions: action.payload.transactions
+			};
+		case GET_BUDGETDATA:
+			return {
+				...state,
 				transactions: action.payload.transactions,
 				categories: action.payload.categories,
+				currentCategory: action.payload.categories[0],
+				options: action.payload.options,
 			};
 		case ADD_CATEGORY:
 			return {
@@ -102,7 +88,7 @@ export const budgetReducer = (
 
 			return {
 				...state,
-				transactions: [...state.transactions, newTransaction],
+				transactions: [newTransaction, ...state.transactions],
 				currentCategory: category!,
 			};
 		case DELETE_TRANSACTION:

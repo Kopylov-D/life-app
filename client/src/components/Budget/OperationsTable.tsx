@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import {
 	addTransaction,
 	changeCategory,
+	deleteTransaction,
 } from '../../store/ducks/budget/actions';
 
 import Modal, { Params } from '../UI/Modal';
@@ -18,14 +19,14 @@ type Props = {
 	transactions: TransactionInterface[];
 	categories: CategoryInterface[];
 	currentCategory: CategoryInterface;
-	onDeleteTransaction(id: string): void;
+	// onDeleteTransaction(id: string): void;
 };
 
 const OperationsTable: React.FC<Props> = ({
 	transactions,
 	categories,
 	currentCategory,
-	onDeleteTransaction,
+	// onDeleteTransaction,
 }) => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 	const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
@@ -49,13 +50,17 @@ const OperationsTable: React.FC<Props> = ({
 	};
 
 	const onAddTransactionHandler = (
-		id: string,
+		categoryId: string,
 		amount: number,
 		isExpense: boolean,
 		currentDate: Date | Date[]
 	) => {
-		dispatch(addTransaction(id, amount, currentDate, isExpense));
+		dispatch(addTransaction(categoryId, amount, isExpense, currentDate));
 	};
+
+	const onDeleteTransactionHandler = (_id: string) => {
+		dispatch(deleteTransaction(_id));
+	}
 
 	return (
 		<div className="table">
@@ -83,7 +88,7 @@ const OperationsTable: React.FC<Props> = ({
 							amount={item.amount}
 							isExpense={item.isExpense}
 							onChangeTransaction={onChangeCategoryHandler}
-							onDeleteTransaction={onDeleteTransaction}
+							onDeleteTransaction={onDeleteTransactionHandler}
 						/>
 					);
 				})}

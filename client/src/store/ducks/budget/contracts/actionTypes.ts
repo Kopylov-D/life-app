@@ -1,4 +1,5 @@
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
+export const GET_BUDGETDATA = 'GET_BUDGETDATA';
 export const FETCH_START = 'FETCH_START';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_ERROR = 'FETCH_ERROR';

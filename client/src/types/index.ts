@@ -1,4 +1,4 @@
-import { CategoryInterface } from "../store/ducks/budget/types";
+import { CategoryInterface } from '../store/ducks/budget/types';
 
 export type AuthData = {
 	token: string;
@@ -14,8 +14,8 @@ export type User = {
 export type Selector = {
 	months?: Month[];
 	years?: number[];
-	categories?: CategoryInterface[]
-	items: (CategoryInterface | Month)[]
+	categories?: CategoryInterface[];
+	items: (CategoryInterface | Month)[];
 };
 
 export type Month = {
@@ -32,7 +32,8 @@ export type Month = {
 		| 'Сентябрь'
 		| 'Октябрь'
 		| 'Ноябрь'
-		| 'Декабрь';
+		| 'Декабрь'
+		| 'Весь год';
 };
 
 export type Year = {
@@ -47,7 +48,7 @@ export type CurrentDate = {
 
 export type CategorySelect = {
 	id: string;
-  title: string;
-  isSelected: boolean
+	title: string;
+	isSelected: boolean;
 	// onClick(): void;
-}
+};

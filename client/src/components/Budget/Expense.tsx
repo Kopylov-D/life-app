@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { api } from '../../services/api';
+import { parseToDate } from '../../services/utils/dateUtils';
 import { addCategory, getBudgetData } from '../../store/ducks/budget/actions';
-import { selectCategoriesWithAmount } from '../../store/ducks/budget/selectors';
+import {
+	selectCategoriesWithAmount,
+	selectOptions,
+} from '../../store/ducks/budget/selectors';
 import { Month } from '../../types';
 import { Button } from '../UI';
 import Select from '../UI/Select';
 import Table from './Table';
+import YearChanger from './YearChanger';
 
 type Props = {
 	// data: TransactionInterface[];
@@ -26,26 +31,23 @@ const months: Month[] = [
 	{ _id: '9', name: 'Октябрь' },
 	{ _id: '10', name: 'Ноябрь' },
 	{ _id: '11', name: 'Декабрь' },
+	{ _id: '12', name: 'Весь год' },
 ];
-
-const years = [2018, 2019, 2020, 2021];
 
 const Expense: React.FC<Props> = props => {
 	const dispatch = useDispatch();
-	const { location } = useHistory();
+	const categories = useSelector(selectCategoriesWithAmount);
+	const options = useSelector(selectOptions);
 
 	const currentMonth = new Date().getMonth().toString();
 	const [month, setMonth] = useState<string>(currentMonth);
-	const [year, setYear] = useState<string>(new Date().getFullYear().toString());
+	const [year, setYear] = useState<number>(new Date().getFullYear());
 	const [isExpense, setIsExpense] = useState<boolean>(true);
-	const categories = useSelector(selectCategoriesWithAmount)
-	// const [month, setMonth] = useState<number>(new Date().getMonth());
-	// const [year, setYear] = useState<number>(new Date().getFullYear());
 
-
+	const { location } = useHistory();
 
 	useEffect(() => {
-		dispatch(getBudgetData('2020', month));
+		dispatch(getBudgetData(year.toString(), month));
 		if (location.pathname === '/budget/expense') {
 			setIsExpense(true);
 		} else {
@@ -55,21 +57,31 @@ const Expense: React.FC<Props> = props => {
 	}, [year, month, location.pathname]);
 
 	const testHandler = async () => {
-		const res = await api.getUser();
+		const res = await api.test('qweasd21');
 		console.log(res);
 	};
 
 	const addCategoryHandler = async () => {
-		dispatch(addCategory());
+		dispatch(addCategory(isExpense));
 	};
 
 	const onMonthClickHandler = (id: string) => {
 		setMonth(id);
 	};
 
-	// const onYearClickHandler = (year: number) => {
-	// 	setYear(year);
+	// const prevYearHandler = () => {
+	// 	const minYear = parseToDate(options.startDate).getFullYear();
+	// 	let newYear = year - 1;
+	// 	newYear >= minYear && setYear(newYear);
 	// };
+
+	// const nextYearHandler = () => {
+	// 	const maxYear = new Date().getFullYear();
+	// 	let newYear = year + 1;
+	// 	newYear <= maxYear && setYear(newYear);
+	// };
+
+
 
 	return (
 		<div className="budget__expense">
@@ -80,14 +92,14 @@ const Expense: React.FC<Props> = props => {
 					type="month"
 					initialId={month}
 				/>
-				{/* <Select
-					years={years}
-					onItemClick={onYearClickHandler}
-					type="year"
-					initialLabel={year}
-				/> */}
+				{/* <div>
+					<button onClick={prevYearHandler}></button>
+					<span>{year} </span>
+					<button onClick={nextYearHandler}></button>
+				</div> */}
+				<YearChanger startDate={options.startDate} changeYear={(year) => setYear(year)} year={year} />
 			</div>
-			<Table categories={categories}/>
+			<Table categories={categories} isExpense={isExpense} />
 			<Button type="primary" disabled={false} onClick={addCategoryHandler}>
 				+
 			</Button>
