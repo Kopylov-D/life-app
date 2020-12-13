@@ -5,16 +5,19 @@
 .budget {
 	padding: 10px;
 	overflow: auto;
-  position: absolute;
-  bottom: 0;
-  top: 0;
-  right: 0;
+	position: absolute;
+	bottom: 0;
+	top: 0;
+	right: 0;
 	// display: flex;
 	left: $menu-width + $gap;
 	background: $c-white;
-  border-radius: $block-radius;
-  
-	&__expense {
+	border-radius: $block-radius;
+
+	&__tables {
+		max-width: 500px;
+		display: flex;
+		justify-content: space-between;
 	}
 
 	&__income {

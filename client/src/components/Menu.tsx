@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import Expense from './Budget/Expense';
+import Expense from './Budget/Accounting';
 
 type Item = {
 	to: string;

@@ -87,7 +87,7 @@ export const api = {
 			throw new Error(e.response.data.message || 'Что-то пошло не так');
 		}),
 
-	addCategory: (isExpense: boolean): any => axios.post('/api/budget/categories', {isExpense}),
+	addCategory: (name: string, isExpense: boolean): any => axios.post('/api/budget/categories', {name, isExpense}),
 
 	changeCategory: (_id: string, name: string, color: string) =>
 		axios.patch(`/api/budget/categories/${_id}`, {

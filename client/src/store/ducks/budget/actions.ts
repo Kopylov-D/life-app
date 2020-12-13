@@ -79,10 +79,10 @@ export function deleteTransaction(_id: string) {
 	};
 }
 
-export function addCategory(isExpense: boolean) {
+export function addCategory(name: string = 'Новая категория', isExpense: boolean = true) {
 	return async (dispatch: any) => {
 		try {
-			const { data } = await api.addCategory(isExpense);
+			const { data } = await api.addCategory(name, isExpense);
 			dispatch({ type: ADD_CATEGORY, payload: data.category });
 		} catch (e) {
 			console.log(e);

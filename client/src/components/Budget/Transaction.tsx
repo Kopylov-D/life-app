@@ -20,7 +20,7 @@ const Transaction: React.FC<Props> = ({
 	onDeleteTransaction,
 }) => {
 	return (
-		<div className={classNames('table__item', {'expense': isExpense}, {'income': !isExpense})}>
+		<div className={classNames('table__item', {'color-expense': isExpense}, {'color-income': !isExpense})}>
 			<div>{formatDate(date)}</div>
 			<div>{amount} руб.</div>
 			<div>{category.name}</div>

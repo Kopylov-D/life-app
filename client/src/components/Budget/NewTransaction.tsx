@@ -11,6 +11,7 @@ import calendar from '../../assets/img/calendar.svg';
 import Select from '../UI/Select';
 import { CategoryInterface } from '../../store/ducks/budget/types';
 import { formatDate } from '../../services/utils/dateUtils';
+import Switch from './Switch';
 
 interface Props {
 	categories: CategoryInterface[];
@@ -104,14 +105,22 @@ const NewTransaction: React.FC<Props> = ({
 				onItemClick={setCurrentCategoryId}
 			/>
 			<div className="options">
-				<div
+				<Switch
+					textLeft="расходы"
+					textRight="доходы"
+					colorLeft="color-expense"
+					colorRight="color-income"
+					onSwitch={setIsExpense}
+					flag={isExpense}
+				/>
+				{/* <div
 					className={classNames('expense-toggle', { active: isExpense })}
 					onClick={() => setIsExpense(true)}
 				></div>
 				<div
 					className={classNames('expense-toggle', { active: !isExpense })}
 					onClick={() => setIsExpense(false)}
-				></div>
+				></div> */}
 				<img src={calendar} alt="" onClick={onToggleCalendarHandler}></img>
 			</div>
 

@@ -9,14 +9,24 @@
 	// max-width: 400px;
 	// min-width: 200px;
 	background: #cccc;
-  border-radius: 3px;
-  
-  & label {
-    margin-bottom: 20px;
+	border-radius: 3px;
+	
+	&__title {
+		margin-bottom: 20px;
+	}
 
-  }
+	&__input input {
+		height: 20px;
+		margin: 20px 0;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 2px;
+		font-size: 14px;
+	}
+	
+
 
   &__buttons {
+		margin-top: 20px;
     display: flex;
   }
 }

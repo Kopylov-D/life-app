@@ -54,8 +54,8 @@ class BudgetController {
 
 	async addCategory(req: RequestWithUser, res: Response) {
 		try {
-			const { isExpense } = req.body;
-			const category = new Category({ user: req.user, isExpense });
+			const { name, isExpense } = req.body;
+			const category = new Category({ user: req.user, isExpense, name });
 			await category.save();
 			res.status(201).json({ message: 'Категория создана', category });
 		} catch (e) {
@@ -71,11 +71,6 @@ class BudgetController {
 			// 	return `${year}-${month}-00T00:00:00.000Z`;
 			// };
 			const formDate = (year: any, month: any, to = 0) => {
-			  // to = 1
-				// if (month === '12') {
-				// 	month = '0'
-				// 	to = 12
-				// }
 				if (year && month) {
 					return new Date(+year, +month + to, 1);
 				} else {

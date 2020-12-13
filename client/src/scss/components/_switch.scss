@@ -1,0 +1,27 @@
+@import '../variables';
+
+.switch {
+  display: flex;
+  // justify-content: stretch;
+  border: 1px solid $c-secondary;
+  border-radius: 5px;
+  height: 20px;
+  min-width: 40px;
+  flex-grow: 1;
+  // max-width: 200px;
+  background-color: $c-white;
+
+  &__toggle {
+    // padding: 2px 8px;
+    flex-grow: 1;
+    text-align: center;
+
+    min-width: 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  &__active {
+    display: block;
+  }
+}

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Expense from '../components/Budget/Expense';
+import Categories from '../components/Budget/Categories';
+import Accounting from '../components/Budget/Accounting';
 import Operations from '../components/Budget/Operations';
+import Reports from '../components/Budget/Reports';
 import Menu from '../components/Menu';
 import { getBudgetData } from '../store/ducks/budget/actions';
 
 const menuItems = [
-	{ to: '/budget/expense', title: 'Расходы', component: Expense },
-	{ to: '/budget/income', title: 'Доходы', component: Expense },
 	{ to: '/budget/operation', title: 'Операции', component: Operations },
+	{ to: '/budget/accounting', title: 'Расходы/Доходы', component: Accounting },
+	{ to: '/budget/categories', title: 'Категории', component: Categories },
+	{ to: '/budget/report', title: 'Отчеты', component: Reports },
 ];
 
 const BudgetPage: React.FC<any> = props => {

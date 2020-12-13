@@ -34,7 +34,7 @@ const months: Month[] = [
 	{ _id: '12', name: 'Весь год' },
 ];
 
-const Expense: React.FC<Props> = props => {
+const Accounting: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const categories = useSelector(selectCategoriesWithAmount);
 	const options = useSelector(selectOptions);
@@ -42,17 +42,17 @@ const Expense: React.FC<Props> = props => {
 	const currentMonth = new Date().getMonth().toString();
 	const [month, setMonth] = useState<string>(currentMonth);
 	const [year, setYear] = useState<number>(new Date().getFullYear());
-	const [isExpense, setIsExpense] = useState<boolean>(true);
+	// const [isExpense, setIsExpense] = useState<boolean>(true);
 
 	const { location } = useHistory();
 
 	useEffect(() => {
 		dispatch(getBudgetData(year.toString(), month));
-		if (location.pathname === '/budget/expense') {
-			setIsExpense(true);
-		} else {
-			setIsExpense(false);
-		}
+		// if (location.pathname === '/budget/expense') {
+		// 	setIsExpense(true);
+		// } else {
+		// 	setIsExpense(false);
+		// }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [year, month, location.pathname]);
 
@@ -61,9 +61,9 @@ const Expense: React.FC<Props> = props => {
 		console.log(res);
 	};
 
-	const addCategoryHandler = async () => {
-		dispatch(addCategory(isExpense));
-	};
+	// const addCategoryHandler = async () => {
+	// 	dispatch(addCategory(isExpense));
+	// };
 
 	const onMonthClickHandler = (id: string) => {
 		setMonth(id);
@@ -81,10 +81,8 @@ const Expense: React.FC<Props> = props => {
 	// 	newYear <= maxYear && setYear(newYear);
 	// };
 
-
-
 	return (
-		<div className="budget__expense">
+		<div className="budget__accounting">
 			<div className="budget__panel">
 				<Select
 					items={months}
@@ -92,20 +90,20 @@ const Expense: React.FC<Props> = props => {
 					type="month"
 					initialId={month}
 				/>
-				{/* <div>
-					<button onClick={prevYearHandler}></button>
-					<span>{year} </span>
-					<button onClick={nextYearHandler}></button>
-				</div> */}
-				<YearChanger startDate={options.startDate} changeYear={(year) => setYear(year)} year={year} />
+				<YearChanger
+					startDate={options.startDate}
+					changeYear={year => setYear(year)}
+					year={year}
+				/>
 			</div>
-			<Table categories={categories} isExpense={isExpense} />
-			<Button type="primary" disabled={false} onClick={addCategoryHandler}>
-				+
-			</Button>
+			<div className="budget__tables">
+				<Table categories={categories} isExpense={true} />
+				<Table categories={categories} isExpense={false} />
+			</div>
+
 			<Button type="secondary" disabled={false} onClick={testHandler} />
 		</div>
 	);
 };
 
-export default Expense;
+export default Accounting;

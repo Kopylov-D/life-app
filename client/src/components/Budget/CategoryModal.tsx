@@ -1,34 +1,46 @@
 import e from 'express';
 import React, { Fragment, useRef, useEffect, useState } from 'react';
-import { Input, Button } from '.';
+import { Input, Button } from '../UI';
 import {
 	createControl,
 	FormControl,
 	validate,
 } from '../../services/validations/form';
+import Switch from './Switch';
+import { CategoryInterface } from '../../store/ducks/budget/types';
 
 export interface Params {
-	value: string
-	isExpense?: boolean
-	color?: string
+	value: string;
+	type?: 'add' | 'change';
+	isExpense: boolean;
+	color?: string;
 }
 
 interface Props {
 	title: string;
-	// onSubmit(e: React.SyntheticEvent): void;
+	// isExpense: boolean;
+	category?: CategoryInterface;
 	onClick(params: Params): void;
 	onCloseClick(): void;
 }
 
-const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
+const CategoryModal: React.FC<Props> = ({ title, category, onClick, onCloseClick }) => {
 	const [control, setControl] = useState<FormControl>(
 		createControl({ type: 'text', class: 'modal' }, { required: true })
 	);
-	// const refInput = useRef(null);
+
+	const [isExpense, setIsExpense] = useState<boolean>(true);
+	// const refInput = useRef();
 
 	// useEffect(() => {
 	//   refInput.current.focus();
-	// }, []);
+  // }, []);
+  
+  useEffect(() => {
+    if (category) {
+      setIsExpense(category.isExpense)
+    }
+  }, [])
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -43,23 +55,23 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	};
 
 	const onOkClickHandler = () => {
-		onClick({value: control.value});
+		onClick({ value: control.value, isExpense });
 	};
 
 	const onEnterKeyPress = (e: React.KeyboardEvent) => {
 		if (e.key === 'Enter') {
-			onOkClickHandler()
+			onOkClickHandler();
 		}
-	}
+	};
 
 	const onSubmit = (e: React.SyntheticEvent) => {
-		e.preventDefault()
-	}
+		e.preventDefault();
+	};
 
 	return (
 		<Fragment>
 			<div className="modal">
-				<label>{title}</label>
+				<label className="modal__title">{title}</label>
 				<form
 					onSubmit={e => {
 						onSubmit(e);
@@ -75,6 +87,15 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 						shouldValidate={!!control.validation}
 						onChange={onChangeHandler}
 						onKeyPress={e => onEnterKeyPress(e)}
+					/>
+
+					<Switch
+						colorLeft="color-expense"
+						colorRight="color-income"
+						textLeft="Расходы"
+						textRight="Доходы"
+						onSwitch={setIsExpense}
+						flag={isExpense}
 					/>
 				</form>
 				<div className="modal__buttons">
@@ -123,4 +144,4 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	// );
 };
 
-export default Modal;
+export default CategoryModal;

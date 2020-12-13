@@ -1,4 +1,3 @@
-import { act } from 'react-dom/test-utils';
 import {
 	FETCH_START,
 	FETCH_SUCCESS,
