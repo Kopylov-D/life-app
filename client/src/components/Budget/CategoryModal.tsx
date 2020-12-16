@@ -1,5 +1,4 @@
-import e from 'express';
-import React, { Fragment, useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Input, Button } from '../UI';
 import {
 	createControl,
@@ -8,6 +7,8 @@ import {
 } from '../../services/validations/form';
 import Switch from './Switch';
 import { CategoryInterface } from '../../store/ducks/budget/types';
+import Backdrop from '../UI/Backdrop';
+import ModalTemplate from '../UI/ModalTemplate';
 
 export interface Params {
 	value: string;
@@ -69,9 +70,8 @@ const CategoryModal: React.FC<Props> = ({ title, category, onClick, onCloseClick
 	};
 
 	return (
-		<Fragment>
-			<div className="modal">
-				<label className="modal__title">{title}</label>
+		<Backdrop onClick={onCloseClick}>
+			<ModalTemplate title={title}>
 				<form
 					onSubmit={e => {
 						onSubmit(e);
@@ -99,49 +99,58 @@ const CategoryModal: React.FC<Props> = ({ title, category, onClick, onCloseClick
 					/>
 				</form>
 				<div className="modal__buttons">
-					<Button type="primary" disabled={false} onClick={onOkClickHandler}>
+					<Button type="primary" size='small' disabled={false} onClick={onOkClickHandler}>
 						Ок
 					</Button>
-					<Button type="secondary" disabled={false} onClick={onCloseClick}>
+					<Button type="secondary" size='small' disabled={false} onClick={onCloseClick}>
 						Отмена
 					</Button>
 				</div>
-			</div>
-			{/* <Backdrop onClick={onCancelModalClick} onKeyPress={onKeyPress} /> */}
-			{/* <div className="backdrop backdrop__modal"></div> */}
-		</Fragment>
+			</ModalTemplate>
+		</Backdrop>
+		// <Fragment>
+		// 	<div className="modal">
+		// 		<label className="modal__title">{title}</label>
+		// 		<form
+		// 			onSubmit={e => {
+		// 				onSubmit(e);
+		// 			}}
+		// 		>
+		// 			<Input
+		// 				// refInput={refInput}
+		// 				value={control.value}
+		// 				class={control.class}
+		// 				type={control.type}
+		// 				valid={control.valid}
+		// 				touched={control.touched}
+		// 				shouldValidate={!!control.validation}
+		// 				onChange={onChangeHandler}
+		// 				onKeyPress={e => onEnterKeyPress(e)}
+		// 			/>
+
+		// 			<Switch
+		// 				colorLeft="color-expense"
+		// 				colorRight="color-income"
+		// 				textLeft="Расходы"
+		// 				textRight="Доходы"
+		// 				onSwitch={setIsExpense}
+		// 				flag={isExpense}
+		// 			/>
+		// 		</form>
+		// 		<div className="modal__buttons">
+		// 			<Button type="primary" size='small' disabled={false} onClick={onOkClickHandler}>
+		// 				Ок
+		// 			</Button>
+		// 			<Button type="secondary" size='small' disabled={false} onClick={onCloseClick}>
+		// 				Отмена
+		// 			</Button>
+		// 		</div>
+		// 	</div>
+		// 	{/* <Backdrop onClick={onCancelModalClick} onKeyPress={onKeyPress} /> */}
+		// 	{/* <div className="backdrop backdrop__modal"></div> */}
+		// </Fragment>
 	);
-	// return (
-	//   <Fragment>
-	//     <div className={classes.Modal}>
-	//       <label>{modal.title}</label>
-	//       <form
-	//         onSubmit={event => {
-	//           onSubmitModal(event);
-	//         }}
-	//       >
-	//         <Input
-	//           refInput={refInput}
-	//           type={modal.inputType}
-	//           style={modal.style}
-	//           onChange={onChangeModal}
-	//         />
-	//       </form>
-	//       <div className={classes.buttons}>
-	//         <Button type="success" onClick={onOkModalClick}>
-	//           Ок
-	//         </Button>
-	//         <Button type="primary" onClick={onCancelModalClick}>
-	//           Отмена
-	//         </Button>
-	//         <Button type="error" onClick={onDeleteModalClick}>
-	//           Удалить категорию
-	//         </Button>
-	//       </div>
-	//     </div>
-	//     <Backdrop onClick={onCancelModalClick} onKeyPress={onKeyPress} />
-	//   </Fragment>
-	// );
+
 };
 
 export default CategoryModal;

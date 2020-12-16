@@ -135,10 +135,10 @@ class BudgetController {
 
 	async changeCategory(req: RequestWithUser, res: Response) {
 		try {
-			const { name, color } = req.body;
+			const { name, color, isExpense } = req.body;
 			const { id } = req.params;
 			console.log(id);
-			await Category.findByIdAndUpdate(id, { name, color });
+			await Category.findByIdAndUpdate(id, { name, color, isExpense });
 			res.json({ message: 'update' });
 		} catch (error) {
 			res.status(500).json({ message: 'Что-то пошло не так' });

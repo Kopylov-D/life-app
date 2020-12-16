@@ -4,6 +4,7 @@ import Expense from '../components/Budget/Accounting';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
+import ModalTemplate from '../components/UI/ModalTemplate';
 import { BudgetPage } from '../pages';
 
 const Main = (props: any) => {
@@ -26,6 +27,9 @@ const Main = (props: any) => {
 				{props.children}
 			</main>
 			<Footer />
+			{/* <ModalTemplate>
+				sdfdf
+			</ModalTemplate> */}
 		</div>
 	);
 };

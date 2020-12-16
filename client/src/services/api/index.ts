@@ -89,10 +89,11 @@ export const api = {
 
 	addCategory: (name: string, isExpense: boolean): any => axios.post('/api/budget/categories', {name, isExpense}),
 
-	changeCategory: (_id: string, name: string, color: string) =>
+	changeCategory: (_id: string, name: string, color: string, isExpense: boolean) =>
 		axios.patch(`/api/budget/categories/${_id}`, {
 			name,
 			color,
+			isExpense
 		}),
 
 	deleteCategory: (_id: string): any =>

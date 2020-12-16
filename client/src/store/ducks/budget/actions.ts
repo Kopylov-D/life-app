@@ -35,7 +35,7 @@ export function getTransactions() {
 		dispatch(fetchStart());
 		try {
 			const { data } = await api.fetchTransactions();
-			console.log(data)
+			console.log(data);
 			dispatch(setTransactions(data));
 		} catch (e) {
 			console.log(e);
@@ -79,7 +79,10 @@ export function deleteTransaction(_id: string) {
 	};
 }
 
-export function addCategory(name: string = 'Новая категория', isExpense: boolean = true) {
+export function addCategory(
+	name: string = 'Новая категория',
+	isExpense: boolean = true
+) {
 	return async (dispatch: any) => {
 		try {
 			const { data } = await api.addCategory(name, isExpense);
@@ -90,28 +93,27 @@ export function addCategory(name: string = 'Новая категория', isEx
 	};
 }
 
-export function changeCategory(_id: string, name: string, color: string) {
+export function changeCategory(
+	_id: string,
+	name: string,
+	color: string,
+	isExpense: boolean
+) {
 	return async (dispatch: any, getState: any) => {
 		const state = getState();
 		const categories = state.budget.categories;
 
-		// console.log(state)
-		const newCAt = categories.map((item: any) => {
+		const newCategory = categories.map((item: CategoryInterface) => {
 			if (item._id === _id) {
-				if (name) {
-					item.name = name;
-				}
-				if (color) {
-					item.color = color;
-				}
+				name ? (item.name = name) : (name = item.name);
+				color && (item.color = color);
+				item.isExpense = isExpense;
 			}
 			return item;
 		});
 
-		const res = await api.changeCategory(_id, name, color);
-		console.log(res);
-
-		dispatch(updateCategories(newCAt));
+		await api.changeCategory(_id, name, color, isExpense);
+		dispatch(updateCategories(newCategory));
 	};
 }
 

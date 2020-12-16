@@ -6,7 +6,7 @@ import {
 	deleteTransaction,
 } from '../../store/ducks/budget/actions';
 
-import Modal, { Params } from '../UI/Modal';
+import Modal, { Params } from '../UI/OperationModal';
 
 import {
 	CategoryInterface,
@@ -14,6 +14,8 @@ import {
 } from '../../store/ducks/budget/types';
 import NewTransaction from './NewTransaction';
 import Transaction from './Transaction';
+import ModalTemplate from '../UI/ModalTemplate';
+import Backdrop from '../UI/Backdrop';
 
 type Props = {
 	transactions: TransactionInterface[];
@@ -40,7 +42,9 @@ const OperationsTable: React.FC<Props> = ({
 	};
 
 	const onOkModalClick = (params: Params): void => {
-		dispatch(changeCategory(currentCategoryId, params.value, 'red'));
+		dispatch(
+			changeCategory(currentCategoryId, params.value, 'red', params.isExpense)
+		);
 		setModalIsOpen(false);
 	};
 
@@ -60,7 +64,7 @@ const OperationsTable: React.FC<Props> = ({
 
 	const onDeleteTransactionHandler = (_id: string) => {
 		dispatch(deleteTransaction(_id));
-	}
+	};
 
 	return (
 		<div className="table">
@@ -95,11 +99,14 @@ const OperationsTable: React.FC<Props> = ({
 			</div>
 
 			{modalIsOpen && (
-				<Modal
-					title="Изменить категорию"
-					onClick={onOkModalClick}
-					onCloseClick={onCancelModalClick}
-				/>
+				// <Modal
+				// 	title="Изменить категорию"
+				// 	onClick={onOkModalClick}
+				// 	onCloseClick={onCancelModalClick}
+				// />
+				<Backdrop onClick={() => setModalIsOpen(false)} type='black'>
+					<ModalTemplate title='Модальное окно'>Текст</ModalTemplate>
+				</Backdrop>
 			)}
 		</div>
 	);

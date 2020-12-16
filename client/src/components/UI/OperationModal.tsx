@@ -9,7 +9,7 @@ import {
 
 export interface Params {
 	value: string
-	isExpense?: boolean
+	isExpense: boolean
 	color?: string
 }
 
@@ -43,7 +43,7 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	};
 
 	const onOkClickHandler = () => {
-		onClick({value: control.value});
+		onClick({value: control.value, isExpense: true});
 	};
 
 	const onEnterKeyPress = (e: React.KeyboardEvent) => {
