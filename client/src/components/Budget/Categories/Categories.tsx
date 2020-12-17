@@ -4,14 +4,14 @@ import {
 	deleteCategory,
 	changeCategory,
 	addCategory,
-} from '../../store/ducks/budget/actions';
-import { selectCategories } from '../../store/ducks/budget/selectors';
-import { CategoryInterface } from '../../store/ducks/budget/types';
-import { Button } from '../UI';
-import Modal, { Params } from '../UI/OperationModal';
+} from '../../../store/ducks/budget/actions';
+import { selectCategories } from '../../../store/ducks/budget/selectors';
+import { CategoryInterface } from '../../../store/ducks/budget/types';
+import { Button } from '../../UI';
+import { Params } from '../Operations/OperationModal';
 import CategoryItem from './CategoryItem';
-import CategoryModal from './CategoryModal';
-import TableItem from './TableItem';
+import CategoryModal from './CategoryChanger';
+import Table from '../Table';
 
 const Categories: React.FC = () => {
 	const categories = useSelector(selectCategories);
@@ -23,13 +23,6 @@ const Categories: React.FC = () => {
 	const [currentCategory, setCurrentCategory] = useState<
 		CategoryInterface | undefined
 	>();
-	// {
-	// _id: '',
-	// name: '',
-	// isExpense: false,
-	// amount: 0,
-	// color: '',
-	// }
 
 	const dispatch = useDispatch();
 
@@ -45,16 +38,18 @@ const Categories: React.FC = () => {
 	};
 
 	const onOkModalClick = (params: Params): void => {
-		console.log('Modal okClick', params, currentCategory);
-
-		dispatch(changeCategory(currentCategory!._id, params.value, 'red', params.isExpense));
+		dispatch(
+			changeCategory(
+				currentCategory!._id,
+				params.value,
+				'red',
+				params.isExpense
+			)
+		);
 		setModalIsOpen(false);
 	};
 
 	const onOkNewCategoryModalClick = (params: Params): void => {
-		console.log('Modal okClick', params, currentCategory);
-
-		// dispatch(changeCategory(currentCategoryId, params.value, 'red'));
 		addCategoryHandler(params.value, params.isExpense!);
 		setNewCategoryModalIsOpen(false);
 	};
@@ -69,7 +64,7 @@ const Categories: React.FC = () => {
 
 	return (
 		<div className="budget__categories">
-			<div className="budget__categories-table">
+			<Table class="budget-categories">
 				{categories.map(item => (
 					<CategoryItem
 						key={item._id}
@@ -80,8 +75,7 @@ const Categories: React.FC = () => {
 						onDeleteCategory={onDeleteCategoryHandler}
 					/>
 				))}
-			</div>
-
+			</Table>
 			<Button
 				type="primary"
 				size="small"

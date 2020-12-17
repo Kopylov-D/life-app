@@ -1,0 +1,16 @@
+.category-changer {
+
+  	&__input input {
+		height: 20px;
+		margin: 20px 0;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 2px;
+		font-size: 14px;
+	}
+
+	  &__buttons {
+		margin-top: 20px;
+		display: flex;
+		justify-content: space-between;
+  }
+}

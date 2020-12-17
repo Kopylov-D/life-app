@@ -1,17 +1,17 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import classNames from 'classnames';
 import Calendar from 'react-calendar';
 import {
 	createControl,
 	FormControl,
 	validate,
-} from '../../services/validations/form';
-import { Input } from '../UI';
-import calendar from '../../assets/img/calendar.svg';
-import Select from '../UI/Select';
-import { CategoryInterface } from '../../store/ducks/budget/types';
-import { formatDate } from '../../services/utils/dateUtils';
-import Switch from './Switch';
+} from '../../../services/validations/form';
+import { Input } from '../../UI';
+import calendar from '../../../assets/img/calendar.svg';
+import Select from '../../UI/Select';
+import { CategoryInterface } from '../../../store/ducks/budget/types';
+import { formatDate } from '../../../services/utils/dateUtils';
+import Switch from '../../UI/Switch';
+import Backdrop from '../../UI/Backdrop';
 
 interface Props {
 	categories: CategoryInterface[];
@@ -113,27 +113,14 @@ const NewTransaction: React.FC<Props> = ({
 					onSwitch={setIsExpense}
 					flag={isExpense}
 				/>
-				{/* <div
-					className={classNames('expense-toggle', { active: isExpense })}
-					onClick={() => setIsExpense(true)}
-				></div>
-				<div
-					className={classNames('expense-toggle', { active: !isExpense })}
-					onClick={() => setIsExpense(false)}
-				></div> */}
 				<img src={calendar} alt="" onClick={onToggleCalendarHandler}></img>
 			</div>
 
 			{calendarIsOpen && (
-				<Fragment>
 					<div className="calendar">
-						<div
-							className="backdrop backdrop__modal"
-							onClick={onToggleCalendarHandler}
-						></div>
 						<Calendar value={currentDate} onChange={onChangeDateHandler} />
+						<Backdrop onClick={onToggleCalendarHandler} type='black'/>
 					</div>
-				</Fragment>
 			)}
 		</div>
 	);

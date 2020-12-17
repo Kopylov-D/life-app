@@ -1,12 +1,17 @@
-@import './button';
-@import './loader';
-@import './input';
-@import './toast';
+@import './UI/button';
+@import './UI/loader';
+@import './UI/input';
+@import './UI/toast';
+@import './UI/modal';
+@import './UI/select';
+@import './UI/switch';
+@import './UI/backdrop';
+
+@import './categories';
 @import './error';
 @import './table';
-@import './modal';
-@import './select';
-@import './switch';
-@import './backdrop';
-@import './categories';
-@import './modal copy';
+
+@import './Budget/categoryChanger';
+
+
+

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getBudgetData } from '../../store/ducks/budget/actions';
+import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
 	selectCurrentCategory,
 	selectOptions,
 	selectTransactions,
-} from '../../store/ducks/budget/selectors';
+} from '../../../store/ducks/budget/selectors';
 import OperationsTable from './OperationsTable';
-import YearChanger from './YearChanger';
+import YearChanger from '../YearChanger';
 
 interface Props {
 	// transactions: TransactionInterface[];

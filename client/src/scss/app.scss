@@ -160,21 +160,13 @@ body {
 	}
 }
 
-.calendar {
+.react-calendar {
+	border-radius: 4px;
+	z-index: 110;
 	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	& .react-calendar {
-		border-radius: 4px;
-		z-index: 50;
-	}
+	transform: translate(-50%, 0);
+	left: 50%;
+	top: 20%;
 }
 
 .color-income {
@@ -183,4 +175,8 @@ body {
 
 .color-expense {
 	background-color: $c-expense;
+}
+
+.color-primary {
+	color: $c-primary;
 }

@@ -1,33 +1,36 @@
 import React from 'react';
-import TableItem from './TableItem';
-import { CategoryInterface } from '../../store/ducks/budget/types';
+import classNames from 'classnames';
 
 type Props = {
-	isExpense: boolean;
-	categories: CategoryInterface[];
+	class: string;
+	headerItems?: string[];
 };
 
-const Table: React.FC<Props> = ({ categories, isExpense }) => {
+const Table: React.FC<Props> = props => {
 	return (
-		<div className="table table__accounting">
-			<header className="table__header table__accounting">
-				<div>Категория</div>
-				<div>Сумма</div>
-			</header>
+		<div
+			className={classNames('table', {
+				[`table__${props.class}`]: props.class,
+			})}
+		>
+			{props.headerItems && (
+				<header
+					className={classNames('table__header', {
+						[`table__${props.class}`]: props.class,
+					})}
+				>
+					{props.headerItems.map(item => (
+						<div>{item}</div>
+					))}
+				</header>
+			)}
 
-			<div className="table__body">
-				{categories.map(item => {
-					if (isExpense === item.isExpense) {
-						return (
-							<TableItem
-								key={item._id}
-								_id={item._id}
-								name={item.name}
-								amount={item.amount}
-							/>
-						);
-					} else return null;
+			<div
+				className={classNames('table__body', {
+					[`table__${props.class}`]: props.class,
 				})}
+			>
+				{props.children}
 			</div>
 		</div>
 	);

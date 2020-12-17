@@ -1,8 +1,16 @@
+import classNames from 'classnames';
 import React from 'react';
 
-const Loader = () => {
+type Props = {
+	size?: 'small' | 'normal';
+	type?: 'spinner' | 'circle';
+};
+
+const Loader: React.FC<Props> = ({ size = 'normal', type = 'spinner' }) => {
+
 	return (
-		<div className="lds-spinner">
+		<div className={classNames(`lds-${type}`, `lds-${type}-${size}`, `lds-${type}-primary`)}>
+			{}
 			<div></div>
 			<div></div>
 			<div></div>

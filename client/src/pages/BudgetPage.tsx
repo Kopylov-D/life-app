@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Categories from '../components/Budget/Categories';
-import Accounting from '../components/Budget/Accounting';
-import Operations from '../components/Budget/Operations';
-import Reports from '../components/Budget/Reports';
+import Categories from '../components/Budget/Categories/Categories';
+import Accounting from '../components/Budget/Accounting/Accounting';
+import Operations from '../components/Budget/Operations/Operations';
+import Reports from '../components/Budget/Reports/Reports';
 import Menu from '../components/Menu';
 import { getBudgetData } from '../store/ducks/budget/actions';
 

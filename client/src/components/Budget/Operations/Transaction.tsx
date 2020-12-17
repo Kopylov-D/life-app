@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import React from 'react';
-import gear from '../../assets/img/gear.svg';
-import trash from '../../assets/img/trash.svg';
-import { formatDate } from '../../services/utils/dateUtils';
-import { TransactionInterface } from '../../store/ducks/budget/types';
+import gear from '../../../assets/img/gear.svg';
+import trash from '../../../assets/img/trash.svg';
+import { formatDate } from '../../../services/utils/dateUtils';
+import { TransactionInterface } from '../../../store/ducks/budget/types';
 
 interface Props extends TransactionInterface {
-	onChangeTransaction(e: React.MouseEvent, _id: string): void;
+	// onChangeTransaction(e: React.MouseEvent, _id: string): void;
 	onDeleteTransaction(_id: string): void;
 }
 
@@ -16,7 +16,7 @@ const Transaction: React.FC<Props> = ({
 	amount,
 	category,
 	isExpense,
-	onChangeTransaction,
+	// onChangeTransaction,
 	onDeleteTransaction,
 }) => {
 	return (
@@ -26,7 +26,7 @@ const Transaction: React.FC<Props> = ({
 			<div>{category.name}</div>
 
 			<div className="options">
-				<img src={gear} alt="" onClick={e => onChangeTransaction(e, _id)}></img>
+				{/* <img src={gear} alt="" onClick={e => onChangeTransaction(e, _id)}></img> */}
 				<img src={trash} alt="" onClick={() => onDeleteTransaction(_id)}></img>
 			</div>
 		</div>

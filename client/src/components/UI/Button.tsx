@@ -24,7 +24,7 @@ const Button: React.FC<Props> = ({
 			onClick={onClick}
 			disabled={disabled}
 		>
-			{isLoading ? <Loader /> : children}
+			{isLoading ? <Loader size='small'/> : children}
 		</button>
 	);
 };

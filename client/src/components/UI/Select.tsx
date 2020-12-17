@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Selector } from '../../types';
+import Backdrop from './Backdrop';
 
 interface Props extends Selector {
 	// items: props.type[];
@@ -33,29 +34,28 @@ const Select: React.FC<Props> = ({ type, items, initialId, onItemClick }) => {
 	};
 
 	return (
-		<div className="select">
-			<div className="select__input" onClick={toggleDropdown}>
-				<span>{label}</span>
-				<i>х</i>
-			</div>
+		<Fragment>
+			<div className="select">
+				<div className="select__input" onClick={toggleDropdown}>
+					<span>{label}</span>
+					<i>х</i>
+				</div>
 
-			{isOpen && (
-				<Fragment>
-					<div
-						className="backdrop backdrop__select"
-						onClick={toggleDropdown}
-					></div>
-					<div className="select__dropdown">
-						{items &&
-							items.map(item => (
-								<li key={item._id} onClick={() => onClickHandler(item._id)}>
-									{item.name}
-								</li>
-							))}
-					</div>
-				</Fragment>
-			)}
-		</div>
+				{isOpen && (
+					<Fragment>
+						<div className="select__dropdown">
+							{items &&
+								items.map(item => (
+									<li key={item._id} onClick={() => onClickHandler(item._id)}>
+										{item.name}
+									</li>
+								))}
+						</div>
+					</Fragment>
+				)}
+			</div>
+			{isOpen && <Backdrop onClick={toggleDropdown} />}
+		</Fragment>
 	);
 };
 

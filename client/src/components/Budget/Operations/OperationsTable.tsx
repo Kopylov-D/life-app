@@ -4,18 +4,18 @@ import {
 	addTransaction,
 	changeCategory,
 	deleteTransaction,
-} from '../../store/ducks/budget/actions';
+} from '../../../store/ducks/budget/actions';
 
-import Modal, { Params } from '../UI/OperationModal';
+import { Params } from './OperationModal';
 
 import {
 	CategoryInterface,
 	TransactionInterface,
-} from '../../store/ducks/budget/types';
+} from '../../../store/ducks/budget/types';
 import NewTransaction from './NewTransaction';
 import Transaction from './Transaction';
-import ModalTemplate from '../UI/ModalTemplate';
-import Backdrop from '../UI/Backdrop';
+import Modal from '../../UI/Modal';
+import Backdrop from '../../UI/Backdrop';
 
 type Props = {
 	transactions: TransactionInterface[];
@@ -30,28 +30,28 @@ const OperationsTable: React.FC<Props> = ({
 	currentCategory,
 	// onDeleteTransaction,
 }) => {
-	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-	const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
+	// const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+	// const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
 
 	const dispatch = useDispatch();
 
-	const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
-		e.preventDefault();
-		setCurrentCategoryId(id);
-		setModalIsOpen(true);
-	};
+	// const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
+	// 	e.preventDefault();
+	// 	setCurrentCategoryId(id);
+	// 	setModalIsOpen(true);
+	// };
 
-	const onOkModalClick = (params: Params): void => {
-		dispatch(
-			changeCategory(currentCategoryId, params.value, 'red', params.isExpense)
-		);
-		setModalIsOpen(false);
-	};
+	// const onOkModalClick = (params: Params): void => {
+	// 	dispatch(
+	// 		changeCategory(currentCategoryId, params.value, 'red', params.isExpense)
+	// 	);
+	// 	setModalIsOpen(false);
+	// };
 
-	const onCancelModalClick = () => {
-		setModalIsOpen(false);
-		console.log('Cancel modal');
-	};
+	// const onCancelModalClick = () => {
+	// 	setModalIsOpen(false);
+	// 	console.log('Cancel modal');
+	// };
 
 	const onAddTransactionHandler = (
 		categoryId: string,
@@ -91,23 +91,13 @@ const OperationsTable: React.FC<Props> = ({
 							date={item.date}
 							amount={item.amount}
 							isExpense={item.isExpense}
-							onChangeTransaction={onChangeCategoryHandler}
+							// onChangeTransaction={onChangeCategoryHandler}
 							onDeleteTransaction={onDeleteTransactionHandler}
 						/>
 					);
 				})}
 			</div>
 
-			{modalIsOpen && (
-				// <Modal
-				// 	title="Изменить категорию"
-				// 	onClick={onOkModalClick}
-				// 	onCloseClick={onCancelModalClick}
-				// />
-				<Backdrop onClick={() => setModalIsOpen(false)} type='black'>
-					<ModalTemplate title='Модальное окно'>Текст</ModalTemplate>
-				</Backdrop>
-			)}
 		</div>
 	);
 };

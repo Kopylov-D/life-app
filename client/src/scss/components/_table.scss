@@ -1,6 +1,8 @@
 @import '../variables';
 
 .table {
+	$parent: &;
+
 	max-width: 800px;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -18,6 +20,7 @@
 			minmax(50px, 1fr)
 			minmax(150px, 1.5fr);
 		&__body {
+
 		}
 	}
 
@@ -48,9 +51,33 @@
 		}
 	}
 
-	&__accounting {
+	&__budget-accounting {
+		
+		#{$parent}__item,
+		#{$parent}__header {
+			grid-template-columns:
+				minmax(90px, 1fr)
+				minmax(50px, 1fr);
+		}
+	}
+
+	&__budget-categories {
 		grid-template-columns:
 			minmax(90px, 1fr)
 			minmax(50px, 1fr);
+
+		max-width: 400px;
+		margin-bottom: 10px;
+
+		#{$parent}-item {
+			color: red;
+		}
+
+		#{$parent}__item,
+		#{$parent}__header {
+			grid-template-columns:
+				minmax(90px, 1fr)
+				minmax(50px, 1fr);
+		}
 	}
 }

@@ -1,11 +1,11 @@
 import e from 'express';
 import React, { Fragment, useRef, useEffect, useState } from 'react';
-import { Input, Button } from '.';
+import { Input, Button } from '../../UI';
 import {
 	createControl,
 	FormControl,
 	validate,
-} from '../../services/validations/form';
+} from '../../../services/validations/form';
 
 export interface Params {
 	value: string

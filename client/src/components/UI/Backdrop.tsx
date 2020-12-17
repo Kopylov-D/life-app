@@ -10,7 +10,8 @@ const Backdrop: React.FC<Props> = ({type, onClick, children}) => {
   return (
     <div className={classNames('backdrop', {[`backdrop-${type}`]: type})} onClick={onClick} >
 
-      {children}
+      {/* {children} */}
+
       
     </div>
   )

@@ -1,6 +1,6 @@
 import React from 'react';
-import gear from '../../assets/img/gear.svg';
-import trash from '../../assets/img/trash.svg';
+import gear from '../../../assets/img/gear.svg';
+import trash from '../../../assets/img/trash.svg';
 
 interface Props {
 	_id: string;
@@ -12,7 +12,7 @@ interface Props {
 
 const CategoryItem: React.FC<Props> = props => {
 	return (
-		<div className="table__item">
+		<div className="table__item table__budget-categories-item">
 			<div>{props.name}</div>
 			<div className="options">
 				<img

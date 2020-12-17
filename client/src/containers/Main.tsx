@@ -1,10 +1,10 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Expense from '../components/Budget/Accounting';
+import Expense from '../components/Budget/Accounting/Accounting';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Menu from '../components/Menu';
-import ModalTemplate from '../components/UI/ModalTemplate';
+import ModalTemplate from '../components/UI/Modal';
 import { BudgetPage } from '../pages';
 
 const Main = (props: any) => {
