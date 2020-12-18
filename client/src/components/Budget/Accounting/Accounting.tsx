@@ -56,38 +56,42 @@ const Accounting: React.FC = () => {
 	};
 
 	return (
-		<Loader size='normal' type='spinner' />
-		// <div className="budget__accounting">
-		// 	<div className="budget__panel">
-		// 		<Select
-		// 			items={months}
-		// 			onItemClick={onMonthClickHandler}
-		// 			type="month"
-		// 			initialId={month}
-		// 		/>
-		// 		<YearChanger
-		// 			startDate={options.startDate}
-		// 			changeYear={year => setYear(year)}
-		// 			year={year}
-		// 		/>
-		// 	</div>
-		// 	{isLoading ? (
-		// 		<Loader size="normal" />
-		// 	) : (
-		// 		<div className="budget__tables">
-		// 			<AccountingTable
-		// 				categories={categories}
-		// 				isExpense={true}
-		// 				title="Расходы"
-		// 			/>
-		// 			<AccountingTable
-		// 				categories={categories}
-		// 				isExpense={false}
-		// 				title="Доходы"
-		// 			/>
-		// 		</div>
-		// 	)}
-		// </div>
+		// <Loader size='normal' type='spinner' />
+		<div className="budget__accounting">
+			<div className="budget__panel">
+				<Select
+					items={months}
+					onItemClick={onMonthClickHandler}
+					type="month"
+					initialId={month}
+				/>
+				<YearChanger
+					startDate={options.startDate}
+					changeYear={year => setYear(year)}
+					year={year}
+				/>
+				<div className='budget__diagramm'>
+					<div className='budget__diagramm-top'></div>
+					<div className='budget__diagramm-bottom'></div>
+				</div>
+			</div>
+			{isLoading ? (
+				<Loader size="normal" />
+			) : (
+				<div className="budget__tables">
+					<AccountingTable
+						categories={categories}
+						isExpense={true}
+						title="Расходы"
+					/>
+					<AccountingTable
+						categories={categories}
+						isExpense={false}
+						title="Доходы"
+					/>
+				</div>
+			)}
+		</div>
 	);
 };
 

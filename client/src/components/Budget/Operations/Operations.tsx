@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
 	selectCurrentCategory,
+	selectIsLoading,
 	selectOptions,
 	selectTransactions,
 } from '../../../store/ducks/budget/selectors';
 import OperationsTable from './OperationsTable';
 import YearChanger from '../YearChanger';
+import { Loader } from '../../UI';
 
 interface Props {
 	// transactions: TransactionInterface[];
@@ -24,25 +26,32 @@ const Operations: React.FC<Props> = () => {
 	const categories = useSelector(selectCategories);
 	const currentCategory = useSelector(selectCurrentCategory);
 	const options = useSelector(selectOptions);
+	const isLoading = useSelector(selectIsLoading);
 
 	useEffect(() => {
 		dispatch(getBudgetData(year.toString(), '12'));
 	}, [year]);
 
 	return (
-		<div>
+		<Fragment>
 			<YearChanger
 				startDate={options.startDate}
 				changeYear={year => setYear(year)}
 				year={year}
 			/>
-			<OperationsTable
-				transactions={transactions}
-				categories={categories}
-				currentCategory={currentCategory}
-				// onDeleteTransaction={onDeleteTransactionHandler}
-			/>
-		</div>
+			{isLoading ? (
+				<Loader />
+			) : (
+				<div>
+					<OperationsTable
+						transactions={transactions}
+						categories={categories}
+						currentCategory={currentCategory}
+						// onDeleteTransaction={onDeleteTransactionHandler}
+					/>
+				</div>
+			)}
+		</Fragment>
 	);
 };
 

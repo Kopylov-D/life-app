@@ -19,8 +19,8 @@ const Table: React.FC<Props> = props => {
 						[`table__${props.class}`]: props.class,
 					})}
 				>
-					{props.headerItems.map(item => (
-						<div>{item}</div>
+					{props.headerItems.map((item, index) => (
+						<div key={index}>{item}</div>
 					))}
 				</header>
 			)}

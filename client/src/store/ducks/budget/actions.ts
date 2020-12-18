@@ -6,7 +6,7 @@ import {
 	GET_BUDGETDATA,
 	ADD_CATEGORY,
 	UPDATE_CATEGORIES,
-	// SET_CATEGORIES,
+	GET_CATEGORIES,
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
 	DELETE_TRANSACTION,
@@ -35,8 +35,22 @@ export function getTransactions() {
 		dispatch(fetchStart());
 		try {
 			const { data } = await api.fetchTransactions();
-			console.log(data);
+			console.log(data)
 			dispatch(setTransactions(data));
+			dispatch(fetchSuccess());
+		} catch (e) {
+			console.log(e);
+		}
+	};
+}
+
+export function getCategories() {
+	return async (dispatch: any) => {
+		dispatch(fetchStart());
+		try {
+			const { data } = await api.fetchCategories();
+			dispatch(setCategories(data));
+			dispatch(fetchSuccess());
 		} catch (e) {
 			console.log(e);
 		}
@@ -168,7 +182,7 @@ function setTransactions(payload: TransactionInterface[]): GetTransactions {
 	};
 }
 
-type getBudgetData = {
+type GetBudgetData = {
 	type: typeof GET_BUDGETDATA;
 	payload: BudgetData;
 };
@@ -179,7 +193,7 @@ type BudgetData = {
 	options: Options;
 };
 
-function setBudgetData(payload: BudgetData): getBudgetData {
+function setBudgetData(payload: BudgetData): GetBudgetData {
 	return {
 		type: GET_BUDGETDATA,
 		payload,
@@ -206,6 +220,18 @@ type DeleteCategory = {
 function delCategory(payload: string): DeleteCategory {
 	return {
 		type: DELETE_CATEGORY,
+		payload,
+	};
+}
+
+type GetCategories = {
+	type: typeof GET_CATEGORIES;
+	payload: CategoryInterface[];
+};
+
+function setCategories(payload: CategoryInterface[]): GetCategories {
+	return {
+		type: GET_CATEGORIES,
 		payload,
 	};
 }

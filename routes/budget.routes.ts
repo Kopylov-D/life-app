@@ -9,6 +9,7 @@ router.get('/', auth, BudgetController.getBudgetData)
 router.get('/transactions', auth, BudgetController.getTransactions)
 router.post('/transactions', auth, BudgetController.addTransaction);
 router.delete('/transactions/:id', auth, BudgetController.deleteTransaction);
+router.get('/categories', auth, BudgetController.getCategories)
 router.post('/categories', auth, BudgetController.addCategory)
 router.patch('/categories/:id', auth, BudgetController.changeCategory)
 router.delete('/categories/:id', auth, BudgetController.deleteCategory)

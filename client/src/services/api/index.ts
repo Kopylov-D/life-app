@@ -79,21 +79,26 @@ export const api = {
 	fetchBudgetData: (year: string, month: string) =>
 		axios.get(`/api/budget?year=${year}&month=${month}`),
 
-	fetchTransactions: () =>
-		axios.get(`/api/budget/transactions`),
+	fetchTransactions: () => axios.get(`/api/budget/transactions`),
 
-	getCategories: () =>
-		axios.get('/api/budget/transactions/get').catch(e => {
+	fetchCategories: () =>
+		axios.get('/api/budget/categories').catch(e => {
 			throw new Error(e.response.data.message || 'Что-то пошло не так');
 		}),
 
-	addCategory: (name: string, isExpense: boolean): any => axios.post('/api/budget/categories', {name, isExpense}),
+	addCategory: (name: string, isExpense: boolean): any =>
+		axios.post('/api/budget/categories', { name, isExpense }),
 
-	changeCategory: (_id: string, name: string, color: string, isExpense: boolean) =>
+	changeCategory: (
+		_id: string,
+		name: string,
+		color: string,
+		isExpense: boolean
+	) =>
 		axios.patch(`/api/budget/categories/${_id}`, {
 			name,
 			color,
-			isExpense
+			isExpense,
 		}),
 
 	deleteCategory: (_id: string): any =>

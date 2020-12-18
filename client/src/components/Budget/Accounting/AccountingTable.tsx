@@ -16,7 +16,7 @@ const AccountingTable: React.FC<Props> = ({ categories, isExpense, title }) => {
 				{categories.map(item => {
 					if (item.isExpense === isExpense) {
 						return (
-							<div className="table__item table__accounting">
+							<div className="table__item table__accounting" key={item._id}>
 								<div>{item.name}</div>
 								<div>{item.amount} руб.</div>
 							</div>

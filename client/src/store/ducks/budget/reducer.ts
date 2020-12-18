@@ -4,7 +4,7 @@ import {
 	GET_TRANSACTIONS,
 	ADD_CATEGORY,
 	UPDATE_CATEGORIES,
-	SET_CATEGORIES,
+	GET_CATEGORIES,
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
 	DELETE_TRANSACTION,
@@ -102,10 +102,10 @@ export const budgetReducer = (
 				...state,
 				categories: action.payload,
 			};
-		case SET_CATEGORIES:
+		case GET_CATEGORIES:
 			return {
 				...state,
-				categories: action.payload,
+				categories: action.payload.categories,
 			};
 		case DELETE_CATEGORY:
 			return {

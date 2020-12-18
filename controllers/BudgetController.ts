@@ -78,11 +78,11 @@ class BudgetController {
 				}
 			};
 
-			let to = 1
+			let to = 1;
 
 			if (month === '12') {
-				month = '0'
-				to = 12
+				month = '0';
+				to = 12;
 			}
 
 			const transactions = await Transaction.find({
@@ -119,6 +119,15 @@ class BudgetController {
 				.sort({ date: -1 })
 				.populate('category', 'name');
 			res.status(200).json({ transactions });
+		} catch (e) {
+			res.status(500).json({ message: 'Что-то пошло не так' });
+		}
+	}
+
+	async getCategories(req: RequestWithUser, res: Response) {
+		try {
+			const categories = await Category.find({ user: req.user });
+			res.status(200).json({ categories });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
