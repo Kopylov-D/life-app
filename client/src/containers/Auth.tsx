@@ -2,7 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { createControl, FormControl, validate } from '../services/validations/form';
-import { Button, Input, Toast } from '../components/UI';
+import Input from '../components/UI/Input';
+import Button from '../components/UI/Button';
 import Error from '../components/Error';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '../store/ducks/auth/actions';

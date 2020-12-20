@@ -6,7 +6,7 @@ type Props = {
 	onClick: () => void;
 	disabled: boolean;
 	isLoading?: boolean;
-	type: 'primary' | 'secondary';
+	type: 'primary' | 'secondary' | 'count';
 	size?: 'small' | 'large';
 };
 

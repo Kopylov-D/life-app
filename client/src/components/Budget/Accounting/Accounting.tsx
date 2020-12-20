@@ -6,12 +6,14 @@ import {
 	selectCategoriesWithAmount,
 	selectIsLoading,
 	selectOptions,
+	// selectSumAmount,
 } from '../../../store/ducks/budget/selectors';
 import { Month } from '../../../types';
-import { Loader } from '../../UI';
+import Loader from '../../UI/Loader';
 import Select from '../../UI/Select';
 import YearChanger from '../YearChanger';
 import AccountingTable from './AccountingTable';
+import Proportion from './Proportion';
 
 const months: Month[] = [
 	{ _id: '0', name: 'Январь' },
@@ -31,7 +33,7 @@ const months: Month[] = [
 
 const Accounting: React.FC = () => {
 	const dispatch = useDispatch();
-	const categories = useSelector(selectCategoriesWithAmount);
+	const { categories, proportion } = useSelector(selectCategoriesWithAmount);
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
 
@@ -41,8 +43,15 @@ const Accounting: React.FC = () => {
 
 	const { location } = useHistory();
 
+	console.log(proportion);
+
 	useEffect(() => {
 		dispatch(getBudgetData(year.toString(), month));
+
+		// if (proportion) {
+		// 	const newPercent = (proportion.expense * 100) / proportion.income;
+		// 	setPercent(newPercent)
+		// }
 		// if (location.pathname === '/budget/expense') {
 		// 	setIsExpense(true);
 		// } else {
@@ -50,6 +59,12 @@ const Accounting: React.FC = () => {
 		// }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [year, month, location.pathname]);
+
+	// const calcSum = () => {
+	// 	const fullSum = sum.sumExpense + sum.sumIncome
+
+	// 	const
+	// }
 
 	const onMonthClickHandler = (id: string) => {
 		setMonth(id);
@@ -59,24 +74,23 @@ const Accounting: React.FC = () => {
 		// <Loader size='normal' type='spinner' />
 		<div className="budget__accounting">
 			<div className="budget__panel">
-				<Select
-					items={months}
-					onItemClick={onMonthClickHandler}
-					type="month"
-					initialId={month}
-				/>
-				<YearChanger
-					startDate={options.startDate}
-					changeYear={year => setYear(year)}
-					year={year}
-				/>
-				<div className='budget__diagramm'>
-					<div className='budget__diagramm-top'></div>
-					<div className='budget__diagramm-bottom'></div>
+				<div className="budget__panel-selectors">
+					<Select
+						items={months}
+						onItemClick={onMonthClickHandler}
+						type="month"
+						initialId={month}
+					/>
+					<YearChanger
+						startDate={options.startDate}
+						changeYear={year => setYear(year)}
+						year={year}
+					/>
 				</div>
+				<Proportion proportion={proportion} />
 			</div>
 			{isLoading ? (
-				<Loader size="normal" />
+				<Loader size="small" type='cube-grid' />
 			) : (
 				<div className="budget__tables">
 					<AccountingTable

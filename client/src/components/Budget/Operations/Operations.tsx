@@ -10,7 +10,7 @@ import {
 } from '../../../store/ducks/budget/selectors';
 import OperationsTable from './OperationsTable';
 import YearChanger from '../YearChanger';
-import { Loader } from '../../UI';
+import Loader from '../../UI/Loader';
 
 interface Props {
 	// transactions: TransactionInterface[];
@@ -40,7 +40,7 @@ const Operations: React.FC<Props> = () => {
 				year={year}
 			/>
 			{isLoading ? (
-				<Loader />
+				<Loader type='cube-grid' />
 			) : (
 				<div>
 					<OperationsTable

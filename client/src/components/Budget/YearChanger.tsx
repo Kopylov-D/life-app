@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { parseToDate } from '../../services/utils/dateUtils';
+import { selectIsLoading } from '../../store/ducks/budget/selectors';
+import Button from '../UI/Button';
 
 type Props = {
 	startDate: string;
@@ -9,6 +12,7 @@ type Props = {
 
 const YearChanger: React.FC<Props> = props => {
 	const [year, setYear] = useState<number>(new Date().getFullYear());
+	const isLoading = useSelector(selectIsLoading);
 
 	useEffect(() => {
 		setYear(props.year);
@@ -33,10 +37,14 @@ const YearChanger: React.FC<Props> = props => {
 	};
 
 	return (
-		<div>
-			<button onClick={prevYearHandler}></button>
+		<div className="year-changer">
+			<Button onClick={prevYearHandler} type="count" disabled={isLoading}>
+				<span className="material-icons">chevron_left</span>
+			</Button>
 			<span>{year} </span>
-			<button onClick={nextYearHandler}></button>
+			<Button onClick={nextYearHandler} type="count" disabled={isLoading}>
+				<span className="material-icons">chevron_right</span>
+			</Button>
 		</div>
 	);
 };

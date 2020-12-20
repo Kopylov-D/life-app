@@ -5,7 +5,7 @@ import {
 	FormControl,
 	validate,
 } from '../../../services/validations/form';
-import { Input } from '../../UI';
+import Input from '../../UI/Input';
 import calendar from '../../../assets/img/calendar.svg';
 import Select from '../../UI/Select';
 import { CategoryInterface } from '../../../store/ducks/budget/types';

@@ -1,6 +1,6 @@
-import e from 'express';
-import React, { Fragment, useRef, useEffect, useState } from 'react';
-import { Input, Button } from '../../UI';
+import React, { Fragment, useState } from 'react';
+import Button from '../../UI/Button';
+import Input from '../../UI/Input';
 import {
 	createControl,
 	FormControl,
@@ -8,9 +8,9 @@ import {
 } from '../../../services/validations/form';
 
 export interface Params {
-	value: string
-	isExpense: boolean
-	color?: string
+	value: string;
+	isExpense: boolean;
+	color?: string;
 }
 
 interface Props {
@@ -19,6 +19,7 @@ interface Props {
 	onClick(params: Params): void;
 	onCloseClick(): void;
 }
+
 
 const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	const [control, setControl] = useState<FormControl>(
@@ -43,18 +44,18 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	};
 
 	const onOkClickHandler = () => {
-		onClick({value: control.value, isExpense: true});
+		onClick({ value: control.value, isExpense: true });
 	};
 
 	const onEnterKeyPress = (e: React.KeyboardEvent) => {
 		if (e.key === 'Enter') {
-			onOkClickHandler()
+			onOkClickHandler();
 		}
-	}
+	};
 
 	const onSubmit = (e: React.SyntheticEvent) => {
-		e.preventDefault()
-	}
+		e.preventDefault();
+	};
 
 	return (
 		<Fragment>
@@ -86,41 +87,8 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 					</Button>
 				</div>
 			</div>
-			{/* <Backdrop onClick={onCancelModalClick} onKeyPress={onKeyPress} /> */}
-			{/* <div className="backdrop backdrop__modal"></div> */}
 		</Fragment>
-	);
-	// return (
-	//   <Fragment>
-	//     <div className={classes.Modal}>
-	//       <label>{modal.title}</label>
-	//       <form
-	//         onSubmit={event => {
-	//           onSubmitModal(event);
-	//         }}
-	//       >
-	//         <Input
-	//           refInput={refInput}
-	//           type={modal.inputType}
-	//           style={modal.style}
-	//           onChange={onChangeModal}
-	//         />
-	//       </form>
-	//       <div className={classes.buttons}>
-	//         <Button type="success" onClick={onOkModalClick}>
-	//           Ок
-	//         </Button>
-	//         <Button type="primary" onClick={onCancelModalClick}>
-	//           Отмена
-	//         </Button>
-	//         <Button type="error" onClick={onDeleteModalClick}>
-	//           Удалить категорию
-	//         </Button>
-	//       </div>
-	//     </div>
-	//     <Backdrop onClick={onCancelModalClick} onKeyPress={onKeyPress} />
-	//   </Fragment>
-	// );
+	)
 };
 
 export default Modal;

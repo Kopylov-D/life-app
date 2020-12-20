@@ -32,6 +32,7 @@ const Table: React.FC<Props> = props => {
 			>
 				{props.children}
 			</div>
+			
 		</div>
 	);
 };

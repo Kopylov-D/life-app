@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react';
-import { Input, Button } from '../../UI';
+import Input from '../../UI/Input';
+import Button from '../../UI/Button';
 import {
 	createControl,
 	FormControl,
@@ -77,12 +78,9 @@ const CategoryChanger: React.FC<Props> = ({
 		e.preventDefault();
 	};
 
-	console.log(';sdfsdf');
-
 	return (
 		<Fragment>
-			{/* <Backdrop onClick={onCloseClick} /> */}
-			<Modal title={title} closeModal={onCloseClick} backdropType='black'>
+			<Modal title={title} closeModal={onCloseClick} backdropType="black">
 				<form
 					className="category-changer"
 					onSubmit={e => {

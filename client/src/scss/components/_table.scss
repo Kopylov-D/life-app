@@ -56,7 +56,7 @@
 		#{$parent}__item,
 		#{$parent}__header {
 			grid-template-columns:
-				minmax(90px, 1fr)
+				minmax(110px, 2.5fr)
 				minmax(50px, 1fr);
 		}
 	}

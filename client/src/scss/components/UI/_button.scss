@@ -15,7 +15,17 @@
 	align-items: center;
 	justify-content: center;
 
-	transition-duration: 0.4s;
+	transition-duration: 0.9s;
+
+	&.count {
+		min-width: 20px;
+		padding: 0;
+		width: 20px;
+		height: 20px;
+		background: $c-white;
+		color: $c-primary;
+		border: 1px solid $c-primary;
+	}
 
 	&.primary {
 		background: $c-primary;
@@ -37,17 +47,14 @@
 	}
 
 	&:focus {
-		box-shadow: 0 0 0 2px rgba(#45a5ff, $alpha: 0.5);
+		box-shadow: 0 0 0 2px rgba($c-primary, $alpha: 0.5);
 	}
 
 	&:hover {
-		background: linear-gradient(
-				0deg,
-				rgba(255, 255, 255, 0.15),
-				rgba(255, 255, 255, 0.15)
-			),
-			linear-gradient(180deg, #45a6ff 0%, #0055fb 100%), #c4c4c4;
+		background: 
+			linear-gradient(180deg, $c-primary 0%, #0055fb 100%);
 		cursor: pointer;
+		// color: $c-white;
 	}
 
 	&:active {

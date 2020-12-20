@@ -12,7 +12,8 @@ import {
 	selectIsLoading,
 } from '../../../store/ducks/budget/selectors';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
-import { Button, Loader } from '../../UI';
+import Button from '../../UI/Button'
+import  Loader from '../../UI/Loader';
 import { Params } from '../Operations/OperationModal';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryChanger';
@@ -32,7 +33,9 @@ const Categories: React.FC = () => {
 	>();
 
 	useEffect(() => {
-		dispatch(getCategories());
+		if (categories.length < 1) {
+			dispatch(getCategories());
+		}
 	}, []);
 
 	const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
@@ -74,7 +77,7 @@ const Categories: React.FC = () => {
 	return (
 		<Fragment>
 			{isLoading ? (
-				<Loader />
+				<Loader type='cube-grid' />
 			) : (
 				<div className="budget__categories">
 					<Table class="budget-categories">
