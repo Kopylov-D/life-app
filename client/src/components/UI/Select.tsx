@@ -16,11 +16,13 @@ const Select: React.FC<Props> = ({ type, items, initialId, onItemClick }) => {
 	const [label, setLabel] = useState<string>('');
 
 	useEffect(() => {
-		if (initialId) {
+		if (initialId && items.length > 0) {
 			const item = items.find(item => item._id === initialId);
-			item && setLabel(item.name);
+			console.log(items)
+			item && setLabel(item.name) 
+			
 		}
-	}, []);
+	}, [items]);
 
 	const toggleDropdown = () => {
 		setIsOpen(isOpen => !isOpen);
@@ -38,7 +40,7 @@ const Select: React.FC<Props> = ({ type, items, initialId, onItemClick }) => {
 			<div className="select">
 				<div className="select__input" onClick={toggleDropdown}>
 					<span>{label}</span>
-					<i>х</i>
+					<span className="material-icons">{`arrow_drop_${isOpen ? 'up' : 'down'}`}</span>
 				</div>
 
 				{isOpen && (

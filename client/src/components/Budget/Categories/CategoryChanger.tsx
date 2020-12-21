@@ -8,7 +8,6 @@ import {
 } from '../../../services/validations/form';
 import Switch from '../../UI/Switch';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
-import Backdrop from '../../UI/Backdrop';
 import Modal from '../../UI/Modal';
 
 export interface Params {
@@ -20,7 +19,6 @@ export interface Params {
 
 interface Props {
 	title: string;
-	// isExpense: boolean;
 	category?: CategoryInterface;
 	onClick(params: Params): void;
 	onCloseClick(): void;

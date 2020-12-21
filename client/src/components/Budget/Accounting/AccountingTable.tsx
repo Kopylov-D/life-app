@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
 import Table from '../Table';
 

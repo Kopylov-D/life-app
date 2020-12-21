@@ -1,20 +1,18 @@
-import classNames from 'classnames'
-import React from 'react'
+import classNames from 'classnames';
+import React from 'react';
 
 type Props = {
-  onClick():void
-  type?: string
-}
+	onClick(): void;
+	type?: string;
+};
 
-const Backdrop: React.FC<Props> = ({type, onClick, children}) => {
-  return (
-    <div className={classNames('backdrop', {[`backdrop-${type}`]: type})} onClick={onClick} >
+const Backdrop: React.FC<Props> = ({ type, onClick }) => {
+	return (
+		<div
+			className={classNames('backdrop', { [`backdrop-${type}`]: type })}
+			onClick={onClick}
+		></div>
+	);
+};
 
-      {/* {children} */}
-
-      
-    </div>
-  )
-}
-
-export default Backdrop
+export default Backdrop;

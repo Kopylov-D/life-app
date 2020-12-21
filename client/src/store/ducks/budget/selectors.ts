@@ -66,26 +66,3 @@ export const selectCategoriesWithAmount = createSelector(
 	}
 );
 
-// export const selectSumAmount = createSelector(
-// 	selectCategoriesWithAmount,
-// 	categories => {
-// 		let sumExpense = 0;
-// 		let sumIncome = 0;
-// 		categories.forEach((category: CategoryInterface) => {
-// 			if (category.isExpense) {
-// 				sumExpense += category.amount;
-// 			} else {
-// 				sumIncome += category.amount;
-// 			}
-// 		});
-
-// 		return {
-// 			sumExpense,
-// 			sumIncome,
-// 		};
-// 	}
-// );
-
-export const selectExample = (state: RootState) => {
-	return state.budget.categories;
-};

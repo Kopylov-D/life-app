@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 import {
 	createControl,
@@ -40,9 +40,7 @@ const NewTransaction: React.FC<Props> = ({
 	const [isExpense, setIsExpense] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
-	const [filtredCategories, setfiltredCategories] = useState<
-		CategoryInterface[]
-	>([]);
+	const [filtredCategories, setfiltredCategories] = useState<CategoryInterface[]>([]);
 
 	useEffect(() => {
 		setCategoryId(currentCategory._id);

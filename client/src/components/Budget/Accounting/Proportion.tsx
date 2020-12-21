@@ -14,14 +14,13 @@ const Proportion: React.FC<Props> = ({ proportion }) => {
 			>
 				{proportion.expense}
 			</div>
-			{/* <span>{proportion.expense}</span> */}
+
 			<div
 				className="budget__proportion-bottom"
 				style={{ width: proportion.percentIncome + '%' }}
 			>
 				{proportion.income}
 			</div>
-			{/* <span>{proportion.expense}</span> */}
 		</div>
 	);
 };

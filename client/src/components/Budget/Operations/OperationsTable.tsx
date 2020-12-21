@@ -1,12 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import {
 	addTransaction,
-	changeCategory,
 	deleteTransaction,
 } from '../../../store/ducks/budget/actions';
-
-import { Params } from './OperationModal';
 
 import {
 	CategoryInterface,
@@ -14,8 +11,6 @@ import {
 } from '../../../store/ducks/budget/types';
 import NewTransaction from './NewTransaction';
 import Transaction from './Transaction';
-import Modal from '../../UI/Modal';
-import Backdrop from '../../UI/Backdrop';
 
 type Props = {
 	transactions: TransactionInterface[];
@@ -28,30 +23,8 @@ const OperationsTable: React.FC<Props> = ({
 	transactions,
 	categories,
 	currentCategory,
-	// onDeleteTransaction,
 }) => {
-	// const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-	// const [currentCategoryId, setCurrentCategoryId] = useState<string>('');
-
 	const dispatch = useDispatch();
-
-	// const onChangeCategoryHandler = (e: React.MouseEvent, id: string): void => {
-	// 	e.preventDefault();
-	// 	setCurrentCategoryId(id);
-	// 	setModalIsOpen(true);
-	// };
-
-	// const onOkModalClick = (params: Params): void => {
-	// 	dispatch(
-	// 		changeCategory(currentCategoryId, params.value, 'red', params.isExpense)
-	// 	);
-	// 	setModalIsOpen(false);
-	// };
-
-	// const onCancelModalClick = () => {
-	// 	setModalIsOpen(false);
-	// 	console.log('Cancel modal');
-	// };
 
 	const onAddTransactionHandler = (
 		categoryId: string,
@@ -97,7 +70,6 @@ const OperationsTable: React.FC<Props> = ({
 					);
 				})}
 			</div>
-
 		</div>
 	);
 };

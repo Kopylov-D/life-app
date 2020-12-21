@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { TransactionInterface } from '../../store/ducks/budget/types';
 
 type Item = {
 	id: string;

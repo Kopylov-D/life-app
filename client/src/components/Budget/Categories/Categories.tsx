@@ -4,7 +4,6 @@ import {
 	deleteCategory,
 	changeCategory,
 	addCategory,
-	getBudgetData,
 	getCategories,
 } from '../../../store/ducks/budget/actions';
 import {
