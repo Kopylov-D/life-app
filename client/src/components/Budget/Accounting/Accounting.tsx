@@ -6,7 +6,6 @@ import {
 	selectCategoriesWithAmount,
 	selectIsLoading,
 	selectOptions,
-	// selectSumAmount,
 } from '../../../store/ducks/budget/selectors';
 import { Month } from '../../../types';
 import Loader from '../../UI/Loader';
@@ -78,7 +77,7 @@ const Accounting: React.FC = () => {
 					<Select
 						items={months}
 						onItemClick={onMonthClickHandler}
-						type="month"
+						// type="month"
 						initialId={month}
 					/>
 					<YearChanger
@@ -89,6 +88,7 @@ const Accounting: React.FC = () => {
 				</div>
 				<Proportion proportion={proportion} />
 			</div>
+
 			{isLoading ? (
 				<Loader size="small" type='cube-grid' />
 			) : (

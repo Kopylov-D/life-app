@@ -98,7 +98,7 @@ const NewTransaction: React.FC<Props> = ({
 			/>
 			<Select
 				items={filtredCategories}
-				type="category"
+				// type="category"
 				initialId={currentCategory._id}
 				onItemClick={setCurrentCategoryId}
 			/>

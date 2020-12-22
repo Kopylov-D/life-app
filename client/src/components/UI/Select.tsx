@@ -4,23 +4,26 @@ import Backdrop from './Backdrop';
 
 interface Props extends Selector {
 	// items: props.type[];
-	type: 'month' | 'year' | 'category';
+	// type: 'month' | 'year' | 'category';
 	initialId: string;
 	onItemClick(id: string): void;
 }
 
 // export type Select = ReturnType<typeof rootReducer>;
 
-const Select: React.FC<Props> = ({ type, items, initialId, onItemClick }) => {
+const Select: React.FC<Props> = ({ items, initialId, onItemClick }) => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [label, setLabel] = useState<string>('');
 
 	useEffect(() => {
 		if (initialId && items.length > 0) {
 			const item = items.find(item => item._id === initialId);
-			console.log(items)
-			item && setLabel(item.name) 
-			
+			if (item) {
+				setLabel(item.name);
+			} else {
+				setLabel(items[0].name);
+				onItemClick(items[0]._id);
+			}
 		}
 	}, [items]);
 
@@ -40,7 +43,9 @@ const Select: React.FC<Props> = ({ type, items, initialId, onItemClick }) => {
 			<div className="select">
 				<div className="select__input" onClick={toggleDropdown}>
 					<span>{label}</span>
-					<span className="material-icons">{`arrow_drop_${isOpen ? 'up' : 'down'}`}</span>
+					<span className="material-icons">{`arrow_drop_${
+						isOpen ? 'up' : 'down'
+					}`}</span>
 				</div>
 
 				{isOpen && (

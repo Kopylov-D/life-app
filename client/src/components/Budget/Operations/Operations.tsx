@@ -4,6 +4,7 @@ import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
 	selectCurrentCategory,
+	selectDataChart,
 	selectIsLoading,
 	selectOptions,
 	selectTransactions,
@@ -27,6 +28,9 @@ const Operations: React.FC<Props> = () => {
 	const currentCategory = useSelector(selectCurrentCategory);
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
+	const chart = useSelector(selectDataChart)
+
+	console.log(chart)
 
 	useEffect(() => {
 		dispatch(getBudgetData(year.toString(), '12'));

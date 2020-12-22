@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { formatDate, parseToDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
 import { Options } from './contracts/state';
 import { CategoryInterface, TransactionInterface } from './types';
@@ -54,6 +55,33 @@ export const selectCategoriesWithAmount = createSelector(
 		const percentIncome = (income * 100) / (expense + income);
 		const percentExpense = 100 - percentIncome;
 
+		// const result: DataChartType[] = [];
+
+		// let sum = 0;
+		// let name = '';
+
+		// transactions.map((transaction, index) => {
+
+		// 	name = formatDate(parseToDate(transaction.date));
+
+		// 	if (
+		// 		parseToDate(transaction.date).getDay() ===
+		// 			parseToDate(transactions[index - 1].date).getDay() &&
+		// 		index > 0
+		// 	) {
+		// 		sum += transaction.amount;
+		// 	} else {
+		// 		result.push({
+		// 			value: sum,
+		// 			name,
+		// 		});
+
+		// 		sum = 0;
+		// 	}
+		// });
+
+		// console.log(result);
+
 		return {
 			categories: categoriesWithAmount,
 			proportion: {
@@ -66,3 +94,49 @@ export const selectCategoriesWithAmount = createSelector(
 	}
 );
 
+type DataChartType = {
+	name: string;
+	value: number;
+};
+
+export const selectDataChart = createSelector(
+	selectTransactions,
+	selectCategories,
+	(transactions: TransactionInterface[], categories): DataChartType[] => {
+		const result: DataChartType[] = [];
+
+		let sum = 0;
+		let name = '';
+
+		transactions.map((transaction, index) => {
+			if (index === 0) {
+				sum = transaction.amount;
+				name = formatDate(transaction.date);
+			} else {
+				if (
+					formatDate(transaction.date) ===
+					formatDate(transactions[index - 1].date)
+				) {
+					transaction.isExpense
+						? (sum -= transaction.amount)
+						: (sum += transaction.amount);
+				} else {
+					result.push({
+						value: sum,
+						name,
+					});
+					sum = transaction.amount;
+					name = formatDate(transaction.date);
+				}
+			}
+
+			if (index === transactions.length - 1) {
+				result.push({
+					value: sum,
+					name,
+				});
+			}
+		});
+		return result.reverse();
+	}
+);

@@ -8,7 +8,7 @@ export interface TransactionInterface {
 	amount: number;
 	// date: string;
 	isExpense: boolean;
-	date: Date;
+	date: string;
 	__v?: number;
 }
 
