@@ -3,6 +3,7 @@ import { User } from '../models/User';
 import { Transaction } from '../models/Budget/Transaction';
 import { Category } from '../models/Budget/Category';
 import { FiltredDateType, RequestWithUser } from '../types/types';
+import { type } from 'os';
 
 class BudgetController {
 	async getInfo(req: RequestWithUser, res: Response) {
@@ -66,10 +67,8 @@ class BudgetController {
 
 	async getBudgetData(req: RequestWithUser, res: Response) {
 		try {
-			let { year, month } = req.query;
-			// const formDate = (year: string, month: string) => {
-			// 	return `${year}-${month}-00T00:00:00.000Z`;
-			// };
+			let { year, month, all } = req.query;
+
 			const formDate = (year: any, month: any, to = 0) => {
 				if (year && month) {
 					return new Date(+year, +month + to, 1);
@@ -85,12 +84,21 @@ class BudgetController {
 				to = 12;
 			}
 
+			let optionsDate: FiltredDateType = {
+				$gte: formDate(year, month),
+				$lt: formDate(year, month, to),
+			};
+
+			if (all === 'all') {
+				optionsDate = {
+					$gte: new Date(1900),
+					$lt: new Date(),
+				};
+			}
+
 			const transactions = await Transaction.find({
 				user: req.user,
-				date: {
-					$gte: formDate(year, month),
-					$lt: formDate(year, month, to),
-				},
+				date: optionsDate,
 			})
 				.sort({ date: -1 })
 				.populate('category', 'name');

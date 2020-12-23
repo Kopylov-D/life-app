@@ -4,7 +4,6 @@ import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
 	selectCurrentCategory,
-	selectDataChart,
 	selectIsLoading,
 	selectOptions,
 	selectTransactions,
@@ -13,11 +12,7 @@ import OperationsTable from './OperationsTable';
 import YearChanger from '../YearChanger';
 import Loader from '../../UI/Loader';
 
-interface Props {
-	// transactions: TransactionInterface[];
-	// categories: CategoryInterface[]
-	// currentCategory: CategoryInterface
-}
+interface Props {}
 
 const Operations: React.FC<Props> = () => {
 	const dispatch = useDispatch();
@@ -28,9 +23,6 @@ const Operations: React.FC<Props> = () => {
 	const currentCategory = useSelector(selectCurrentCategory);
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
-	const chart = useSelector(selectDataChart)
-
-	console.log(chart)
 
 	useEffect(() => {
 		dispatch(getBudgetData(year.toString(), '12'));
@@ -44,14 +36,13 @@ const Operations: React.FC<Props> = () => {
 				year={year}
 			/>
 			{isLoading ? (
-				<Loader type='cube-grid' />
+				<Loader type="cube-grid" />
 			) : (
 				<div>
 					<OperationsTable
 						transactions={transactions}
 						categories={categories}
 						currentCategory={currentCategory}
-						// onDeleteTransaction={onDeleteTransactionHandler}
 					/>
 				</div>
 			)}

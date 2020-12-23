@@ -29,6 +29,7 @@ export type CategoryType = {
 };
 
 export type FiltredDateType = {
-	$gte: Date,
-	$lt: Date,
-}
+	$gte: Date;
+	$lt: Date;
+};
+
