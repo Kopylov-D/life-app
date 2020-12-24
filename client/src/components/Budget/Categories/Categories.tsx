@@ -92,7 +92,8 @@ const Categories: React.FC = () => {
 						))}
 					</Table>
 					<Button
-						type="primary"
+						// type="primary"
+						color='primary'
 						size="small"
 						disabled={false}
 						onClick={() => setNewCategoryModalIsOpen(toggle => !toggle)}

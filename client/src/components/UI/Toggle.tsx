@@ -21,10 +21,10 @@ const Switch: React.FC<Props> = ({
 	onSwitch,
 }) => {
 	let toggle = (
-		<Fragment>
+		<div className='toggle__switch'>
 			<div
 				className={classNames(
-					'toggle__switch',
+					'toggle__switch-item',
 					// { active: flag },
 					{ [colorLeft]: flag }
 				)}
@@ -34,7 +34,7 @@ const Switch: React.FC<Props> = ({
 			</div>
 			<div
 				className={classNames(
-					'toggle__switch',
+					'toggle__switch-item',
 					// { active: !flag },
 					{ [colorRight ? colorRight : colorLeft]: !flag }
 				)}
@@ -42,7 +42,7 @@ const Switch: React.FC<Props> = ({
 			>
 				{textRight}
 			</div>
-		</Fragment>
+		</div>
 	);
 
 	if (type === 'btn') {
@@ -55,7 +55,7 @@ const Switch: React.FC<Props> = ({
 				)}
 				onClick={() => onSwitch(false)}
 			>
-				{textRight}
+				{textLeft}
 			</div>
 		);
 	}

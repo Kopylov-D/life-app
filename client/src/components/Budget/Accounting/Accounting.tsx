@@ -7,7 +7,7 @@ import {
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';
 import Loader from '../../UI/Loader';
-import Panel from '../Panel';
+import DatePanel from '../DatePanel';
 import AccountingTable from './AccountingTable';
 import Proportion from './Proportion';
 
@@ -18,29 +18,16 @@ const Accounting: React.FC = () => {
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
 
-	// const currentMonth = new Date().getMonth().toString();
-	// const [month, setMonth] = useState<string>(currentMonth);
-	// const [year, setYear] = useState<number>(new Date().getFullYear());
-
-	// useEffect(() => {
-	// dispatch(getBudgetData(year.toString(), month));
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [year, month]);
-
-	// const onMonthClickHandler = (id: string) => {
-	// 	setMonth(id);
-	// };
-
-	const changeBudgetDataHandler = (year: string, month: string) => {
+	const changeDateHandler = (year: string, month: string) => {
 		dispatch(getBudgetData(year, month));
 	};
 
 	return (
 		<div className="budget__accounting">
 			<div className="budget__panel">
-				<Panel
+				<DatePanel
 					startDate={options.startDate}
-					changeBudgetData={changeBudgetDataHandler}
+					changeDate={changeDateHandler}
 				/>
 				<Proportion proportion={proportion} />
 			</div>

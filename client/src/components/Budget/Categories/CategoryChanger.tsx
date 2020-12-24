@@ -108,7 +108,8 @@ const CategoryChanger: React.FC<Props> = ({
 				</form>
 				<div className="category-changer__buttons">
 					<Button
-						type="primary"
+						// type="primary"
+						color='primary'
 						size="small"
 						disabled={false}
 						onClick={onOkClickHandler}
@@ -116,7 +117,8 @@ const CategoryChanger: React.FC<Props> = ({
 						Ок
 					</Button>
 					<Button
-						type="secondary"
+						// type="secondary"
+						color='secondary'
 						size="small"
 						disabled={false}
 						onClick={onCloseClick}

@@ -79,10 +79,10 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 					/>
 				</form>
 				<div className="modal__buttons">
-					<Button type="primary" disabled={false} onClick={onOkClickHandler}>
+					<Button color="primary" disabled={false} onClick={onOkClickHandler}>
 						Ок
 					</Button>
-					<Button type="secondary" disabled={false} onClick={onCloseClick}>
+					<Button color="secondary" disabled={false} onClick={onCloseClick}>
 						Отмена
 					</Button>
 				</div>

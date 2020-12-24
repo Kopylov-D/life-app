@@ -15,7 +15,7 @@ import {
 import { Options } from './contracts/state';
 import { CategoryInterface, TransactionInterface } from './types';
 
-export function getBudgetData(year: string, month: string) {
+export function getBudgetData(year: string, month: string = '') {
 	return async (dispatch: any) => {
 		dispatch(fetchStart());
 		try {

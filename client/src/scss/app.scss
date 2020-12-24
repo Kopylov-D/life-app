@@ -177,6 +177,16 @@ body {
 	background-color: $c-expense;
 }
 
-.color-primary {
-	color: $c-primary;
+.primary {
+	color: $c-white;
+	background-color: $c-primary;
+
 }
+
+.secondary {
+	color: black;
+	background-color: $c-secondary;
+	border: #0d0d0d 1px solid;
+}
+
+

@@ -97,7 +97,7 @@ const Auth = () => {
 				<div className="auth__buttons">
 					<Button
 						disabled={!isFormValid}
-						type="primary"
+						color="primary"
 						onClick={loginHandler}
 						isLoading={isLoading}
 					>
@@ -105,7 +105,7 @@ const Auth = () => {
 					</Button>
 					<Button
 						disabled={!isFormValid}
-						type="secondary"
+						color="secondary"
 						onClick={registerHandler}
 						isLoading={isLoading}
 					>

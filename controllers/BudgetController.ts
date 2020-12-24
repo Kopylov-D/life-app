@@ -77,17 +77,17 @@ class BudgetController {
 				}
 			};
 
-			let to = 1;
-
-			if (month === '12') {
-				month = '0';
-				to = 12;
-			}
-
 			let optionsDate: FiltredDateType = {
 				$gte: formDate(year, month),
-				$lt: formDate(year, month, to),
+				$lt: formDate(year, month, 1),
 			};
+
+			if (!month) {
+				optionsDate = {
+					$gte: formDate(year, '0'),
+					$lt: formDate(year, '0', 12),
+				};
+			}
 
 			if (all === 'all') {
 				optionsDate = {

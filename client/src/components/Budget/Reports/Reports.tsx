@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	Area,
@@ -8,7 +8,6 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
-import { months } from '../../../pages/BudgetPage';
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectDataChart,
@@ -16,8 +15,7 @@ import {
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';
 import Loader from '../../UI/Loader';
-import Select from '../../UI/Select';
-import YearChanger from '../YearChanger';
+import DatePanel from '../DatePanel';
 
 const Reports = () => {
 	const dispatch = useDispatch();
@@ -25,15 +23,6 @@ const Reports = () => {
 	const isLoading = useSelector(selectIsLoading);
 	const options = useSelector(selectOptions);
 	const data = useSelector(selectDataChart);
-
-	const currentMonth = new Date().getMonth().toString();
-	const [month, setMonth] = useState<string>(currentMonth);
-	const [year, setYear] = useState<number>(new Date().getFullYear());
-
-	useEffect(() => {
-		dispatch(getBudgetData(year.toString(), month));
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [year, month]);
 
 	const gradientOffset = () => {
 		const dataMax = Math.max(...data.map(i => i.value));
@@ -50,25 +39,13 @@ const Reports = () => {
 
 	const off = gradientOffset();
 
-	const onMonthClickHandler = (id: string) => {
-		setMonth(id);
+	const changeDateHandler = (year: string, month: string) => {
+		dispatch(getBudgetData(year, month));
 	};
 
 	return (
 		<div className="budget__reports">
-			<div className="budget__panel-selectors">
-				<Select
-					items={months}
-					onItemClick={onMonthClickHandler}
-					// type="month"
-					initialId={month}
-				/>
-				<YearChanger
-					startDate={options.startDate}
-					changeYear={year => setYear(year)}
-					year={year}
-				/>
-			</div>
+			<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
 
 			{isLoading ? (
 				<Loader type="cube-grid" />

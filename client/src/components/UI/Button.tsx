@@ -1,30 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import Loader from './Loader';
 
 type Props = {
 	onClick: () => void;
-	disabled: boolean;
+	disabled?: boolean;
 	isLoading?: boolean;
-	type: 'primary' | 'secondary' | 'count';
+	type?: 'count' | 'toggle';
+	color?: 'primary' | 'secondary';
 	size?: 'small' | 'large';
 };
 
 const Button: React.FC<Props> = ({
-	disabled,
+	disabled = false,
 	isLoading,
 	type,
+	color,
 	size,
 	children,
 	onClick,
 }) => {
+
 	return (
 		<button
-			className={classNames('btn', { [`btn-${size}`]: size }, `${type}`)}
+			className={classNames(
+				'btn',
+				{ [`btn-${size}`]: size },
+				{ [`btn-${type}`]: type },
+				`${color}`
+			)}
 			onClick={onClick}
 			disabled={disabled}
 		>
-			{isLoading ? <Loader size='small'/> : children}
+			{isLoading ? <Loader size="small" /> : children}
 		</button>
 	);
 };

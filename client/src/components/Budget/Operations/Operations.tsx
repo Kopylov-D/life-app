@@ -9,14 +9,13 @@ import {
 	selectTransactions,
 } from '../../../store/ducks/budget/selectors';
 import OperationsTable from './OperationsTable';
-import YearChanger from '../YearChanger';
 import Loader from '../../UI/Loader';
+import DatePanel from '../DatePanel';
 
 interface Props {}
 
 const Operations: React.FC<Props> = () => {
 	const dispatch = useDispatch();
-	const [year, setYear] = useState<number>(new Date().getFullYear());
 
 	const transactions = useSelector(selectTransactions);
 	const categories = useSelector(selectCategories);
@@ -24,17 +23,13 @@ const Operations: React.FC<Props> = () => {
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
 
-	useEffect(() => {
-		dispatch(getBudgetData(year.toString(), '12'));
-	}, [year]);
+	const changeDateHandler = (year: string, month: string) => {
+		dispatch(getBudgetData(year, month));
+	};
 
 	return (
 		<Fragment>
-			<YearChanger
-				startDate={options.startDate}
-				changeYear={year => setYear(year)}
-				year={year}
-			/>
+			<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
 			{isLoading ? (
 				<Loader type="cube-grid" />
 			) : (
