@@ -12,6 +12,7 @@ import { CategoryInterface } from '../../../store/ducks/budget/types';
 import { formatDate } from '../../../services/utils/dateUtils';
 import Switch from '../../UI/Switch';
 import Backdrop from '../../UI/Backdrop';
+import Toggle from '../../UI/Toggle';
 
 interface Props {
 	categories: CategoryInterface[];
@@ -103,7 +104,7 @@ const NewTransaction: React.FC<Props> = ({
 				onItemClick={setCurrentCategoryId}
 			/>
 			<div className="options">
-				<Switch
+				<Toggle
 					textLeft="расходы"
 					textRight="доходы"
 					colorLeft="color-expense"
