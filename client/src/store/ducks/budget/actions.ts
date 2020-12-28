@@ -15,16 +15,16 @@ import {
 import { Options } from './contracts/state';
 import { CategoryInterface, TransactionInterface } from './types';
 
-export function getBudgetData(year: string, month: string = '') {
+export function getBudgetData(year: string, month: string = '', all: boolean = false) {
 	return async (dispatch: any) => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await api.fetchBudgetData(year, month);
+			const { data } = await api.fetchBudgetData(year, month, all);
+			console.log(all)
 			dispatch(fetchSuccess());
 			dispatch(setBudgetData(data));
 		} catch (e) {
 			console.log(e);
-			// dispatch(authError(e.message));
 			dispatch(fetchError(e));
 		}
 	};

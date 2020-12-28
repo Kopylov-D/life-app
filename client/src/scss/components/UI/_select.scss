@@ -1,30 +1,20 @@
-// @import
+@import '../../variables';
 
 .select {
-	min-width: 100px;
-	width: 100px;
+	// min-width: 100px;
+	display: inline-block;
+	// width: 100px;
 	position: relative;
 	z-index: 110;
 	user-select: none;
 	box-sizing: border-box;
 
-	// &__backdrop {
-	//   position: fixed;
-	//   // display: none;
-	//   z-index: -1;
-	//   top: 0;
-	//   right: 0;
-	//   left: 0;
-	//   bottom: 0;
-	//   background: transparent;
-	// }
-
 	&__input {
-		height: 20px;
+		height: $element-height;
 		border: 1px solid #ededf0;
 		border-radius: 4px;
 		display: flex;
-		// align-items: center;
+		align-items: center;
 		justify-content: space-between;
 		// padding: 0 1rem;
 		padding-left: 10px;
@@ -39,7 +29,7 @@
 		border-radius: 5px;
 		// z-index: 100;
 
-		top: 20px;
+		top: $element-height;
 		left: 0;
 		right: 0;
 		max-height: 400px;

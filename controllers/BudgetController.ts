@@ -89,7 +89,7 @@ class BudgetController {
 				};
 			}
 
-			if (all === 'all') {
+			if (all === 'true') {
 				optionsDate = {
 					$gte: new Date(1900),
 					$lt: new Date(),

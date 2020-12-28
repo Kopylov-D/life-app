@@ -30,11 +30,13 @@
 
 	&__panel {
 		display: flex;
-		margin: 1rem;
+		// margin: 1rem;
 		justify-content: space-between;
+		margin-bottom: 2rem;
 
 		&-selectors {
 			display: flex;
+			align-items: center;
 		}
 	}
 

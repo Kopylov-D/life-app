@@ -9,6 +9,7 @@ import {
 import Switch from '../../UI/Switch';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
 import Modal from '../../UI/Modal';
+import Toggle from '../../UI/Toggle';
 
 export interface Params {
 	value: string;
@@ -97,11 +98,11 @@ const CategoryChanger: React.FC<Props> = ({
 						onKeyPress={e => onEnterKeyPress(e)}
 					/>
 
-					<Switch
-						colorLeft="color-expense"
-						colorRight="color-income"
-						textLeft="Расходы"
-						textRight="Доходы"
+					<Toggle
+						colorPrimary="color-expense"
+						colorSecondary="color-income"
+						textPrimary="Расходы"
+						textSecondary="Доходы"
 						onSwitch={setIsExpense}
 						flag={isExpense}
 					/>

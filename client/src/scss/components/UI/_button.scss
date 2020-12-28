@@ -18,10 +18,10 @@
 	transition-duration: 0.4s;
 
 	&-count {
-		min-width: 20px;
+		min-width: $element-height;
 		padding: 0;
 		width: 20px;
-		height: 20px;
+		height: $element-height;
 		background: $c-white;
 		color: $c-primary;
 		border: 1px solid $c-primary;

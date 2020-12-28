@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Month } from '../../types';
-import Button from '../UI/Button';
 import Select from '../UI/Select';
-import Switch from '../UI/Switch';
 import Toggle from '../UI/Toggle';
 import YearChanger from './YearChanger';
 
@@ -24,7 +22,7 @@ export const months: Month[] = [
 
 type Props = {
 	startDate: string;
-	changeDate(year: string, month: string): void;
+	changeDate(year: string, month: string, all: boolean): void;
 };
 
 const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
@@ -34,11 +32,17 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 	const [allTime, setAllTime] = useState<boolean>(false);
 
 	useEffect(() => {
-		changeDate(year.toString(), month);
-	}, [month, year]);
+		changeDate(year.toString(), month, allTime);
+	}, [month, year, allTime]);
 
 	const onMonthClickHandler = (id: string) => {
+		setAllTime(false);
 		setMonth(id);
+	};
+
+	const onChangeYearHandler = (year: number) => {
+		setAllTime(false);
+		setYear(year);
 	};
 
 	const allTimeToggle = () => {
@@ -54,16 +58,16 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 			/>
 			<YearChanger
 				startDate={startDate}
-				changeYear={year => setYear(year)}
+				changeYear={onChangeYearHandler}
 				year={year}
 			/>
 
 			<Toggle
-        colorLeft="primary"
-        textLeft='Все время'
+				type="btn"
+				colorPrimary="primary"
+				textPrimary="Все время"
 				flag={allTime}
 				onSwitch={allTimeToggle}
-				type="btn"
 			/>
 		</div>
 	);

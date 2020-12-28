@@ -18,8 +18,8 @@ const Accounting: React.FC = () => {
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
 
-	const changeDateHandler = (year: string, month: string) => {
-		dispatch(getBudgetData(year, month));
+	const changeDateHandler = (year: string, month: string, all: boolean) => {
+		dispatch(getBudgetData(year, month, all));
 	};
 
 	return (

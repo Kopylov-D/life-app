@@ -105,10 +105,10 @@ const NewTransaction: React.FC<Props> = ({
 			/>
 			<div className="options">
 				<Toggle
-					textLeft="расходы"
-					textRight="доходы"
-					colorLeft="color-expense"
-					colorRight="color-income"
+					textPrimary="расходы"
+					textSecondary="доходы"
+					colorPrimary="color-expense"
+					colorSecondary="color-income"
 					onSwitch={setIsExpense}
 					flag={isExpense}
 				/>

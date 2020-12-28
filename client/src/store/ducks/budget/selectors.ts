@@ -70,18 +70,19 @@ export const selectCategoriesWithAmount = createSelector(
 type DataChartType = {
 	name: string;
 	value: number;
+	balance: number;
 };
 
 export const selectDataChart = createSelector(
 	selectTransactions,
-	selectCategories,
-	(transactions: TransactionInterface[], categories): DataChartType[] => {
+	(transactions: TransactionInterface[]): DataChartType[] => {
 		const result: DataChartType[] = [];
 
 		let sum = 0;
 		let name = '';
+		let balance = 0;
 
-		transactions.map((transaction, index) => {
+		transactions.forEach((transaction, index) => {
 			if (index === 0) {
 				sum = transaction.amount;
 				name = formatDate(transaction.date);
@@ -97,6 +98,7 @@ export const selectDataChart = createSelector(
 					result.push({
 						value: sum,
 						name,
+						balance,
 					});
 					sum = transaction.amount;
 					name = formatDate(transaction.date);
@@ -107,10 +109,89 @@ export const selectDataChart = createSelector(
 				result.push({
 					value: sum,
 					name,
+					balance,
 				});
 			}
+
+			console.log(balance);
 		});
 
-			return result.reverse();
+		return result;
+	}
+);
+
+export const selectColumns = createSelector(
+	selectTransactions,
+	(transactions: TransactionInterface[]): DataChartType[] => {
+		const result: DataChartType[] = [];
+
+		let sum = 0;
+		let name = '';
+		let balance = 0;
+
+		transactions.forEach((transaction, index) => {
+			if (index === 0) {
+				sum = transaction.amount;
+				name = formatDate(transaction.date);
+			} else {
+				if (
+					formatDate(transaction.date) ===
+					formatDate(transactions[index - 1].date)
+				) {
+					transaction.isExpense
+						? (sum -= transaction.amount)
+						: (sum += transaction.amount);
+				} else {
+					result.push({
+						value: sum,
+						name,
+						balance,
+					});
+					sum = transaction.amount;
+					name = formatDate(transaction.date);
+				}
+			}
+
+			if (index === transactions.length - 1) {
+				result.push({
+					value: sum,
+					name,
+					balance,
+				});
+			}
+
+			console.log(balance);
+		});
+
+		return result;
+	}
+);
+
+export const selectBalanceChart = createSelector(
+	selectTransactions,
+	(transactions: TransactionInterface[]): DataChartType[] => {
+		const result: DataChartType[] = [];
+
+		let sum = 0;
+		let name = '';
+		let balance = 0;
+
+		transactions = transactions.reverse();
+
+		transactions.forEach(transaction => {
+			transaction.isExpense
+				? (balance -= transaction.amount)
+				: (balance += transaction.amount);
+
+			name = formatDate(transaction.date);
+
+			result.push({
+				name,
+				value: sum,
+				balance,
+			});
+		});
+
+		return result;
 	}
 );

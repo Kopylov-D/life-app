@@ -2,20 +2,20 @@ import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 type Props = {
-	textLeft?: string;
-	textRight?: string;
+	textPrimary?: string;
+	textSecondary?: string;
 	onSwitch(flag: boolean): void;
-	colorLeft: string;
-	colorRight?: string;
+	colorPrimary: string;
+	colorSecondary?: string;
 	flag: boolean;
 	type?: 'switch' | 'btn';
 };
 
 const Switch: React.FC<Props> = ({
-	textLeft,
-	textRight,
-	colorLeft,
-	colorRight,
+	textPrimary,
+	textSecondary,
+	colorPrimary,
+	colorSecondary,
 	flag,
 	type = 'switch',
 	onSwitch,
@@ -26,21 +26,21 @@ const Switch: React.FC<Props> = ({
 				className={classNames(
 					'toggle__switch-item',
 					// { active: flag },
-					{ [colorLeft]: flag }
+					{ [colorPrimary]: flag }
 				)}
 				onClick={() => onSwitch(true)}
 			>
-				{textLeft}
+				{textPrimary}
 			</div>
 			<div
 				className={classNames(
 					'toggle__switch-item',
 					// { active: !flag },
-					{ [colorRight ? colorRight : colorLeft]: !flag }
+					{ [colorSecondary ? colorSecondary : colorPrimary]: !flag }
 				)}
 				onClick={() => onSwitch(false)}
 			>
-				{textRight}
+				{textSecondary}
 			</div>
 		</div>
 	);
@@ -51,11 +51,11 @@ const Switch: React.FC<Props> = ({
 				className={classNames(
 					'toggle__btn',
 					{ 'toggle__btn-active': flag },
-					{ [colorRight ? colorRight : colorLeft]: !flag }
+					{ [colorPrimary]: flag }
 				)}
-				onClick={() => onSwitch(false)}
+				onClick={() => onSwitch(flag)}
 			>
-				{textLeft}
+				{textPrimary}
 			</div>
 		);
 	}
