@@ -23,13 +23,23 @@ const Operations: React.FC<Props> = () => {
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
 
-	const changeDateHandler = (year: string, month: string, all: boolean) => {
-		dispatch(getBudgetData(year, month, all));
+	const changeDateHandler = (
+		year: string,
+		month: string,
+		all: boolean,
+		fullYear: boolean
+	) => {
+		dispatch(getBudgetData(year, month, all, fullYear));
 	};
 
 	return (
 		<Fragment>
-			<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
+			<div className="budget__panel">
+				<DatePanel
+					changeDate={changeDateHandler}
+					startDate={options.startDate}
+				/>
+			</div>
 			{isLoading ? (
 				<Loader type="cube-grid" />
 			) : (

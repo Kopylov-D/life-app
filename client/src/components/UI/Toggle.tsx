@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 type Props = {
@@ -21,24 +21,16 @@ const Switch: React.FC<Props> = ({
 	onSwitch,
 }) => {
 	let toggle = (
-		<div className='toggle__switch'>
+		<div className="toggle__switch" onClick={() => onSwitch(!flag)}>
 			<div
-				className={classNames(
-					'toggle__switch-item',
-					// { active: flag },
-					{ [colorPrimary]: flag }
-				)}
-				onClick={() => onSwitch(true)}
+				className={classNames('toggle__switch-item', { [colorPrimary]: flag })}
 			>
 				{textPrimary}
 			</div>
 			<div
-				className={classNames(
-					'toggle__switch-item',
-					// { active: !flag },
-					{ [colorSecondary ? colorSecondary : colorPrimary]: !flag }
-				)}
-				onClick={() => onSwitch(false)}
+				className={classNames('toggle__switch-item', {
+					[colorSecondary ? colorSecondary : colorPrimary]: !flag,
+				})}
 			>
 				{textSecondary}
 			</div>

@@ -6,17 +6,22 @@
 	user-select: none;
 	max-width: 200px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
 	cursor: pointer;
 
+	
+
 	&__switch {
 		display: flex;
+		align-items: center;
+		justify-content: center;
 		// justify-content: stretch;
 		// border: 1px solid $c-secondary;
-		border: 1px solid black;
+		// border: 1px solid black;
+		box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5);
 
 		min-width: 40px;
 		border-radius: 5px;
@@ -24,6 +29,8 @@
 		max-width: 200px;
 		background-color: $c-white;
 		padding: 2px;
+
+		transition-duration: 0.4s;
 
 		&-item {
 			// margin: 1px;
@@ -33,27 +40,24 @@
 
 			min-width: 20px;
 			border-radius: $border-radius;
+
+			transition-duration: 0.2s;
 		}
 	}
 
 	&__btn {
-		// width: 70px;
 		height: $element-height;
-		// text-align: center;
-
 		display: flex;
 		align-items: center;
 		justify-content: center;
 
-		// font-size: 12px;
-
 		background: #ffffff;
-
-		/* MyDropShadow */
 		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25), inset 0px 2px 0px #ffffff;
 		border-radius: 4px;
-		// padding: 2px;
 		padding: 0 4px;
+
+		transition-duration: 0.2s;
+
 		&-active {
 			box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.7);
 		}

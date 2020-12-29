@@ -67,7 +67,7 @@ class BudgetController {
 
 	async getBudgetData(req: RequestWithUser, res: Response) {
 		try {
-			let { year, month, all } = req.query;
+			let { year, month, all, fullYear } = req.query;
 
 			const formDate = (year: any, month: any, to = 0) => {
 				if (year && month) {
@@ -82,7 +82,7 @@ class BudgetController {
 				$lt: formDate(year, month, 1),
 			};
 
-			if (!month) {
+			if (fullYear === 'true') {
 				optionsDate = {
 					$gte: formDate(year, '0'),
 					$lt: formDate(year, '0', 12),
@@ -111,6 +111,7 @@ class BudgetController {
 			const options = {
 				startDate: firstTransaction[0].date,
 			};
+			
 			res.status(200).json({ transactions, categories, options });
 
 			// console.log(firstTr[0].date);

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { formatDate } from '../../../services/utils/dateUtils';
+import { formatDate, toDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
 import { Options } from './contracts/state';
 import { CategoryInterface, TransactionInterface } from './types';
@@ -73,6 +73,12 @@ type DataChartType = {
 	balance: number;
 };
 
+type PropChart = {
+	name: string;
+	expense: number;
+	income: number;
+};
+
 export const selectDataChart = createSelector(
 	selectTransactions,
 	(transactions: TransactionInterface[]): DataChartType[] => {
@@ -122,47 +128,49 @@ export const selectDataChart = createSelector(
 
 export const selectColumns = createSelector(
 	selectTransactions,
-	(transactions: TransactionInterface[]): DataChartType[] => {
-		const result: DataChartType[] = [];
+	(transactions: TransactionInterface[]): PropChart[] => {
+		const result: PropChart[] = [];
 
-		let sum = 0;
 		let name = '';
-		let balance = 0;
+		let expense = 0;
+		let income = 0;
 
 		transactions.forEach((transaction, index) => {
+
+			transaction.isExpense
+				? (expense += transaction.amount)
+				: (income += transaction.amount);
+
 			if (index === 0) {
-				sum = transaction.amount;
-				name = formatDate(transaction.date);
+				name = formatDate(transaction.date, 'short');
 			} else {
 				if (
-					formatDate(transaction.date) ===
-					formatDate(transactions[index - 1].date)
+					formatDate(transaction.date, 'short') !==
+					formatDate(transactions[index - 1].date, 'short')
 				) {
-					transaction.isExpense
-						? (sum -= transaction.amount)
-						: (sum += transaction.amount);
-				} else {
 					result.push({
-						value: sum,
 						name,
-						balance,
+						expense,
+						income,
 					});
-					sum = transaction.amount;
-					name = formatDate(transaction.date);
+					income = 0;
+					expense = 0
+					name = formatDate(transaction.date, 'short');
 				}
 			}
 
 			if (index === transactions.length - 1) {
 				result.push({
-					value: sum,
 					name,
-					balance,
+					expense,
+					income,
 				});
 			}
 
-			console.log(balance);
+			// console.log(balance);
 		});
 
+		console.log(result)
 		return result;
 	}
 );

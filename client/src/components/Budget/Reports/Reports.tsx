@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
 	Area,
 	AreaChart,
+	Bar,
+	BarChart,
 	CartesianGrid,
+	Legend,
 	Line,
 	LineChart,
 	Tooltip,
@@ -13,6 +16,7 @@ import {
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectBalanceChart,
+	selectColumns,
 	selectDataChart,
 	selectIsLoading,
 	selectOptions,
@@ -27,6 +31,7 @@ const Reports = () => {
 	const options = useSelector(selectOptions);
 	// const data = useSelector(selectDataChart);
 	const data = useSelector(selectBalanceChart);
+	const columns = useSelector(selectColumns);
 
 	const gradientOffset = () => {
 		const dataMax = Math.max(...data.map(i => i.balance));
@@ -43,8 +48,13 @@ const Reports = () => {
 
 	const off = gradientOffset();
 
-	const changeDateHandler = (year: string, month: string, all: boolean) => {
-		dispatch(getBudgetData(year, month, all));
+	const changeDateHandler = (
+		year: string,
+		month: string,
+		all: boolean,
+		fullYear: boolean
+	) => {
+		dispatch(getBudgetData(year, month, all, fullYear));
 	};
 
 	return (
@@ -62,9 +72,10 @@ const Reports = () => {
 				'Нет данных за выбранный период'
 			) : (
 				<Fragment>
+					<div className="reports__header">Баланс</div>
 					<AreaChart
-						width={730}
-						height={250}
+						width={750}
+						height={350}
 						data={data}
 						margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
 					>
@@ -74,8 +85,12 @@ const Reports = () => {
 								<stop offset={off} stopColor="red" stopOpacity={1} />
 							</linearGradient>
 						</defs>
-						<XAxis dataKey="name" interval="preserveStart" />
-						<YAxis interval="preserveStart" />
+						<XAxis
+							// padding={{ left: 10, right: 10 }}
+							dataKey="name"
+							interval="preserveStart"
+						/>
+						<YAxis padding={{ bottom: 20, top: 20 }} interval="preserveStart" />
 						<CartesianGrid strokeDasharray="3 3" />
 						<Tooltip />
 						<Area
@@ -87,7 +102,23 @@ const Reports = () => {
 							fill="url(#colorUv)"
 						/>
 					</AreaChart>
-{/* 
+
+					<div className="reports__header">Расход/Доход</div>
+					<BarChart
+						width={750}
+						height={350}
+						data={columns}
+						margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+					>
+						<CartesianGrid strokeDasharray="3 3" />
+						<XAxis dataKey="name" />
+						<YAxis />
+						<Tooltip />
+						<Legend />
+						<Bar name="Расходы" dataKey="expense" fill="#8884d8" />
+						<Bar name="Доходы" dataKey="income" fill="#82ca9d" />
+					</BarChart>
+					{/* 
 					<LineChart width={500} height={300} data={data}>
 						<XAxis dataKey="name" />
 						<YAxis />

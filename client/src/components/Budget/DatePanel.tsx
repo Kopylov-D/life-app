@@ -17,12 +17,16 @@ export const months: Month[] = [
 	{ _id: '9', name: 'Октябрь' },
 	{ _id: '10', name: 'Ноябрь' },
 	{ _id: '11', name: 'Декабрь' },
-	{ _id: '', name: 'Весь год' },
 ];
 
 type Props = {
 	startDate: string;
-	changeDate(year: string, month: string, all: boolean): void;
+	changeDate(
+		year: string,
+		month: string,
+		all: boolean,
+		fullYear: boolean
+	): void;
 };
 
 const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
@@ -30,23 +34,32 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 	const [month, setMonth] = useState<string>(currentMonth);
 	const [year, setYear] = useState<number>(new Date().getFullYear());
 	const [allTime, setAllTime] = useState<boolean>(false);
+	const [fullYear, setFullYear] = useState<boolean>(false);
 
 	useEffect(() => {
-		changeDate(year.toString(), month, allTime);
-	}, [month, year, allTime]);
+		changeDate(year.toString(), month, allTime, fullYear);
+	}, [month, year, allTime, fullYear]);
 
 	const onMonthClickHandler = (id: string) => {
 		setAllTime(false);
+		setFullYear(false);
 		setMonth(id);
 	};
 
 	const onChangeYearHandler = (year: number) => {
 		setAllTime(false);
+		// setFullYear(false);
 		setYear(year);
 	};
 
 	const allTimeToggle = () => {
+		setFullYear(false);
 		setAllTime(!allTime);
+	};
+
+	const fullYearToggle = () => {
+		setAllTime(false);
+		setFullYear(!fullYear);
 	};
 
 	return (
@@ -68,6 +81,14 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 				textPrimary="Все время"
 				flag={allTime}
 				onSwitch={allTimeToggle}
+			/>
+
+			<Toggle
+				type="btn"
+				colorPrimary="primary"
+				textPrimary="Весь год"
+				flag={fullYear}
+				onSwitch={fullYearToggle}
 			/>
 		</div>
 	);

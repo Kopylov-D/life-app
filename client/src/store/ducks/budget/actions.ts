@@ -15,12 +15,11 @@ import {
 import { Options } from './contracts/state';
 import { CategoryInterface, TransactionInterface } from './types';
 
-export function getBudgetData(year: string, month: string = '', all: boolean = false) {
+export function getBudgetData(year: string, month: string, all: boolean = false, fullYear: boolean = false) {
 	return async (dispatch: any) => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await api.fetchBudgetData(year, month, all);
-			console.log(all)
+			const { data } = await api.fetchBudgetData(year, month, all, fullYear);
 			dispatch(fetchSuccess());
 			dispatch(setBudgetData(data));
 		} catch (e) {

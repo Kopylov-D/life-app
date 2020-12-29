@@ -41,7 +41,9 @@ const NewTransaction: React.FC<Props> = ({
 	const [isExpense, setIsExpense] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
-	const [filtredCategories, setfiltredCategories] = useState<CategoryInterface[]>([]);
+	const [filtredCategories, setfiltredCategories] = useState<
+		CategoryInterface[]
+	>([]);
 
 	useEffect(() => {
 		setCategoryId(currentCategory._id);
@@ -89,6 +91,7 @@ const NewTransaction: React.FC<Props> = ({
 			<div>{formatDate(currentDate)}</div>
 			<Input
 				value={control.value}
+				placeholder='Новая операция'
 				class={control.class}
 				type={control.type}
 				valid={control.valid}
@@ -116,10 +119,10 @@ const NewTransaction: React.FC<Props> = ({
 			</div>
 
 			{calendarIsOpen && (
-					<div className="calendar">
-						<Calendar value={currentDate} onChange={onChangeDateHandler} />
-						<Backdrop onClick={onToggleCalendarHandler} type='black'/>
-					</div>
+				<div className="calendar">
+					<Calendar value={currentDate} onChange={onChangeDateHandler} />
+					<Backdrop onClick={onToggleCalendarHandler} type="black" />
+				</div>
 			)}
 		</div>
 	);

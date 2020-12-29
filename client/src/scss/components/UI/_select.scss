@@ -1,25 +1,22 @@
 @import '../../variables';
 
 .select {
-	// min-width: 100px;
-	display: inline-block;
-	// width: 100px;
+	min-width: 80px;
+	// display: inline-block;
+	display: block;
 	position: relative;
-	z-index: 110;
+	// z-index: 110;
 	user-select: none;
-	box-sizing: border-box;
 
 	&__input {
 		height: $element-height;
 		border: 1px solid #ededf0;
-		border-radius: 4px;
+		border-radius: $border-radius;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		// padding: 0 1rem;
 		padding-left: 10px;
 		cursor: pointer;
-		z-index: 110;
 	}
 
 	&__dropdown {
@@ -27,28 +24,23 @@
 		background: $c-white;
 		border: 1px solid #ccc;
 		border-radius: 5px;
-		// z-index: 100;
+		min-width: inherit;
+		z-index: 110;
 
 		top: $element-height;
-		left: 0;
 		right: 0;
 		max-height: 400px;
-		// overflow-y: auto;
-		// margin: 1rem;
 
 		box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
 
 		& li {
 			list-style-type: none;
 			cursor: pointer;
-
-			// text-align: center;
-
-			padding: 2px;
-			padding-left: 1rem;
+			padding: 2px 1rem;
 
 			&:hover {
 				background-color: $c-secondary;
+				border-radius: $border-radius;
 			}
 		}
 	}
