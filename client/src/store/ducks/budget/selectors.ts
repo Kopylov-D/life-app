@@ -1,8 +1,16 @@
 import { createSelector } from 'reselect';
-import { formatDate, toDate } from '../../../services/utils/dateUtils';
+import {
+	formatDate,
+	parseToDate,
+	toDate,
+} from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
 import { Options } from './contracts/state';
-import { CategoryInterface, TransactionInterface } from './types';
+import {
+	BalanceInterface,
+	CategoryInterface,
+	TransactionInterface,
+} from './types';
 
 export const selectTransactions = (state: RootState): TransactionInterface[] =>
 	state.budget.transactions;
@@ -17,6 +25,14 @@ export const selectCurrentCategory = (state: RootState) =>
 
 export const selectOptions = (state: RootState): Options =>
 	state.budget.options;
+
+export const selectBalance = (state: RootState): BalanceInterface[] => {
+	const balance = state.budget.balance;
+	return balance.map(item => {
+		item.date = formatDate(item.date);
+		return item;
+	});
+};
 
 export type SelectCategoriesWithAmount = {
 	categories: CategoryInterface[];
@@ -118,8 +134,6 @@ export const selectDataChart = createSelector(
 					balance,
 				});
 			}
-
-			console.log(balance);
 		});
 
 		return result;
@@ -154,24 +168,21 @@ export const selectColumns = createSelector(
 						income,
 					});
 					income = 0;
-					expense = 0
+					expense = 0;
 					name = formatDate(transaction.date, 'short');
 				}
 			}
 
-			if (index === transactions.length - 1) {
-				result.push({
-					name,
-					expense,
-					income,
-				});
-			}
-
-			// console.log(balance);
+			// if (index === transactions.length - 1) {
+			// 	result.push({
+			// 		name,
+			// 		expense,
+			// 		income,
+			// 	});
+			// }
 		});
 
-		console.log(result)
-		return result;
+		return result.reverse();
 	}
 );
 

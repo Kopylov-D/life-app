@@ -1,5 +1,5 @@
 import { CurrentDate } from '../../../../types';
-import { TransactionInterface, CategoryInterface } from '../types';
+import { TransactionInterface, CategoryInterface, BalanceInterface } from '../types';
 
 export type BudgetState = {
 	transactions: TransactionInterface[];
@@ -9,6 +9,7 @@ export type BudgetState = {
 	date: CurrentDate
 	currentCategory: CategoryInterface
 	options: Options
+	balance: BalanceInterface[]
 };
 
 export type Options = {

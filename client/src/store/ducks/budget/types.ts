@@ -6,9 +6,9 @@ export interface TransactionInterface {
 	};
 	user: string;
 	amount: number;
-	// date: string;
 	isExpense: boolean;
 	date: string;
+	// balance: number
 	__v?: number;
 }
 
@@ -20,4 +20,11 @@ export interface CategoryInterface {
 	isExpense: boolean;
 
 	// isSelected?: boolean;
+}
+
+export interface BalanceInterface {
+	_id: string
+	date: string
+	user: string
+	value: number
 }

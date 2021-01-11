@@ -36,6 +36,7 @@ const initialState: BudgetState = {
 	options: {
 		startDate: '',
 	},
+	balance: []
 };
 
 export const budgetReducer = (
@@ -65,6 +66,7 @@ export const budgetReducer = (
 				categories: action.payload.categories,
 				currentCategory: action.payload.categories[0],
 				options: action.payload.options,
+				balance: action.payload.balance
 			};
 		case ADD_CATEGORY:
 			return {

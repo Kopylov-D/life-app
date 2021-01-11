@@ -13,7 +13,7 @@ import {
 	GET_TRANSACTIONS,
 } from './contracts/actionTypes';
 import { Options } from './contracts/state';
-import { CategoryInterface, TransactionInterface } from './types';
+import { BalanceInterface, CategoryInterface, TransactionInterface } from './types';
 
 export function getBudgetData(year: string, month: string, all: boolean = false, fullYear: boolean = false) {
 	return async (dispatch: any) => {
@@ -190,6 +190,7 @@ type BudgetData = {
 	transactions: TransactionInterface[];
 	categories: CategoryInterface[];
 	options: Options;
+	balance: BalanceInterface[]
 };
 
 function setBudgetData(payload: BudgetData): GetBudgetData {

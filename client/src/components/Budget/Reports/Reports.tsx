@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
+	selectBalance,
 	selectBalanceChart,
 	selectColumns,
 	selectDataChart,
@@ -29,13 +30,12 @@ const Reports = () => {
 
 	const isLoading = useSelector(selectIsLoading);
 	const options = useSelector(selectOptions);
-	// const data = useSelector(selectDataChart);
-	const data = useSelector(selectBalanceChart);
 	const columns = useSelector(selectColumns);
+	const balance = useSelector(selectBalance);
 
 	const gradientOffset = () => {
-		const dataMax = Math.max(...data.map(i => i.balance));
-		const dataMin = Math.min(...data.map(i => i.balance));
+		const dataMax = Math.max(...balance.map(i => i.value));
+		const dataMin = Math.min(...balance.map(i => i.value));
 
 		if (dataMax <= 0) {
 			return 0;
@@ -68,7 +68,7 @@ const Reports = () => {
 
 			{isLoading ? (
 				<Loader type="cube-grid" />
-			) : data.length < 1 ? (
+			) : balance.length < 1 ? (
 				'Нет данных за выбранный период'
 			) : (
 				<Fragment>
@@ -76,7 +76,7 @@ const Reports = () => {
 					<AreaChart
 						width={750}
 						height={350}
-						data={data}
+						data={balance}
 						margin={{ top: 10, right: 30, left: 0, bottom: 10 }}
 					>
 						<defs>
@@ -87,7 +87,7 @@ const Reports = () => {
 						</defs>
 						<XAxis
 							// padding={{ left: 10, right: 10 }}
-							dataKey="name"
+							dataKey="date"
 							interval="preserveStart"
 						/>
 						<YAxis padding={{ bottom: 20, top: 20 }} interval="preserveStart" />
@@ -95,7 +95,7 @@ const Reports = () => {
 						<Tooltip />
 						<Area
 							type="monotone"
-							dataKey="balance"
+							dataKey="value"
 							stroke="#000"
 							fillOpacity={1}
 							activeDot={{ r: 4 }}
@@ -118,13 +118,6 @@ const Reports = () => {
 						<Bar name="Расходы" dataKey="expense" fill="#8884d8" />
 						<Bar name="Доходы" dataKey="income" fill="#82ca9d" />
 					</BarChart>
-					{/* 
-					<LineChart width={500} height={300} data={data}>
-						<XAxis dataKey="name" />
-						<YAxis />
-						<CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-						<Line type="monotone" dataKey="balance" stroke="#8884d8" />
-					</LineChart> */}
 				</Fragment>
 			)}
 		</div>

@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { User } from '../models/User';
 import { Transaction } from '../models/Budget/Transaction';
 import { Category } from '../models/Budget/Category';
 import { FiltredDateType, RequestWithUser } from '../types/types';
-import { type } from 'os';
+import { Balance } from '../models/Budget/Balance';
 
 class BudgetController {
 	async getInfo(req: RequestWithUser, res: Response) {
@@ -36,7 +36,37 @@ class BudgetController {
 			});
 
 			await transaction.save();
-			res.status(201).json({ message: 'Транзакция добавлена', transaction });
+
+			const transactions = await Transaction.find({ user: req.user }).sort({
+				date: 1,
+			});
+
+			let value = 0;
+
+			transactions.forEach(async transaction => {
+				transaction.isExpense
+					? (value -= transaction.amount)
+					: (value += transaction.amount);
+
+				await Balance.updateOne(
+					{ transaction: transaction._id },
+					{
+						$set: {
+							user: req.user,
+							date: transaction.date,
+							transaction: transaction._id,
+							value,
+						},
+					},
+					{ upsert: true }
+				);
+			});
+
+			const balance = await Balance.find({ user: req.user });
+
+			res
+				.status(201)
+				.json({ message: 'Транзакция добавлена', balance, transaction });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -45,8 +75,10 @@ class BudgetController {
 	async deleteTransaction(req: RequestWithUser, res: Response) {
 		try {
 			const { id } = req.params;
-			console.log(req);
 			await Transaction.findByIdAndDelete(id);
+			const b = await Balance.findOne({ transaction: id });
+			console.log(b);
+			await Balance.findOneAndDelete({ transaction: id });
 			res.status(200).json({ message: 'Транзакция удалена' });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
@@ -109,10 +141,15 @@ class BudgetController {
 				.limit(1);
 
 			const options = {
-				startDate: firstTransaction[0].date,
+				startDate: firstTransaction.length > 0 && firstTransaction[0].date,
 			};
-			
-			res.status(200).json({ transactions, categories, options });
+
+			const balance = await Balance.find({
+				user: req.user,
+				date: optionsDate,
+			}).sort({ date: 1 });
+
+			res.status(200).json({ transactions, categories, options, balance });
 
 			// console.log(firstTr[0].date);
 			// const date = firstTr[0].date;

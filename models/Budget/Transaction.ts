@@ -25,7 +25,11 @@ const TransactionSchema: Schema = new Schema<TransactionType>({
 	isExpense: {
 		required: true,
 		type: Boolean
-	}
+	},
+	// balance: {
+	// 	required: true,
+	// 	type: Number
+	// }
 });
 
 export type TransactionModelDocumentInterface = TransactionType & Document;

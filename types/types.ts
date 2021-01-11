@@ -28,8 +28,14 @@ export type CategoryType = {
 	isExpense: boolean;
 };
 
+export type BalanceType = {
+	_id: string;
+	user: string;
+	date: Date;
+	value: number;
+};
+
 export type FiltredDateType = {
 	$gte: Date;
 	$lt: Date;
 };
-
