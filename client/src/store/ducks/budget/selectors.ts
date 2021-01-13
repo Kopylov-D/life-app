@@ -1,11 +1,8 @@
+import { type } from 'os';
 import { createSelector } from 'reselect';
-import {
-	formatDate,
-	parseToDate,
-	toDate,
-} from '../../../services/utils/dateUtils';
+import { formatDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
-import { Options } from './contracts/state';
+import { OptionsInterface } from './contracts/state';
 import {
 	BalanceInterface,
 	CategoryInterface,
@@ -23,7 +20,7 @@ export const selectIsLoading = (state: RootState): boolean =>
 export const selectCurrentCategory = (state: RootState) =>
 	state.budget.currentCategory;
 
-export const selectOptions = (state: RootState): Options =>
+export const selectOptions = (state: RootState): OptionsInterface =>
 	state.budget.options;
 
 export const selectBalance = (state: RootState): BalanceInterface[] => {
@@ -76,8 +73,8 @@ export const selectCategoriesWithAmount = createSelector(
 			proportion: {
 				income,
 				expense,
-				percentIncome,
-				percentExpense,
+				percentIncome: percentIncome ? percentIncome : 0,
+				percentExpense: percentExpense ? percentExpense : 0,
 			},
 		};
 	}
@@ -149,19 +146,16 @@ export const selectColumns = createSelector(
 		let expense = 0;
 		let income = 0;
 
-		transactions.forEach((transaction, index) => {
+		transactions = transactions.reverse();
 
+		transactions.forEach((transaction, index, arr) => {
+			name = formatDate(transaction.date, 'short');
 			transaction.isExpense
 				? (expense += transaction.amount)
 				: (income += transaction.amount);
 
-			if (index === 0) {
-				name = formatDate(transaction.date, 'short');
-			} else {
-				if (
-					formatDate(transaction.date, 'short') !==
-					formatDate(transactions[index - 1].date, 'short')
-				) {
+			if (index < arr.length - 1) {
+				if (name !== formatDate(arr[index + 1].date, 'short')) {
 					result.push({
 						name,
 						expense,
@@ -169,46 +163,14 @@ export const selectColumns = createSelector(
 					});
 					income = 0;
 					expense = 0;
-					name = formatDate(transaction.date, 'short');
 				}
+			} else {
+				result.push({
+					name,
+					expense,
+					income,
+				});
 			}
-
-			// if (index === transactions.length - 1) {
-			// 	result.push({
-			// 		name,
-			// 		expense,
-			// 		income,
-			// 	});
-			// }
-		});
-
-		return result.reverse();
-	}
-);
-
-export const selectBalanceChart = createSelector(
-	selectTransactions,
-	(transactions: TransactionInterface[]): DataChartType[] => {
-		const result: DataChartType[] = [];
-
-		let sum = 0;
-		let name = '';
-		let balance = 0;
-
-		transactions = transactions.reverse();
-
-		transactions.forEach(transaction => {
-			transaction.isExpense
-				? (balance -= transaction.amount)
-				: (balance += transaction.amount);
-
-			name = formatDate(transaction.date);
-
-			result.push({
-				name,
-				value: sum,
-				balance,
-			});
 		});
 
 		return result;

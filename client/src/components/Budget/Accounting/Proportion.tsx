@@ -6,6 +6,7 @@ type Props = {
 };
 
 const Proportion: React.FC<Props> = ({ proportion }) => {
+	console.log(proportion)
 	return (
 		<div className="budget__proportion">
 			<div

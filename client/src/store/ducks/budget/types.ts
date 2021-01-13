@@ -8,23 +8,22 @@ export interface TransactionInterface {
 	amount: number;
 	isExpense: boolean;
 	date: string;
-	// balance: number
-	__v?: number;
+	// __v?: number;
 }
 
 export interface CategoryInterface {
 	_id: string;
+	user: string;
 	name: string;
 	amount: number;
 	color: string;
 	isExpense: boolean;
-
-	// isSelected?: boolean;
+	// __v?: number;
 }
 
 export interface BalanceInterface {
-	_id: string
-	date: string
-	user: string
-	value: number
+	_id: string;
+	date: string;
+	user: string;
+	value: number;
 }

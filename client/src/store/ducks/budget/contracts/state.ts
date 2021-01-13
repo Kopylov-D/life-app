@@ -8,10 +8,12 @@ export type BudgetState = {
 	error: Error;
 	date: CurrentDate
 	currentCategory: CategoryInterface
-	options: Options
+	options: OptionsInterface
 	balance: BalanceInterface[]
 };
 
-export type Options = {
+export type OptionsInterface = {
 	startDate: string
 }
+
+

@@ -89,7 +89,7 @@ const CategoryChanger: React.FC<Props> = ({
 					<Input
 						// refInput={refInput}
 						value={control.value}
-						class={control.class}
+						className={control.class}
 						type={control.type}
 						valid={control.valid}
 						touched={control.touched}

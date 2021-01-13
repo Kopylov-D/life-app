@@ -4,7 +4,6 @@ import bcrypt from 'bcrypt';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import config from 'config';
-import { Transaction } from '../models/Budget/Transaction';
 
 class AuthController {
 	async register(req: Request, res: Response) {
@@ -66,10 +65,8 @@ class AuthController {
 			}
 
 			const token = jwt.sign({ userId: user.id }, config.get('jwtSecret'), {
-				expiresIn: '24h',
+				expiresIn: '30d',
 			});
-
-			// const firstTr = Transaction.findOne()
 
 			res.json({ token, userId: user.id });
 		} catch (e) {

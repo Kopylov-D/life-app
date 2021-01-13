@@ -10,6 +10,7 @@ body {
 		sans-serif;
 	background: $c-background;
 	color: #0d0d0d;
+	box-sizing: border-box;
 }
 
 .app {
@@ -24,37 +25,70 @@ body {
 }
 
 .auth {
-	position: absolute;
-	// top: 50%;
-	left: 50%;
-	transform: translate(-50%, 0);
-	// margin: 22px;
+	height: 100vh;
 
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+
+	&__bg {
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0;
+	}
 
 	&__main {
-		width: 520px;
-		min-height: 425px;
-		background: $c-white;
-		margin: 20px auto;
+		width: 380px;
 		border-radius: 5px;
 		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-		padding: 40px 30px;
+		box-sizing: border-box;
+		padding: 30px 30px;
+
+		background: $c-background;
+
+		background: rgba(255, 255, 255, 0.6);
+		border: 5px solid
+			linear-gradient(
+				220deg,
+				rgba(255, 0, 0, 0.2) 100%,
+				rgba(5, 0, 0, 0.6) 100%
+			);
+	}
+
+	&__inputs {
+		margin: 50px 0;
+	}
+
+	&__input {
+		&:first-child {
+			margin: px 0;
+		}
 	}
 
 	&__buttons {
 		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		// align-items: center;
 
 		& > button {
-			margin-right: 10px;
+			// margin-right: 10px;
+			margin-bottom: 15px;
+		}
+
+		& div {
+			text-align: center;
+			cursor: pointer;
+			opacity: 0.7;
 		}
 	}
 
 	& header {
 		font-size: 24px;
-		margin-bottom: 20px;
+		text-align: center;
+		margin-bottom: 30px;
 	}
 }
 
@@ -102,13 +136,8 @@ body {
 		left: 0;
 		right: 0;
 		bottom: $footer-height + $gap;
-		// display: flex;
-
 		// background: $c-white;
 		border-radius: $block-radius;
-		// flex-grow: 1;
-
-		// border-radius: $block-radius;
 	}
 
 	&__menu {
@@ -128,17 +157,24 @@ body {
 		}
 
 		& a {
-			padding: 5px;
+			padding: 8px 5px;
+			border-radius: $border-radius;
+			color: black;
 
 			&:hover {
-				background: $c-secondary;
+				background: $c-background;
 				cursor: pointer;
+			}
+
+			&.active {
+				background: $c-primary;
+				color: white;
 			}
 		}
 	}
 
 	&__component-frame {
-		background: $c-white;
+		// background: $c-white;
 		border-radius: $block-radius;
 		flex-grow: 1;
 	}
@@ -180,13 +216,10 @@ body {
 .primary {
 	color: $c-white;
 	background-color: $c-primary;
-
 }
 
 .secondary {
-	color: black;
+	color: $c-primary;
 	background-color: $c-secondary;
-	border: #0d0d0d 1px solid;
+	border: $c-primary 1px solid;
 }
-
-

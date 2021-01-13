@@ -7,8 +7,6 @@ import {
 	BarChart,
 	CartesianGrid,
 	Legend,
-	Line,
-	LineChart,
 	Tooltip,
 	XAxis,
 	YAxis,
@@ -16,9 +14,9 @@ import {
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectBalance,
-	selectBalanceChart,
+	// selectBalanceChart,
 	selectColumns,
-	selectDataChart,
+	// selectDataChart,
 	selectIsLoading,
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';

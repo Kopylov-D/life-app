@@ -25,9 +25,11 @@ export function login(email: string, password: string) {
 		dispatch(authStart());
 		try {
 			const { data } = await api.login(email, password);
-			document.cookie = `jwtToken=${data.token}; max-age=360000`;
-			document.cookie = `userId=${data.userId}; max-age=360000`;
+			const maxAge = 3600 * 24 * 30
+			document.cookie = `jwtToken=${data.token}; max-age=${maxAge}`;
+			document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
 			dispatch(authSuccess(data));
+			dispatch(authMessage(''))
 		} catch (e) {
 			dispatch(authMessage(e.message));
 			console.log(e);

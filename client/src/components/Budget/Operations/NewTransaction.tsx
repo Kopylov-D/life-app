@@ -92,7 +92,7 @@ const NewTransaction: React.FC<Props> = ({
 			<Input
 				value={control.value}
 				placeholder='Новая операция'
-				class={control.class}
+				className={control.class}
 				type={control.type}
 				valid={control.valid}
 				touched={control.touched}

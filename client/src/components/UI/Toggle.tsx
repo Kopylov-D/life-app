@@ -23,13 +23,13 @@ const Switch: React.FC<Props> = ({
 	let toggle = (
 		<div className="toggle__switch" onClick={() => onSwitch(!flag)}>
 			<div
-				className={classNames('toggle__switch-item', { [colorPrimary]: flag })}
+				className={classNames('toggle__switch-item', { [colorPrimary]: flag, active: flag })}
 			>
 				{textPrimary}
 			</div>
 			<div
 				className={classNames('toggle__switch-item', {
-					[colorSecondary ? colorSecondary : colorPrimary]: !flag,
+					[colorSecondary ? colorSecondary : colorPrimary]: !flag, active: !flag
 				})}
 			>
 				{textSecondary}

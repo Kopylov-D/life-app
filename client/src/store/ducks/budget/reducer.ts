@@ -9,39 +9,36 @@ import {
 	ADD_TRANSACTION,
 	DELETE_TRANSACTION,
 	GET_BUDGETDATA,
+	BudgetActionsTypes,
 } from './contracts/actionTypes';
 import { BudgetState } from './contracts/state';
 
 const initialState: BudgetState = {
-	transactions: [
-		// {
-		// 	amount: 100,
-		// 	date: '2020-11-20T13:55:29.402Z',
-		// 	user: '5fb250b7e6ab891d20b020c9',
-		// 	category: '1',
-		// 	__v: 0,
-		// 	_id: '5fb7cad19cd9171bd081598c',
-		// },
-	],
-	categories: [
-		// 	{ _id: '1', color: 'red', type: 'expense', name: 'Одежда', amount: 200 },
-	],
+	transactions: [],
+	categories: [],
 	isLoading: true,
 	error: { name: '', message: '' },
 	date: {
 		year: 2020,
 		month: 10,
 	},
-	currentCategory: { _id: '', color: '', name: '', amount: 0, isExpense: true },
+	currentCategory: {
+		_id: '',
+		color: '',
+		user: '',
+		name: '',
+		amount: 0,
+		isExpense: true,
+	},
 	options: {
 		startDate: '',
 	},
-	balance: []
+	balance: [],
 };
 
 export const budgetReducer = (
 	state = initialState,
-	action: any
+	action: BudgetActionsTypes
 ): BudgetState => {
 	switch (action.type) {
 		case FETCH_START:
@@ -54,11 +51,6 @@ export const budgetReducer = (
 				...state,
 				isLoading: false,
 			};
-		case GET_TRANSACTIONS:
-			return {
-				...state,
-				transactions: action.payload.transactions
-			};
 		case GET_BUDGETDATA:
 			return {
 				...state,
@@ -66,7 +58,7 @@ export const budgetReducer = (
 				categories: action.payload.categories,
 				currentCategory: action.payload.categories[0],
 				options: action.payload.options,
-				balance: action.payload.balance
+				balance: action.payload.balance,
 			};
 		case ADD_CATEGORY:
 			return {
@@ -76,7 +68,7 @@ export const budgetReducer = (
 		case ADD_TRANSACTION:
 			const transaction = action.payload;
 			const category = state.categories.find(
-				item => item._id === transaction.category
+				item => item._id === transaction.category._id
 			);
 
 			const newTransaction = {
@@ -86,7 +78,6 @@ export const budgetReducer = (
 					name: category!.name,
 				},
 			};
-
 			return {
 				...state,
 				transactions: [newTransaction, ...state.transactions],
@@ -107,7 +98,7 @@ export const budgetReducer = (
 		case GET_CATEGORIES:
 			return {
 				...state,
-				categories: action.payload.categories,
+				categories: action.payload,
 			};
 		case DELETE_CATEGORY:
 			return {

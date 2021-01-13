@@ -33,10 +33,7 @@ export function createControl(
 		value: '',
 		valid: !!validation,
 		touched: false,
-		// label: '',
 		shouldValidate: true,
-		// class: '',
-		// placeholder: '',
 	};
 }
 

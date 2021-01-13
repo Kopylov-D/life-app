@@ -1,4 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
 import { api } from '../../../services/api';
+import { RootState } from '../../rootReducer';
 import {
 	FETCH_ERROR,
 	FETCH_START,
@@ -10,13 +12,35 @@ import {
 	DELETE_CATEGORY,
 	ADD_TRANSACTION,
 	DELETE_TRANSACTION,
-	GET_TRANSACTIONS,
+	// GET_TRANSACTIONS,
+	DeleteCategoryType,
+	// DeleteTransactionType,
+	FetchErrorType,
+	FetchStartType,
+	FetchSuccsessType,
+	GetBudgetDataType,
+	GetCategoriesType,
+	// GetTransactionsType,
+	UpdateCategoriesType,
+	BudgetDataType,
+	BudgetActionsTypes,
 } from './contracts/actionTypes';
-import { Options } from './contracts/state';
-import { BalanceInterface, CategoryInterface, TransactionInterface } from './types';
+import { CategoryInterface } from './types';
 
-export function getBudgetData(year: string, month: string, all: boolean = false, fullYear: boolean = false) {
-	return async (dispatch: any) => {
+type ThunkType = ThunkAction<
+	Promise<void>,
+	RootState,
+	unknown,
+	BudgetActionsTypes
+>;
+
+export function getBudgetData(
+	year: string,
+	month: string,
+	all: boolean = false,
+	fullYear: boolean = false
+): ThunkType {
+	return async dispatch => {
 		dispatch(fetchStart());
 		try {
 			const { data } = await api.fetchBudgetData(year, month, all, fullYear);
@@ -29,22 +53,22 @@ export function getBudgetData(year: string, month: string, all: boolean = false,
 	};
 }
 
-export function getTransactions() {
-	return async (dispatch: any) => {
-		dispatch(fetchStart());
-		try {
-			const { data } = await api.fetchTransactions();
-			console.log(data)
-			dispatch(setTransactions(data));
-			dispatch(fetchSuccess());
-		} catch (e) {
-			console.log(e);
-		}
-	};
-}
+// export function getTransactions() {
+// 	return async (dispatch: any) => {
+// 		dispatch(fetchStart());
+// 		try {
+// 			const { data } = await api.fetchTransactions();
+// 			console.log(data);
+// 			dispatch(setTransactions(data));
+// 			dispatch(fetchSuccess());
+// 		} catch (e) {
+// 			console.log(e);
+// 		}
+// 	};
+// }
 
-export function getCategories() {
-	return async (dispatch: any) => {
+export function getCategories(): ThunkType {
+	return async dispatch => {
 		dispatch(fetchStart());
 		try {
 			const { data } = await api.fetchCategories();
@@ -61,8 +85,8 @@ export function addTransaction(
 	amount: number,
 	isExpense: boolean,
 	date: Date | Date[] | undefined = undefined
-) {
-	return async (dispatch: any) => {
+): ThunkType {
+	return async dispatch => {
 		try {
 			const { data } = await api.addTransaction(
 				categoryId,
@@ -70,10 +94,7 @@ export function addTransaction(
 				isExpense,
 				date
 			);
-			const transaction = {
-				...data.transaction,
-			};
-			console.log(transaction);
+			console.log(data.transaction)
 			dispatch({ type: ADD_TRANSACTION, payload: data.transaction });
 		} catch (e) {
 			console.log(e);
@@ -81,8 +102,8 @@ export function addTransaction(
 	};
 }
 
-export function deleteTransaction(_id: string) {
-	return async (dispatch: any) => {
+export function deleteTransaction(_id: string): ThunkType {
+	return async dispatch => {
 		try {
 			await api.deleteTransaction(_id);
 			dispatch({ type: DELETE_TRANSACTION, payload: _id });
@@ -95,8 +116,8 @@ export function deleteTransaction(_id: string) {
 export function addCategory(
 	name: string = 'Новая категория',
 	isExpense: boolean = true
-) {
-	return async (dispatch: any) => {
+): ThunkType {
+	return async dispatch => {
 		try {
 			const { data } = await api.addCategory(name, isExpense);
 			dispatch({ type: ADD_CATEGORY, payload: data.category });
@@ -111,10 +132,9 @@ export function changeCategory(
 	name: string,
 	color: string,
 	isExpense: boolean
-) {
-	return async (dispatch: any, getState: any) => {
-		const state = getState();
-		const categories = state.budget.categories;
+): ThunkType {
+	return async (dispatch, getState) => {
+		const categories = getState().budget.categories;
 
 		const newCategory = categories.map((item: CategoryInterface) => {
 			if (item._id === _id) {
@@ -130,16 +150,12 @@ export function changeCategory(
 	};
 }
 
-export function deleteCategory(id: string) {
-	return async (dispatch: any) => {
+export function deleteCategory(id: string): ThunkType {
+	return async dispatch => {
 		await api.deleteCategory(id);
 		dispatch(delCategory(id));
 	};
 }
-
-type FetchStartType = {
-	type: typeof FETCH_START;
-};
 
 function fetchStart(): FetchStartType {
 	return {
@@ -147,20 +163,11 @@ function fetchStart(): FetchStartType {
 	};
 }
 
-type FetchSuccsessType = {
-	type: typeof FETCH_SUCCESS;
-};
-
 function fetchSuccess(): FetchSuccsessType {
 	return {
 		type: FETCH_SUCCESS,
 	};
 }
-
-type FetchErrorType = {
-	type: typeof FETCH_ERROR;
-	error: Error;
-};
 
 function fetchError(error: Error): FetchErrorType {
 	return {
@@ -169,98 +176,44 @@ function fetchError(error: Error): FetchErrorType {
 	};
 }
 
-type GetTransactions = {
-	type: typeof GET_TRANSACTIONS;
-	payload: TransactionInterface[];
-};
+// function setTransactions(payload: TransactionInterface[]): GetTransactionsType {
+// 	return {
+// 		type: GET_TRANSACTIONS,
+// 		payload,
+// 	};
+// }
 
-function setTransactions(payload: TransactionInterface[]): GetTransactions {
-	return {
-		type: GET_TRANSACTIONS,
-		payload,
-	};
-}
-
-type GetBudgetData = {
-	type: typeof GET_BUDGETDATA;
-	payload: BudgetData;
-};
-
-type BudgetData = {
-	transactions: TransactionInterface[];
-	categories: CategoryInterface[];
-	options: Options;
-	balance: BalanceInterface[]
-};
-
-function setBudgetData(payload: BudgetData): GetBudgetData {
+function setBudgetData(payload: BudgetDataType): GetBudgetDataType {
 	return {
 		type: GET_BUDGETDATA,
 		payload,
 	};
 }
 
-type UpdateCategories = {
-	type: typeof UPDATE_CATEGORIES;
-	payload: CategoryInterface[];
-};
-
-function updateCategories(payload: CategoryInterface[]): UpdateCategories {
+function updateCategories(payload: CategoryInterface[]): UpdateCategoriesType {
 	return {
 		type: UPDATE_CATEGORIES,
 		payload,
 	};
 }
 
-type DeleteCategory = {
-	type: typeof DELETE_CATEGORY;
-	payload: string;
-};
-
-function delCategory(payload: string): DeleteCategory {
+function delCategory(payload: string): DeleteCategoryType {
 	return {
 		type: DELETE_CATEGORY,
 		payload,
 	};
 }
 
-type GetCategories = {
-	type: typeof GET_CATEGORIES;
-	payload: CategoryInterface[];
-};
-
-function setCategories(payload: CategoryInterface[]): GetCategories {
+function setCategories(payload: CategoryInterface[]): GetCategoriesType {
 	return {
 		type: GET_CATEGORIES,
 		payload,
 	};
 }
 
-type DeleteTransaction = {
-	type: typeof DELETE_TRANSACTION;
-	payload: string;
-};
-
-function delTransaction(payload: string): DeleteTransaction {
-	return {
-		type: DELETE_TRANSACTION,
-		payload,
-	};
-}
-
-type AddCategory = {
-	type: typeof ADD_CATEGORY;
-	payload: CategoryInterface;
-};
-
-// function Category(payload: string): DeleteCategory {
+// function delTransaction(payload: string): DeleteTransactionType {
 // 	return {
-// 		type: DELETE_CATEGORY,
+// 		type: DELETE_TRANSACTION,
 // 		payload,
 // 	};
 // }
-
-// type AddCategory = {
-// 	type: typeof GET_TRANSACTIONS;
-// 	payload: TransactionInterface[];
-// };

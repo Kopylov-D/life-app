@@ -17,6 +17,10 @@
 		justify-content: space-between;
 		padding-left: 10px;
 		cursor: pointer;
+
+		&:hover {
+			background: $c-background;
+		}
 	}
 
 	&__dropdown {
@@ -39,7 +43,7 @@
 			padding: 2px 1rem;
 
 			&:hover {
-				background-color: $c-secondary;
+				background-color: $c-background;
 				border-radius: $border-radius;
 			}
 		}

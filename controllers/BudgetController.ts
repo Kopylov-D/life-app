@@ -10,10 +10,6 @@ class BudgetController {
 		try {
 			const existing = await User.findById(req.user);
 			if (existing) {
-				// return res.json({ user: existing });
-
-				// const categories = await Category.find({}).populate('user')
-				// const categories = await Category.find({})
 				const transactions = await Transaction.find({}).populate('category');
 				return res.json({ data: transactions });
 			}
@@ -27,7 +23,7 @@ class BudgetController {
 	async addTransaction(req: RequestWithUser, res: Response) {
 		try {
 			const { amount, categoryId, date, isExpense } = req.body;
-			const transaction = new Transaction({
+			const newTransaction = new Transaction({
 				amount,
 				user: req.user,
 				category: categoryId,
@@ -35,7 +31,13 @@ class BudgetController {
 				isExpense,
 			});
 
-			await transaction.save();
+			await newTransaction.save();
+
+			const transaction = await Transaction.findOne({
+				_id: newTransaction._id,
+			}).populate('category', 'name');
+
+			res.status(201).json({ message: 'Транзакция добавлена', transaction });
 
 			const transactions = await Transaction.find({ user: req.user }).sort({
 				date: 1,
@@ -62,11 +64,8 @@ class BudgetController {
 				);
 			});
 
-			const balance = await Balance.find({ user: req.user });
-
-			res
-				.status(201)
-				.json({ message: 'Транзакция добавлена', balance, transaction });
+			// const balance = await Balance.find({ user: req.user });
+			// res.status(201).json({ message: 'Транзакция добавлена', balance, transaction });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -136,7 +135,9 @@ class BudgetController {
 				.populate('category', 'name');
 
 			const categories = await Category.find({ user: req.user });
-			const firstTransaction = await Transaction.find()
+			const firstTransaction = await Transaction.find({
+				user: req.user,
+			})
 				.sort({ date: 1 })
 				.limit(1);
 
@@ -173,7 +174,7 @@ class BudgetController {
 	async getCategories(req: RequestWithUser, res: Response) {
 		try {
 			const categories = await Category.find({ user: req.user });
-			res.status(200).json({ categories });
+			res.status(200).json(categories);
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -194,7 +195,7 @@ class BudgetController {
 			const { id } = req.params;
 			console.log(id);
 			await Category.findByIdAndUpdate(id, { name, color, isExpense });
-			res.json({ message: 'update' });
+			res.json({ message: 'Категория обновлена' });
 		} catch (error) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
