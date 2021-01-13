@@ -31,9 +31,10 @@ const Input: React.FC<Props> = props => {
 		props.onClick && props.onClick(true);
 	};
 
+
 	return (
 		<div
-			className={classnames( 'input', {
+			className={classnames('input', {
 				[`${props.className}__input`]: props.className,
 				'--invalid': isInvalid(props),
 			})}
@@ -58,8 +59,8 @@ const Input: React.FC<Props> = props => {
 
 			{isInvalid(props) && props.errorMessage && (
 				<div>
-					{props.errorMessage.map((m: string) => (
-						<div>{m}</div>
+					{props.errorMessage.map((message: string, index: number) => (
+						<div key={index}>{message}</div>
 					))}
 				</div>
 			)}

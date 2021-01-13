@@ -56,7 +56,7 @@ export const budgetReducer = (
 				...state,
 				transactions: action.payload.transactions,
 				categories: action.payload.categories,
-				currentCategory: action.payload.categories[0],
+				currentCategory: action.payload.categories.length > 0 ? action.payload.categories[0] : state.currentCategory,
 				options: action.payload.options,
 				balance: action.payload.balance,
 			};

@@ -27,14 +27,14 @@ const Auth = () => {
 		{ initialValue: '' },
 		{
 			required: true,
-			minLength: 3,
+			minLength: 8,
 			email: true,
 		}
 	);
 
 	const password = useInput(
 		{ initialValue: '' },
-		{ required: true, minLength: 6, notCyrillic: true }
+		// { required: true,}
 	);
 
 	// const [formControls, setFormControls] = React.useState<FormControls>({
@@ -53,9 +53,12 @@ const Auth = () => {
 
 	useEffect(() => {
 		if (email.valid && password.valid) {
+			console.log(isFormValid);
+			
 			setIsFormValid(true);
+
 		}
-	}, [email.valid, password.valid]);
+	}, [email.value, password.value]);
 
 	const submitHandler = (event: React.SyntheticEvent): void => {
 		event.preventDefault();

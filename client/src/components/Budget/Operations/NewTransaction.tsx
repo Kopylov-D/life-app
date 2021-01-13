@@ -10,7 +10,6 @@ import calendar from '../../../assets/img/calendar.svg';
 import Select from '../../UI/Select';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
 import { formatDate } from '../../../services/utils/dateUtils';
-import Switch from '../../UI/Switch';
 import Backdrop from '../../UI/Backdrop';
 import Toggle from '../../UI/Toggle';
 
@@ -46,10 +45,14 @@ const NewTransaction: React.FC<Props> = ({
 	>([]);
 
 	useEffect(() => {
-		setCategoryId(currentCategory._id);
+		// setCategoryId(currentCategory._id);
 		const cat = categories.filter(item => item.isExpense === isExpense);
 		setfiltredCategories(cat);
-	}, [currentCategory, categories, isExpense]);
+	}, [categories, isExpense]);
+
+	useEffect(() => {
+		currentCategory && setCategoryId(currentCategory._id);
+	}, [currentCategory]);
 
 	const onChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -91,7 +94,7 @@ const NewTransaction: React.FC<Props> = ({
 			<div>{formatDate(currentDate)}</div>
 			<Input
 				value={control.value}
-				placeholder='Новая операция'
+				placeholder="Новая операция"
 				className={control.class}
 				type={control.type}
 				valid={control.valid}
@@ -103,7 +106,7 @@ const NewTransaction: React.FC<Props> = ({
 			<Select
 				items={filtredCategories}
 				// type="category"
-				initialId={currentCategory._id}
+				initialId={currentCategory && currentCategory._id}
 				onItemClick={setCurrentCategoryId}
 			/>
 			<div className="options">

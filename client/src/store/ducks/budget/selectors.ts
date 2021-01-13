@@ -17,10 +17,10 @@ export const selectCategories = (state: RootState): CategoryInterface[] =>
 export const selectIsLoading = (state: RootState): boolean =>
 	state.budget.isLoading;
 
-export const selectCurrentCategory = (state: RootState) =>
+export const selectCurrentCategory = (state: RootState) => 
 	state.budget.currentCategory;
 
-export const selectOptions = (state: RootState): OptionsInterface =>
+export const selectOptions = (state: RootState): OptionsInterface => 
 	state.budget.options;
 
 export const selectBalance = (state: RootState): BalanceInterface[] => {

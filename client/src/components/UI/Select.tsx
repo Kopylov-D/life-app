@@ -24,6 +24,8 @@ const Select: React.FC<Props> = ({ items, initialId, onItemClick }) => {
 				setLabel(items[0].name);
 				onItemClick(items[0]._id);
 			}
+		} else {
+			// setLabel('sdfsdf')
 		}
 	}, [items]);
 
