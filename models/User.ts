@@ -13,6 +13,9 @@ const UserSchema: Schema = new Schema<UserType>({
 		type: String,
 		required: true,
 	},
+	balance: {
+		type: Array
+	}
 });
 
 // UserSchema.set('toJSON', {

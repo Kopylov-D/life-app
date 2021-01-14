@@ -7,7 +7,7 @@ interface DataStoredInToken {
 	userId: string;
 }
 
-export const auth = (
+export const auth = async (
 	req: RequestWithUser,
 	res: Response,
 	next: NextFunction
@@ -29,9 +29,7 @@ export const auth = (
 			config.get('jwtSecret')
 		) as DataStoredInToken;
 
-		console.log('middleware', decoded.userId);
 		req.user = decoded.userId;
-
 		next();
 	} catch (e) {
 		res.status(401).json({ message: 'Нет авторизации' });

@@ -1,84 +1,49 @@
-import { getAuthData } from '../../../api/httpApi';
+import { api, getAuthData } from '../../../services/api';
+import { AuthData } from '../../../types';
 import {
 	AUTH_START,
 	AUTH_SUCCESS,
-	AUTH_ERROR,
 	AUTH_LOGOUT,
+	AUTH_MESSAGE,
 } from './actionTypes';
 
-type AuthData = {
-	jwtToken: string;
-	userId: string;
-};
-
-export function register(email: any, password: any) {
+export function register(email: string, password: string) {
 	return async (dispatch: any) => {
 		dispatch(authStart());
 		try {
-			const user = {
-				email,
-				password,
-			};
-			const response = await fetch('/api/auth/register', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(user),
-			});
-			const data = await response.json();
-
-			if (!response.ok) {
-				throw new Error(data.message || 'Что-то пошло не так');
-			}
-			
-			document.cookie = `jwtToken=${data.token}; max-age=36000`;
-			document.cookie = `userId=${data.userId}; max-age=36000`;
-			dispatch(authSuccess(data));
+			const { data } = await api.register(email, password);
+			dispatch(authMessage(data.message));
 		} catch (e) {
 			console.log(e);
-			dispatch(authError(e.message));
+			dispatch(authMessage(e.message));
 		}
 	};
 }
 
-export function login(email: any, password: any) {
+export function login(email: string, password: string) {
 	return async (dispatch: any) => {
 		dispatch(authStart());
 		try {
-			const user = {
-				email,
-				password,
-			};
-			const response = await fetch('/api/auth/login', {
-				method: 'POST',
-				headers: {
-					'Content-type': 'application/json',
-				},
-				body: JSON.stringify(user),
-			});
-			const data = await response.json();
-
-			if (!response.ok) {
-				throw new Error(data.message || 'Что-то пошло не так');
-			}
-
-			document.cookie = `jwtToken=${data.token}; max-age=360000`;
-			document.cookie = `userId=${data.userId}; max-age=360000`;
+			const { data } = await api.login(email, password);
+			const maxAge = 3600 * 24 * 30
+			document.cookie = `jwtToken=${data.token}; max-age=${maxAge}`;
+			document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
 			dispatch(authSuccess(data));
+			dispatch(authMessage(''))
 		} catch (e) {
-			dispatch(authError(e.message));
+			dispatch(authMessage(e.message));
+			console.log(e);
 		}
 	};
 }
 
 export function autoLogin() {
 	return async (dispatch: any) => {
-		const { jwtToken, userId } = getAuthData();
+		const { token, userId } = getAuthData();
 
-		if (jwtToken && userId) {
+		if (token && userId) {
 			const authData: AuthData = {
-				jwtToken,
+				token,
 				userId,
 			};
 			dispatch(authSuccess(authData));
@@ -96,71 +61,42 @@ export function logout() {
 	};
 }
 
-type authStartType = {
+type AuthStartType = {
 	type: typeof AUTH_START;
 };
 
-type authSuccessType = {
+type AuthSuccessType = {
 	type: typeof AUTH_SUCCESS;
 	authData: AuthDataType;
 };
 
-type AuthErrorType = {
-	type: typeof AUTH_ERROR;
-	errorMessage: string;
+type AuthMessageType = {
+	type: typeof AUTH_MESSAGE;
+	message: string;
 };
 
 type AuthDataType = {
 	message?: string;
-	jwtToken?: string | null;
+	token?: string | null;
 	userId?: string;
 };
 
-export function authStart(): authStartType {
+export function authStart(): AuthStartType {
 	return {
 		type: AUTH_START,
 	};
 }
 
-export function authSuccess(authData: AuthDataType): authSuccessType {
+export function authSuccess(authData: AuthDataType): AuthSuccessType {
 	return {
 		type: AUTH_SUCCESS,
 		authData,
 	};
 }
 
-export function authError(errorMessage: string): AuthErrorType {
+export function authMessage(message: string): AuthMessageType {
 	return {
-		type: AUTH_ERROR,
-		errorMessage,
+		type: AUTH_MESSAGE,
+		message,
 	};
 }
-
-// export function autoLogin() {
-// 	return async dispatch => {
-// 		sendsay.setSessionFromCookie();
-// 		const session = sendsey.session;
-// 		const email = (document.cookie.match(`(^|; )sendsay_email=([^;]*)`) ||
-// 			0)[2];
-// 		const sublogin = (document.cookie.match(`(^|; )sendsay_sublogin=([^;]*)`) ||
-// 			0)[2];
-
-// 		if (session) {
-// 			const authData = {
-// 				session,
-// 				email,
-// 				sublogin,
-// 			};
-// 			dispatch(authSuccess(authData));
-// 		} else {
-// 			dispatch(logout());
-// 		}
-// 	};
-// }
-
-// export function logout() {
-// 	document.cookie = `sendsay_session=; max-age=-1`;
-// 	return {
-// 		type: AUTH_LOGOUT,
-// 	};
-// }

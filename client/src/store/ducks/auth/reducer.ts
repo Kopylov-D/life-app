@@ -4,20 +4,21 @@ import {
 	// AUTH_RESTORE_SESSION,
 	AUTH_START,
 	AUTH_SUCCESS,
+	AUTH_MESSAGE
 } from './actionTypes';
 
 type InitialState = {
 	isAuth: boolean,
 	isLoading: boolean,
 	authData?: {}
-	errorMessage?: string | null
+	message?: string | null
 }
 
 const initialState: InitialState = {
 	isAuth: false,
 	isLoading: false,
 	authData: {},
-	errorMessage: null
+	message: null
 };
 
 export const authReducer = (state = initialState, action: any): InitialState => {
@@ -28,7 +29,7 @@ export const authReducer = (state = initialState, action: any): InitialState => 
 				isAuth: true,
 				isLoading: false,
 				authData: action.authData,
-				errorMessage: null
+				// message: action.me
 			};
 		case AUTH_START:
 			return {
@@ -42,12 +43,18 @@ export const authReducer = (state = initialState, action: any): InitialState => 
 		// 			session: action.session,
 		// 		},
 		// 	};
-		case AUTH_ERROR:
+		case AUTH_MESSAGE:
 			return {
 				...state,
 				isLoading: false,
-				errorMessage: action.errorMessage,
+				message: action.message,
 			};
+		// case AUTH_ERROR:
+		// 	return {
+		// 		...state,
+		// 		isLoading: false,
+		// 		errorMessage: action.errorMessage,
+		// 	};
 		case AUTH_LOGOUT:
 			return {
 				...state,

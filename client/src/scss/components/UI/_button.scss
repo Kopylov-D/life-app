@@ -1,0 +1,72 @@
+@import '../../variables';
+
+.btn {
+	min-width: 110px;
+	height: 40px;
+	padding: 0 20px;
+	background: $c-primary;
+	border-radius: $border-radius;
+	border: none;
+	color: $c-white;
+	font-size: 16px;
+	user-select: none;
+	cursor: pointer;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	transition-duration: .1s;
+
+	&-count {
+		min-width: $element-height;
+		padding: 0;
+		width: 20px;
+		height: $element-height;
+		background: $c-white;
+		color: $c-primary;
+		border: 1px solid $c-primary;
+	}
+
+	&-toggle {
+		background-color: $c-secondary;
+		min-width: 20px;
+		max-width: 200px;
+
+		&--active {
+			background-color: rgba($c-primary, $alpha: 0.5);
+		}
+	}
+
+	&-small {
+		min-width: 80px;
+		height: 30px;
+		padding: 0 10px;
+	}
+
+	div {
+		align-self: center;
+	}
+
+	&:focus {
+		box-shadow: 0 0 0 2px rgba($c-primary, $alpha: 0.5);
+	}
+
+	&:hover {
+		background: rgba($c-primary, $alpha: 0.9);
+		color: $c-white;
+		border: none;
+	}
+
+	&:active {
+		box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25);
+		background: $c-primary;
+	}
+
+	&:disabled {
+		background: linear-gradient(0deg, #c4c4c4, #c4c4c4),
+			linear-gradient(180deg, #45a6ff 0%, #0055fb 100%);
+		color: black;
+		border: none;
+	}
+}

@@ -1,0 +1,16 @@
+.backdrop {
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+
+	&-black {
+		background: rgba($color: #000000, $alpha: 0.7);
+	}
+
+	// &-transparent {
+	// 	background: transparent;
+	// }
+}

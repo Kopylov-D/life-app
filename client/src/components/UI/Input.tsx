@@ -1,42 +1,70 @@
 import React from 'react';
 import classnames from 'classnames';
 
-type Props = {
+interface Props {
 	value: string;
-	type: string;
-	label: string;
+	type: 'text' | 'password' | 'checkbox';
+	label?: string;
 	valid: boolean;
-	shouldValidate: boolean;
 	touched: boolean;
-
-	// optionalLabel: string;
+	shouldValidate?: boolean;
+	className?: string;
+	placeholder?: string;
+	messages?: Array<string>;
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;
-};
-
-function isInvalid({ valid, shouldValidate, touched }: Props) {
-	return !valid && shouldValidate && touched;
+	onKeyPress?(event: React.KeyboardEvent<HTMLInputElement>): void;
+	onClick?(toggle: boolean): void;
 }
+
+function isInvalid({ valid, touched }: Props) {
+	return !valid && touched;
+}
+// function isInvalid({ valid, shouldValidate, touched }: Props) {
+// 	return !valid && shouldValidate && touched;
+// }
 
 const Input: React.FC<Props> = props => {
 	const inputType = props.type || 'text';
 	const htmlFor = `${inputType}-${Math.random()}`;
 
+	const onClickHandler = () => {
+		props.onClick && props.onClick(true);
+	};
+
 	return (
-		<div className={classnames('input', { '--invalid': isInvalid(props) })}>
-			{/* <div className={classnames('input')}> */}
-			<div>
-				<label htmlFor={htmlFor}>
-					<span>{props.label}</span>
-					{/* <span>{props.optionalLabel}</span> */}
-				</label>
-			</div>
+		<div
+			className={classnames('input', {
+				[`${props.className}__input`]: props.className,
+				'--invalid': isInvalid(props),
+			})}
+			onClick={onClickHandler}
+		>
+			{props.label && (
+				<div>
+					<label htmlFor={htmlFor}>
+						<span>{props.label}</span>
+					</label>
+				</div>
+			)}
 
 			<input
 				id={htmlFor}
 				type={inputType}
 				value={props.value}
 				onChange={event => props.onChange(event, props.value)}
+				onKeyPress={props.onKeyPress}
+				placeholder={props.placeholder}
 			/>
+
+			{isInvalid(props) && props.messages && (
+				<div className="input__messages">
+					{props.messages.map((message: string, index: number) => (
+						<div className="input__message" key={index}>
+							{message}
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 };

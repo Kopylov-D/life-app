@@ -1,0 +1,51 @@
+@import '../../variables';
+
+.select {
+	min-width: 80px;
+	// display: inline-block;
+	display: block;
+	position: relative;
+	// z-index: 110;
+	user-select: none;
+
+	&__input {
+		height: $element-height;
+		border: 1px solid #ededf0;
+		border-radius: $border-radius;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-left: 10px;
+		cursor: pointer;
+
+		&:hover {
+			background: $c-background;
+		}
+	}
+
+	&__dropdown {
+		position: absolute;
+		background: $c-white;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		min-width: inherit;
+		z-index: 110;
+
+		top: $element-height;
+		right: 0;
+		max-height: 400px;
+
+		box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+
+		& li {
+			list-style-type: none;
+			cursor: pointer;
+			padding: 2px 1rem;
+
+			&:hover {
+				background-color: $c-background;
+				border-radius: $border-radius;
+			}
+		}
+	}
+}

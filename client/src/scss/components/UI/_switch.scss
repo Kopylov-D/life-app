@@ -1,0 +1,68 @@
+@import '../../variables';
+
+.toggle {
+	border-radius: 5px;
+	height: $element-height;
+	user-select: none;
+	max-width: 200px;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+
+	&__switch {
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		height: $element-height;
+		min-width: 40px;
+		border-radius: 5px;
+		max-width: 200px;
+		background-color: $c-background;
+		padding: 2px;
+
+		transition-duration: $transition-duration;
+
+		&-item {
+			text-align: center;
+			padding: 1px 8px;
+			line-height: $element-height - 2px;
+			min-width: 20px;
+			border-radius: $border-radius;
+
+			transition-duration: $transition-duration;
+
+			&.active {
+				box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+			}
+
+			// &:hover {
+			// 	box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+			// }
+		}
+	}
+
+	&__btn {
+		height: $element-height;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		background: #ffffff;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25), inset 0px 2px 0px #ffffff;
+		border-radius: 4px;
+		padding: 0 4px;
+
+		transition-duration: 0.2s;
+
+		&-active {
+			box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.7);
+		}
+
+		&:hover {
+			background: $c-background;
+		}
+	}
+}

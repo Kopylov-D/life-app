@@ -1,0 +1,79 @@
+@import '../variables';
+
+.table {
+	$parent: &;
+
+	max-width: 800px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+
+	&__header,
+	&__item {
+		display: grid;
+		gap: 10px;
+		align-items: center;
+
+		grid-template-columns:
+			minmax(90px, 1fr)
+			minmax(50px, 1fr)
+			minmax(50px, 1fr)
+			minmax(150px, 1.5fr);
+		&__body {
+
+		}
+	}
+
+	&__header {
+		border-bottom: 1px solid black;
+		padding: 5px;
+	}
+	&__item {
+		border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
+		padding: 5px 15px;
+	}
+
+	&__input input {
+		height: 20px;
+		margin: 5px 0;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 2px;
+		font-size: 14px;
+	}
+
+	& .options {
+		display: flex;
+		justify-content: flex-end;
+
+		& img {
+			margin-right: 5px;
+			cursor: pointer;
+		}
+
+		& :first-child {
+			margin-right: 5px;
+		}
+	}
+
+	&__budget-accounting {
+		
+		#{$parent}__item,
+		#{$parent}__header {
+			grid-template-columns:
+				minmax(110px, 3.5fr)
+				minmax(50px, 1fr);
+		}
+	}
+
+	&__budget-categories {
+	
+		margin-bottom: 10px;
+
+		#{$parent}__item,
+		#{$parent}__header {
+			grid-template-columns:
+				minmax(90px, 1fr)
+				minmax(50px, 1fr);
+		}
+	}
+}

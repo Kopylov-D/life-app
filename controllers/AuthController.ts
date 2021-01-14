@@ -18,7 +18,6 @@ class AuthController {
 				});
 			}
 			const { email, password } = req.body;
-
 			const candidate = await User.findOne({ email });
 
 			if (candidate) {
@@ -29,9 +28,7 @@ class AuthController {
 
 			const hashedPassword = await bcrypt.hash(password, 12);
 			const user = new User({ email, password: hashedPassword });
-
 			await user.save();
-
 			res.status(201).json({ message: 'Пользователь создан' });
 		} catch (e) {
 			res.status(500).json({
@@ -68,7 +65,7 @@ class AuthController {
 			}
 
 			const token = jwt.sign({ userId: user.id }, config.get('jwtSecret'), {
-				expiresIn: '24h',
+				expiresIn: '30d',
 			});
 
 			res.json({ token, userId: user.id });

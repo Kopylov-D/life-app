@@ -4,9 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Auth from './containers/Auth';
 import { RootState } from './store/rootReducer';
 import { autoLogin } from './store/ducks/auth/actions';
-
 import Main from './containers/Main';
-import { BudgetPage, NotesPage, TodosPage, StatisticPage } from './pages';
+import BudgetPage from './pages/BudgetPage';
+import NotesPage from './pages/NotesPage';
+import TodosPage from './pages/TodosPage';
+import StatisticPage from './pages/StatisticPage';
 
 import './scss/app.scss';
 
@@ -29,18 +31,12 @@ function App() {
 		</Switch>
 	);
 
-	if (!isAuth) {
-		routes = (
-			<Switch>
-				<Route path="/auth" component={Auth} exact />
-
-				<Redirect to="/auth" />
-			</Switch>
-		);
-	}
-
 	return (
-		<BrowserRouter>{isAuth ? <Main>{routes}</Main> : <Auth />}</BrowserRouter>
+		<div className="app">
+			<BrowserRouter>
+				{isAuth ? <Main>{routes}</Main> : <Auth />}
+			</BrowserRouter>
+		</div>
 	);
 }
 
