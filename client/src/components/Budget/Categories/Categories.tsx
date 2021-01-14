@@ -92,7 +92,6 @@ const Categories: React.FC = () => {
 						))}
 					</Table>
 					<Button
-						// type="primary"
 						color='primary'
 						size="small"
 						disabled={false}

@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-
-// import {
-// 	createControl,
-// 	FormControl,
-// 	validate,
-// } from '../services/validations/form';
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
 import Error from '../components/Error';
@@ -27,14 +21,13 @@ const Auth = () => {
 		{ initialValue: '' },
 		{
 			required: true,
-			minLength: 8,
 			email: true,
 		}
 	);
 
 	const password = useInput(
 		{ initialValue: '' },
-		// { required: true,}
+		{ required: true, minLength: 6, notCyrillic: true }
 	);
 
 	// const [formControls, setFormControls] = React.useState<FormControls>({
@@ -53,12 +46,11 @@ const Auth = () => {
 
 	useEffect(() => {
 		if (email.valid && password.valid) {
-			console.log(isFormValid);
-			
 			setIsFormValid(true);
-
+		} else {
+			setIsFormValid(false);
 		}
-	}, [email.value, password.value]);
+	}, [email.valid, password.valid]);
 
 	const submitHandler = (event: React.SyntheticEvent): void => {
 		event.preventDefault();
@@ -123,7 +115,7 @@ const Auth = () => {
 			className="auth__bg"
 			style={{
 				backgroundImage: `url(${BgImg})`,
-				backgroundSize: '100%',
+				backgroundSize: 'cover',
 				backgroundRepeat: 'no-repeat',
 				// backgroundPosition: 'center-top',
 			}}
@@ -141,7 +133,7 @@ const Auth = () => {
 							valid={email.valid}
 							type="text"
 							className="auth"
-							errorMessage={email.errorMessages}
+							messages={email.errorMessages}
 						/>
 						<Input
 							onChange={password.onChange}
@@ -151,7 +143,7 @@ const Auth = () => {
 							valid={password.valid}
 							type="password"
 							className="auth"
-							errorMessage={password.errorMessages}
+							messages={password.errorMessages}
 						/>
 					</div>
 

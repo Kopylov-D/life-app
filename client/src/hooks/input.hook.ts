@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 
-interface Input {}
-
 export interface Validations {
 	minLength?: number;
-	// maxLength?: number;
+	maxLength?: number;
 	required?: boolean;
 	email?: boolean;
-	// notCyrillic?: boolean;
+	notCyrillic?: boolean;
+	isNumber?: boolean;
 }
 
 interface Config {
@@ -16,8 +15,6 @@ interface Config {
 }
 
 function useValidation(value: string, validations: Validations | null) {
-	// const [isEmpty, setIsEmpty] = useState(true);
-	// const [minLengthError, setMinLengthError] = useState(false);
 	const [valid, setValid] = useState<boolean>(true);
 	const [errorMessages, setErrorMessages] = useState<Array<string>>([]);
 
@@ -29,80 +26,61 @@ function useValidation(value: string, validations: Validations | null) {
 
 		setErrorMessages([]);
 		setValid(true);
-		let isValid = true;
 
-		// if (validations.minLength) {
-		// 	inValid = value.length < validations.minLength &&
-		// 		setErrorMessages(err => [
-		// 			...err,
-		// 			`Мин. длина - ${validations.minLength}`,
-		// 		]);
-		// }
-
-		// if (validations.maxLength) {
-		// 	value.length > validations.maxLength &&
-		// 		setErrorMessages(err => [
-		// 			...err,
-		// 			`Макс. длина - ${validations.maxLength}`,
-		// 		]);
-		// }
-
-		// if (validations.required) {
-		// 	value.trim() === '' &&
-		// 		setErrorMessages(err => [...err, 'Поле не должно быть пустым']);
-		// }
-
-		// if (validations.email) {
-		// 	const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-		// 	!reg.test(String(value).toLowerCase()) &&
-		// 		setErrorMessages(err => [...err, 'Некорректный email']);
-		// }
-
-		// if (validations.notCyrillic) {
-		// 	const reg = /[а-я]/gi;
-		// 	reg.test(String(value).toLowerCase()) &&
-		// 		setErrorMessages(err => [...err, 'Кириллица запрещена']);
-		// }
-
-		// setValid(!inValid);
-
-		// let isValid = true;
-
-		// if (validation.required) {
-		//   isValid = value.trim() !== '' && isValid;
-		// }
 		for (const validation in validations) {
 			switch (validation) {
 				case 'minLength':
 					if (value.length < validations[validation]!) {
 						setValid(false);
+						setErrorMessages(err => [
+							...err,
+							`Мин. длина - ${validations[validation]}`,
+						]);
+					}
+					break;
+				case 'maxLength':
+					if (value.length > validations[validation]!) {
+						setValid(false);
+						setErrorMessages(err => [
+							...err,
+							`Макс. длина - ${validations[validation]}`,
+						]);
 					}
 					break;
 				case 'required':
 					if (value.trim() === '') {
 						setValid(false);
+						setErrorMessages(err => [...err, 'Поле не должно быть пустым']);
 					}
 					break;
-
 				case 'email':
-					const reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-					if (!reg.test(String(value).toLowerCase())) {
-						setValid(false);
-					}
+					let regEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-				// default:
+					if (!regEmail.test(String(value).toLowerCase())) {
+						setValid(false);
+						setErrorMessages(err => [...err, 'Некорректный email']);
+					}
+					break;
+				case 'notCyrillic':
+					let regCyrillic = /[а-я]/gi;
+					if (regCyrillic.test(String(value).toLowerCase())) {
+						setValid(false);
+						setErrorMessages(err => [...err, 'Кириллица запрещена']);
+					}
+					break;
+				case 'isNumber':
+					if (Number.isNaN(+value)) {
+						setValid(false);
+						setErrorMessages(err => [...err, 'Значение не является числом']);
+					}
+					break;
 			}
 		}
 	}, [value]);
 
-	// console.log('hook', valid);
-
 	return {
 		valid,
 		errorMessages,
-		// isEmpty,
-		// minLengthError,
 	};
 }
 
@@ -116,6 +94,10 @@ export const useInput = (config: Config, validations: Validations = {}) => {
 		setValue(e.target.value);
 	};
 
+	const clearValue = () => {
+		setValue('')
+	}
+
 	// const onTouched = (e: React.SyntheticEvent) => {
 	// 	setTouched(true);
 	// };
@@ -123,9 +105,9 @@ export const useInput = (config: Config, validations: Validations = {}) => {
 	return {
 		value,
 		onChange,
+		clearValue,
 		// onTouched,
 		touched,
-		// validations,
 		...valid,
 	};
 };

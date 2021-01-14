@@ -49,6 +49,10 @@
 			margin-right: 5px;
 			cursor: pointer;
 		}
+
+		& :first-child {
+			margin-right: 5px;
+		}
 	}
 
 	&__budget-accounting {
@@ -56,22 +60,14 @@
 		#{$parent}__item,
 		#{$parent}__header {
 			grid-template-columns:
-				minmax(110px, 2.5fr)
+				minmax(110px, 3.5fr)
 				minmax(50px, 1fr);
 		}
 	}
 
 	&__budget-categories {
-		grid-template-columns:
-			minmax(90px, 1fr)
-			minmax(50px, 1fr);
-
-		max-width: 400px;
+	
 		margin-bottom: 10px;
-
-		#{$parent}-item {
-			color: red;
-		}
 
 		#{$parent}__item,
 		#{$parent}__header {

@@ -34,6 +34,14 @@
 		}
 	}
 
+	&__messages {
+		margin-top: 5px;
+	}
+
+	&__message {
+		font-size: 12px;
+	}
+
 	&.--invalid {
 		color: $c-invalid;
 

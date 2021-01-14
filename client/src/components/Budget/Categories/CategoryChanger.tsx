@@ -1,15 +1,10 @@
 import React, { useRef, useEffect, useState, Fragment } from 'react';
 import Input from '../../UI/Input';
 import Button from '../../UI/Button';
-import {
-	createControl,
-	FormControl,
-	validate,
-} from '../../../services/validations/form';
-import Switch from '../../UI/Switch';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
 import Modal from '../../UI/Modal';
 import Toggle from '../../UI/Toggle';
+import { useInput } from '../../../hooks/input.hook';
 
 export interface Params {
 	value: string;
@@ -31,13 +26,10 @@ const CategoryChanger: React.FC<Props> = ({
 	onClick,
 	onCloseClick,
 }) => {
-	const [control, setControl] = useState<FormControl>(
-		createControl(
-			{ type: 'text', class: 'category-changer' },
-			{ required: true }
-		)
+	const input = useInput(
+		{ initialValue: category ? category.name : '' },
+		{ required: true }
 	);
-
 	const [isExpense, setIsExpense] = useState<boolean>(true);
 	// const refInput = useRef();
 
@@ -51,20 +43,8 @@ const CategoryChanger: React.FC<Props> = ({
 		}
 	}, []);
 
-	const onChangeHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
-	): void => {
-		const value = event.target.value;
-		setControl({
-			...control,
-			value,
-			valid: validate(value, control.validation),
-		});
-		event.target.value = '';
-	};
-
 	const onOkClickHandler = () => {
-		onClick({ value: control.value, isExpense });
+		onClick({ value: input.value, isExpense });
 	};
 
 	const onEnterKeyPress = (e: React.KeyboardEvent) => {
@@ -88,13 +68,14 @@ const CategoryChanger: React.FC<Props> = ({
 				>
 					<Input
 						// refInput={refInput}
-						value={control.value}
-						className={control.class}
-						type={control.type}
-						valid={control.valid}
-						touched={control.touched}
-						shouldValidate={!!control.validation}
-						onChange={onChangeHandler}
+						value={input.value}
+						className="category-changer"
+						type="text"
+						valid={input.valid}
+						touched={input.touched}
+						placeholder="Имя категории"
+						// shouldValidate={!!control.validation}
+						onChange={input.onChange}
 						onKeyPress={e => onEnterKeyPress(e)}
 					/>
 
@@ -110,16 +91,16 @@ const CategoryChanger: React.FC<Props> = ({
 				<div className="category-changer__buttons">
 					<Button
 						// type="primary"
-						color='primary'
+						color="primary"
 						size="small"
-						disabled={false}
+						disabled={!input.valid}
 						onClick={onOkClickHandler}
 					>
 						Ок
 					</Button>
 					<Button
 						// type="secondary"
-						color='secondary'
+						color="secondary"
 						size="small"
 						disabled={false}
 						onClick={onCloseClick}

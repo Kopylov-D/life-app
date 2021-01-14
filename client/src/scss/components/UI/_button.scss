@@ -5,7 +5,7 @@
 	height: 40px;
 	padding: 0 20px;
 	background: $c-primary;
-	border-radius: 5px;
+	border-radius: $border-radius;
 	border: none;
 	color: $c-white;
 	font-size: 16px;
@@ -16,7 +16,7 @@
 	align-items: center;
 	justify-content: center;
 
-	transition-duration: $transition-duration;
+	transition-duration: .1s;
 
 	&-count {
 		min-width: $element-height;
@@ -40,7 +40,7 @@
 
 	&-small {
 		min-width: 80px;
-		height: 25px;
+		height: 30px;
 		padding: 0 10px;
 	}
 
@@ -53,7 +53,7 @@
 	}
 
 	&:hover {
-		background: rgba($c-primary, $alpha: 0.8);
+		background: rgba($c-primary, $alpha: 0.9);
 		color: $c-white;
 		border: none;
 	}

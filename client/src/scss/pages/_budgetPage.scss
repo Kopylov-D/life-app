@@ -9,7 +9,6 @@
 	bottom: 0;
 	top: 0;
 	right: 0;
-	// display: flex;
 	left: $menu-width + $gap;
 	background: $c-white;
 	border-radius: $block-radius;
@@ -20,9 +19,22 @@
 	}
 
 	&__tables {
-		// max-width: 500px;
 		display: flex;
 		justify-content: space-between;
+
+		&-header {
+			text-align: center;
+			font-size: 18px;
+			margin-bottom: 15px;
+		}
+	}
+
+	&__categories {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		max-width: 600px;
+		// flex-grow: 1;
 	}
 
 	&__income {
@@ -30,6 +42,7 @@
 
 	&__panel {
 		display: flex;
+		min-height: 40px;
 		// margin: 1rem;
 		justify-content: space-between;
 		margin-bottom: 2rem;

@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
-import {
-	createControl,
-	FormControl,
-	validate,
-} from '../../../services/validations/form';
 import Input from '../../UI/Input';
 import calendar from '../../../assets/img/calendar.svg';
 import Select from '../../UI/Select';
@@ -12,6 +7,7 @@ import { CategoryInterface } from '../../../store/ducks/budget/types';
 import { formatDate } from '../../../services/utils/dateUtils';
 import Backdrop from '../../UI/Backdrop';
 import Toggle from '../../UI/Toggle';
+import { useInput } from '../../../hooks/input.hook';
 
 interface Props {
 	categories: CategoryInterface[];
@@ -29,13 +25,6 @@ const NewTransaction: React.FC<Props> = ({
 	currentCategory,
 	onAddTransaction,
 }) => {
-	const [control, setControl] = useState<FormControl>(
-		createControl(
-			{ type: 'text', class: 'table' },
-			{ required: true, isNumber: true, notNull: true }
-		)
-	);
-
 	const [categoryId, setCategoryId] = useState<string>('');
 	const [isExpense, setIsExpense] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
@@ -43,6 +32,11 @@ const NewTransaction: React.FC<Props> = ({
 	const [filtredCategories, setfiltredCategories] = useState<
 		CategoryInterface[]
 	>([]);
+
+	const input = useInput(
+		{ initialValue: '' },
+		{ isNumber: true, maxLength: 12 }
+	);
 
 	useEffect(() => {
 		// setCategoryId(currentCategory._id);
@@ -54,25 +48,13 @@ const NewTransaction: React.FC<Props> = ({
 		currentCategory && setCategoryId(currentCategory._id);
 	}, [currentCategory]);
 
-	const onChangeHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
-	): void => {
-		const value = event.target.value;
-		setControl({
-			...control,
-			value,
-			valid: validate(value, control.validation),
-		});
-		event.target.value = '';
-	};
-
 	const onKeyEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if (event.key === 'Enter' && control.valid) {
-			const amount = +control.value;
-			setControl({ ...control, value: '' });
+		if (event.key === 'Enter' && input.valid) {
+			const amount = +input.value;
+			input.clearValue();
 			onAddTransaction(categoryId, amount, isExpense, currentDate);
-		} else if (event.key === 'Enter' && !control.valid) {
-			setControl({ ...control, value: '' });
+		} else if (event.key === 'Enter' && !input.valid) {
+			input.value = '';
 		}
 	};
 
@@ -93,19 +75,17 @@ const NewTransaction: React.FC<Props> = ({
 		<div className="table__item">
 			<div>{formatDate(currentDate)}</div>
 			<Input
-				value={control.value}
+				value={input.value}
 				placeholder="Новая операция"
-				className={control.class}
-				type={control.type}
-				valid={control.valid}
-				touched={control.touched}
-				shouldValidate={!!control.validation}
-				onChange={onChangeHandler}
+				className="table"
+				type="text"
+				valid={input.valid}
+				touched={input.touched}
+				onChange={input.onChange}
 				onKeyPress={onKeyEnter}
 			/>
 			<Select
 				items={filtredCategories}
-				// type="category"
 				initialId={currentCategory && currentCategory._id}
 				onItemClick={setCurrentCategoryId}
 			/>

@@ -10,7 +10,7 @@ interface Props {
 	shouldValidate?: boolean;
 	className?: string;
 	placeholder?: string;
-	errorMessage?: Array<string>;
+	messages?: Array<string>;
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;
 	onKeyPress?(event: React.KeyboardEvent<HTMLInputElement>): void;
 	onClick?(toggle: boolean): void;
@@ -30,7 +30,6 @@ const Input: React.FC<Props> = props => {
 	const onClickHandler = () => {
 		props.onClick && props.onClick(true);
 	};
-
 
 	return (
 		<div
@@ -57,10 +56,12 @@ const Input: React.FC<Props> = props => {
 				placeholder={props.placeholder}
 			/>
 
-			{isInvalid(props) && props.errorMessage && (
-				<div>
-					{props.errorMessage.map((message: string, index: number) => (
-						<div key={index}>{message}</div>
+			{isInvalid(props) && props.messages && (
+				<div className="input__messages">
+					{props.messages.map((message: string, index: number) => (
+						<div className="input__message" key={index}>
+							{message}
+						</div>
 					))}
 				</div>
 			)}

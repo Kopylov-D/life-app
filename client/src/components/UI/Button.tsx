@@ -21,7 +21,6 @@ const Button: React.FC<Props> = ({
 	onClick,
 }) => {
 
-	console.log('disabled', disabled)
 	return (
 		<button
 			className={classNames(

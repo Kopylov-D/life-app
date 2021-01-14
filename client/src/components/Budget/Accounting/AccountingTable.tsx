@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
 import Table from '../Table';
 
@@ -11,7 +11,7 @@ type Props = {
 const AccountingTable: React.FC<Props> = ({ categories, isExpense, title }) => {
 	return (
 		<div>
-			<div>{title}</div>
+			<div className='budget__tables-header'>{title}</div>
 			<Table class="budget-accounting" headerItems={['Категория', 'Сумма']}>
 				{categories.map(item => {
 					if (item.isExpense === isExpense) {
