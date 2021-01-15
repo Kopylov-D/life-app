@@ -18,6 +18,9 @@
 	},
 	"author": "Dmitrii Kopylov <dimonanos@gmail.com>",
 	"license": "ISC",
+	"engines": {
+    "node": "15.2"
+  },
 	"bugs": {
 		"url": "https://github.com/Kopylov-D/life-app/issues"
 	},

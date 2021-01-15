@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from 'express';
 import mongoose from 'mongoose';
 import config from 'config';
+import path from 'path'
 
 import { authRouter, budgetRouter } from './routes';
 // import budget from './routes/budget.routes'
@@ -11,6 +12,14 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/budget', budgetRouter);
+
+if (process.env.NODE_ENV === 'production') {
+	app.use('/', express.static(path.join(__dirname, 'client', 'build')))
+
+	app.get('*', (req, res) => {
+		res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
+	})
+}
 
 const PORT: number = config.get('port') || 8000;
 const uri: string = config.get('mongoUri');
