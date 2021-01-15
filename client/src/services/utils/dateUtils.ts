@@ -1,7 +1,9 @@
 export const formatDate = (date: Date | Date[] | string, type: string = ''): string => {
 	if (typeof date === 'string') {
-		date = new Date(date);
+		date = new Date(Date.parse(date));
 	}
+
+	console.log(date)
 
 	switch (type) {
 		case 'short':
