@@ -54,8 +54,8 @@ export function autoLogin() {
 }
 
 export function logout() {
-	document.cookie = `jwtToken=; max-age=-1`;
-	document.cookie = `userId=; max-age=-1`;
+	document.cookie = `jwtToken=''; max-age=-1`;
+	document.cookie = `userId=''; max-age=-1`;
 	return {
 		type: AUTH_LOGOUT,
 	};

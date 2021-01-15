@@ -17,19 +17,25 @@ export const selectCategories = (state: RootState): CategoryInterface[] =>
 export const selectIsLoading = (state: RootState): boolean =>
 	state.budget.isLoading;
 
-export const selectCurrentCategory = (state: RootState) => 
+export const selectCurrentCategory = (state: RootState) =>
 	state.budget.currentCategory;
 
-export const selectOptions = (state: RootState): OptionsInterface => 
+export const selectOptions = (state: RootState): OptionsInterface =>
 	state.budget.options;
 
 export const selectBalance = (state: RootState): BalanceInterface[] => {
-	const balance = state.budget.balance;
-	return balance.map(item => {
-		item.date = formatDate(item.date);
-		return item;
-	});
+	return state.budget.balance;
 };
+
+export const selectBalanceWithFormatDate = createSelector(
+	selectBalance,
+	balance => {
+		return balance.map(item => {
+			item.date = formatDate(item.date);
+			return item;
+		});
+	}
+);
 
 export type SelectCategoriesWithAmount = {
 	categories: CategoryInterface[];

@@ -13,10 +13,8 @@ import {
 } from 'recharts';
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
-	selectBalance,
-	// selectBalanceChart,
+	selectBalanceWithFormatDate,
 	selectColumns,
-	// selectDataChart,
 	selectIsLoading,
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';
@@ -29,7 +27,7 @@ const Reports = () => {
 	const isLoading = useSelector(selectIsLoading);
 	const options = useSelector(selectOptions);
 	const columns = useSelector(selectColumns);
-	const balance = useSelector(selectBalance);
+	const balance = useSelector(selectBalanceWithFormatDate);
 
 	const gradientOffset = () => {
 		const dataMax = Math.max(...balance.map(i => i.value));
