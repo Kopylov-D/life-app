@@ -13,9 +13,12 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/budget', budgetRouter);
 
+let PORT: string | number = config.get('port') || 8008
+
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
 
+	PORT = process.env.PORT || 8008
 	// app.use(express.static('client/build'));
 
 	// app.get('*', (req: Request, res: Response) => {
@@ -27,7 +30,6 @@ if (process.env.NODE_ENV === 'production') {
 	});
 }
 
-const PORT: number = config.get('port') || 8000;
 const uri: string = config.get('mongoUri');
 
 async function start() {
