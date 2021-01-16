@@ -14,6 +14,7 @@ node_modules
 dist
 
 # misc
+.vscode/
 
 /client/.DS_Store
 /client/.env.local
