@@ -1,5 +1,4 @@
 import React from 'react';
-import Menu from '../components/Menu';
 
 const withFeature = (items: string) => {
 	return (Component: Function) => (props: React.ComponentProps<any>) => {
@@ -10,11 +9,7 @@ const withFeature = (items: string) => {
 				<div className="component-frame">{props.children}</div>
 			</main>
 		);
-		// return (
-		//   <Feature name={featureName}>
-		//     <Component {...props} />
-		//   </Feature>
-		// );
+
 	};
 };
 

@@ -64,7 +64,6 @@ const OperationsTable: React.FC<Props> = ({
 							date={item.date}
 							amount={item.amount}
 							isExpense={item.isExpense}
-							// onChangeTransaction={onChangeCategoryHandler}
 							onDeleteTransaction={onDeleteTransactionHandler}
 						/>
 					);

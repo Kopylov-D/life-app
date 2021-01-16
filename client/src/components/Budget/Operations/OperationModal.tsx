@@ -67,7 +67,6 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 					}}
 				>
 					<Input
-						// refInput={refInput}
 						value={control.value}
 						className={control.class}
 						type={control.type}

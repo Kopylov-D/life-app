@@ -26,4 +26,3 @@ const Menu: React.FC<Props> = ({ items }) => {
 
 export default Menu;
 
-// style={{width: `${props.width}%`}

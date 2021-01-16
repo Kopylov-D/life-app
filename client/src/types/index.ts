@@ -50,5 +50,4 @@ export type CategorySelect = {
 	id: string;
 	title: string;
 	isSelected: boolean;
-	// onClick(): void;
 };

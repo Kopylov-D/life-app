@@ -117,7 +117,6 @@ const Auth = () => {
 				backgroundImage: `url(${BgImg})`,
 				backgroundSize: 'cover',
 				backgroundRepeat: 'no-repeat',
-				// backgroundPosition: 'center-top',
 			}}
 		>
 			<div className={classNames('auth')}>
@@ -158,14 +157,6 @@ const Auth = () => {
 						</Button>
 
 						<div onClick={registerHandler}>Зарегистрироваться</div>
-						{/* <Button
-							disabled={!isFormValid}
-							color="secondary"
-							onClick={registerHandler}
-							isLoading={isLoading}
-						>
-							Регистрация
-						</Button> */}
 					</div>
 				</form>
 			</div>

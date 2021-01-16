@@ -67,14 +67,12 @@ const CategoryChanger: React.FC<Props> = ({
 					}}
 				>
 					<Input
-						// refInput={refInput}
 						value={input.value}
 						className="category-changer"
 						type="text"
 						valid={input.valid}
 						touched={input.touched}
 						placeholder="Имя категории"
-						// shouldValidate={!!control.validation}
 						onChange={input.onChange}
 						onKeyPress={e => onEnterKeyPress(e)}
 					/>
@@ -90,7 +88,6 @@ const CategoryChanger: React.FC<Props> = ({
 				</form>
 				<div className="category-changer__buttons">
 					<Button
-						// type="primary"
 						color="primary"
 						size="small"
 						disabled={!input.valid}
@@ -99,7 +96,6 @@ const CategoryChanger: React.FC<Props> = ({
 						Ок
 					</Button>
 					<Button
-						// type="secondary"
 						color="secondary"
 						size="small"
 						disabled={false}

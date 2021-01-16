@@ -48,7 +48,6 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 
 	const onChangeYearHandler = (year: number) => {
 		setAllTime(false);
-		// setFullYear(false);
 		setYear(year);
 	};
 
