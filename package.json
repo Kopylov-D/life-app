@@ -10,7 +10,7 @@
 		"client:install": "npm install --prefix client",
 		"client:build": "npm run build --prefix client",
 		"dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-		"buildTs": "tsc -p ."
+		"build": "tsc -p ."
 	},
 	"repository": {
 		"type": "git",
@@ -19,7 +19,7 @@
 	"author": "Dmitrii Kopylov <dimonanos@gmail.com>",
 	"license": "ISC",
 	"engines": {
-    "node": "15.2"
+    "node": "15.x"
   },
 	"bugs": {
 		"url": "https://github.com/Kopylov-D/life-app/issues"
