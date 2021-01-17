@@ -1,0 +1,12 @@
+@import './variables';
+
+.todos {
+  max-width: 800px;
+  margin: 0 auto;
+
+  &__board {
+    display: flex;
+    justify-content: space-between;
+
+  }
+}

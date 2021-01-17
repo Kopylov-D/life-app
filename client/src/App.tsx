@@ -27,7 +27,7 @@ function App() {
 			<Route path="/todos" component={TodosPage} />
 			<Route path="/statistic" component={StatisticPage} />
 
-			<Redirect to="/budget" />
+			<Redirect to="/todos" />
 		</Switch>
 	);
 

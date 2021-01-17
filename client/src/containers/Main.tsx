@@ -6,7 +6,7 @@ const Main = (props: any) => {
 	return (
 		<div className="main">
 			<Header />
-			<main className="main__content">{props.children}</main>
+			<main>{props.children}</main>
 			<Footer />
 		</div>
 	);

@@ -131,21 +131,23 @@ body {
 	}
 
 	&__content {
+		padding: 15px;
+		overflow: auto;
 		position: absolute;
-		top: $header-height + $gap;
-		left: 0;
-		right: 0;
 		bottom: $footer-height + $gap;
-		// background: $c-white;
+		top: $header-height + $gap;
+		right: 0;
+		left: $menu-width + $gap;
+		background: $c-white;
 		border-radius: $block-radius;
 	}
 
 	&__menu {
 		width: $menu-width;
 		position: absolute;
-		top: 0;
+		top: $header-height + $gap;
 		left: 0;
-		bottom: 0;
+		bottom: $footer-height + $gap;
 		background: $c-white;
 		border-radius: $block-radius;
 		margin-right: $gap;

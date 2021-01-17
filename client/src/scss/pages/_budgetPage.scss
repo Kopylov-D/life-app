@@ -3,21 +3,9 @@
 @import './variables';
 
 .budget {
-	padding: 15px;
-	overflow: auto;
-	position: absolute;
-	bottom: 0;
-	top: 0;
-	right: 0;
-	left: $menu-width + $gap;
-	background: $c-white;
-	border-radius: $block-radius;
-
-	&__container {
-		margin: 10px auto;
-		max-width: 800px;
-		height: 100%;
-	}
+	margin: 10px auto;
+	max-width: 800px;
+	height: 100%;
 
 	&__tables {
 		display: flex;
@@ -35,7 +23,6 @@
 		flex-direction: column;
 		align-items: stretch;
 		max-width: 600px;
-		// flex-grow: 1;
 	}
 
 	&__income {

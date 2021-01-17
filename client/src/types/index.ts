@@ -51,3 +51,10 @@ export type CategorySelect = {
 	title: string;
 	isSelected: boolean;
 };
+
+export type MenuItem = {
+	to: string
+	title: string
+	img?: string
+	component?: React.FC
+}
