@@ -39,3 +39,63 @@ export type FiltredDateType = {
 	$gte: Date;
 	$lt: Date;
 };
+
+export enum Priority {
+	'high',
+	'middle',
+	'low',
+}
+
+// export enum Level {
+// 	'one'
+// }
+
+export interface TaskInterface {
+	_id: string;
+	user: string;
+	target?: string;
+	subtask?: string;
+	name: string;
+	color?: string;
+	priority?: Priority;
+	date: Date;
+	level: number;
+	expiresIn?: Date;
+}
+
+export interface SubtaskInterface {
+	_id: string;
+	user: string;
+	target: string;
+	task: string;
+	name: string;
+	color?: string;
+	priority?: Priority;
+	date: Date;
+	level: number;
+	expiresIn: Date;
+}
+
+export interface ColorInterface {
+	id: string;
+	name: string;
+	hex: string;
+}
+
+export interface TargetInterface {
+	id: string;
+	user: string;
+	name: string;
+	date: Date;
+	color?: string;
+	expiresIn: Date;
+}
+
+export interface CardInterface {
+	id: string
+	user: string
+	name: string
+	color?: string
+	level: number
+
+}

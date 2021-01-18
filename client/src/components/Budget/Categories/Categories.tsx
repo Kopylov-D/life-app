@@ -16,7 +16,7 @@ import  Loader from '../../UI/Loader';
 import { Params } from '../Operations/OperationModal';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryChanger';
-import Table from '../Table';
+import Table from '../../Table';
 
 const Categories: React.FC = () => {
 	const dispatch = useDispatch();
@@ -79,7 +79,7 @@ const Categories: React.FC = () => {
 				<Loader type='cube-grid' />
 			) : (
 				<div className="budget__categories">
-					<Table class="budget-categories">
+					<Table class="categories">
 						{categories.map(item => (
 							<CategoryItem
 								key={item._id}

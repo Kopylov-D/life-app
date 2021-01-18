@@ -55,15 +55,6 @@
 		}
 	}
 
-	&__budget-accounting {
-		
-		#{$parent}__item,
-		#{$parent}__header {
-			grid-template-columns:
-				minmax(110px, 3.5fr)
-				minmax(50px, 1fr);
-		}
-	}
 
 	&__budget-categories {
 	

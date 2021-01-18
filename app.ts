@@ -4,6 +4,7 @@ import config from 'config';
 import path from 'path';
 
 import { authRouter, budgetRouter } from './routes';
+import todosRouter from './routes/todos.routes'
 
 const app: express.Application = express();
 
@@ -11,6 +12,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/budget', budgetRouter);
+app.use('/api/todos', todosRouter)
 
 let PORT: string | number = config.get('port') || 8008;
 const uri: string = config.get('mongoUri');

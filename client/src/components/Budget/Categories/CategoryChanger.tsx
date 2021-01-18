@@ -59,7 +59,12 @@ const CategoryChanger: React.FC<Props> = ({
 
 	return (
 		<Fragment>
-			<Modal title={title} closeModal={onCloseClick} backdropType="black">
+			<Modal
+				title={title}
+				class="category-changer"
+				closeModal={onCloseClick}
+				backdropType="black"
+			>
 				<form
 					className="category-changer"
 					onSubmit={e => {
@@ -85,25 +90,26 @@ const CategoryChanger: React.FC<Props> = ({
 						onSwitch={setIsExpense}
 						flag={isExpense}
 					/>
+
+					<div className="category-changer__buttons">
+						<Button
+							color="primary"
+							size="small"
+							disabled={!input.valid}
+							onClick={onOkClickHandler}
+						>
+							Ок
+						</Button>
+						<Button
+							color="secondary"
+							size="small"
+							disabled={false}
+							onClick={onCloseClick}
+						>
+							Отмена
+						</Button>
+					</div>
 				</form>
-				<div className="category-changer__buttons">
-					<Button
-						color="primary"
-						size="small"
-						disabled={!input.valid}
-						onClick={onOkClickHandler}
-					>
-						Ок
-					</Button>
-					<Button
-						color="secondary"
-						size="small"
-						disabled={false}
-						onClick={onCloseClick}
-					>
-						Отмена
-					</Button>
-				</div>
 			</Modal>
 		</Fragment>
 	);

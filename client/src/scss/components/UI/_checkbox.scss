@@ -1,5 +1,62 @@
 @import '../../variables';
 
+.checkbox {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+
+	&__real {
+		width: 0;
+		height: 0;
+		opacity: 0;
+		position: absolute;
+		z-index: -1;
+
+		&:focus + .checkbox__custom {
+			box-shadow: 0px 0px 0px 2px rgba($color: $c-primary, $alpha: 0.6);
+		}
+
+		&:checked + .checkbox__custom {
+			background: $c-primary;
+		}
+
+		&:checked + .checkbox__custom::before {
+			opacity: 1;
+		}
+	}
+
+	&__custom {
+		position: relative;
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		background: $c-white;
+		border-radius: $border-radius;
+		// vertical-align: middle;
+		margin-right: 10px;
+
+		&::before {
+			content: '';
+
+			display: inline-block;
+			width: 13px;
+			height: 13px;
+			background-image: url('../../../assets/img/Shape.svg');
+			background-size: contain;
+			background-repeat: no-repeat;
+
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			opacity: 0;
+			margin-top: 2px;
+
+			transition: 0.2s ease-in;
+		}
+	}
+}
+
 // .checkbox input {
 //   // --active: #{$blue};
 //   --active-inner: $c-primary;
@@ -196,74 +253,6 @@
 //     --r: 0deg;
 //   }
 // }
-
-/* *********************************
-Чекбоксы
-********************************* */
-
-.checkbox {
-	$с: #ffffff;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-
-	&__real {
-		width: 0;
-		height: 0;
-		opacity: 0;
-		position: absolute;
-		z-index: -1;
-
-		&:focus + .checkbox__custom {
-			box-shadow: 0px 0px 0px 1px #818a94;
-		}
-
-		&:checked + .checkbox__custom {
-			background: $c-primary;
-		}
-
-		&:checked + .checkbox__custom::before {
-			// transform: translate(-50%, -50%) scale(1);
-			opacity: 1;
-		}
-	}
-
-	&__custom {
-		position: relative;
-		display: inline-block;
-		width: 16px;
-		height: 16px;
-		background: $с;
-		// background: chartreuse;
-		border: 1px solid #d4d4d4;
-		border-radius: 4px;
-		// vertical-align: middle;
-		margin-right: 10px;
-
-		&::before {
-			content: '';
-
-			/* Рисуем галочку */
-			display: inline-block;
-			// display: flex;
-			width: 13px;
-			height: 13px;
-			background-image: url('../../../assets/img/Shape.svg');
-			background-size: contain;
-			background-repeat: no-repeat;
-
-			/* Выравниваем по центру */
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			opacity: 0;
-			margin-top: 2px;
-
-			transition: 0.2s ease-in;
-		}
-	}
-}
 
 // .real-checkbox {
 // 	width: 0;

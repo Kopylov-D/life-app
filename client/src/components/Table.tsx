@@ -10,14 +10,14 @@ const Table: React.FC<Props> = props => {
 	return (
 		<div
 			className={classNames('table', {
-				[`table__${props.class}`]: props.class,
+				[`${props.class}__table`]: props.class,
 			})}
 		>
 			{props.headerItems && (
 				<header
-					className={classNames('table__header', {
-						[`table__${props.class}`]: props.class,
-					})}
+					className={classNames( {
+						[`${props.class}__table`]: props.class,
+					}, 'table__header',)}
 				>
 					{props.headerItems.map((item, index) => (
 						<div key={index}>{item}</div>
@@ -27,12 +27,11 @@ const Table: React.FC<Props> = props => {
 
 			<div
 				className={classNames('table__body', {
-					[`table__${props.class}`]: props.class,
+					[`${props.class}__table`]: props.class,
 				})}
 			>
 				{props.children}
 			</div>
-			
 		</div>
 	);
 };

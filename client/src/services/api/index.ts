@@ -140,6 +140,8 @@ export const api = {
 
 	deleteCategory: (_id: string): any =>
 		axios.delete<MessageResponseType>(`/api/budget/categories/${_id}`),
+	
+	addTask: (name: string) => axios.post('/api/todos/tasks', {name})
 };
 
 // export const {jwtToken} = getAuthData()

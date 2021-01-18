@@ -1,0 +1,14 @@
+@import '../../variables';
+
+.categories {
+  
+	&__table {
+		margin-bottom: 10px;
+		.table__header,
+		.table__item {
+			grid-template-columns:
+				minmax(90px, 1fr)
+				minmax(50px, 1fr);
+		}
+	}
+}

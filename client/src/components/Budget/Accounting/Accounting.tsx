@@ -35,7 +35,7 @@ const Accounting: React.FC = () => {
 			{isLoading ? (
 				<Loader size="small" type="cube-grid" />
 			) : (
-				<div className="budget__tables">
+				<div className="accounting__tables">
 					<AccountingTable
 						categories={categories}
 						isExpense={true}
