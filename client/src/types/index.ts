@@ -58,3 +58,8 @@ export type MenuItem = {
 	img?: string
 	component?: React.FC
 }
+
+export interface BackdropInterface  {
+	onClick(): void;
+	type?: 'black';
+};

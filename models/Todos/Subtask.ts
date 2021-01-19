@@ -22,6 +22,11 @@ const SubtaskSchema: Schema = new Schema<SubtaskInterface>({
 		type: String,
 		default: 'Новая подзадача',
 	},
+	isDone: {
+		required: true,
+		type: Boolean,
+		default: false
+	},
 	color: {
 		required: false,
 		ref: 'Color',

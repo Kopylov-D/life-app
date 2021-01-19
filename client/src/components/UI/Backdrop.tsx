@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React from 'react';
+import {BackdropInterface} from '../../types'
 
-type Props = {
-	onClick(): void;
-	type?: string;
+ interface Props extends BackdropInterface  {
+
 };
 
 const Backdrop: React.FC<Props> = ({ type, onClick }) => {

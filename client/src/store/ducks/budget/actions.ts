@@ -53,26 +53,12 @@ export function getBudgetData(
 	};
 }
 
-// export function getTransactions() {
-// 	return async (dispatch: any) => {
-// 		dispatch(fetchStart());
-// 		try {
-// 			const { data } = await api.fetchTransactions();
-// 			console.log(data);
-// 			dispatch(setTransactions(data));
-// 			dispatch(fetchSuccess());
-// 		} catch (e) {
-// 			console.log(e);
-// 		}
-// 	};
-// }
-
 export function getCategories(): ThunkType {
 	return async dispatch => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await api.fetchCategories();
-			dispatch(setCategories(data));
+			const categories  = await api.fetchCategories();
+			dispatch(setCategories(categories));
 			dispatch(fetchSuccess());
 		} catch (e) {
 			console.log(e);

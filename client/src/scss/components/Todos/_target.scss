@@ -1,0 +1,35 @@
+@import '../../variables';
+
+.target {
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  background: rgba($color: #a50d0d79, $alpha: .3);
+  border-radius: $border-radius;
+  padding: 4px;
+  margin-bottom: 2px;
+  font-size: 1.4rem;
+
+
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+
+  &__name {
+    margin-right: 1rem;
+  }
+
+  &__date {
+    font-size: $f-small;
+    // align-self: baseline;
+  }
+
+  & img {
+    height: 16px;
+  }
+  
+
+
+
+}

@@ -1,15 +1,19 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getTargets, getTasks } from '../../../store/ducks/todos/actions';
 import Button from '../../UI/Button';
 import Task from './Task';
 
 interface Props {
-  headerName: string
-
+	headerName: string;
 }
 
 const Card: React.FC<any> = props => {
+	const dispatch = useDispatch();
 	const onClick = () => {
 		console.log('add task click');
+		dispatch(getTargets());
+		dispatch(getTasks())
 	};
 
 	const onTaskCheck = () => {

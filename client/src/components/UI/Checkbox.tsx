@@ -3,16 +3,19 @@ import React from 'react';
 interface Props {
 	id: string;
 	checked: boolean;
-	value: string;
+	value?: string;
 	onChangeHandler(id: string): void;
 }
 
 const Checkbox: React.FC<Props> = ({ id, checked, value, onChangeHandler }) => {
+
+	const idHtmlFor = Math.random().toString()
+
 	return (
-		<label htmlFor={id} className="checkbox">
+		<label htmlFor={idHtmlFor} className="checkbox">
 			<input
 				className="checkbox__real"
-				id={id}
+				id={idHtmlFor}
 				type="checkbox"
 				checked={checked}
 				onChange={() => onChangeHandler(id)}

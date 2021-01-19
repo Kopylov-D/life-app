@@ -1,4 +1,3 @@
-import { type } from 'os';
 import { createSelector } from 'reselect';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';

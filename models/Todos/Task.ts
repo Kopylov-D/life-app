@@ -22,6 +22,16 @@ const TaskSchema: Schema = new Schema<TaskInterface>({
 		type: String,
 		default: 'Новая задача',
 	},
+	isDone: {
+		required: true,
+		type: Boolean,
+		default: false
+	},
+	notes: {
+		required: true,
+		type: String,
+		default: ''
+	},
 	color: {
 		required: false,
 		ref: 'Color',

@@ -1,3 +1,5 @@
+/* colors*/
+
 $c-primary: #1b4ea3;
 $c-secondary: #f7f7fa;
 $c-invalid: #cf2c00;
@@ -6,6 +8,8 @@ $c-expense: #b8340044;
 $c-income: #31b80028;
 
 $c-white: #fff;
+
+/* sizing*/
 
 $border-radius: 4px;
 $block-radius: 8px;
@@ -16,8 +20,12 @@ $header-height: 80px;
 $footer-height: 20px;
 $menu-width: 200px;
 
-$f-small: 12px;
-$f-normal: 16px;
+/* fonts*/
+
+$f-small: 1rem;
+$f-normal: 1.6rem;
+
+/* transformations*/
 
 $transform: translate(1px, 1px);
 $scale: scale(0.98);

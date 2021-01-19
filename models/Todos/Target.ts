@@ -12,6 +12,16 @@ const TargetSchema: Schema = new Schema<TargetInterface>({
 		type: String,
 		default: 'Новая подзадача',
 	},
+	isDone: {
+		required: true,
+		type: Boolean,
+		default: false
+	},
+	notes: {
+		required: false,
+		type: String,
+		// default: ''
+	},
 	color: {
 		required: false,
 		ref: 'Color',

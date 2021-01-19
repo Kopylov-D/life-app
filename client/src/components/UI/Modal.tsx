@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
+import { BackdropInterface } from '../../types';
 import Backdrop from './Backdrop';
 
-type Props = {
+interface Props  {
 	title?: string;
 	class?: string;
-	backdropType?: string;
+	backdropType?: BackdropInterface['type'];
 	closeModal(): void;
+
 };
 
 const Modal: React.FC<Props> = props => {
