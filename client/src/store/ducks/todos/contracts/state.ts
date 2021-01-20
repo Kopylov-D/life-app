@@ -1,13 +1,14 @@
 import { LoadingStatus } from '../../../types';
 
-export interface TodosState  {
+export interface TodosState {
 	tasks: TaskInterface[];
 	subtasks: SubtaskInterface[];
 	targets: TargetInterface[];
 	colors: ColorInterface[];
 	cards: CardInterface[];
 	loadingStatus: LoadingStatus;
-};
+	errorMessage?: string;
+}
 
 export enum Priority {
 	'high',
@@ -17,7 +18,7 @@ export enum Priority {
 
 export interface TaskInterface {
 	_id: string;
-	user: string;
+	// user: string;
 	target?: string;
 	subtask?: string;
 	name: string;
@@ -32,7 +33,7 @@ export interface TaskInterface {
 
 export interface SubtaskInterface {
 	_id: string;
-	user: string;
+	// user: string;
 	target: string;
 	task: string;
 	name: string;
@@ -52,7 +53,7 @@ export interface ColorInterface {
 
 export interface TargetInterface {
 	_id: string;
-	user: string;
+	// user: string;
 	name: string;
 	isDone: boolean;
 	notes: string;
@@ -68,4 +69,12 @@ export interface CardInterface {
 	name: string;
 	color?: string;
 	level: number;
+}
+
+export interface TodosDataInterface {
+	tasks: TaskInterface[];
+	subtasks: SubtaskInterface[];
+	targets: TargetInterface[];
+	colors: ColorInterface[];
+	cards: CardInterface[];
 }

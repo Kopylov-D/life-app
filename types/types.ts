@@ -68,7 +68,7 @@ export interface TaskInterface {
 export interface SubtaskInterface {
 	_id: string;
 	user: string;
-	target: string;
+	target?: string;
 	task: string;
 	name: string;
 	isDone: boolean;

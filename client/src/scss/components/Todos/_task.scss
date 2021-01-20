@@ -10,6 +10,12 @@
 	padding: 0px 10px;
 	margin-bottom: 2px;
 
+	&__main {
+		display: flex;
+		flex-direction: column;
+		
+	}
+
 	&__content {
 		display: flex;
 	}

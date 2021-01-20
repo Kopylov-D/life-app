@@ -15,3 +15,10 @@ export type BudgetState = {
 export type OptionsInterface = {
 	startDate: string;
 };
+
+export interface BudgetDataInterface {
+	transactions: TransactionInterface[];
+	categories: CategoryInterface[];
+	options: OptionsInterface;
+	balance: BalanceInterface[];
+}

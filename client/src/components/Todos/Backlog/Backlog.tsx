@@ -6,24 +6,27 @@ import NewBacklogTask from './NewBacklogTask';
 import Target from './Target';
 import { useInput } from '../../../hooks/input.hook';
 import Input from '../../UI/Input';
-import { api } from '../../../services/api';
+import { useDispatch } from 'react-redux';
+import { fetchAddTarget } from '../../../store/ducks/todos/actions';
 
 interface Props {}
 
 const Backlog: React.FC<Props> = props => {
-	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(
-		false
+	const dispatch = useDispatch();
+	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(false);
+	const addTargetInput = useInput(
+		{ initialValue: '' },
+		{ required: true, maxLength: 30 }
 	);
-	const addTargetInput = useInput({ initialValue: '' }, {required: true, maxLength: 30 });
 
 	const addTargetHandler = () => {
 		setAddTargetModalIsOpen(true);
 	};
 
 	const createTargetHandler = async () => {
-		await api.addTarget(addTargetInput.value)
+		// await api.addTarget(addTargetInput.value)
+		dispatch(fetchAddTarget(addTargetInput.value));
 		setAddTargetModalIsOpen(true);
-
 	};
 
 	return (
@@ -36,18 +39,12 @@ const Backlog: React.FC<Props> = props => {
 					Новая цель
 				</Button>
 			</div>
-			<Table
-				class="backlog"
-				headerItems={['Срок выполнения', 'Название', 'Приоритет']}
-			>
+			<Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}>
 				<NewBacklogTask />
 			</Table>
 
 			{addTargetModalIsOpen && (
-				<Modal
-					closeModal={() => setAddTargetModalIsOpen(false)}
-					backdropType="black"
-				>
+				<Modal closeModal={() => setAddTargetModalIsOpen(false)} backdropType="black">
 					<Input
 						onChange={addTargetInput.onChange}
 						value={addTargetInput.value}

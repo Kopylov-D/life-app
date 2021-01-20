@@ -1,4 +1,5 @@
-import { api, getAuthData } from '../../../services/api';
+import { authApi } from '../../../services/api/authApi';
+import { getAuthData } from '../../../services/api/index';
 import { AuthData } from '../../../types';
 import {
 	AUTH_START,
@@ -11,7 +12,7 @@ export function register(email: string, password: string) {
 	return async (dispatch: any) => {
 		dispatch(authStart());
 		try {
-			const { data } = await api.register(email, password);
+			const { data } = await authApi.register(email, password);
 			dispatch(authMessage(data.message));
 		} catch (e) {
 			console.log(e);
@@ -24,7 +25,7 @@ export function login(email: string, password: string) {
 	return async (dispatch: any) => {
 		dispatch(authStart());
 		try {
-			const { data } = await api.login(email, password);
+			const { data } = await authApi.login(email, password);
 			const maxAge = 3600 * 24 * 30
 			document.cookie = `jwtToken=${data.token}; max-age=${maxAge}`;
 			document.cookie = `userId=${data.userId}; max-age=${maxAge}`;

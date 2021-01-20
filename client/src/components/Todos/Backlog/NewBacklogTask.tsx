@@ -6,10 +6,6 @@ import Backdrop from '../../UI/Backdrop';
 import Input from '../../UI/Input';
 import calendar from '../../../assets/img/calendar.svg';
 
-import Select from '../../UI/Select';
-import Toggle from '../../UI/Toggle';
-import { api } from '../../../services/api';
-
 interface Props {}
 
 const items = [{}];
@@ -21,8 +17,7 @@ const NewBacklogTask: React.FC<Props> = props => {
 
 	const onKeyEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter' && input.valid) {
-      console.log('enter');
-      api.addTask(input.value)
+			console.log('enter');
 		}
 	};
 

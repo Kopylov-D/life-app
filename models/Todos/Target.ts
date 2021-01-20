@@ -15,7 +15,7 @@ const TargetSchema: Schema = new Schema<TargetInterface>({
 	isDone: {
 		required: true,
 		type: Boolean,
-		default: false
+		default: false,
 	},
 	notes: {
 		required: false,
@@ -42,9 +42,6 @@ const TargetSchema: Schema = new Schema<TargetInterface>({
 	},
 });
 
-type TargetModelDocumentInterface = TargetInterface & Document;
+export type TargetModelDocumentInterface = TargetInterface & Document;
 
-export const Target = model<TargetModelDocumentInterface>(
-	'Target',
-	TargetSchema
-);
+export const Target = model<TargetModelDocumentInterface>('Target', TargetSchema);

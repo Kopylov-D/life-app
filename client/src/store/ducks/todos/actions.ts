@@ -1,19 +1,23 @@
 import { ThunkAction } from 'redux-thunk';
-import { api } from '../../../services/api';
+import { todosApi } from '../../../services/api/todosApi';
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
-import { setLoadingStatus, setTargets, setTasks, TodosActions } from './actionCreators';
-import { TodosActionTypes } from './contracts/actionTypes';
+import {
+	addTarget,
+	setLoadingStatus,
+	setTargets,
+	setTasks,
+	setTodosData,
+	TodosActions,
+} from './actionCreators';
 
 type ThunkType = ThunkAction<Promise<void>, RootState, unknown, TodosActions>;
 
 export function getTargets(): ThunkType {
 	return async dispatch => {
-		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
-			const targets = await api.fetchTargets();
+			const targets = await todosApi.fetchTargets();
 			dispatch(setTargets(targets));
-			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -23,10 +27,35 @@ export function getTargets(): ThunkType {
 
 export function getTasks(): ThunkType {
 	return async dispatch => {
+		try {
+			const { data } = await todosApi.getTasks();
+			dispatch(setTasks(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function getTodosData(): ThunkType {
+	return async dispatch => {
 		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
-			const tasks = await api.fetchTasks();
-			dispatch(setTasks(tasks));
+			const { data } = await todosApi.getTodosData();
+			dispatch(setTodosData(data));
+			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function fetchAddTarget(name: string): ThunkType {
+	return async dispatch => {
+		try {
+			const { data } = await todosApi.addTarget(name);
+			dispatch(addTarget(data));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

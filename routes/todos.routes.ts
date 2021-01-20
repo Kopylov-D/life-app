@@ -4,6 +4,8 @@ import { auth } from "../middleware/auth.middleware";
 
 const router = Router()
 
+router.get('/', auth, TodosController.getTodosData)
+
 router.get('/tasks', auth, TodosController.getTasks)
 router.post('/tasks', auth, TodosController.addTask)
 

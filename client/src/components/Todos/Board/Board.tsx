@@ -6,8 +6,10 @@ type Props = {
 }
 
 export const Board: React.FC<Props> = (props) => {
+  
   return (
     <div className='todos__board'>
+
       <Card/>
       <Card/>
       <Card/>

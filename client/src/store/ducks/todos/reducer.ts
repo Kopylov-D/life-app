@@ -14,6 +14,15 @@ const initialState: TodosState = {
 
 export const todosReducer = (state = initialState, action: TodosActions): TodosState => {
 	switch (action.type) {
+		case TodosActionTypes.SET_TODOS_DATA:
+			return {
+				...state,
+				tasks: action.payload.tasks,
+				subtasks: action.payload.subtasks,
+				targets: action.payload.targets,
+				colors: action.payload.colors,
+				cards: action.payload.cards,
+			};
 		case TodosActionTypes.SET_TARGETS:
 			return {
 				...state,
@@ -29,9 +38,12 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				...state,
 				tasks: action.payload,
 			};
-		default:
+		case TodosActionTypes.ADD_TARGET:
 			return {
 				...state,
+				targets: [...state.targets, action.payload],
 			};
+		default:
+			return state;
 	}
 };

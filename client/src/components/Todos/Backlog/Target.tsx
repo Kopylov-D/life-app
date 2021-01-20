@@ -1,6 +1,6 @@
 import React from 'react';
 import trash from '../../../assets/img/trash.svg';
-import { TargetInterface } from '../../../store/ducks/todos/types';
+import { TargetInterface } from '../../../store/ducks/todos/contracts/state';
 import Checkbox from '../../UI/Checkbox';
 
 interface Props extends TargetInterface {

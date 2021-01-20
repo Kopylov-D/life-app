@@ -1,22 +1,25 @@
 import { Action } from 'redux';
 import { LoadingStatus } from '../../../types';
-import { TargetInterface, TaskInterface } from '../types';
+import {
+	CardInterface,
+	ColorInterface,
+	SubtaskInterface,
+	TargetInterface,
+	TaskInterface,
+	TodosDataInterface,
+} from '../contracts/state';
 
 export enum TodosActionTypes {
-	// GET_TARGETS = 'GET_TARGETS',
 	SET_TARGETS = 'SET_TARGETS',
 	SET_LOADING_STATUS = 'SET_LOADING',
-	SET_TASKS = 'SET_TASKS'
+	SET_TASKS = 'SET_TASKS',
+	SET_TODOS_DATA = 'SET_TODOS_DATA',
+	ADD_TARGET = 'ADD_TARGET'
 }
 
-// export interface GetTargetsActionInterface extends Action<TodosActionTypes> {
-// 	type: TodosActionTypes.GET_TARGETS;
-// 	payload: TargetInterface[];
-// }
-
 export interface SetTargetsActionInterface extends Action<TodosActionTypes> {
-  type: TodosActionTypes.SET_TARGETS
-  payload: TargetInterface[]
+	type: TodosActionTypes.SET_TARGETS;
+	payload: TargetInterface[];
 }
 
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
@@ -25,6 +28,16 @@ export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes
 }
 
 export interface SetTasksActionInterface extends Action<TodosActionTypes> {
-	type: TodosActionTypes.SET_TASKS
-	payload: TaskInterface[]
+	type: TodosActionTypes.SET_TASKS;
+	payload: TaskInterface[];
+}
+
+export interface SetTodosDataActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_TODOS_DATA;
+	payload: TodosDataInterface
+}
+
+export interface AddTargetActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.ADD_TARGET;
+	payload: TargetInterface
 }

@@ -1,5 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
-import { api } from '../../../services/api';
+import { budgetApi } from '../../../services/api/budgetApi';
 import { RootState } from '../../rootReducer';
 import {
 	FETCH_ERROR,
@@ -27,12 +27,7 @@ import {
 } from './contracts/actionTypes';
 import { CategoryInterface } from './types';
 
-type ThunkType = ThunkAction<
-	Promise<void>,
-	RootState,
-	unknown,
-	BudgetActionsTypes
->;
+type ThunkType = ThunkAction<Promise<void>, RootState, unknown, BudgetActionsTypes>;
 
 export function getBudgetData(
 	year: string,
@@ -43,7 +38,7 @@ export function getBudgetData(
 	return async dispatch => {
 		dispatch(fetchStart());
 		try {
-			const { data } = await api.fetchBudgetData(year, month, all, fullYear);
+			const { data } = await budgetApi.fetchBudgetData(year, month, all, fullYear);
 			dispatch(fetchSuccess());
 			dispatch(setBudgetData(data));
 		} catch (e) {
@@ -57,8 +52,8 @@ export function getCategories(): ThunkType {
 	return async dispatch => {
 		dispatch(fetchStart());
 		try {
-			const categories  = await api.fetchCategories();
-			dispatch(setCategories(categories));
+			const { data } = await budgetApi.fetchCategories();
+			dispatch(setCategories(data));
 			dispatch(fetchSuccess());
 		} catch (e) {
 			console.log(e);
@@ -74,14 +69,13 @@ export function addTransaction(
 ): ThunkType {
 	return async dispatch => {
 		try {
-			const { data } = await api.addTransaction(
+			const { data } = await budgetApi.addTransaction(
 				categoryId,
 				amount,
 				isExpense,
 				date
 			);
-			console.log(data.transaction)
-			dispatch({ type: ADD_TRANSACTION, payload: data.transaction });
+			dispatch({ type: ADD_TRANSACTION, payload: data });
 		} catch (e) {
 			console.log(e);
 		}
@@ -91,7 +85,7 @@ export function addTransaction(
 export function deleteTransaction(_id: string): ThunkType {
 	return async dispatch => {
 		try {
-			await api.deleteTransaction(_id);
+			await budgetApi.deleteTransaction(_id);
 			dispatch({ type: DELETE_TRANSACTION, payload: _id });
 		} catch (e) {
 			console.log(e);
@@ -105,8 +99,8 @@ export function addCategory(
 ): ThunkType {
 	return async dispatch => {
 		try {
-			const { data } = await api.addCategory(name, isExpense);
-			dispatch({ type: ADD_CATEGORY, payload: data.category });
+			const { data } = await budgetApi.addCategory(name, isExpense);
+			dispatch({ type: ADD_CATEGORY, payload: data });
 		} catch (e) {
 			console.log(e);
 		}
@@ -131,14 +125,14 @@ export function changeCategory(
 			return item;
 		});
 
-		await api.changeCategory(_id, name, color, isExpense);
+		await budgetApi.changeCategory(_id, name, color, isExpense);
 		dispatch(updateCategories(newCategory));
 	};
 }
 
 export function deleteCategory(id: string): ThunkType {
 	return async dispatch => {
-		await api.deleteCategory(id);
+		await budgetApi.deleteCategory(id);
 		dispatch(delCategory(id));
 	};
 }
