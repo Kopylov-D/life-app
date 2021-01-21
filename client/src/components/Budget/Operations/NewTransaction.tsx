@@ -35,7 +35,7 @@ const NewTransaction: React.FC<Props> = ({
 
 	const input = useInput(
 		{ initialValue: '' },
-		{ isNumber: true, maxLength: 12 }
+		{ required: true, isNumber: true, maxLength: 12 }
 	);
 
 	useEffect(() => {

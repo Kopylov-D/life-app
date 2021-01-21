@@ -14,7 +14,10 @@ export enum TodosActionTypes {
 	SET_LOADING_STATUS = 'SET_LOADING',
 	SET_TASKS = 'SET_TASKS',
 	SET_TODOS_DATA = 'SET_TODOS_DATA',
-	ADD_TARGET = 'ADD_TARGET'
+	ADD_TARGET = 'ADD_TARGET',
+	ADD_SUBTASK = 'ADD_SUBTASK',
+	ADD_CARD = 'ADD_CARD',
+	CHANGE_CARD = 'CHANGE_CARD',
 }
 
 export interface SetTargetsActionInterface extends Action<TodosActionTypes> {
@@ -34,10 +37,25 @@ export interface SetTasksActionInterface extends Action<TodosActionTypes> {
 
 export interface SetTodosDataActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_TODOS_DATA;
-	payload: TodosDataInterface
+	payload: TodosDataInterface;
 }
 
 export interface AddTargetActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.ADD_TARGET;
-	payload: TargetInterface
+	payload: TargetInterface;
+}
+
+export interface AddSubtaskActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.ADD_SUBTASK;
+	payload: SubtaskInterface;
+}
+
+export interface AddCardActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.ADD_CARD;
+	payload: CardInterface;
+}
+
+export interface ChangeCardActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.CHANGE_CARD;
+	payload: CardInterface;
 }

@@ -1,18 +1,32 @@
-import React from 'react'
-import Card from './Card'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddCard } from '../../../store/ducks/todos/actions';
+import { selectCards, selectCardsNumber } from '../../../store/ducks/todos/selectors';
+import Button from '../../UI/Button';
+import Card from './Card';
+import { CardInterface } from '../../../store/ducks/todos/contracts/state';
 
-type Props = {
-
+interface Props {
+	cards: CardInterface[];
 }
 
-export const Board: React.FC<Props> = (props) => {
-  
-  return (
-    <div className='todos__board'>
+export const Board: React.FC<any> = props => {
+	const dispatch = useDispatch();
+	const cardsNumber = useSelector(selectCardsNumber);
+	const cards = useSelector(selectCards);
 
-      <Card/>
-      <Card/>
-      <Card/>
-    </div>
-  )
-}
+	const onCreateCartHandler = () => {
+		dispatch(fetchAddCard(cardsNumber + 1));
+	};
+
+	return (
+		<div className="board">
+			<div className="board__cards">
+				{cards.map(card => (
+					<Card key={card._id} _id={card._id} level={card.level} name={card.name} />
+				))}
+			</div>
+			<Button onClick={onCreateCartHandler}>Создать карточку</Button>
+		</div>
+	);
+};

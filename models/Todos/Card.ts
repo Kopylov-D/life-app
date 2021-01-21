@@ -10,7 +10,7 @@ const CardSchema: Schema = new Schema<CardInterface>({
 	name: {
 		required: true,
 		type: String,
-		default: 'Введите имя карточки',
+		default: 'Новая карточка',
 	},
 	color: {
 		required: false,

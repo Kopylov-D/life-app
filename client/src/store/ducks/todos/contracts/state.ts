@@ -65,7 +65,7 @@ export interface TargetInterface {
 
 export interface CardInterface {
 	_id: string;
-	user: string;
+	user?: string;
 	name: string;
 	color?: string;
 	level: number;

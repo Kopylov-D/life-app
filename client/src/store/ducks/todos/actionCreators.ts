@@ -1,20 +1,32 @@
 import { LoadingStatus } from '../../types';
 import {
+	AddCardActionInterface,
+	AddSubtaskActionInterface,
 	AddTargetActionInterface,
+	ChangeCardActionInterface,
 	SetLoadingStatusActionInterface,
 	SetTargetsActionInterface,
 	SetTasksActionInterface,
 	SetTodosDataActionInterface,
 	TodosActionTypes,
 } from './contracts/actionTypes';
-import { TargetInterface, TaskInterface, TodosDataInterface } from './contracts/state';
+import {
+	CardInterface,
+	SubtaskInterface,
+	TargetInterface,
+	TaskInterface,
+	TodosDataInterface,
+} from './contracts/state';
 
 export type TodosActions =
 	| SetTargetsActionInterface
 	| SetLoadingStatusActionInterface
 	| SetTasksActionInterface
 	| SetTodosDataActionInterface
-	| AddTargetActionInterface;
+	| AddTargetActionInterface
+	| AddSubtaskActionInterface
+	| AddCardActionInterface 
+	| ChangeCardActionInterface 
 
 export const setTargets = (payload: TargetInterface[]): SetTargetsActionInterface => ({
 	type: TodosActionTypes.SET_TARGETS,
@@ -42,5 +54,20 @@ export const setTodosData = (
 
 export const addTarget = (payload: TargetInterface): AddTargetActionInterface => ({
 	type: TodosActionTypes.ADD_TARGET,
+	payload,
+});
+
+export const addSubtask = (payload: SubtaskInterface): AddSubtaskActionInterface => ({
+	type: TodosActionTypes.ADD_SUBTASK,
+	payload,
+});
+
+export const addCard = (payload: CardInterface): AddCardActionInterface => ({
+	type: TodosActionTypes.ADD_CARD,
+	payload,
+});
+
+export const changeCard = (payload: CardInterface): ChangeCardActionInterface => ({
+	type: TodosActionTypes.CHANGE_CARD,
 	payload,
 });

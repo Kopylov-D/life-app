@@ -193,7 +193,6 @@ class BudgetController {
 		try {
 			const { name, color, isExpense } = req.body;
 			const { id } = req.params;
-			console.log(id);
 			await Category.findByIdAndUpdate(id, { name, color, isExpense });
 			res.json({ message: 'Категория обновлена' });
 		} catch (error) {
@@ -204,7 +203,6 @@ class BudgetController {
 	async deleteCategory(req: RequestWithUser, res: Response) {
 		try {
 			const { id } = req.params;
-			console.log(req.params);
 			// if (!Types.ObjectId.isValid(_id)) return res.status(404).send(`No post with id: ${_id}`);
 			await Transaction.deleteMany({ category: id });
 			await Category.findByIdAndRemove(id);

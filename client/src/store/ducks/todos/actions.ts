@@ -3,7 +3,10 @@ import { todosApi } from '../../../services/api/todosApi';
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
 import {
+	addCard,
+	addSubtask,
 	addTarget,
+	changeCard,
 	setLoadingStatus,
 	setTargets,
 	setTasks,
@@ -56,6 +59,42 @@ export function fetchAddTarget(name: string): ThunkType {
 		try {
 			const { data } = await todosApi.addTarget(name);
 			dispatch(addTarget(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function fetchAddSubtask(name: string, task: string, target: string | null = null): ThunkType {
+	return async dispatch => {
+		try {
+			const { data } = await todosApi.addSubtask(name, task, target);
+			dispatch(addSubtask(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function fetchAddCard(level: number): ThunkType {
+	return async dispatch => {
+		try {
+			const { data } = await todosApi.addCard(level);
+			dispatch(addCard(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function updateCard(id: string, name: string): ThunkType {
+	return async dispatch => {
+		try {
+			const { data } = await todosApi.updateCard(id, name);
+			dispatch(changeCard(data));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

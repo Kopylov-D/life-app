@@ -1,3 +1,4 @@
+import { act } from 'react-dom/test-utils';
 import { LoadingStatus } from '../../types';
 import { TodosActions } from './actionCreators';
 import { TodosActionTypes } from './contracts/actionTypes';
@@ -42,6 +43,28 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 			return {
 				...state,
 				targets: [...state.targets, action.payload],
+			};
+		case TodosActionTypes.ADD_SUBTASK:
+			return {
+				...state,
+				subtasks: [...state.subtasks, action.payload],
+			};
+		case TodosActionTypes.ADD_CARD:
+			return {
+				...state,
+				cards: [...state.cards, action.payload],
+			};
+		case TodosActionTypes.CHANGE_CARD:
+			const cards = state.cards.map(card => {
+				if (card._id === action.payload._id) {
+					return action.payload;
+				}
+				return card;
+			});
+
+			return {
+				...state,
+				cards,
 			};
 		default:
 			return state;

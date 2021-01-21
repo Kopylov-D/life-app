@@ -85,13 +85,13 @@ class TodosController {
 
 			const card = new Card({
 				user: req.user,
-				name,
+				name: name && name,
 				level,
 				color: color && color,
 			});
 
 			await card.save();
-			res.status(201).json({ message: 'subtask added', data: card });
+			res.status(201).json({ message: 'card added', data: card });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -166,6 +166,28 @@ class TodosController {
 		}
 	}
 
+	async updateCard(req: RequestWithUser, res: Response) {
+		try {
+			const { name, color, level }: CardInterface = req.body;
+
+			const card = {
+				// user: req.user,
+				name,
+				level: level && level,
+				color: color && color,
+			};
+
+			const { id } = req.params;
+
+			await Card.findOneAndUpdate({ id }, { $set: card });
+
+			const ncard = await Card.find({ id });
+
+			res.status(200).json({ message: 'card is updated', data: ncard });
+		} catch (e) {
+			res.status(300).json({ message: e });
+		}
+	}
 	async updateTask(req: RequestWithUser, res: Response) {
 		try {
 			const {
@@ -198,7 +220,7 @@ class TodosController {
 
 			await Task.updateOne({ _id }, { $set: task });
 
-			res.status(201).json({ message: 'task is updated' });
+			res.status(200).json({ message: 'task is updated' });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
