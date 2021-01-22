@@ -79,6 +79,48 @@ class TodosController {
 		}
 	}
 
+	async updateTarget(req: RequestWithUser, res: Response) {
+		try {
+			const {
+				name,
+				isDone,
+				color,
+				priority,
+				expiresIn,
+				notes,
+			}: TargetInterface = req.body;
+
+			const target = {
+				user: req.user,
+				name,
+				isDone: isDone && isDone,
+				color: color && color,
+				priority: priority && priority,
+				notes: notes && notes,
+				expiresIn: expiresIn && expiresIn,
+			};
+
+			const { id } = req.params;
+
+			await Target.updateOne({ _id: id }, { $set: target });
+			const updatedTarget = await Target.findOne({ _id: id });
+
+			res.status(201).json({ message: 'target updated', data: updatedTarget });
+		} catch (e) {
+			res.status(500).json({ message: e });
+		}
+	}
+
+	async deleteTarget(req: RequestWithUser, res: Response) {
+		try {
+			const { id } = req.params;
+			await Target.findByIdAndDelete(id);
+			res.status(200).json({ message: 'target is deleted' });
+		} catch (e) {
+			res.status(500).json({ message: e });
+		}
+	}
+
 	async addCard(req: RequestWithUser, res: Response) {
 		try {
 			const { name, level, color }: CardInterface = req.body;
@@ -179,25 +221,43 @@ class TodosController {
 
 			const { id } = req.params;
 
-			await Card.findOneAndUpdate({ id }, { $set: card });
+			await Card.findOneAndUpdate(
+				{ _id: id },
+				{
+					$set: {
+						name,
+						// level: level && level,
+						color,
+					},
+				}
+			);
 
-			const ncard = await Card.find({ id });
+			const ncard = await Card.findOne({ _id: id });
 
 			res.status(200).json({ message: 'card is updated', data: ncard });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
 	}
+
+	async deleteCard(req: RequestWithUser, res: Response) {
+		try {
+			const { id } = req.params;
+			await Card.findByIdAndDelete(id);
+			res.status(200).json({ message: 'card is deleted' });
+		} catch (e) {
+			res.status(300).json({ message: e });
+		}
+	}
+
 	async updateTask(req: RequestWithUser, res: Response) {
 		try {
 			const {
-				_id,
 				target,
 				subtask,
 				name,
 				color,
 				priority,
-				date,
 				expiresIn,
 				level,
 				notes,
@@ -205,7 +265,6 @@ class TodosController {
 			}: TaskInterface = req.body;
 
 			const task = {
-				user: req.user,
 				target: target && target,
 				subtask: subtask && subtask,
 				name,
@@ -214,13 +273,27 @@ class TodosController {
 				notes: notes && notes,
 				color: color && color,
 				priority: priority && priority,
-				date,
 				expiresIn: expiresIn && expiresIn,
 			};
 
-			await Task.updateOne({ _id }, { $set: task });
+			const { id } = req.params;
 
-			res.status(200).json({ message: 'task is updated' });
+			// await Card.findOneAndUpdate(
+			// 	{ _id: id },
+			// 	{
+			// 		$set: {
+			// 			name,
+			// 			// level: level && level,
+			// 			color,
+			// 		},
+			// 	}
+			// );
+
+			await Task.findOneAndUpdate({ _id: id }, { $set: task });
+
+			const updatedTask = Task.findOne({ _id: id });
+
+			res.status(200).json({ message: 'task is updated', data: updatedTask });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}

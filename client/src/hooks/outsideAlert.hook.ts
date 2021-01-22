@@ -28,9 +28,9 @@ function useOutsigjdeClick(initialFlag: boolean) {
 
 	const handleClickOutside = (event: any) => {
 		if (ref !== null && ref.current && !ref.current.contains(event.target)) {
-      setFlag(false);
-      console.log(ref)
-      console.log(event.target)
+			setFlag(false);
+			console.log(ref);
+			console.log(event.target);
 		}
 	};
 
@@ -45,32 +45,29 @@ function useOutsigjdeClick(initialFlag: boolean) {
 }
 
 export default function useOutsideClick(initialIsVisible: boolean, key?: string) {
-  const [isVisible, setIsVisible] = useState(
-    initialIsVisible
-  );
-  const ref = useRef<any>(null);
+	const [isVisible, setIsVisible] = useState(initialIsVisible);
+	const ref = useRef<any>(null);
 
-  const handleHideDropdown = (event: KeyboardEvent) => {
-    if (event.key === key) {
-      setIsVisible(false);
-    }
-  };
+	const handleHideDropdown = (event: KeyboardEvent) => {
+		if (event.key === key) {
+			setIsVisible(false);
+		}
+	};
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (ref !== null && ref.current && !ref.current.contains(event.target)) {
-      setIsVisible(false);
-    }
-  };
+	const handleClickOutside = (event: MouseEvent) => {
+		if (ref !== null && ref.current && !ref.current.contains(event.target)) {
+			setIsVisible(false);
+		}
+	};
 
-  useEffect(() => {
-    document.addEventListener("keydown", handleHideDropdown, true);
-    document.addEventListener("click", handleClickOutside, true);
-    console.log('object')
-    return () => {
-      document.removeEventListener("keydown", handleHideDropdown, true);
-      document.removeEventListener("click", handleClickOutside, true);
-    };
-  });
+	useEffect(() => {
+		document.addEventListener('keydown', handleHideDropdown, true);
+		document.addEventListener('click', handleClickOutside, true);
+		return () => {
+			document.removeEventListener('keydown', handleHideDropdown, true);
+			document.removeEventListener('click', handleClickOutside, true);
+		};
+	});
 
-  return { ref, isVisible, setIsVisible };
+	return { ref, isVisible, setIsVisible };
 }

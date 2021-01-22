@@ -1,12 +1,13 @@
 import React from 'react';
 import classnames from 'classnames';
+import { useInput } from '../../hooks/input.hook';
 
 interface Props {
 	value: string;
-	type: 'text' | 'password' | 'checkbox';
+	type?: 'text' | 'password' | 'checkbox';
 	label?: string;
-	valid: boolean;
-	touched: boolean;
+	valid?: boolean;
+	touched?: boolean;
 	shouldValidate?: boolean;
 	className?: string;
 	placeholder?: string;
@@ -24,6 +25,12 @@ function isInvalid({ valid, touched }: Props) {
 // }
 
 const Input: React.FC<Props> = props => {
+	// const input = useInput({initialValue: ''})
+
+	// let type: Props['type']
+	// props.type ? type = props.type : type = 'text'
+
+
 	const inputType = props.type || 'text';
 	const htmlFor = `${inputType}-${Math.random()}`;
 

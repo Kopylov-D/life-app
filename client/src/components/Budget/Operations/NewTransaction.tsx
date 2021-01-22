@@ -29,9 +29,7 @@ const NewTransaction: React.FC<Props> = ({
 	const [isExpense, setIsExpense] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
 	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
-	const [filtredCategories, setfiltredCategories] = useState<
-		CategoryInterface[]
-	>([]);
+	const [filtredCategories, setfiltredCategories] = useState<any>([]);
 
 	const input = useInput(
 		{ initialValue: '' },
@@ -41,7 +39,13 @@ const NewTransaction: React.FC<Props> = ({
 	useEffect(() => {
 		// setCategoryId(currentCategory._id);
 		const cat = categories.filter(item => item.isExpense === isExpense);
-		setfiltredCategories(cat);
+		const items = cat.map(item => {
+			return {
+				id: item._id,
+				value: item.name,
+			};
+		});
+		setfiltredCategories(items);
 	}, [categories, isExpense]);
 
 	useEffect(() => {

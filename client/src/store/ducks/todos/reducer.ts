@@ -1,4 +1,4 @@
-import { act } from 'react-dom/test-utils';
+import { act } from '@testing-library/react';
 import { LoadingStatus } from '../../types';
 import { TodosActions } from './actionCreators';
 import { TodosActionTypes } from './contracts/actionTypes';
@@ -65,6 +65,28 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 			return {
 				...state,
 				cards,
+			};
+		case TodosActionTypes.DELETE_CARD:
+			return {
+				...state,
+				cards: state.cards.filter(item => item._id !== action.payload),
+			};
+		case TodosActionTypes.DELETE_TARGET:
+			return {
+				...state,
+				targets: state.targets.filter(item => item._id !== action.payload),
+			};
+		case TodosActionTypes.CHANGE_TARGET:
+			const targets = state.targets.map(target => {
+				if (target._id === action.payload._id) {
+					return action.payload
+				}
+				return target
+			})
+
+			return {
+				...state,
+				targets,
 			};
 		default:
 			return state;

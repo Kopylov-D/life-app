@@ -31,7 +31,7 @@ const CategoryChanger: React.FC<Props> = ({
 		{ required: true }
 	);
 	const [isExpense, setIsExpense] = useState<boolean>(true);
-	// const refInput = useRef();
+	// const refInput = useRef<React.RefObject<HTMLInputElement>>();
 
 	// useEffect(() => {
 	//   refInput.current.focus();

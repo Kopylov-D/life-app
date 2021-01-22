@@ -21,7 +21,7 @@ interface Props {
 }
 
 
-const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
+const OperationModal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	const [control, setControl] = useState<FormControl>(
 		createControl({ type: 'text', class: 'modal' }, { required: true })
 	);
@@ -90,4 +90,4 @@ const Modal: React.FC<Props> = ({ title, onClick, onCloseClick }) => {
 	)
 };
 
-export default Modal;
+export default OperationModal;

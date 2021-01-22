@@ -28,12 +28,13 @@
 		background: $c-white;
 		border: 1px solid #ccc;
 		border-radius: 5px;
-		min-width: inherit;
-		z-index: 110;
+		width: 100%;
+		// min-width: inherit;
+		z-index: 1100;
 
 		top: $element-height;
 		right: 0;
-		max-height: 400px;
+		// max-height: 400px;
 
 		box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
 

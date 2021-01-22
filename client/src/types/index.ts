@@ -19,8 +19,8 @@ export type Selector = {
 };
 
 export type Month = {
-	_id: string;
-	name:
+	id: string;
+	value:
 		| 'Январь'
 		| 'Февраль'
 		| 'Март'

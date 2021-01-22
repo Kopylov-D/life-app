@@ -7,6 +7,8 @@ import {
 	addSubtask,
 	addTarget,
 	changeCard,
+	deleteCard,
+	deleteTarget,
 	setLoadingStatus,
 	setTargets,
 	setTasks,
@@ -54,6 +56,18 @@ export function getTodosData(): ThunkType {
 	};
 }
 
+export function updateTarget(id: string, name: string, isDone: boolean, notes: string, color?: string): ThunkType {
+	return async dispatch => {
+		try {
+			const { data } = await todosApi.updateTarget(id, name, isDone, notes, color);
+			dispatch(addTarget(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
 export function fetchAddTarget(name: string): ThunkType {
 	return async dispatch => {
 		try {
@@ -66,7 +80,23 @@ export function fetchAddTarget(name: string): ThunkType {
 	};
 }
 
-export function fetchAddSubtask(name: string, task: string, target: string | null = null): ThunkType {
+export function fetchDeleteTarget(id: string): ThunkType {
+	return async dispatch => {
+		try {
+			await todosApi.deleteTarget(id);
+			dispatch(deleteTarget(id));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function fetchAddSubtask(
+	name: string,
+	task: string,
+	target: string | null = null
+): ThunkType {
 	return async dispatch => {
 		try {
 			const { data } = await todosApi.addSubtask(name, task, target);
@@ -95,6 +125,18 @@ export function updateCard(id: string, name: string): ThunkType {
 		try {
 			const { data } = await todosApi.updateCard(id, name);
 			dispatch(changeCard(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function fetchDeleteCard(id: string): ThunkType {
+	return async dispatch => {
+		try {
+			await todosApi.deleteCard(id);
+			dispatch(deleteCard(id));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

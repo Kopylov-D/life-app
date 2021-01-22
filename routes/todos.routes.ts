@@ -8,13 +8,17 @@ router.get('/', auth, TodosController.getTodosData);
 
 router.get('/tasks', auth, TodosController.getTasks);
 router.post('/tasks', auth, TodosController.addTask);
+router.patch('/tasks/:id', auth, TodosController.updateTask);
 
 router.get('/targets', auth, TodosController.getTargets);
 router.post('/targets', auth, TodosController.addTarget);
+router.delete('/targets/:id', auth, TodosController.deleteTarget);
+router.patch('/targets/:id', auth, TodosController.updateTarget);
 
 router.post('/subtasks', auth, TodosController.addSubtask);
 
-router.post('/cards', auth, TodosController.addCard)
-router.patch('/cards/:id', auth, TodosController.updateCard)
+router.post('/cards', auth, TodosController.addCard);
+router.patch('/cards/:id', auth, TodosController.updateCard);
+router.delete('/cards/:id', auth, TodosController.deleteCard);
 
 export default router;

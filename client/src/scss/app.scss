@@ -9,9 +9,8 @@ html {
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 	background: $c-background;
 	color: #0d0d0d;
 	box-sizing: border-box;
@@ -55,11 +54,7 @@ body {
 
 		background: rgba(255, 255, 255, 0.6);
 		border: 5px solid
-			linear-gradient(
-				220deg,
-				rgba(255, 0, 0, 0.2) 100%,
-				rgba(5, 0, 0, 0.6) 100%
-			);
+			linear-gradient(220deg, rgba(255, 0, 0, 0.2) 100%, rgba(5, 0, 0, 0.6) 100%);
 	}
 
 	&__inputs {

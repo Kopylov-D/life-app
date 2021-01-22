@@ -2,7 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInput } from '../../../hooks/input.hook';
 import useOutsideClick from '../../../hooks/outsideAlert.hook';
-import { getTargets, getTasks, updateCard } from '../../../store/ducks/todos/actions';
+import {
+	fetchDeleteCard,
+	getTargets,
+	getTasks,
+	updateCard,
+} from '../../../store/ducks/todos/actions';
 import { CardInterface } from '../../../store/ducks/todos/contracts/state';
 import { selectTasks } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
@@ -22,8 +27,8 @@ const Card: React.FC<Props> = props => {
 
 	const onClick = () => {
 		console.log('add task click');
-		dispatch(getTargets());
-		dispatch(getTasks());
+		// dispatch(getTargets());
+		// dispatch(getTasks());
 	};
 
 	const onTaskCheck = (id: string) => {
@@ -34,6 +39,10 @@ const Card: React.FC<Props> = props => {
 		console.log('task del', id);
 	};
 
+	const onCardDelete = () => {
+		dispatch(fetchDeleteCard(props._id));
+	};
+
 	const onClickHeaderName = () => {
 		setIsVisible(true);
 	};
@@ -41,26 +50,31 @@ const Card: React.FC<Props> = props => {
 	const onChangeCard = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
 			dispatch(updateCard(props._id, headerInput.value));
-
+			setIsVisible(false);
 		}
 	};
 
 	return (
 		<div className="card">
 			<div className="card__container">
-				<header ref={ref} className="card__header" onClick={onClickHeaderName}>
-					{isVisible ? (
-						<Input
-							onChange={headerInput.onChange}
-							type="text"
-							valid={headerInput.valid}
-							value={headerInput.value}
-							touched={headerInput.touched}
-							onKeyPress={onChangeCard}
-						/>
-					) : (
-						props.name
-					)}
+				<header ref={ref} className="card__header">
+					<div className="card__title" onClick={onClickHeaderName}>
+						{isVisible ? (
+							<Input
+								onChange={headerInput.onChange}
+								type="text"
+								valid={headerInput.valid}
+								value={headerInput.value}
+								touched={headerInput.touched}
+								onKeyPress={onChangeCard}
+							/>
+						) : (
+							props.name
+						)}
+					</div>
+					<span className="card__delete material-icons" onClick={onCardDelete}>
+						clear
+					</span>
 				</header>
 
 				<ul className="card__content">
