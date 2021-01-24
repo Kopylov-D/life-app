@@ -38,8 +38,6 @@ async function start() {
 			useCreateIndex: true,
 		});
 
-		//Приложение запускает сервер и слушает соединения на порте
-
 		app.listen(PORT, () =>
 			console.log(`App has been started on port ${PORT}...`)
 		);

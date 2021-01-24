@@ -22,8 +22,8 @@ const Task: React.FC<Props> = props => {
 	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(true);
 	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
 
-	const onChangeHandler = (id: string) => {
-		props.onChecked(id);
+	const onChangeHandler = () => {
+		// props.onChecked(id);
 	};
 
 	const onDeleteTask = () => {

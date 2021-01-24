@@ -102,8 +102,8 @@ class TodosController {
 
 			const { id } = req.params;
 
-			await Target.updateOne({ _id: id }, { $set: target });
-			const updatedTarget = await Target.findOne({ _id: id });
+			const updatedTarget = 	await Target.findByIdAndUpdate( id, { $set: req.body }, {new: true});
+			// const updatedTarget = await Target.findOne({ _id: id });
 
 			res.status(201).json({ message: 'target updated', data: updatedTarget });
 		} catch (e) {
@@ -210,31 +210,26 @@ class TodosController {
 
 	async updateCard(req: RequestWithUser, res: Response) {
 		try {
-			const { name, color, level }: CardInterface = req.body;
+			// const { name, color, level }: CardInterface = req.body;
 
-			const card = {
-				// user: req.user,
-				name,
-				level: level && level,
-				color: color && color,
-			};
+			// const card = {
+			// 	// user: req.user,
+			// 	name,
+			// 	level: level && level,
+			// 	color: color && color,
+			// };
 
 			const { id } = req.params;
 
-			await Card.findOneAndUpdate(
+			const updatedCard = await Card.findOneAndUpdate(
 				{ _id: id },
-				{
-					$set: {
-						name,
-						// level: level && level,
-						color,
-					},
-				}
+				{ $set: req.body },
+				{ new: true }
 			);
 
-			const ncard = await Card.findOne({ _id: id });
+			// const ncard = await Card.findOne({ _id: id });
 
-			res.status(200).json({ message: 'card is updated', data: ncard });
+			res.status(200).json({ message: 'card is updated', data: updatedCard });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
@@ -264,6 +259,10 @@ class TodosController {
 				isDone,
 			}: TaskInterface = req.body;
 
+			console.log(req.body);
+
+			// for (let i = 0; )
+
 			const task = {
 				target: target && target,
 				subtask: subtask && subtask,
@@ -289,9 +288,22 @@ class TodosController {
 			// 	}
 			// );
 
-			await Task.findOneAndUpdate({ _id: id }, { $set: task });
+			Task.schema.path('level').validate(function (value: string | null) {
+				return value !== null && value !== '';
+			}, 'Invalid value');
 
-			const updatedTask = Task.findOne({ _id: id });
+			const updatedTask = await Task.findOneAndUpdate(
+				{ _id: id },
+				{ $set: req.body },
+				{ new: true }
+				// { runValidators: true },
+				// function (err) {
+				// 	// console.log(err);
+				// 	;
+				// }
+			);
+
+			// const updatedTask = await Task.findOne({ _id: id });
 
 			res.status(200).json({ message: 'task is updated', data: updatedTask });
 		} catch (e) {

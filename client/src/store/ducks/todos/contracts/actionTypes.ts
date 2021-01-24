@@ -10,14 +10,18 @@ import {
 } from '../contracts/state';
 
 export enum TodosActionTypes {
-	SET_TARGETS = 'SET_TARGETS',
 	SET_LOADING_STATUS = 'SET_LOADING',
-	SET_TASKS = 'SET_TASKS',
 	SET_TODOS_DATA = 'SET_TODOS_DATA',
 
+	SET_TARGETS = 'SET_TARGETS',
 	ADD_TARGET = 'ADD_TARGET',
 	DELETE_TARGET = 'DELETE_TARGET',
 	CHANGE_TARGET = 'CHANGE_TARGET',
+
+	SET_TASKS = 'SET_TASKS',
+	ADD_TASK = 'ADD_TASK',
+	DELETE_TASK = 'DELETE_TASK',
+	CHANGE_TASK = 'CHANGE_TASK',
 
 	ADD_SUBTASK = 'ADD_SUBTASK',
 
@@ -26,14 +30,19 @@ export enum TodosActionTypes {
 	DELETE_CARD = 'DELETE_CARD',
 }
 
-export interface SetTargetsActionInterface extends Action<TodosActionTypes> {
-	type: TodosActionTypes.SET_TARGETS;
-	payload: TargetInterface[];
-}
-
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_LOADING_STATUS;
 	payload: LoadingStatus;
+}
+
+export interface SetTodosDataActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_TODOS_DATA;
+	payload: TodosDataInterface;
+}
+
+export interface SetTargetsActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_TARGETS;
+	payload: TargetInterface[];
 }
 
 //tasks
@@ -42,9 +51,9 @@ export interface SetTasksActionInterface extends Action<TodosActionTypes> {
 	payload: TaskInterface[];
 }
 
-export interface SetTodosDataActionInterface extends Action<TodosActionTypes> {
-	type: TodosActionTypes.SET_TODOS_DATA;
-	payload: TodosDataInterface;
+export interface AddTaskActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.ADD_TASK;
+	payload: TaskInterface;
 }
 
 /* targets **/

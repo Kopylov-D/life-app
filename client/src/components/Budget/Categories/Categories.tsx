@@ -97,7 +97,7 @@ const Categories: React.FC = () => {
 						disabled={false}
 						onClick={() => setNewCategoryModalIsOpen(toggle => !toggle)}
 					>
-						+
+						Создать категорию
 					</Button>
 
 					{newCategoryModalIsOpen && (

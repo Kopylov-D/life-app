@@ -4,7 +4,7 @@ interface Props {
 	id: string;
 	checked: boolean;
 	value?: string;
-	onChangeHandler(id: string): void;
+	onChangeHandler(): void;
 }
 
 const Checkbox: React.FC<Props> = ({ id, checked, value, onChangeHandler }) => {
@@ -18,7 +18,7 @@ const Checkbox: React.FC<Props> = ({ id, checked, value, onChangeHandler }) => {
 				id={idHtmlFor}
 				type="checkbox"
 				checked={checked}
-				onChange={() => onChangeHandler(id)}
+				onChange={onChangeHandler}
 			/>
 			<span className="checkbox__custom"></span>
       <span className="checkbox__text">{value}</span>

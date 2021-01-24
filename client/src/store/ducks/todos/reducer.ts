@@ -39,6 +39,11 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				...state,
 				tasks: action.payload,
 			};
+		case TodosActionTypes.ADD_TASK:
+			return {
+				...state,
+				tasks: [...state.tasks, action.payload],
+			};
 		case TodosActionTypes.ADD_TARGET:
 			return {
 				...state,

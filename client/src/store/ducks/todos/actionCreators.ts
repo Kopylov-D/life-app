@@ -3,6 +3,7 @@ import {
 	AddCardActionInterface,
 	AddSubtaskActionInterface,
 	AddTargetActionInterface,
+	AddTaskActionInterface,
 	ChangeCardActionInterface,
 	ChangeTargetActionInterface,
 	DeleteCardActionInterface,
@@ -28,26 +29,17 @@ export type TodosActions =
 	| SetTodosDataActionInterface
 	| AddTargetActionInterface
 	| AddSubtaskActionInterface
-	| AddCardActionInterface 
-	| ChangeCardActionInterface 
-	| DeleteCardActionInterface 
-	| DeleteTargetActionInterface 
-	| ChangeTargetActionInterface 
-
-export const setTargets = (payload: TargetInterface[]): SetTargetsActionInterface => ({
-	type: TodosActionTypes.SET_TARGETS,
-	payload,
-});
+	| AddCardActionInterface
+	| ChangeCardActionInterface
+	| DeleteCardActionInterface
+	| DeleteTargetActionInterface
+	| AddTaskActionInterface
+	| ChangeTargetActionInterface;
 
 export const setLoadingStatus = (
 	payload: LoadingStatus
 ): SetLoadingStatusActionInterface => ({
 	type: TodosActionTypes.SET_LOADING_STATUS,
-	payload,
-});
-
-export const setTasks = (payload: TaskInterface[]): SetTasksActionInterface => ({
-	type: TodosActionTypes.SET_TASKS,
 	payload,
 });
 
@@ -58,9 +50,27 @@ export const setTodosData = (
 	payload,
 });
 
+/* tasks **/
+
+export const setTasks = (payload: TaskInterface[]): SetTasksActionInterface => ({
+	type: TodosActionTypes.SET_TASKS,
+	payload,
+});
+
+export const addTask = (payload: TaskInterface): AddTaskActionInterface => ({
+	type: TodosActionTypes.ADD_TASK,
+	payload,
+});
+
+/* targets **/
 
 export const addTarget = (payload: TargetInterface): AddTargetActionInterface => ({
 	type: TodosActionTypes.ADD_TARGET,
+	payload,
+});
+
+export const setTargets = (payload: TargetInterface[]): SetTargetsActionInterface => ({
+	type: TodosActionTypes.SET_TARGETS,
 	payload,
 });
 
@@ -74,10 +84,14 @@ export const deleteTarget = (payload: string): DeleteTargetActionInterface => ({
 	payload,
 });
 
+/* subtask **/
+
 export const addSubtask = (payload: SubtaskInterface): AddSubtaskActionInterface => ({
 	type: TodosActionTypes.ADD_SUBTASK,
 	payload,
 });
+
+/* cards **/
 
 export const addCard = (payload: CardInterface): AddCardActionInterface => ({
 	type: TodosActionTypes.ADD_CARD,

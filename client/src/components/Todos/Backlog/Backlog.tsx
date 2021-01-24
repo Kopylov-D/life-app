@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import Modal from '../../UI/Modal';
 import Table from '../../Table';
 import Button from '../../UI/Button';
-import NewBacklogTask from './NewBacklogTask';
+import NewBacklogTask from './TaskEditor';
 import Target from './Target';
 import { useInput } from '../../../hooks/input.hook';
 import Input from '../../UI/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAddTarget, fetchDeleteTarget } from '../../../store/ducks/todos/actions';
+import { fetchAddTarget, fetchDeleteTarget, updateTarget } from '../../../store/ducks/todos/actions';
 import { selectTargets, selectTasks } from '../../../store/ducks/todos/selectors';
 import BacklogTask from './BacklogTask';
+import TaskChanger from './TaskChanger';
+import TaskEditor from './TaskEditor';
 
 interface Props {}
 
@@ -20,17 +22,18 @@ const Backlog: React.FC<Props> = props => {
 	const tasks = useSelector(selectTasks);
 
 	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(false);
-	const [changeTargetModalIsOpen, setChangeTargetModalIsOpen] = useState<boolean>(false);
+	const [addTaskModalIsOpen, setAddTaskModalIsOpen] = useState<boolean>(false);
+	// const [changeTargetModalIsOpen, setChangeTargetModalIsOpen] = useState<boolean>(false);
 
 	const addTargetInput = useInput(
 		{ initialValue: '' },
 		{ required: true, maxLength: 30 }
 	);
 
-	const changeTargetInput = useInput(
-		{ initialValue: '' },
-		{ required: true, maxLength: 30 }
-	);
+	// const changeTargetInput = useInput(
+	// 	{ initialValue:  ''},
+	// 	{ required: true, maxLength: 30 }
+	// );
 
 	const addTargetHandler = () => {
 		setAddTargetModalIsOpen(true);
@@ -48,8 +51,8 @@ const Backlog: React.FC<Props> = props => {
 		// dispatch(fetchDeleteTarget(id));
 	};
 
-	const changeTragetHandler = (id: string) => {
-		dispatch(fetchDeleteTarget(id));
+	const changeTargetHandler = (id: string, name: string, notes: string, isDone: boolean) => {
+		dispatch(updateTarget(id, name, notes, isDone));
 	};
 
 	const createTargetHandler = async () => {
@@ -57,6 +60,18 @@ const Backlog: React.FC<Props> = props => {
 		dispatch(fetchAddTarget(addTargetInput.value));
 		setAddTargetModalIsOpen(true);
 	};
+
+	const createTaskHandler =  () => {
+		// await api.addTarget(addTargetInput.value)
+		// dispatch();
+		setAddTargetModalIsOpen(true);
+	};
+
+
+
+	const addTaskHandler = () => {
+		setAddTaskModalIsOpen(true)
+	}
 
 	return (
 		<div className="todos__backlog">
@@ -70,7 +85,7 @@ const Backlog: React.FC<Props> = props => {
 						isDone={target.isDone}
 						name={target.name}
 						deleteTarget={deleteTargetHandler}
-						changeTraget={changeTragetHandler}
+						changeTarget={changeTargetHandler}
 					/>
 				))}
 				<Button onClick={addTargetHandler} size="small">
@@ -78,7 +93,7 @@ const Backlog: React.FC<Props> = props => {
 				</Button>
 			</div>
 			<Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}>
-				<NewBacklogTask />
+				<TaskEditor />
 				{tasks.map(task => (
 					<BacklogTask
 						key={task._id}
@@ -88,11 +103,14 @@ const Backlog: React.FC<Props> = props => {
 						isDone={task.isDone}
 						level={task.level}
 						name={task.name}
+						target={task.target}
 						changeTask={changeTaskHandler}
 						deleteTask={deleteTaskHandler}
 					/>
 				))}
 			</Table>
+
+			<Button onClick={addTaskHandler} size='small'>Добавить задачу</Button>
 
 			{addTargetModalIsOpen && (
 				<Modal closeModal={() => setAddTargetModalIsOpen(false)} backdropType="black">
@@ -114,7 +132,9 @@ const Backlog: React.FC<Props> = props => {
 				</Modal>
 			)}
 
-			{changeTargetModalIsOpen && (
+			{/* {addTaskModalIsOpen && <TaskChanger close={() => setAddTaskModalIsOpen(false)} />} */}
+
+			{/* {changeTargetModalIsOpen && (
 				<Modal closeModal={() => setChangeTargetModalIsOpen(false)} backdropType="black">
 					<Input
 						onChange={addTargetInput.onChange}
@@ -126,13 +146,13 @@ const Backlog: React.FC<Props> = props => {
 					/>
 
 					<Button onClick={createTargetHandler} size="small">
-						Добавить
+						Изменить
 					</Button>
 					<Button onClick={() => setAddTargetModalIsOpen(false)} size="small">
 						Отмена
 					</Button>
 				</Modal>
-			)}
+			)} */}
 		</div>
 	);
 };

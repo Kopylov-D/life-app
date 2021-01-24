@@ -1,7 +1,7 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import config from 'config';
 import jwt from 'jsonwebtoken';
-import { RequestWithUser, UserType } from '../types/types';
+import { RequestWithUser } from '../types/types';
 
 interface DataStoredInToken {
 	userId: string;

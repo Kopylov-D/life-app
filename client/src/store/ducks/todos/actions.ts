@@ -6,7 +6,9 @@ import {
 	addCard,
 	addSubtask,
 	addTarget,
+	addTask,
 	changeCard,
+	changeTarget,
 	deleteCard,
 	deleteTarget,
 	setLoadingStatus,
@@ -18,11 +20,13 @@ import {
 
 type ThunkType = ThunkAction<Promise<void>, RootState, unknown, TodosActions>;
 
-export function getTargets(): ThunkType {
+export function getTodosData(): ThunkType {
 	return async dispatch => {
+		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
-			const targets = await todosApi.fetchTargets();
-			dispatch(setTargets(targets));
+			const { data } = await todosApi.getTodosData();
+			dispatch(setTodosData(data));
+			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -42,13 +46,17 @@ export function getTasks(): ThunkType {
 	};
 }
 
-export function getTodosData(): ThunkType {
+export function fetchAddTask(
+	name: string,
+	target?: string,
+	notes?: string,
+	color?: string,
+	priority?: string
+): ThunkType {
 	return async dispatch => {
-		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
-			const { data } = await todosApi.getTodosData();
-			dispatch(setTodosData(data));
-			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
+			const { data } = await todosApi.addTask(name, target, notes, color, priority);
+			dispatch(addTask(data));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -56,11 +64,29 @@ export function getTodosData(): ThunkType {
 	};
 }
 
-export function updateTarget(id: string, name: string, isDone: boolean, notes: string, color?: string): ThunkType {
+export function getTargets(): ThunkType {
+	return async dispatch => {
+		try {
+			const targets = await todosApi.fetchTargets();
+			dispatch(setTargets(targets));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function updateTarget(
+	id: string,
+	name?: string,
+	notes?: string,
+	isDone?: boolean,
+	color?: string
+): ThunkType {
 	return async dispatch => {
 		try {
 			const { data } = await todosApi.updateTarget(id, name, isDone, notes, color);
-			dispatch(addTarget(data));
+			dispatch(changeTarget(data));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

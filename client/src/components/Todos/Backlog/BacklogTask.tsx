@@ -15,21 +15,23 @@ interface Props extends TaskInterface {
 }
 
 const BacklogTask: React.FC<Props> = props => {
+	const [changerIsOpen, setChangerIsOpen] = useState<boolean>(false);
+	const targetsList = useSelector(selectTargetsList);
 
-	const [changerIsOpen, setChangerIsOpen] = useState<boolean>(false)
-	const targetsList = useSelector(selectTargetsList)
-
-	
 	const onDelete = () => {};
 
-	const onChange = () => {
-		setChangerIsOpen(true)
+	// const onChange = () => {
+	// 	setChangerIsOpen(true);
+	// };
+
+	const onChangeTask = async (name: any, target?: any, notes?: any) => {
+		// props.changeTask(props._id)
+		await todosApi.updateTask(props._id, name, target, notes);
+		setChangerIsOpen(false);
+
 	};
 
-	const onChangeTask = (name: any, targets?: any, notes?: any) => {
-		// props.changeTask(props._id)
-		todosApi.updateTask(props._id, name, targets, notes)
-	}
+	
 
 	return (
 		<Fragment>
@@ -43,12 +45,22 @@ const BacklogTask: React.FC<Props> = props => {
 				<div>{props.priority}</div>
 
 				<div className="options">
-					<img src={gear} alt="" onClick={onChange}></img>
+					<img src={gear} alt="" onClick={() => setChangerIsOpen(true)}></img>
 					<img src={trash} alt="" onClick={onDelete}></img>
 				</div>
 			</div>
 
-			{changerIsOpen && <TaskChanger close={() => setChangerIsOpen(false)} submitChanges={onChangeTask} name={props.name} selectItems={targetsList} notes={props.notes}/> }
+			{changerIsOpen && (
+				<TaskChanger
+					close={() => setChangerIsOpen(false)}
+					submitChanges={onChangeTask}
+					name={props.name}
+					selectItems={targetsList}
+					notes={props.notes}
+					priority={props.priority}
+					parentTarget={props.target}
+				/>
+			)}
 		</Fragment>
 	);
 };
