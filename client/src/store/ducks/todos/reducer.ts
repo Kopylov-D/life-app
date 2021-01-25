@@ -44,6 +44,22 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				...state,
 				tasks: [...state.tasks, action.payload],
 			};
+		case TodosActionTypes.DELETE_TASK:
+			return {
+				...state,
+				tasks: state.tasks.filter(task => task._id !== action.payload),
+			};
+		case TodosActionTypes.CHANGE_TASK:
+			const tasks = state.tasks.map(task => {
+				if (task._id === action.payload._id) {
+					return action.payload;
+				}
+				return task;
+			});
+			return {
+				...state,
+				tasks,
+			};
 		case TodosActionTypes.ADD_TARGET:
 			return {
 				...state,
@@ -84,10 +100,10 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 		case TodosActionTypes.CHANGE_TARGET:
 			const targets = state.targets.map(target => {
 				if (target._id === action.payload._id) {
-					return action.payload
+					return action.payload;
 				}
-				return target
-			})
+				return target;
+			});
 
 			return {
 				...state,

@@ -7,11 +7,19 @@ import Target from './Target';
 import { useInput } from '../../../hooks/input.hook';
 import Input from '../../UI/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAddTarget, fetchDeleteTarget, updateTarget } from '../../../store/ducks/todos/actions';
+import {
+	fetchAddTarget,
+	fetchAddTask,
+	fetchDeleteTarget,
+	fetchDeleteTask,
+	updateTarget,
+	updateTask,
+} from '../../../store/ducks/todos/actions';
 import { selectTargets, selectTasks } from '../../../store/ducks/todos/selectors';
 import BacklogTask from './BacklogTask';
 import TaskChanger from './TaskChanger';
 import TaskEditor from './TaskEditor';
+import { addTask } from '../../../store/ducks/todos/actionCreators';
 
 interface Props {}
 
@@ -22,7 +30,7 @@ const Backlog: React.FC<Props> = props => {
 	const tasks = useSelector(selectTasks);
 
 	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(false);
-	const [addTaskModalIsOpen, setAddTaskModalIsOpen] = useState<boolean>(false);
+	const [taskEditorIsOpen, setTaskEditorIsOpen] = useState<boolean>(false);
 	// const [changeTargetModalIsOpen, setChangeTargetModalIsOpen] = useState<boolean>(false);
 
 	const addTargetInput = useInput(
@@ -43,15 +51,12 @@ const Backlog: React.FC<Props> = props => {
 		dispatch(fetchDeleteTarget(id));
 	};
 
-	const deleteTaskHandler = (id: string) => {
-		// dispatch(fetchDeleteTarget(id));
-	};
-
-	const changeTaskHandler = (id: string) => {
-		// dispatch(fetchDeleteTarget(id));
-	};
-
-	const changeTargetHandler = (id: string, name: string, notes: string, isDone: boolean) => {
+	const changeTargetHandler = (
+		id: string,
+		name: string,
+		notes: string,
+		isDone: boolean
+	) => {
 		dispatch(updateTarget(id, name, notes, isDone));
 	};
 
@@ -61,17 +66,33 @@ const Backlog: React.FC<Props> = props => {
 		setAddTargetModalIsOpen(true);
 	};
 
-	const createTaskHandler =  () => {
-		// await api.addTarget(addTargetInput.value)
-		// dispatch();
-		setAddTargetModalIsOpen(true);
+	const createTaskHandler = (
+		name: string,
+		target?: string,
+		notes?: string,
+		color?: string,
+		priority?: string
+	) => {
+		dispatch(fetchAddTask(name, target, notes, color, priority));
 	};
 
+	const changeTaskHandler = (
+		id: string,
+		isDone?: boolean,
+		name?: string,
+		target?: string,
+		notes?: string,
+		color?: string,
+		priority?: string
+	) => {
+		dispatch(updateTask(id, isDone, name, target, notes, color, priority));
+	};
 
-
-	const addTaskHandler = () => {
-		setAddTaskModalIsOpen(true)
-	}
+	const deleteTaskHandler = (id: string) => {
+		console.log(id);
+		
+		dispatch(fetchDeleteTask(id));
+	};
 
 	return (
 		<div className="todos__backlog">
@@ -93,7 +114,15 @@ const Backlog: React.FC<Props> = props => {
 				</Button>
 			</div>
 			<Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}>
-				<TaskEditor />
+				{taskEditorIsOpen ? (
+					<TaskEditor
+						type="create"
+						submit={createTaskHandler}
+						cancelEditor={() => setTaskEditorIsOpen(false)}
+					/>
+				) : (
+					<Button onClick={() => setTaskEditorIsOpen(true)} size='small'>Добавить задачу</Button>
+				)}
 				{tasks.map(task => (
 					<BacklogTask
 						key={task._id}
@@ -109,8 +138,6 @@ const Backlog: React.FC<Props> = props => {
 					/>
 				))}
 			</Table>
-
-			<Button onClick={addTaskHandler} size='small'>Добавить задачу</Button>
 
 			{addTargetModalIsOpen && (
 				<Modal closeModal={() => setAddTargetModalIsOpen(false)} backdropType="black">

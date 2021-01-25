@@ -9,6 +9,7 @@ router.get('/', auth, TodosController.getTodosData);
 router.get('/tasks', auth, TodosController.getTasks);
 router.post('/tasks', auth, TodosController.addTask);
 router.patch('/tasks/:id', auth, TodosController.updateTask);
+router.delete('/tasks/:id', auth, TodosController.deleteTask)
 
 router.get('/targets', auth, TodosController.getTargets);
 router.post('/targets', auth, TodosController.addTarget);

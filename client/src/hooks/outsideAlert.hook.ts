@@ -62,10 +62,10 @@ export default function useOutsideClick(initialIsVisible: boolean, key?: string)
 
 	useEffect(() => {
 		document.addEventListener('keydown', handleHideDropdown, true);
-		document.addEventListener('click', handleClickOutside, true);
+		document.addEventListener('mousedown', handleClickOutside, true);
 		return () => {
 			document.removeEventListener('keydown', handleHideDropdown, true);
-			document.removeEventListener('click', handleClickOutside, true);
+			document.removeEventListener('mousedown', handleClickOutside, true);
 		};
 	});
 

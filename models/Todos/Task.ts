@@ -28,9 +28,9 @@ const TaskSchema: Schema = new Schema<TaskInterface>({
 		default: false
 	},
 	notes: {
-		required: true,
+		required: false,
 		type: String,
-		default: ''
+		// default: ''
 	},
 	color: {
 		required: false,

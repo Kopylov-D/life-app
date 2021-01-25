@@ -9,8 +9,10 @@ import {
 	addTask,
 	changeCard,
 	changeTarget,
+	changeTask,
 	deleteCard,
 	deleteTarget,
+	deleteTask,
 	setLoadingStatus,
 	setTargets,
 	setTasks,
@@ -57,6 +59,38 @@ export function fetchAddTask(
 		try {
 			const { data } = await todosApi.addTask(name, target, notes, color, priority);
 			dispatch(addTask(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function updateTask(
+	id: string,
+	isDone?: boolean,
+	name?: string,
+	target?: string,
+	notes?: string,
+	color?: string,
+	priority?: string
+): ThunkType {
+	return async dispatch => {
+		try {
+			const { data } = await todosApi.updateTask(id, isDone, name,  target, notes, color, priority);
+			dispatch(changeTask(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function fetchDeleteTask(id: string): ThunkType {
+	return async dispatch => {
+		try {
+			await todosApi.deleteTask(id);
+			dispatch(deleteTask(id));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

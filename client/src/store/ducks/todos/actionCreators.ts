@@ -6,8 +6,10 @@ import {
 	AddTaskActionInterface,
 	ChangeCardActionInterface,
 	ChangeTargetActionInterface,
+	ChangeTaskActionInterface,
 	DeleteCardActionInterface,
 	DeleteTargetActionInterface,
+	DeleteTaskActionInterface,
 	SetLoadingStatusActionInterface,
 	SetTargetsActionInterface,
 	SetTasksActionInterface,
@@ -26,6 +28,9 @@ export type TodosActions =
 	| SetTargetsActionInterface
 	| SetLoadingStatusActionInterface
 	| SetTasksActionInterface
+	| AddTaskActionInterface
+	| ChangeTaskActionInterface
+	| DeleteTaskActionInterface
 	| SetTodosDataActionInterface
 	| AddTargetActionInterface
 	| AddSubtaskActionInterface
@@ -33,7 +38,6 @@ export type TodosActions =
 	| ChangeCardActionInterface
 	| DeleteCardActionInterface
 	| DeleteTargetActionInterface
-	| AddTaskActionInterface
 	| ChangeTargetActionInterface;
 
 export const setLoadingStatus = (
@@ -59,6 +63,16 @@ export const setTasks = (payload: TaskInterface[]): SetTasksActionInterface => (
 
 export const addTask = (payload: TaskInterface): AddTaskActionInterface => ({
 	type: TodosActionTypes.ADD_TASK,
+	payload,
+});
+
+export const changeTask = (payload: TaskInterface): ChangeTaskActionInterface => ({
+	type: TodosActionTypes.CHANGE_TASK,
+	payload,
+});
+
+export const deleteTask = (payload: string): DeleteTaskActionInterface => ({
+	type: TodosActionTypes.DELETE_TASK,
 	payload,
 });
 

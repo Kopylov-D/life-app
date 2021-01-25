@@ -5,61 +5,82 @@ import gear from '../../../assets/img/gear.svg';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
 import TaskChanger from './TaskChanger';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectTargetsList, selectTasksList } from '../../../store/ducks/todos/selectors';
 import { todosApi } from '../../../services/api/todosApi';
+import Checkbox from '../../UI/Checkbox';
+import { updateTask } from '../../../store/ducks/todos/actions';
+import TaskEditor from './TaskEditor';
+import useOutsideClick from '../../../hooks/outsideAlert.hook';
 
 interface Props extends TaskInterface {
 	deleteTask(id: string): void;
-	changeTask(id: string): void;
+	changeTask(
+		id: string,
+		isDone?: boolean,
+		name?: string,
+		target?: string,
+		notes?: string,
+		color?: string,
+		priority?: string
+	): void;
 }
 
 const BacklogTask: React.FC<Props> = props => {
+	const dispatch = useDispatch();
+	const [isDoneTask, setIsDoneTask] = useState<boolean>(props.isDone);
+
 	const [changerIsOpen, setChangerIsOpen] = useState<boolean>(false);
 	const targetsList = useSelector(selectTargetsList);
 
-	const onDelete = () => {};
+	const [taskEditorIsOpen, setTaskEditorIsOpen] = useState<boolean>(false);
+	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
-	// const onChange = () => {
-	// 	setChangerIsOpen(true);
-	// };
-
-	const onChangeTask = async (name: any, target?: any, notes?: any) => {
-		// props.changeTask(props._id)
-		await todosApi.updateTask(props._id, name, target, notes);
-		setChangerIsOpen(false);
-
+	const onChecked = () => {
+		props.changeTask(props._id, !props.isDone);
 	};
 
-	
+	const onChangeTask = (
+		name?: string,
+		target?: string,
+		notes?: string,
+		color?: string,
+		priority?: string
+	) => {
+		props.changeTask(props._id, props.isDone, name, target, notes, color, priority);
+		setIsVisible(false);
+	};
 
 	return (
 		<Fragment>
-			<div
-				className={classNames('table__item task__table', {
-					[`${props.color}`]: props.color,
-				})}
-			>
-				<div>{formatDate(props.date)}</div>
-				<div>{props.name}</div>
-				<div>{props.priority}</div>
-
-				<div className="options">
-					<img src={gear} alt="" onClick={() => setChangerIsOpen(true)}></img>
-					<img src={trash} alt="" onClick={onDelete}></img>
-				</div>
-			</div>
-
-			{changerIsOpen && (
-				<TaskChanger
-					close={() => setChangerIsOpen(false)}
-					submitChanges={onChangeTask}
+			{isVisible ? (
+				<div ref={ref}>
+				<TaskEditor
+					_id={props._id}
+					cancelEditor={() => setIsVisible(false)}
+					type="edit"
+					submit={onChangeTask}
+					deleteTask={props.deleteTask}
 					name={props.name}
-					selectItems={targetsList}
-					notes={props.notes}
-					priority={props.priority}
-					parentTarget={props.target}
+					target={props.target}
 				/>
+				</div>
+
+			) : (
+				<div
+					className={classNames('backlog-task', {
+						[`${props.color}`]: props.color,
+					})}
+				>
+					<div className="backlog-task__content">
+						<Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} />
+						<div>{props.name}</div>
+					</div>
+
+					<div className="options">
+						<img src={gear} alt="" onClick={() => setIsVisible(true)}></img>
+					</div>
+				</div>
 			)}
 		</Fragment>
 	);

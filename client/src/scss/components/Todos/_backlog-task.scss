@@ -1,0 +1,19 @@
+@import '../../variables';
+
+.backlog-task {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 1px solid rgba($color: #000000, $alpha: 1.0);
+  border-radius: $border-radius;
+  margin-bottom: 2px;
+
+
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+
+
+
+}

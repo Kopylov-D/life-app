@@ -11,15 +11,45 @@ export const todosApi = {
 	getTodosData: () =>
 		axios.get<Response<TodosDataInterface>>('/api/todos').then(res => res.data),
 
-	addTask: (name: string, target?: string, notes?: string, color?: string, priority?: string) =>
+	addTask: (
+		name: string,
+		target?: string,
+		notes?: string,
+		color?: string,
+		priority?: string
+	) =>
 		axios
-			.post<Response<TaskInterface>>('/api/todos/tasks', { name, target, notes, color, priority })
+			.post<Response<TaskInterface>>('/api/todos/tasks', {
+				name,
+				target,
+				notes,
+				color,
+				priority,
+			})
 			.then(res => res.data),
 
-	updateTask: (id: string, name: string, target: string, notes: string) =>
+	updateTask: (
+		id: string,
+		isDone?: boolean,
+		name?: string,
+		target?: string,
+		notes?: string,
+		color?: string,
+		priority?: string
+	) =>
 		axios
-			.patch<Response<TaskInterface>>(`/api/todos/tasks/${id}`, { name, target, notes })
+			.patch<Response<TaskInterface>>(`/api/todos/tasks/${id}`, {
+				name,
+				isDone,
+				target,
+				notes,
+				color,
+				priority,
+			})
 			.then(res => res.data),
+
+	deleteTask: (id: string) =>
+		axios.delete<Response<string>>(`/api/todos/tasks/${id}`).then(res => res.data),
 
 	addTarget: (name: string) =>
 		axios

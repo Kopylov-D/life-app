@@ -43,9 +43,19 @@ class TodosController {
 
 			await task.save();
 
-			res.status(201).json({ message: 'task create', task });
+			res.status(201).json({ message: 'task create', data: task });
 		} catch (e) {
 			res.status(300).json({ message: e });
+		}
+	}
+
+	async deleteTask(req: RequestWithUser, res: Response) {
+		try {
+			const { id } = req.params;
+			await Task.findByIdAndDelete(id);
+			res.status(200).json({ message: 'target is deleted' });
+		} catch (e) {
+			res.status(500).json({ message: e });
 		}
 	}
 

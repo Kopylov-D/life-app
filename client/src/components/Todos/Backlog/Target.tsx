@@ -20,6 +20,7 @@ const Target: React.FC<Props> = props => {
 
 		onChange(props.name, props.notes, isCheked);
 	};
+	
 	const onDelete = () => {
 		props.deleteTarget(props._id);
 	};

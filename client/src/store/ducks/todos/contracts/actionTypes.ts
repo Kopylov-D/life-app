@@ -56,6 +56,16 @@ export interface AddTaskActionInterface extends Action<TodosActionTypes> {
 	payload: TaskInterface;
 }
 
+export interface ChangeTaskActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.CHANGE_TASK;
+	payload: TaskInterface;
+}
+
+export interface DeleteTaskActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.DELETE_TASK;
+	payload: string;
+}
+
 /* targets **/
 export interface AddTargetActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.ADD_TARGET;

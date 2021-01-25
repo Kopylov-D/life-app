@@ -13,7 +13,8 @@ type Props = {
 
 const Dropdown: React.FC<Props> = ({ items }) => {
   const [headerTitle, setHeaderTitle] = useState<string>('');
-  const [isOpen, seIsOpen] = useState<boolean>(false)
+	const [isOpen, seIsOpen] = useState<boolean>(false)
+	const [selectedId, setSelectedId] = useState<string>()
 
 	useEffect(() => {
 		const currentItem = items.find(item => item.isSelected);
