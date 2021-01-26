@@ -16,9 +16,11 @@ import {
 	setLoadingStatus,
 	setTargets,
 	setTasks,
+	setTasksToCard,
 	setTodosData,
 	TodosActions,
 } from './actionCreators';
+import { TaskInterface } from './contracts/state';
 
 type ThunkType = ThunkAction<Promise<void>, RootState, unknown, TodosActions>;
 
@@ -41,6 +43,41 @@ export function getTasks(): ThunkType {
 		try {
 			const { data } = await todosApi.getTasks();
 			dispatch(setTasks(data));
+		} catch (e) {
+			console.log(e);
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function addTasksToCard(tasksList: string[], level: number): ThunkType {
+	return async dispatch => {
+		dispatch(setTasksToCard({ tasksList, level }));
+		console.log('dispatch');
+
+		// try {
+		// 	const state = getState();
+		// 	const data = await todosApi.syncData(state.todos.tasks);
+		// 	console.log(data);
+
+		// 	// dispatch(setTasks(data));
+		// } catch (e) {
+		// 	console.log(e);
+		// 	dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		// }
+
+		dispatch(syncData());
+	};
+}
+
+export function syncData(): ThunkType {
+	return async (dispatch, getState) => {
+		try {
+			const state = getState();
+			const data = await todosApi.syncData(state.todos.tasks);
+			console.log(data);
+
+			// dispatch(setTasks(data));
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -77,7 +114,15 @@ export function updateTask(
 ): ThunkType {
 	return async dispatch => {
 		try {
-			const { data } = await todosApi.updateTask(id, isDone, name,  target, notes, color, priority);
+			const { data } = await todosApi.updateTask(
+				id,
+				isDone,
+				name,
+				target,
+				notes,
+				color,
+				priority
+			);
 			dispatch(changeTask(data));
 		} catch (e) {
 			console.log(e);

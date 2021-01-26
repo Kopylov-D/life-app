@@ -13,6 +13,8 @@ export enum TodosActionTypes {
 	SET_LOADING_STATUS = 'SET_LOADING',
 	SET_TODOS_DATA = 'SET_TODOS_DATA',
 
+	ADD_TASK_TO_CARD = 'ADD_TASK_TO_CARD',
+
 	SET_TARGETS = 'SET_TARGETS',
 	ADD_TARGET = 'ADD_TARGET',
 	DELETE_TARGET = 'DELETE_TARGET',
@@ -43,6 +45,16 @@ export interface SetTodosDataActionInterface extends Action<TodosActionTypes> {
 export interface SetTargetsActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_TARGETS;
 	payload: TargetInterface[];
+}
+
+export interface AddTaskToCardActionPayload {
+	tasksList: string[];
+	level: number;
+}
+
+export interface AddTaskToCardActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.ADD_TASK_TO_CARD;
+	payload: AddTaskToCardActionPayload;
 }
 
 //tasks

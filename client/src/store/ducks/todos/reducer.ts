@@ -29,6 +29,18 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				...state,
 				targets: action.payload,
 			};
+		case TodosActionTypes.ADD_TASK_TO_CARD:
+			const selectTasks = state.tasks
+			selectTasks.map(task => {
+				if (action.payload.tasksList.includes(task._id)) {
+					task.level = action.payload.level
+				}
+				return task
+			})
+			return {
+				...state,
+				tasks: selectTasks
+			};
 		case TodosActionTypes.SET_LOADING_STATUS:
 			return {
 				...state,

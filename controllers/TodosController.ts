@@ -13,6 +13,32 @@ import {
 } from '../types/types';
 
 class TodosController {
+	async syncTodos(req: RequestWithUser, res: Response) {
+		try {
+			const { targets, subtasks, tasks, cards } = req.body;
+
+			let count = 0;
+
+			if (req.body.tasks) {
+				const tasks: TaskInterface[] = req.body.tasks;
+
+				tasks.forEach(async task => {
+					await Task.findByIdAndUpdate(task._id, { $set: task });
+					console.log('sdf');
+					
+				});
+			}
+
+			// await Object.keys(req.body).map(item => {
+			// 	if (item === )
+			// })
+
+			res.status(201).json({ message: 'task create', data: count });
+		} catch (e) {
+			res.status(300).json({ message: e });
+		}
+	}
+
 	async addTask(req: RequestWithUser, res: Response) {
 		try {
 			const {
@@ -112,7 +138,11 @@ class TodosController {
 
 			const { id } = req.params;
 
-			const updatedTarget = 	await Target.findByIdAndUpdate( id, { $set: req.body }, {new: true});
+			const updatedTarget = await Target.findByIdAndUpdate(
+				id,
+				{ $set: req.body },
+				{ new: true }
+			);
 			// const updatedTarget = await Target.findOne({ _id: id });
 
 			res.status(201).json({ message: 'target updated', data: updatedTarget });

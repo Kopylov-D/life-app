@@ -11,6 +11,8 @@ export const todosApi = {
 	getTodosData: () =>
 		axios.get<Response<TodosDataInterface>>('/api/todos').then(res => res.data),
 
+	syncData: (tasks: TaskInterface[]) => axios.patch('/api/todos', {tasks}).then(res => res.data),
+
 	addTask: (
 		name: string,
 		target?: string,

@@ -19,7 +19,7 @@ interface Props extends TaskInterface {
 const Task: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 
-	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(true);
+	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(false);
 	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
 
 	const onChangeHandler = () => {
@@ -105,16 +105,6 @@ const Task: React.FC<Props> = props => {
 				{subtasksIsOpen && (
 					<div className="task__extend">
 						<textarea></textarea>
-						{/* <Input
-							className="task"
-							onChange={input.onChange}
-							touched={input.touched}
-							type="text"
-							valid={input.valid}
-							value={input.value}
-							placeholder="Новая подзадача"
-							onKeyPress={onAddSubtask}
-						/> */}
 					</div>
 				)}
 			</Fragment>

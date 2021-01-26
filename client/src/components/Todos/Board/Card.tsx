@@ -9,10 +9,11 @@ import {
 	updateCard,
 } from '../../../store/ducks/todos/actions';
 import { CardInterface } from '../../../store/ducks/todos/contracts/state';
-import { selectTasks } from '../../../store/ducks/todos/selectors';
+import { selectCardsNumber, selectTasks } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Task from './Task';
+import TaskSelector from './TaskSelector';
 
 interface Props extends CardInterface {
 	// headerName: string;
@@ -20,13 +21,18 @@ interface Props extends CardInterface {
 
 const Card: React.FC<Props> = props => {
 	const dispatch = useDispatch();
+
+	const [taskSelectorIsOpen, setTaskSelectorIsOpen] = useState(false);
+
 	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 	// const [headerChangerIsOpen, setHeaderChangerIsOpen] = useState<boolean>(flag);
 	const headerInput = useInput({ initialValue: props.name });
 	const tasks = useSelector(selectTasks);
+	const cardsNumber = useSelector(selectCardsNumber);
 
-	const onClick = () => {
+	const onAddTaskToCard = () => {
 		console.log('add task click');
+		setTaskSelectorIsOpen(true);
 		// dispatch(getTargets());
 		// dispatch(getTasks());
 	};
@@ -72,9 +78,11 @@ const Card: React.FC<Props> = props => {
 							props.name
 						)}
 					</div>
-					<span className="card__delete material-icons" onClick={onCardDelete}>
-						clear
-					</span>
+					{cardsNumber === props.level && (
+						<span className="card__delete material-icons" onClick={onCardDelete}>
+							clear
+						</span>
+					)}
 				</header>
 
 				<ul className="card__content">
@@ -99,10 +107,12 @@ const Card: React.FC<Props> = props => {
 			</div>
 
 			<footer className="card__footer">
-				<Button onClick={onClick} size="small">
+				<Button onClick={onAddTaskToCard} size="small">
 					Добавить задачу
 				</Button>
 			</footer>
+
+			{taskSelectorIsOpen && <TaskSelector close={() => setTaskSelectorIsOpen(false)} tasks={tasks} level={props.level}/>}
 		</div>
 	);
 };
