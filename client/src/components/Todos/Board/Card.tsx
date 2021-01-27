@@ -8,7 +8,7 @@ import {
 	getTasks,
 	updateCard,
 } from '../../../store/ducks/todos/actions';
-import { CardInterface } from '../../../store/ducks/todos/contracts/state';
+import { CardInterface, TaskInterface } from '../../../store/ducks/todos/contracts/state';
 import { selectCardsNumber, selectTasks } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
@@ -16,6 +16,7 @@ import Task from './Task';
 import TaskSelector from './TaskSelector';
 
 interface Props extends CardInterface {
+	tasks: TaskInterface[]
 	// headerName: string;
 }
 
@@ -27,7 +28,6 @@ const Card: React.FC<Props> = props => {
 	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 	// const [headerChangerIsOpen, setHeaderChangerIsOpen] = useState<boolean>(flag);
 	const headerInput = useInput({ initialValue: props.name });
-	const tasks = useSelector(selectTasks);
 	const cardsNumber = useSelector(selectCardsNumber);
 
 	const onAddTaskToCard = () => {
@@ -36,6 +36,10 @@ const Card: React.FC<Props> = props => {
 		// dispatch(getTargets());
 		// dispatch(getTasks());
 	};
+
+	// useEffect(() => {
+	// 	React.rend
+	// }, [tasks])
 
 	const onTaskCheck = (id: string) => {
 		console.log('check task', id);
@@ -86,7 +90,7 @@ const Card: React.FC<Props> = props => {
 				</header>
 
 				<ul className="card__content">
-					{tasks.map(task => {
+					{props.tasks.map(task => {
 						if (task.level === props.level) {
 							return (
 								<Task
@@ -112,7 +116,7 @@ const Card: React.FC<Props> = props => {
 				</Button>
 			</footer>
 
-			{taskSelectorIsOpen && <TaskSelector close={() => setTaskSelectorIsOpen(false)} tasks={tasks} level={props.level}/>}
+			{taskSelectorIsOpen && <TaskSelector close={() => setTaskSelectorIsOpen(false)} tasks={props.tasks} level={props.level}/>}
 		</div>
 	);
 };

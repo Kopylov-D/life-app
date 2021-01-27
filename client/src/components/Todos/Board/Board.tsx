@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddCard } from '../../../store/ducks/todos/actions';
-import { selectCards, selectCardsNumber } from '../../../store/ducks/todos/selectors';
+import { selectCards, selectCardsNumber, selectTasks } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Card from './Card';
 import { CardInterface } from '../../../store/ducks/todos/contracts/state';
@@ -14,6 +14,8 @@ export const Board: React.FC<any> = props => {
 	const dispatch = useDispatch();
 	const cardsNumber = useSelector(selectCardsNumber);
 	const cards = useSelector(selectCards);
+	const tasks = useSelector(selectTasks);
+
 
 	const onCreateCartHandler = () => {
 		dispatch(fetchAddCard(cardsNumber + 1));
@@ -23,7 +25,7 @@ export const Board: React.FC<any> = props => {
 		<div className="board">
 			<div className="board__cards">
 				{cards.map(card => (
-					<Card key={card._id} _id={card._id} level={card.level} name={card.name} />
+					<Card key={card._id} _id={card._id} level={card.level} name={card.name} tasks={tasks} />
 				))}
 			</div>
 			<Button onClick={onCreateCartHandler}>Создать карточку</Button>
