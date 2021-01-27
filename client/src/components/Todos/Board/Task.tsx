@@ -11,7 +11,7 @@ import Input from '../../UI/Input';
 import Subtask from './Subtask';
 
 interface Props extends TaskInterface {
-	// subtasks: SubtaskInterface[]
+	subtasks: SubtaskInterface[];
 	onDelete(id: string): void;
 	onChecked(id: string): void;
 }
@@ -32,8 +32,7 @@ const Task: React.FC<Props> = props => {
 
 	const onAddSubtask = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter') {
-			console.log('enter', props._id);
-			dispatch(fetchAddSubtask(input.value, props._id, props.target));
+			dispatch(fetchAddSubtask(input.value, props._id, props.level, props.target));
 		}
 	};
 
@@ -65,7 +64,22 @@ const Task: React.FC<Props> = props => {
 			{subtasksIsOpen && (
 				<div className="task__extend">
 					{/* <div>{}</div> */}
-					<Subtask />
+					{props.subtasks.map(subtask => {
+						if (subtask.task === props._id) {
+							return (
+								<Subtask
+									key={subtask._id}
+									_id={subtask._id}
+									date={subtask.date}
+									isDone={subtask.isDone}
+									level={subtask.level}
+									name={subtask.name}
+									target={subtask.target}
+									task={subtask.task}
+								/>
+							);
+						}
+					})}
 					<Input
 						className="task"
 						onChange={input.onChange}

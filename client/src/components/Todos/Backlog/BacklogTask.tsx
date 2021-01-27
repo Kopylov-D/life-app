@@ -16,14 +16,17 @@ import useOutsideClick from '../../../hooks/outsideAlert.hook';
 interface Props extends TaskInterface {
 	deleteTask(id: string): void;
 	changeTask(
-		id: string,
-		isDone?: boolean,
-		name?: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
+		// id: string,
+		// isDone?: boolean,
+		// name?: string,
+		// target?: string,
+		// notes?: string,
+		// color?: string,
+		// priority?: string
+		task: TaskInterface
 	): void;
+
+	task: TaskInterface;
 }
 
 const BacklogTask: React.FC<Props> = props => {
@@ -37,35 +40,49 @@ const BacklogTask: React.FC<Props> = props => {
 	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
 	const onChecked = () => {
-		props.changeTask(props._id, !props.isDone);
+		setIsDoneTask(!isDoneTask);
+		props.changeTask({...props.task, isDone: !isDoneTask});
+		// props.changeTask(props._id, !props.isDone);
+		// onChangeTask();
 	};
 
-	const onChangeTask = (
-		name?: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
-	) => {
-		props.changeTask(props._id, props.isDone, name, target, notes, color, priority);
-		setIsVisible(false);
-	};
+	const onChangeTask = (task: TaskInterface) =>
+		// task: TaskInterface
+		// name?: string,
+		// target?: string,
+		// notes?: string,
+		// color?: string,
+		// priority?: string
+		{
+			// props.changeTask(props._id, props.isDone, name, target, notes, color, priority);
+			// const task: TaskInterface = {
+			// 	_id: props._id,
+			// 	date: props.date,
+			// 	isDone: props.isDone,
+			// 	level: props.level,
+			// 	name: input.value,
+			// 	notes: notesInput,
+			// 	target: parentTarget,
+			// };
+			props.changeTask({...task, isDone: isDoneTask});
+			setIsVisible(false);
+		};
 
 	return (
 		<Fragment>
 			{isVisible ? (
 				<div ref={ref}>
-				<TaskEditor
-					_id={props._id}
-					cancelEditor={() => setIsVisible(false)}
-					type="edit"
-					submit={onChangeTask}
-					deleteTask={props.deleteTask}
-					name={props.name}
-					target={props.target}
-				/>
+					<TaskEditor
+						_id={props._id}
+						cancelEditor={() => setIsVisible(false)}
+						type="edit"
+						submit={onChangeTask}
+						deleteTask={props.deleteTask}
+						name={props.name}
+						target={props.target}
+						task={props.task}
+					/>
 				</div>
-
 			) : (
 				<div
 					className={classNames('backlog-task', {

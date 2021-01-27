@@ -1,8 +1,10 @@
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
-import { CardInterface, TargetInterface, TaskInterface } from './contracts/state';
+import { CardInterface, SubtaskInterface, TargetInterface, TaskInterface } from './contracts/state';
 
 export const selectTargets = (state: RootState): TargetInterface[] => state.todos.targets;
+
+export const selectSubtasks = (state: RootState): SubtaskInterface[] => state.todos.subtasks;
 
 export const selectTasks = (state: RootState): TaskInterface[] => state.todos.tasks;
 

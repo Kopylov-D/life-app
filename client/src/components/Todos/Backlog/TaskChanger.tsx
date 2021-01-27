@@ -46,7 +46,7 @@ const TaskChanger: React.FC<Props> = props => {
 
 	const onChangeTask = () => {
 		if (props.type === 'create') {
-			dispatch(fetchAddTask(input.value, parentTarget, notesInput, color, priority))
+			// dispatch(fetchAddTask(input.value, parentTarget, notesInput, color, priority))
 			props.close()
 		}
 		// props.submitChanges(input.value, parentTarget, notesInput, priority);

@@ -16,6 +16,7 @@ import {
 	SetTargetsActionInterface,
 	SetTasksActionInterface,
 	SetTodosDataActionInterface,
+	SyncStateActionInterface,
 	TodosActionTypes,
 } from './contracts/actionTypes';
 import {
@@ -24,6 +25,7 @@ import {
 	TargetInterface,
 	TaskInterface,
 	TodosDataInterface,
+	TodosState,
 } from './contracts/state';
 
 export type TodosActions =
@@ -41,12 +43,18 @@ export type TodosActions =
 	| DeleteCardActionInterface
 	| DeleteTargetActionInterface
 	| ChangeTargetActionInterface
-	| AddTaskToCardActionInterface;
+	| AddTaskToCardActionInterface
+	| SyncStateActionInterface;
 
 export const setLoadingStatus = (
 	payload: LoadingStatus
 ): SetLoadingStatusActionInterface => ({
 	type: TodosActionTypes.SET_LOADING_STATUS,
+	payload,
+});
+
+export const syncState = (payload: TodosState): SyncStateActionInterface => ({
+	type: TodosActionTypes.SYNC_STATE,
 	payload,
 });
 
@@ -57,7 +65,9 @@ export const setTodosData = (
 	payload,
 });
 
-export const setTasksToCard = (payload: AddTaskToCardActionPayload): AddTaskToCardActionInterface => ({
+export const setTasksToCard = (
+	payload: AddTaskToCardActionPayload
+): AddTaskToCardActionInterface => ({
 	type: TodosActionTypes.ADD_TASK_TO_CARD,
 	payload,
 });

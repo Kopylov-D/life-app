@@ -20,6 +20,7 @@ import BacklogTask from './BacklogTask';
 import TaskChanger from './TaskChanger';
 import TaskEditor from './TaskEditor';
 import { addTask } from '../../../store/ducks/todos/actionCreators';
+import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
 
 interface Props {}
 
@@ -66,31 +67,36 @@ const Backlog: React.FC<Props> = props => {
 		setAddTargetModalIsOpen(true);
 	};
 
-	const createTaskHandler = (
-		name: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
-	) => {
-		dispatch(fetchAddTask(name, target, notes, color, priority));
+	const createTaskHandler = (task: TaskInterface) => {
+		dispatch(fetchAddTask(task));
 	};
+	// const createTaskHandler = (
+	// 	name: string,
+	// 	target?: string,
+	// 	notes?: string,
+	// 	color?: string,
+	// 	priority?: string
+	// ) => {
+	// 	dispatch(fetchAddTask(name, target, notes, color, priority));
+	// };
 
 	const changeTaskHandler = (
-		id: string,
-		isDone?: boolean,
-		name?: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
+		task: TaskInterface
+		// id: string,
+		// isDone?: boolean,
+		// name?: string,
+		// target?: string,
+		// notes?: string,
+		// color?: string,
+		// priority?: string
 	) => {
-		dispatch(updateTask(id, isDone, name, target, notes, color, priority));
+		// dispatch(updateTask(id, isDone, name, target, notes, color, priority));
+		dispatch(updateTask(task));
 	};
 
 	const deleteTaskHandler = (id: string) => {
 		console.log(id);
-		
+
 		dispatch(fetchDeleteTask(id));
 	};
 
@@ -117,11 +123,14 @@ const Backlog: React.FC<Props> = props => {
 				{taskEditorIsOpen ? (
 					<TaskEditor
 						type="create"
+						// task={task}
 						submit={createTaskHandler}
 						cancelEditor={() => setTaskEditorIsOpen(false)}
 					/>
 				) : (
-					<Button onClick={() => setTaskEditorIsOpen(true)} size='small'>Добавить задачу</Button>
+					<Button onClick={() => setTaskEditorIsOpen(true)} size="small">
+						Добавить задачу
+					</Button>
 				)}
 				{tasks.map(task => (
 					<BacklogTask
@@ -135,6 +144,7 @@ const Backlog: React.FC<Props> = props => {
 						target={task.target}
 						changeTask={changeTaskHandler}
 						deleteTask={deleteTaskHandler}
+						task={task}
 					/>
 				))}
 			</Table>

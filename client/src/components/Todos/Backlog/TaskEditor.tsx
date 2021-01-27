@@ -16,6 +16,7 @@ import { selectTargetsList } from '../../../store/ducks/todos/selectors';
 import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
 
 interface Props {
+	task?: TaskInterface;
 	type: 'edit' | 'create';
 	_id?: string;
 	target?: string;
@@ -24,15 +25,16 @@ interface Props {
 	isDone?: boolean;
 	notes?: string;
 	color?: string;
-	submit(
-		name: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
-	): void;
+	submit(task: TaskInterface): void;
+	// submit(
+	// 	name: string,
+	// 	target?: string,
+	// 	notes?: string,
+	// 	color?: string,
+	// 	priority?: string
+	// ): void;
 	cancelEditor(): void;
-	deleteTask?(id: string): void
+	deleteTask?(id: string): void;
 }
 
 const TaskEditor: React.FC<Props> = props => {
@@ -45,7 +47,7 @@ const TaskEditor: React.FC<Props> = props => {
 	const selectTargets = useSelector(selectTargetsList);
 	const [parentTarget, setParentTarget] = useState<string>();
 	const [priority, setPriority] = useState<string>();
-	const [notesInput, setNotesInput] = useState<string | undefined>(props.notes);
+	const [notesInput, setNotesInput] = useState<string>(props.notes!);
 	const [color, setColor] = useState<string | undefined>(props.color);
 
 	const onKeyEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -56,14 +58,38 @@ const TaskEditor: React.FC<Props> = props => {
 
 	const onSubmit = () => {
 		if (input.valid) {
-			props.submit(input.value, parentTarget);
+			let task: TaskInterface;
+
+			if (props.type === 'edit') {
+				task = {
+					_id: props.task!._id,
+					date: props.task!.date,
+					isDone: props.task!.isDone,
+					level: props.task!.level,
+					name: input.value,
+					notes: notesInput,
+					target: parentTarget,
+				};
+			} else {
+				task = {
+					_id: '',
+					date: new Date(),
+					isDone: false,
+					level: 0,
+					name: input.value,
+					notes: notesInput,
+					target: parentTarget,
+				};
+			}
+
+			props.submit(task);
 			props.type === 'create' && input.clearValue();
 		}
 	};
 
 	const deleteTask = () => {
-		props.deleteTask!(props._id!)
-	}
+		props.deleteTask!(props._id!);
+	};
 
 	const onToggleCalendarHandler = () => {
 		setCalendarIsOpen(isOpen => !isOpen);
@@ -111,9 +137,7 @@ const TaskEditor: React.FC<Props> = props => {
 					<img src={calendar} alt="" onClick={onToggleCalendarHandler}></img>
 					<img src={edit} alt="" onClick={onToggleCalendarHandler}></img>
 					<img src={warning} alt="" onClick={onToggleCalendarHandler}></img>
-					{props.type === 'edit' && (
-						<img src={trash} alt="" onClick={deleteTask}></img>
-					)}
+					{props.type === 'edit' && <img src={trash} alt="" onClick={deleteTask}></img>}
 				</div>
 			</div>
 

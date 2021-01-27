@@ -1,4 +1,5 @@
 import { Response } from 'express';
+import {Types} from 'mongoose'
 import { Card } from '../models/Todos/Card';
 import { Color } from '../models/Todos/Color';
 import { Subtask } from '../models/Todos/Subtask';
@@ -15,17 +16,37 @@ import {
 class TodosController {
 	async syncTodos(req: RequestWithUser, res: Response) {
 		try {
-			const { targets, subtasks, tasks, cards } = req.body;
-
-			let count = 0;
+			const { targets, subtasks, tasks, cards } = req.body;			
 
 			if (req.body.tasks) {
 				const tasks: TaskInterface[] = req.body.tasks;
 
 				tasks.forEach(async task => {
 					await Task.findByIdAndUpdate(task._id, { $set: task });
-					console.log('sdf');
-					
+				});
+			}
+
+			if (req.body.targets) {
+				const targets: TargetInterface[] = req.body.targets;
+
+				targets.forEach(async target => {
+					await Target.findByIdAndUpdate(target._id, { $set: target });
+				});
+			}
+
+			if (req.body.subtasks) {
+				const subtasks: SubtaskInterface[] = req.body.subtasks;
+
+				subtasks.forEach(async subtask => {
+					await Subtask.findByIdAndUpdate(subtask._id, { $set: subtask });
+				});
+			}
+
+			if (req.body.cards) {
+				const cards: CardInterface[] = req.body.cards;
+
+				cards.forEach(async card => {
+					await Card.findByIdAndUpdate(card._id, { $set: card });
 				});
 			}
 
@@ -33,7 +54,7 @@ class TodosController {
 			// 	if (item === )
 			// })
 
-			res.status(201).json({ message: 'task create', data: count });
+			res.status(201).json({ message: 'sync complete'});
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
@@ -41,31 +62,34 @@ class TodosController {
 
 	async addTask(req: RequestWithUser, res: Response) {
 		try {
-			const {
-				target,
-				subtask,
-				name,
-				color,
-				priority,
-				date,
-				expiresIn,
-				level,
-				notes,
-				isDone,
-			}: TaskInterface = req.body;
-			const task = new Task({
-				user: req.user,
-				target: target && target,
-				subtask: subtask && subtask,
-				name,
-				isDone: isDone && isDone,
-				level: level && level,
-				notes: notes && notes,
-				color: color && color,
-				priority: priority && priority,
-				date: date && date,
-				expiresIn: expiresIn && expiresIn,
-			});
+
+			// const {
+			// 	target,
+			// 	subtask,
+			// 	name,
+			// 	color,
+			// 	priority,
+			// 	date,
+			// 	expiresIn,
+			// 	level,
+			// 	notes,
+			// 	isDone,
+			// }: TaskInterface = req.body;
+			// const task = new Task({
+			// 	user: req.user,
+			// 	target: target && target,
+			// 	subtask: subtask && subtask,
+			// 	name,
+			// 	isDone: isDone && isDone,
+			// 	level: level && level,
+			// 	notes: notes && notes,
+			// 	color: color && color,
+			// 	priority: priority && priority,
+			// 	// date: date && date,
+			// 	expiresIn: expiresIn && expiresIn,
+			// });
+
+			const task = new Task({...req.body, _id: Types.ObjectId(), user: req.user});
 
 			await task.save();
 
@@ -299,7 +323,6 @@ class TodosController {
 				isDone,
 			}: TaskInterface = req.body;
 
-			console.log(req.body);
 
 			// for (let i = 0; )
 

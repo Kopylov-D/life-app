@@ -32,13 +32,15 @@ const TaskSelector: React.FC<Props> = props => {
 	return (
 		<Modal class="task-selector" closeModal={props.close}>
 			{props.tasks.map(task => {
-				return (
-					<div key={task._id}>
-						<div className="" onClick={() => addTaskToList(task._id)}>
-							{task.name}
+				if (!task.subtask) {
+					return (
+						<div key={task._id}>
+							<div className="" onClick={() => addTaskToList(task._id)}>
+								{task.name}
+							</div>
 						</div>
-					</div>
-				);
+					);
+				}
 			})}
 			<Button onClick={addSelectedTaskToBoard}></Button>
 		</Modal>

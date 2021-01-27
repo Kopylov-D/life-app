@@ -7,11 +7,13 @@ import {
 	TargetInterface,
 	TaskInterface,
 	TodosDataInterface,
+	TodosState,
 } from '../contracts/state';
 
 export enum TodosActionTypes {
 	SET_LOADING_STATUS = 'SET_LOADING',
 	SET_TODOS_DATA = 'SET_TODOS_DATA',
+	SYNC_STATE= 'SYNC_STATE',
 
 	ADD_TASK_TO_CARD = 'ADD_TASK_TO_CARD',
 
@@ -35,6 +37,11 @@ export enum TodosActionTypes {
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_LOADING_STATUS;
 	payload: LoadingStatus;
+}
+
+export interface SyncStateActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SYNC_STATE;
+	payload: TodosState;
 }
 
 export interface SetTodosDataActionInterface extends Action<TodosActionTypes> {

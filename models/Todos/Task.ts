@@ -30,7 +30,7 @@ const TaskSchema: Schema = new Schema<TaskInterface>({
 	notes: {
 		required: false,
 		type: String,
-		// default: ''
+		default: ''
 	},
 	color: {
 		required: false,

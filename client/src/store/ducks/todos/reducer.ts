@@ -24,6 +24,11 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				colors: action.payload.colors,
 				cards: action.payload.cards,
 			};
+		case TodosActionTypes.SYNC_STATE:
+			return {
+				...state,
+				...action.payload
+			};
 		case TodosActionTypes.SET_TARGETS:
 			return {
 				...state,

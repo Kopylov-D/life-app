@@ -225,3 +225,7 @@ body {
 	background-color: $c-secondary;
 	border: $c-primary 1px solid;
 }
+
+.done {
+	text-decoration: line-through;
+}

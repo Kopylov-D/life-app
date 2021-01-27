@@ -10,16 +10,13 @@ declare global {
 }
 
 const syncMiddleWare: Middleware = store => next => action => {
-  // console.log('Middleware triggered:', action);
+	// console.log('Middleware triggered:', action);
 
-  const syncActions = ['ADD_TASK_TO_CARD']
+	const syncActions = ['ADD_TASK_TO_CARD'];
 
-  if (syncActions.includes(action.type)) {
-    // store.dispatch(syncData())
-    console.log('need sync');
-    
-  }
-  
+	if (syncActions.includes(action.type)) {
+	}
+
 	return next(action);
 };
 

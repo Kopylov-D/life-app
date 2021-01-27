@@ -5,48 +5,59 @@ import {
 	TaskInterface,
 	SubtaskInterface,
 	CardInterface,
+	TodosState,
 } from '../../store/ducks/todos/contracts/state';
+import Subtask from '../../components/Todos/Board/Subtask';
 
 export const todosApi = {
 	getTodosData: () =>
 		axios.get<Response<TodosDataInterface>>('/api/todos').then(res => res.data),
 
-	syncData: (tasks: TaskInterface[]) => axios.patch('/api/todos', {tasks}).then(res => res.data),
+	syncData: (todos: TodosState) => axios.patch('/api/todos', {...todos}).then(res => res.data),
 
 	addTask: (
-		name: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
+		task: TaskInterface
+		// name: string,
+		// target?: string,
+		// notes?: string,
+		// color?: string,
+		// priority?: string,
+		// subtask?: string,
+		// level?: number
 	) =>
 		axios
 			.post<Response<TaskInterface>>('/api/todos/tasks', {
-				name,
-				target,
-				notes,
-				color,
-				priority,
+				// name,
+				// target,
+				// notes,
+				// color,
+				// priority,
+				// subtask,
+				// level
+				...task,
+				_id: null
 			})
 			.then(res => res.data),
 
 	updateTask: (
-		id: string,
-		isDone?: boolean,
-		name?: string,
-		target?: string,
-		notes?: string,
-		color?: string,
-		priority?: string
+		task: TaskInterface
+		// id: string,
+		// isDone?: boolean,
+		// name?: string,
+		// target?: string,
+		// notes?: string,
+		// color?: string,
+		// priority?: string
 	) =>
 		axios
-			.patch<Response<TaskInterface>>(`/api/todos/tasks/${id}`, {
-				name,
-				isDone,
-				target,
-				notes,
-				color,
-				priority,
+			.patch<Response<TaskInterface>>(`/api/todos/tasks/${task._id}`, {
+				...task
+				// name,
+				// isDone,
+				// target,
+				// notes,
+				// color,
+				// priority,
 			})
 			.then(res => res.data),
 
@@ -77,7 +88,7 @@ export const todosApi = {
 	deleteTarget: (id: string) =>
 		axios.delete<Response<string>>(`/api/todos/targets/${id}`).then(res => res.data),
 
-	addSubtask: (name: string, task: string, target: string | null, level: number = 0) =>
+	addSubtask: (name: string, task: string, level: number, target: string | null) =>
 		axios
 			.post<Response<SubtaskInterface>>('/api/todos/subtasks', {
 				name,
