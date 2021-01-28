@@ -1,4 +1,3 @@
-import { act } from '@testing-library/react';
 import { LoadingStatus } from '../../types';
 import { TodosActions } from './actionCreators';
 import { TodosActionTypes } from './contracts/actionTypes';
@@ -27,7 +26,7 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 		case TodosActionTypes.SYNC_STATE:
 			return {
 				...state,
-				...action.payload
+				...action.payload,
 			};
 		case TodosActionTypes.SET_TARGETS:
 			return {
@@ -35,16 +34,25 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				targets: action.payload,
 			};
 		case TodosActionTypes.ADD_TASK_TO_CARD:
-			const selectTasks = state.tasks
-			selectTasks.map(task => {
+			let selectTasks = state.tasks;
+			let childSubtasks = state.subtasks;
+
+			selectTasks = selectTasks.map(task => {
 				if (action.payload.tasksList.includes(task._id)) {
-					task.level = action.payload.level
+					task.level = action.payload.level;
+					childSubtasks = childSubtasks.map(subtask => {
+						if (subtask.task === task._id) {
+							subtask.level = action.payload.level;
+						}
+						return subtask;
+					});
 				}
-				return task
-			})
+				return task;
+			});
 			return {
 				...state,
-				tasks: selectTasks
+				tasks: selectTasks,
+				subtasks: childSubtasks,
 			};
 		case TodosActionTypes.SET_LOADING_STATUS:
 			return {
@@ -57,14 +65,22 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				tasks: action.payload,
 			};
 		case TodosActionTypes.ADD_TASK:
+
 			return {
 				...state,
 				tasks: [...state.tasks, action.payload],
 			};
 		case TodosActionTypes.DELETE_TASK:
+			// let { deltasks, delsubtasks } = state;
+			// const deltasks = state.tasks.filter(task => task._id !== action.payload);
+			// const delsubtasks = state.subtasks.filter(subtask => subtask.task !== action.payload);
+
+		
+
 			return {
 				...state,
-				tasks: state.tasks.filter(task => task._id !== action.payload),
+				tasks: state.tasks.filter(task => task._id !== action.payload ),
+				// subtasks: state.subtasks.filter(subtask => subtask.task !== action.payload),
 			};
 		case TodosActionTypes.CHANGE_TASK:
 			const tasks = state.tasks.map(task => {

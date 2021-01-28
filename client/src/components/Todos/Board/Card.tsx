@@ -4,6 +4,7 @@ import { useInput } from '../../../hooks/input.hook';
 import useOutsideClick from '../../../hooks/outsideAlert.hook';
 import {
 	fetchDeleteCard,
+	fetchDeleteTask,
 	getTargets,
 	getTasks,
 	updateCard,
@@ -47,7 +48,7 @@ const Card: React.FC<Props> = props => {
 	};
 
 	const onTaskDelete = (id: string) => {
-		console.log('task del', id);
+		dispatch(fetchDeleteTask(id))
 	};
 
 	const onCardDelete = () => {
