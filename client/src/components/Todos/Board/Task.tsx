@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../../hooks/input.hook';
-import { fetchAddSubtask } from '../../../store/ducks/todos/actions';
+import { fetchAddSubtask, updateTask } from '../../../store/ducks/todos/actions';
 import {
 	SubtaskInterface,
 	TaskInterface,
@@ -20,10 +20,27 @@ const Task: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 
 	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(false);
+	const [isDoneTask, setIsDoneTask] = useState<boolean>(props.isDone);
+
 	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
 
-	const onChangeHandler = () => {
-		// props.onChecked(id);
+	const onChecked = () => {
+		setIsDoneTask(!isDoneTask);
+		dispatch(
+			updateTask({
+				_id: props._id,
+				target: props.target,
+				date: props.date,
+				isDone: !props.isDone,
+				level: props.level,
+				name: props.name,
+				notes: props.notes,
+				subtask: props.subtask,
+				color: props.color,
+				priority: props.priority,
+				expiresIn: props.expiresIn
+			})
+		);
 	};
 
 	const onDeleteTask = () => {
@@ -31,8 +48,25 @@ const Task: React.FC<Props> = props => {
 	};
 
 	const onAddSubtask = (e: React.KeyboardEvent<HTMLInputElement>) => {
-		if (e.key === 'Enter') {
+		if (e.key === 'Enter' && input.valid) {
 			dispatch(fetchAddSubtask(input.value, props._id, props.level, props.target));
+			dispatch(
+				updateTask(
+					{
+						_id: props._id,
+						date: props.date,
+						isDone: false,
+						level: props.level,
+						name: props.name,
+						notes: props.notes,
+						subtask: props.subtask,
+						color: props.color,
+					},
+					true
+				)
+			);
+
+			input.clearValue();
 		}
 	};
 
@@ -47,7 +81,7 @@ const Task: React.FC<Props> = props => {
 					<Checkbox
 						checked={props.isDone}
 						id={props._id}
-						onChangeHandler={onChangeHandler}
+						onChangeHandler={onChecked}
 						value={props.name}
 					/>
 
@@ -63,7 +97,6 @@ const Task: React.FC<Props> = props => {
 
 			{subtasksIsOpen && (
 				<div className="task__extend">
-					{/* <div>{}</div> */}
 					{props.subtasks.map(subtask => {
 						if (subtask.task === props._id) {
 							return (
@@ -76,6 +109,7 @@ const Task: React.FC<Props> = props => {
 									name={subtask.name}
 									target={subtask.target}
 									task={subtask.task}
+									// parentTask={}
 								/>
 							);
 						}
@@ -103,7 +137,7 @@ const Task: React.FC<Props> = props => {
 						<Checkbox
 							checked={props.isDone}
 							id={props._id}
-							onChangeHandler={onChangeHandler}
+							onChangeHandler={onChecked}
 							value={props.name}
 						/>
 

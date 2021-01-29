@@ -1,5 +1,5 @@
 import { Response } from 'express';
-import {Types} from 'mongoose'
+import { Types } from 'mongoose';
 import { Card } from '../models/Todos/Card';
 import { Color } from '../models/Todos/Color';
 import { Subtask } from '../models/Todos/Subtask';
@@ -16,7 +16,7 @@ import {
 class TodosController {
 	async syncTodos(req: RequestWithUser, res: Response) {
 		try {
-			const { targets, subtasks, tasks, cards } = req.body;			
+			const { targets, subtasks, tasks, cards } = req.body;
 
 			if (req.body.tasks) {
 				const tasks: TaskInterface[] = req.body.tasks;
@@ -54,7 +54,7 @@ class TodosController {
 			// 	if (item === )
 			// })
 
-			res.status(201).json({ message: 'sync complete'});
+			res.status(201).json({ message: 'sync complete' });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
@@ -62,7 +62,6 @@ class TodosController {
 
 	async addTask(req: RequestWithUser, res: Response) {
 		try {
-
 			// const {
 			// 	target,
 			// 	subtask,
@@ -89,7 +88,7 @@ class TodosController {
 			// 	expiresIn: expiresIn && expiresIn,
 			// });
 
-			const task = new Task({...req.body, _id: Types.ObjectId(), user: req.user});
+			const task = new Task({ ...req.body, _id: Types.ObjectId(), user: req.user });
 
 			await task.save();
 
@@ -104,6 +103,32 @@ class TodosController {
 			const { id } = req.params;
 			await Task.findByIdAndDelete(id);
 			res.status(200).json({ message: 'target is deleted' });
+		} catch (e) {
+			res.status(500).json({ message: e });
+		}
+	}
+
+	async multiplyDelete(req: RequestWithUser, res: Response) {
+		try {
+			if (req.body.tasksId) {
+				// await (await Task.find({user: req.user})).forEach(task => {
+				// 	if (task._id)
+				// })
+				const tasksId: string[] = req.body.tasksId;
+
+				tasksId.forEach(async taskId => {
+					await Task.findByIdAndDelete(taskId);
+				});
+			}
+			if (req.body.subtasksId) {
+				const subtasksId: string[] = req.body.subtasksId;
+
+				subtasksId.forEach(async subtaskId => {
+					await Subtask.findByIdAndDelete(subtaskId);
+				});
+			}
+			
+			res.status(200).json({ message: 'data is deleted' });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -205,34 +230,20 @@ class TodosController {
 
 	async addSubtask(req: RequestWithUser, res: Response) {
 		try {
-			const {
-				name,
-				isDone,
-				color,
-				priority,
-				date,
-				expiresIn,
-				level,
-				task,
-				target,
-			}: SubtaskInterface = req.body;
-
-			const subtask = new Subtask({
-				user: req.user,
-				name,
-				isDone: isDone && isDone,
-				color: color && color,
-				priority: priority && priority,
-				date: date && date,
-				level,
-				task,
-				target: target && target,
-				// notes: notes && notes,
-				expiresIn: expiresIn && expiresIn,
-			});
+			const subtask = new Subtask({ ...req.body, _id: Types.ObjectId(), user: req.user });
 
 			await subtask.save();
 			res.status(201).json({ message: 'subtask added', data: subtask });
+		} catch (e) {
+			res.status(500).json({ message: e });
+		}
+	}
+
+	async deleteSubtask(req: RequestWithUser, res: Response) {
+		try {
+			const { id } = req.params;			
+			await Subtask.findByIdAndDelete(id);
+			res.status(200).json({ message: 'subtask is deleted' });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -322,7 +333,6 @@ class TodosController {
 				notes,
 				isDone,
 			}: TaskInterface = req.body;
-
 
 			// for (let i = 0; )
 

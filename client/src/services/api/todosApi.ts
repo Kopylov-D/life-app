@@ -13,51 +13,26 @@ export const todosApi = {
 	getTodosData: () =>
 		axios.get<Response<TodosDataInterface>>('/api/todos').then(res => res.data),
 
-	syncData: (todos: TodosState) => axios.patch('/api/todos', {...todos}).then(res => res.data),
+	syncData: (todos: TodosState) =>
+		axios.patch('/api/todos', { ...todos }).then(res => res.data),
 
-	addTask: (
-		task: TaskInterface
-		// name: string,
-		// target?: string,
-		// notes?: string,
-		// color?: string,
-		// priority?: string,
-		// subtask?: string,
-		// level?: number
-	) =>
+	multiplyDelete: (tasksId?: string[], subtasksId?: string[]) =>
+		axios
+			.delete<Response<string>>('/api/todos', { data: { tasksId, subtasksId } })
+			.then(res => res.data),
+
+	addTask: (task: TaskInterface) =>
 		axios
 			.post<Response<TaskInterface>>('/api/todos/tasks', {
-				// name,
-				// target,
-				// notes,
-				// color,
-				// priority,
-				// subtask,
-				// level
 				...task,
-				_id: null
+				_id: null,
 			})
 			.then(res => res.data),
 
-	updateTask: (
-		task: TaskInterface
-		// id: string,
-		// isDone?: boolean,
-		// name?: string,
-		// target?: string,
-		// notes?: string,
-		// color?: string,
-		// priority?: string
-	) =>
+	updateTask: (task: TaskInterface) =>
 		axios
 			.patch<Response<TaskInterface>>(`/api/todos/tasks/${task._id}`, {
-				...task
-				// name,
-				// isDone,
-				// target,
-				// notes,
-				// color,
-				// priority,
+				...task,
 			})
 			.then(res => res.data),
 
@@ -87,6 +62,9 @@ export const todosApi = {
 
 	deleteTarget: (id: string) =>
 		axios.delete<Response<string>>(`/api/todos/targets/${id}`).then(res => res.data),
+
+	deleteSubtask: (id: string) =>
+		axios.delete<Response<string>>(`/api/todos/subtasks/${id}`).then(res => res.data),
 
 	addSubtask: (name: string, task: string, level: number, target: string | null) =>
 		axios

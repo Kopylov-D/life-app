@@ -10,6 +10,7 @@ import {
 	ChangeTargetActionInterface,
 	ChangeTaskActionInterface,
 	DeleteCardActionInterface,
+	DeleteSubtaskActionInterface,
 	DeleteTargetActionInterface,
 	DeleteTaskActionInterface,
 	SetLoadingStatusActionInterface,
@@ -38,6 +39,7 @@ export type TodosActions =
 	| SetTodosDataActionInterface
 	| AddTargetActionInterface
 	| AddSubtaskActionInterface
+	| DeleteSubtaskActionInterface
 	| AddCardActionInterface
 	| ChangeCardActionInterface
 	| DeleteCardActionInterface
@@ -120,6 +122,11 @@ export const deleteTarget = (payload: string): DeleteTargetActionInterface => ({
 
 export const addSubtask = (payload: SubtaskInterface): AddSubtaskActionInterface => ({
 	type: TodosActionTypes.ADD_SUBTASK,
+	payload,
+});
+
+export const deleteSubtask = (payload: string): DeleteSubtaskActionInterface => ({
+	type: TodosActionTypes.DELETE_SUBTASK,
 	payload,
 });
 

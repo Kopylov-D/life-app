@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/', auth, TodosController.getTodosData);
 router.patch('/', auth, TodosController.syncTodos);
+router.delete('/', auth, TodosController.multiplyDelete);
 
 router.get('/tasks', auth, TodosController.getTasks);
 router.post('/tasks', auth, TodosController.addTask);
@@ -18,6 +19,7 @@ router.delete('/targets/:id', auth, TodosController.deleteTarget);
 router.patch('/targets/:id', auth, TodosController.updateTarget);
 
 router.post('/subtasks', auth, TodosController.addSubtask);
+router.delete('/subtasks/:id', auth, TodosController.deleteSubtask);
 
 router.post('/cards', auth, TodosController.addCard);
 router.patch('/cards/:id', auth, TodosController.updateCard);

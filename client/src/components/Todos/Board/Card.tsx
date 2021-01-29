@@ -33,7 +33,6 @@ const Card: React.FC<Props> = props => {
 	const cardsNumber = useSelector(selectCardsNumber);
 
 	const onAddTaskToCard = () => {
-		console.log('add task click');
 		setTaskSelectorIsOpen(true);
 		// dispatch(getTargets());
 		// dispatch(getTasks());
@@ -103,6 +102,7 @@ const Card: React.FC<Props> = props => {
 									level={task.level}
 									name={task.name}
 									notes={task.notes}
+									color={task.color}
 									subtasks={props.subtasks}
 									onChecked={onTaskCheck}
 									onDelete={onTaskDelete}

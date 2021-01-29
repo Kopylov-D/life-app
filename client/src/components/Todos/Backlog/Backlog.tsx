@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Modal from '../../UI/Modal';
 import Table from '../../Table';
 import Button from '../../UI/Button';
-import NewBacklogTask from './TaskEditor';
 import Target from './Target';
 import { useInput } from '../../../hooks/input.hook';
 import Input from '../../UI/Input';
@@ -17,9 +16,7 @@ import {
 } from '../../../store/ducks/todos/actions';
 import { selectTargets, selectTasks } from '../../../store/ducks/todos/selectors';
 import BacklogTask from './BacklogTask';
-import TaskChanger from './TaskChanger';
 import TaskEditor from './TaskEditor';
-import { addTask } from '../../../store/ducks/todos/actionCreators';
 import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
 
 interface Props {}
@@ -61,8 +58,7 @@ const Backlog: React.FC<Props> = props => {
 		dispatch(updateTarget(id, name, notes, isDone));
 	};
 
-	const createTargetHandler = async () => {
-		// await api.addTarget(addTargetInput.value)
+	const createTargetHandler = () => {
 		dispatch(fetchAddTarget(addTargetInput.value));
 		setAddTargetModalIsOpen(true);
 	};
@@ -70,33 +66,12 @@ const Backlog: React.FC<Props> = props => {
 	const createTaskHandler = (task: TaskInterface) => {
 		dispatch(fetchAddTask(task));
 	};
-	// const createTaskHandler = (
-	// 	name: string,
-	// 	target?: string,
-	// 	notes?: string,
-	// 	color?: string,
-	// 	priority?: string
-	// ) => {
-	// 	dispatch(fetchAddTask(name, target, notes, color, priority));
-	// };
 
-	const changeTaskHandler = (
-		task: TaskInterface
-		// id: string,
-		// isDone?: boolean,
-		// name?: string,
-		// target?: string,
-		// notes?: string,
-		// color?: string,
-		// priority?: string
-	) => {
-		// dispatch(updateTask(id, isDone, name, target, notes, color, priority));
+	const changeTaskHandler = (task: TaskInterface) => {
 		dispatch(updateTask(task));
 	};
 
 	const deleteTaskHandler = (id: string) => {
-		console.log(id);
-
 		dispatch(fetchDeleteTask(id));
 	};
 

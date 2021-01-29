@@ -65,7 +65,6 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				tasks: action.payload,
 			};
 		case TodosActionTypes.ADD_TASK:
-
 			return {
 				...state,
 				tasks: [...state.tasks, action.payload],
@@ -75,11 +74,9 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 			// const deltasks = state.tasks.filter(task => task._id !== action.payload);
 			// const delsubtasks = state.subtasks.filter(subtask => subtask.task !== action.payload);
 
-		
-
 			return {
 				...state,
-				tasks: state.tasks.filter(task => task._id !== action.payload ),
+				tasks: state.tasks.filter(task => task._id !== action.payload),
 				// subtasks: state.subtasks.filter(subtask => subtask.task !== action.payload),
 			};
 		case TodosActionTypes.CHANGE_TASK:
@@ -102,6 +99,11 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 			return {
 				...state,
 				subtasks: [...state.subtasks, action.payload],
+			};
+		case TodosActionTypes.DELETE_SUBTASK:
+			return {
+				...state,
+				subtasks: state.subtasks.filter(subtask => subtask._id !== action.payload),
 			};
 		case TodosActionTypes.ADD_CARD:
 			return {
