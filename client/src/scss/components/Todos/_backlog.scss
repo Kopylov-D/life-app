@@ -1,0 +1,23 @@
+@import '../../variables';
+
+.backlog {
+
+  &__targets {
+    display: flex;
+  }
+
+  &__add-task {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    & span {
+      margin-right: 1rem;
+    }
+
+    &:hover {
+      color: $c-primary;
+    }
+  }
+}

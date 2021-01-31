@@ -4,9 +4,10 @@
   max-width: 1000px;
   margin: 0 auto;
 
-  &__board {
-    display: flex;
-    justify-content: space-between;
+  // &__board {
+  //   display: flex;
+  //   justify-content: flex-start;
+  //   overflow: auto;
 
-  }
+  // }
 }

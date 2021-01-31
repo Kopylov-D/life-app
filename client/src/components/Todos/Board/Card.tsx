@@ -8,6 +8,7 @@ import {
 	getTargets,
 	getTasks,
 	updateCard,
+	updateTask,
 } from '../../../store/ducks/todos/actions';
 import { CardInterface, SubtaskInterface, TaskInterface } from '../../../store/ducks/todos/contracts/state';
 import { selectCardsNumber, selectTasks } from '../../../store/ducks/todos/selectors';
@@ -42,12 +43,12 @@ const Card: React.FC<Props> = props => {
 	// 	React.rend
 	// }, [tasks])
 
-	const onTaskCheck = (id: string) => {
-		console.log('check task', id);
+	const onTaskCheck = (task: TaskInterface) => {
+		dispatch(updateTask(task))
 	};
 
 	const onTaskDelete = (id: string) => {
-		dispatch(fetchDeleteTask(id))
+		dispatch(fetchDeleteTask(id, ))
 	};
 
 	const onCardDelete = () => {
@@ -106,6 +107,7 @@ const Card: React.FC<Props> = props => {
 									subtasks={props.subtasks}
 									onChecked={onTaskCheck}
 									onDelete={onTaskDelete}
+									task={task}
 					
 								/>
 							);

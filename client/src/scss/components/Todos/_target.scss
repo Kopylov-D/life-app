@@ -2,12 +2,19 @@
 
 .target {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
-  max-width: 500px;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20px 10px;
+  margin-right: 20px;
+  width: 160px;
+  height: 125px;
+  
   background: rgba($color: #a50d0d79, $alpha: .3);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.26);
   border-radius: $border-radius;
-  padding: 4px;
-  margin-bottom: 2px;
+  margin-bottom: 2rem;
   font-size: 1.4rem;
 
 

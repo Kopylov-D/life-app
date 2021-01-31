@@ -29,6 +29,7 @@ export enum TodosActionTypes {
 
 	ADD_SUBTASK = 'ADD_SUBTASK',
 	DELETE_SUBTASK = 'DELETE_SUBTASK',
+	CHANGE_SUBTASK = 'CHANGE_SUBTASK',
 
 	ADD_CARD = 'ADD_CARD',
 	CHANGE_CARD = 'CHANGE_CARD',
@@ -105,6 +106,11 @@ export interface DeleteTargetActionInterface extends Action<TodosActionTypes> {
 /* subtasks **/
 export interface AddSubtaskActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.ADD_SUBTASK;
+	payload: SubtaskInterface;
+}
+
+export interface ChangeSubtaskActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.CHANGE_SUBTASK;
 	payload: SubtaskInterface;
 }
 

@@ -72,12 +72,15 @@ const Backlog: React.FC<Props> = props => {
 	};
 
 	const deleteTaskHandler = (id: string) => {
-		dispatch(fetchDeleteTask(id));
+		dispatch(fetchDeleteTask(id, true));
 	};
 
 	return (
-		<div className="todos__backlog">
+		<div className="backlog">
 			<div className="backlog__targets">
+				<div className="target" onClick={addTargetHandler}>
+					Добавить цель
+				</div>
 				{targets.map(target => (
 					<Target
 						key={target._id}
@@ -90,39 +93,39 @@ const Backlog: React.FC<Props> = props => {
 						changeTarget={changeTargetHandler}
 					/>
 				))}
-				<Button onClick={addTargetHandler} size="small">
-					Новая цель
-				</Button>
 			</div>
-			<Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}>
-				{taskEditorIsOpen ? (
-					<TaskEditor
-						type="create"
-						// task={task}
-						submit={createTaskHandler}
-						cancelEditor={() => setTaskEditorIsOpen(false)}
-					/>
-				) : (
-					<Button onClick={() => setTaskEditorIsOpen(true)} size="small">
-						Добавить задачу
-					</Button>
-				)}
-				{tasks.map(task => (
-					<BacklogTask
-						key={task._id}
-						_id={task._id}
-						notes={task.notes}
-						date={task.date}
-						isDone={task.isDone}
-						level={task.level}
-						name={task.name}
-						target={task.target}
-						changeTask={changeTaskHandler}
-						deleteTask={deleteTaskHandler}
-						task={task}
-					/>
-				))}
-			</Table>
+			{/* <Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}> */}
+			{taskEditorIsOpen ? (
+				<TaskEditor
+					type="create"
+					// task={task}
+					submit={createTaskHandler}
+					cancelEditor={() => setTaskEditorIsOpen(false)}
+				/>
+			) : (
+				// <Button  size="small">
+				// 	Добавить задачу
+				// </Button>
+				<div className="backlog__add-task" onClick={() => setTaskEditorIsOpen(true)}>
+					<span className="material-icons">add_task</span>Добавить задачу
+				</div>
+			)}
+			{tasks.map(task => (
+				<BacklogTask
+					key={task._id}
+					_id={task._id}
+					notes={task.notes}
+					date={task.date}
+					isDone={task.isDone}
+					level={task.level}
+					name={task.name}
+					target={task.target}
+					changeTask={changeTaskHandler}
+					deleteTask={deleteTaskHandler}
+					task={task}
+				/>
+			))}
+			{/* </Table> */}
 
 			{addTargetModalIsOpen && (
 				<Modal closeModal={() => setAddTargetModalIsOpen(false)} backdropType="black">

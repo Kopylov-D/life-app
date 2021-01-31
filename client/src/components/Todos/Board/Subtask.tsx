@@ -1,7 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { decomposeSubtask, fetchDeleteSubtask, updateTask } from '../../../store/ducks/todos/actions';
+import {
+	decomposeSubtask,
+	fetchDeleteSubtask,
+	updateTask,
+} from '../../../store/ducks/todos/actions';
 import { fetchAddTask } from '../../../store/ducks/todos/actions';
 import {
 	SubtaskInterface,
@@ -10,7 +14,9 @@ import {
 import { selectTasks } from '../../../store/ducks/todos/selectors';
 
 // interface Props extends SubtaskInterface {}
-interface Props extends SubtaskInterface {}
+interface Props extends SubtaskInterface {
+	subtask: SubtaskInterface;
+}
 
 const Subtask: React.FC<Props> = props => {
 	const dispatch = useDispatch();
@@ -20,20 +26,7 @@ const Subtask: React.FC<Props> = props => {
 	};
 
 	const onDecomposeSubtask = () => {
-		const level = props.level - 1;
-
-		const task: TaskInterface = {
-			_id: '',
-			date: new Date(),
-			isDone: false,
-			level,
-			subtask: props._id,
-			name: props.name,
-			notes: '',
-			target: props.target,
-		};
-
-		dispatch(decomposeSubtask(task))
+		dispatch(decomposeSubtask(props.subtask));
 	};
 
 	return (

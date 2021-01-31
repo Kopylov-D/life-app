@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useInput } from '../../../hooks/input.hook';
 import { fetchAddSubtask, updateTask } from '../../../store/ducks/todos/actions';
@@ -12,35 +12,42 @@ import Subtask from './Subtask';
 
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
+	task: TaskInterface;
 	onDelete(id: string): void;
-	onChecked(id: string): void;
+	onChecked(task: TaskInterface): void;
 }
 
 const Task: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 
 	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(false);
-	const [isDoneTask, setIsDoneTask] = useState<boolean>(props.isDone);
+	const [numOfSubtask, setNumOfSubtask] = useState(0);
+	const [numDoneSubtask, setNumDoneSubtask] = useState(0);
 
 	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
 
+	useEffect(() => {
+		let count = 0;
+
+		props.subtasks.forEach(subtask => {
+			if (subtask.task === props._id) count++;
+		});
+
+		setNumOfSubtask(count);
+	}, []);
+
+	useEffect(() => {
+		let count = 0;
+
+		props.subtasks.forEach(subtask => {
+			if (subtask.isDone && subtask.task === props._id) count++;
+		});
+
+		setNumDoneSubtask(count);
+	});
+
 	const onChecked = () => {
-		setIsDoneTask(!isDoneTask);
-		dispatch(
-			updateTask({
-				_id: props._id,
-				target: props.target,
-				date: props.date,
-				isDone: !props.isDone,
-				level: props.level,
-				name: props.name,
-				notes: props.notes,
-				subtask: props.subtask,
-				color: props.color,
-				priority: props.priority,
-				expiresIn: props.expiresIn
-			})
-		);
+		props.onChecked({ ...props.task, isDone: !props.isDone });
 	};
 
 	const onDeleteTask = () => {
@@ -50,21 +57,7 @@ const Task: React.FC<Props> = props => {
 	const onAddSubtask = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter' && input.valid) {
 			dispatch(fetchAddSubtask(input.value, props._id, props.level, props.target));
-			dispatch(
-				updateTask(
-					{
-						_id: props._id,
-						date: props.date,
-						isDone: false,
-						level: props.level,
-						name: props.name,
-						notes: props.notes,
-						subtask: props.subtask,
-						color: props.color,
-					},
-					true
-				)
-			);
+			dispatch(updateTask({ ...props.task, isDone: false }, false));
 
 			input.clearValue();
 		}
@@ -88,7 +81,9 @@ const Task: React.FC<Props> = props => {
 					<span className="task__expand material-icons" onClick={onToggleSubtasks}>
 						{subtasksIsOpen ? 'expand_less' : 'expand_more'}
 					</span>
-					<div className="task__counter">0/2</div>
+					<div className="task__counter">
+						{numDoneSubtask}/{numOfSubtask}
+					</div>
 				</div>
 				<span className="task__button material-icons" onClick={onDeleteTask}>
 					delete
@@ -109,6 +104,7 @@ const Task: React.FC<Props> = props => {
 									name={subtask.name}
 									target={subtask.target}
 									task={subtask.task}
+									subtask={subtask}
 									// parentTask={}
 								/>
 							);

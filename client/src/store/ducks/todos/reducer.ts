@@ -105,6 +105,13 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				...state,
 				subtasks: state.subtasks.filter(subtask => subtask._id !== action.payload),
 			};
+		case TodosActionTypes.CHANGE_SUBTASK:
+			return {
+				...state,
+				subtasks: state.subtasks.map(task =>
+					task._id === action.payload._id ? action.payload : task
+				),
+			};
 		case TodosActionTypes.ADD_CARD:
 			return {
 				...state,

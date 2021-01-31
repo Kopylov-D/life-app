@@ -10,10 +10,7 @@ import useOutsideClick from '../../../hooks/outsideAlert.hook';
 
 interface Props extends TaskInterface {
 	deleteTask(id: string): void;
-	changeTask(
-
-		task: TaskInterface
-	): void;
+	changeTask(task: TaskInterface): void;
 
 	task: TaskInterface;
 }

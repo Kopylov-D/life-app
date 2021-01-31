@@ -23,6 +23,9 @@
 
 	&__options {
 		display: flex;
+		justify-content: flex-end;
+		width: 300px;
+
 	}
 
 	&__footer {

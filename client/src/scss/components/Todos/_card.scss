@@ -1,14 +1,16 @@
 @import '../../variables';
 
 .card {
-  min-width: 200px;
+  // min-width: 250px;
   min-height: 300px;
   max-width: 400px;
   width: 250px;
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
   justify-content: space-between;
-  padding: 10px;
+  padding: 1rem;
+  margin-right: 2rem;
   background: #E9E9E9;
   border-radius: $border-radius;
 

@@ -3,13 +3,12 @@ import React, { Fragment } from 'react';
 import { BackdropInterface } from '../../types';
 import Backdrop from './Backdrop';
 
-interface Props  {
+interface Props {
 	title?: string;
 	class?: string;
 	backdropType?: BackdropInterface['type'];
 	closeModal(): void;
-
-};
+}
 
 const Modal: React.FC<Props> = props => {
 	return (
@@ -20,7 +19,8 @@ const Modal: React.FC<Props> = props => {
 				})}
 			>
 				{props.title && <div className="modal__title">{props.title}</div>}
-				<div className="modal__body">{props.children}</div>
+				{/* <div className="modal__body">{props.children}</div> */}
+				{props.children}
 			</div>
 
 			<Backdrop onClick={props.closeModal} type={props.backdropType} />

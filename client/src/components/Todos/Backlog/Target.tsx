@@ -20,7 +20,7 @@ const Target: React.FC<Props> = props => {
 
 		onChange(props.name, props.notes, isCheked);
 	};
-	
+
 	const onDelete = () => {
 		props.deleteTarget(props._id);
 	};
@@ -36,14 +36,13 @@ const Target: React.FC<Props> = props => {
 	return (
 		<div className="target">
 			<div className="target__content">
-				<Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} />
+				{/* <Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} /> */}
 
 				<div className="target__name">{props.name}</div>
-
-				<div className="target__date">{formatDate(props.date)}</div>
 			</div>
+			<div className="target__date">{formatDate(props.date)}</div>
 			<div className="target__options">
-				<img src={trash} alt="" onClick={onDelete} />
+				{/* <img src={trash} alt="" onClick={onDelete} /> */}
 				<img src={gear} alt="" onClick={() => setChangerIsOpen(true)} />
 			</div>
 
