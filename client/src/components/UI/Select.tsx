@@ -4,6 +4,7 @@ import useOutsideClick from '../../hooks/outsideAlert.hook';
 export interface SelectItems {
 	id: string;
 	value: string;
+	some?: any
 }
 
 interface Props {

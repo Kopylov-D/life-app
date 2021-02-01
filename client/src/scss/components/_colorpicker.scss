@@ -1,0 +1,54 @@
+@import '../variables';
+
+.colorpicker {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+  // padding: 1rem 0;
+
+  &__item {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+
+    margin: 5px;
+    cursor: pointer;
+  }
+
+  & .active {
+    // border: 1px solid black;
+    box-shadow: 0 0 3px inset black;
+  }
+
+  // &--grey {
+  //   background-color: #c9d1d3;
+  // }
+
+  // &--lime {
+  //   background-color: #b6e6bd;
+  // }
+
+  // &--purple {
+  //   background-color: #c355f5;
+  // }
+
+  // &--black {
+  //   background-color: #08001a;
+  // }
+
+  // &--red {
+  //   background-color: #ff6464;
+  // }
+
+  // &--green {
+  //   background-color: #42b883;
+  // }
+
+  // &--blue {
+  //   background-color: #64c4ed;
+  // }
+
+  // &--pink {
+  //   background-color: #ffbbcc;
+  // }
+}

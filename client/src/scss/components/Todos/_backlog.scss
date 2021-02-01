@@ -4,6 +4,7 @@
 
   &__targets {
     display: flex;
+    flex-wrap: wrap;
   }
 
   &__add-task {

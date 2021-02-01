@@ -44,20 +44,9 @@ export const todosApi = {
 			.post<Response<TargetInterface>>('/api/todos/targets', { name })
 			.then(res => res.data),
 
-	updateTarget: (
-		id: string,
-		name?: string,
-		isDone?: boolean,
-		notes?: string,
-		color?: string
-	) =>
+	updateTarget: (target: TargetInterface) =>
 		axios
-			.patch<Response<TargetInterface>>(`/api/todos/targets/${id}`, {
-				name,
-				isDone,
-				notes,
-				color,
-			})
+			.patch<Response<TargetInterface>>(`/api/todos/targets/${target._id}`, target)
 			.then(res => res.data),
 
 	deleteTarget: (id: string) =>
@@ -66,14 +55,9 @@ export const todosApi = {
 	deleteSubtask: (id: string) =>
 		axios.delete<Response<string>>(`/api/todos/subtasks/${id}`).then(res => res.data),
 
-	addSubtask: (name: string, task: string, level: number, target: string | null) =>
+	addSubtask: (subtask: SubtaskInterface) =>
 		axios
-			.post<Response<SubtaskInterface>>('/api/todos/subtasks', {
-				name,
-				task,
-				target,
-				level,
-			})
+			.post<Response<SubtaskInterface>>('/api/todos/subtasks', subtask)
 			.then(res => res.data),
 
 	addCard: (level: number) =>

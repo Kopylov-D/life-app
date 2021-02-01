@@ -2,6 +2,7 @@ import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
 import {
 	CardInterface,
+	ColorInterface,
 	SubtaskInterface,
 	TargetInterface,
 	TaskInterface,
@@ -12,7 +13,17 @@ export const selectTargets = (state: RootState): TargetInterface[] => state.todo
 export const selectSubtasks = (state: RootState): SubtaskInterface[] =>
 	state.todos.subtasks;
 
-export const selectTasks = (state: RootState): TaskInterface[] => state.todos.tasks;
+export const selectTasks = (state: RootState): TaskInterface[] =>  state.todos.tasks;
+	// return state.todos.tasks.map(task => {
+	// 	const color = state.todos.colors.find(color => color._id === task.color);
+	// 	if (color) {
+	// 		task.color = color.name;
+	// 	}
+	// 	return task;
+	// });
+// };
+
+export const selectColors = (state: RootState): ColorInterface[] => state.todos.colors;
 
 export const selectCards = (state: RootState): CardInterface[] => state.todos.cards;
 
@@ -26,10 +37,10 @@ export const selectTasksList = (state: RootState) => {
 
 	const items = tasks.map(task => {
 		// if (!task.subtask && !task.level) {
-			return {
-				id: task._id,
-				value: task.name,
-			};
+		return {
+			id: task._id,
+			value: task.name,
+		};
 		// }
 	});
 
@@ -43,10 +54,9 @@ export const selectTargetsList = (state: RootState) => {
 		return {
 			id: target._id,
 			value: target.name,
+			color: target.color,
 		};
 	});
 
 	return items;
 };
-
-

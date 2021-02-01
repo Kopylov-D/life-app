@@ -10,7 +10,7 @@ import {
 	updateCard,
 	updateTask,
 } from '../../../store/ducks/todos/actions';
-import { CardInterface, SubtaskInterface, TaskInterface } from '../../../store/ducks/todos/contracts/state';
+import { CardInterface, ColorInterface, SubtaskInterface, TaskInterface } from '../../../store/ducks/todos/contracts/state';
 import { selectCardsNumber, selectTasks } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
@@ -20,6 +20,7 @@ import TaskSelector from './TaskSelector';
 interface Props extends CardInterface {
 	tasks: TaskInterface[]
 	subtasks: SubtaskInterface[]
+	colors: ColorInterface[]
 	// headerName: string;
 }
 
@@ -104,6 +105,7 @@ const Card: React.FC<Props> = props => {
 									name={task.name}
 									notes={task.notes}
 									color={task.color}
+									colors={props.colors}
 									subtasks={props.subtasks}
 									onChecked={onTaskCheck}
 									onDelete={onTaskDelete}

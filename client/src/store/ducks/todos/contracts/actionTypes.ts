@@ -12,6 +12,7 @@ import {
 
 export enum TodosActionTypes {
 	SET_LOADING_STATUS = 'SET_LOADING',
+	SET_ERROR = 'SET_ERROR',
 	SET_TODOS_DATA = 'SET_TODOS_DATA',
 	SYNC_STATE= 'SYNC_STATE',
 
@@ -39,6 +40,11 @@ export enum TodosActionTypes {
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_LOADING_STATUS;
 	payload: LoadingStatus;
+}
+
+export interface SetErrorActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_ERROR;
+	payload: Error;
 }
 
 export interface SyncStateActionInterface extends Action<TodosActionTypes> {

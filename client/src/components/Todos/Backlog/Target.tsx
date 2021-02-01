@@ -1,25 +1,38 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import trash from '../../../assets/img/trash.svg';
 import gear from '../../../assets/img/gear.svg';
 
 import { formatDate } from '../../../services/utils/dateUtils';
-import { TargetInterface } from '../../../store/ducks/todos/contracts/state';
+import {
+	ColorInterface,
+	TargetInterface,
+} from '../../../store/ducks/todos/contracts/state';
 import Checkbox from '../../UI/Checkbox';
 import TargetChanger from './TargetChanger';
+import classNames from 'classnames';
+import useColorName from '../../../hooks/color.hook';
 
 interface Props extends TargetInterface {
+	colors: ColorInterface[];
 	deleteTarget(id: string): void;
-	changeTarget(id: string, name?: string, notes?: string, isDone?: boolean): void;
+	changeTarget(target: TargetInterface): void;
 }
 
 const Target: React.FC<Props> = props => {
 	const [changerIsOpen, setChangerIsOpen] = useState<boolean>(false);
+	// const [color, setColor] = useState<string>('');
 
-	const onChecked = () => {
-		const isCheked = !props.isDone;
+	const {colorName} = useColorName(props.color, props.colors);
 
-		onChange(props.name, props.notes, isCheked);
-	};
+	// useEffect(() => {
+	// 	const color = props.colors.find(color => color._id === props.color)?.name
+	// 	color && setColor(color)
+	// }, [props.color])
+	// const onChecked = () => {
+	// 	const isCheked = !props.isDone;
+
+	// 	onChange(props.name, props.notes, isCheked);
+	// };
 
 	const onDelete = () => {
 		props.deleteTarget(props._id);
@@ -29,12 +42,12 @@ const Target: React.FC<Props> = props => {
 	// 	setChangerIsOpen(true);
 	// };
 
-	const onChange = (name: string, notes: string, isDone?: boolean) => {
-		props.changeTarget(props._id, name, notes, isDone);
+	const onChange = (target: TargetInterface) => {
+		props.changeTarget(target);
 	};
 
 	return (
-		<div className="target">
+		<div className={classNames('target', colorName)}>
 			<div className="target__content">
 				{/* <Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} /> */}
 
@@ -48,10 +61,15 @@ const Target: React.FC<Props> = props => {
 
 			{changerIsOpen && (
 				<TargetChanger
+					_id={props._id}
+					isDone={props.isDone}
+					date={props.date}
 					name={props.name}
 					notes={props.notes}
+					color={props.color}
 					close={() => setChangerIsOpen(false)}
 					submitChanges={onChange}
+					colors={props.colors}
 				/>
 			)}
 		</div>

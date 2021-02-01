@@ -7,11 +7,24 @@ import { Target } from '../models/Todos/Target';
 import { Task } from '../models/Todos/Task';
 import {
 	CardInterface,
+	ColorInterface,
 	RequestWithUser,
 	SubtaskInterface,
 	TargetInterface,
 	TaskInterface,
 } from '../types/types';
+
+function extractColorId(body: any) {
+	if (body.color) {
+		return body.color
+	} else {
+		return undefined
+	}
+	
+}
+// function extractColorId(color: ColorInterface) {
+// 	return color._id
+// }
 
 class TodosController {
 	async syncTodos(req: RequestWithUser, res: Response) {
@@ -62,36 +75,11 @@ class TodosController {
 
 	async addTask(req: RequestWithUser, res: Response) {
 		try {
-			// const {
-			// 	target,
-			// 	subtask,
-			// 	name,
-			// 	color,
-			// 	priority,
-			// 	date,
-			// 	expiresIn,
-			// 	level,
-			// 	notes,
-			// 	isDone,
-			// }: TaskInterface = req.body;
-			// const task = new Task({
-			// 	user: req.user,
-			// 	target: target && target,
-			// 	subtask: subtask && subtask,
-			// 	name,
-			// 	isDone: isDone && isDone,
-			// 	level: level && level,
-			// 	notes: notes && notes,
-			// 	color: color && color,
-			// 	priority: priority && priority,
-			// 	// date: date && date,
-			// 	expiresIn: expiresIn && expiresIn,
-			// });
-
-			const task = new Task({ ...req.body, _id: Types.ObjectId(), user: req.user });
-
+			console.log(req.body);
+			
+			const color = extractColorId(req.body)
+			const task = new Task({ ...req.body, _id: Types.ObjectId(), user: req.user, color });
 			await task.save();
-
 			res.status(201).json({ message: 'task create', data: task });
 		} catch (e) {
 			res.status(300).json({ message: e });
@@ -186,7 +174,6 @@ class TodosController {
 			};
 
 			const { id } = req.params;
-
 			const updatedTarget = await Target.findByIdAndUpdate(
 				id,
 				{ $set: req.body },
@@ -231,7 +218,6 @@ class TodosController {
 	async addSubtask(req: RequestWithUser, res: Response) {
 		try {
 			const subtask = new Subtask({ ...req.body, _id: Types.ObjectId(), user: req.user });
-
 			await subtask.save();
 			res.status(201).json({ message: 'subtask added', data: subtask });
 		} catch (e) {

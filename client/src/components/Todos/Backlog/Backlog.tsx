@@ -14,10 +14,17 @@ import {
 	updateTarget,
 	updateTask,
 } from '../../../store/ducks/todos/actions';
-import { selectTargets, selectTasks } from '../../../store/ducks/todos/selectors';
+import {
+	selectColors,
+	selectTargets,
+	selectTasks,
+} from '../../../store/ducks/todos/selectors';
 import BacklogTask from './BacklogTask';
 import TaskEditor from './TaskEditor';
-import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
+import {
+	TargetInterface,
+	TaskInterface,
+} from '../../../store/ducks/todos/contracts/state';
 
 interface Props {}
 
@@ -26,6 +33,7 @@ const Backlog: React.FC<Props> = props => {
 
 	const targets = useSelector(selectTargets);
 	const tasks = useSelector(selectTasks);
+	const colors = useSelector(selectColors);
 
 	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(false);
 	const [taskEditorIsOpen, setTaskEditorIsOpen] = useState<boolean>(false);
@@ -49,13 +57,8 @@ const Backlog: React.FC<Props> = props => {
 		dispatch(fetchDeleteTarget(id));
 	};
 
-	const changeTargetHandler = (
-		id: string,
-		name: string,
-		notes: string,
-		isDone: boolean
-	) => {
-		dispatch(updateTarget(id, name, notes, isDone));
+	const changeTargetHandler = (target: TargetInterface) => {
+		dispatch(updateTarget(target));
 	};
 
 	const createTargetHandler = () => {
@@ -78,9 +81,6 @@ const Backlog: React.FC<Props> = props => {
 	return (
 		<div className="backlog">
 			<div className="backlog__targets">
-				<div className="target" onClick={addTargetHandler}>
-					Добавить цель
-				</div>
 				{targets.map(target => (
 					<Target
 						key={target._id}
@@ -89,15 +89,22 @@ const Backlog: React.FC<Props> = props => {
 						date={target.date}
 						isDone={target.isDone}
 						name={target.name}
+						color={target.color}
+						colors={colors}
 						deleteTarget={deleteTargetHandler}
 						changeTarget={changeTargetHandler}
 					/>
 				))}
+				<div className="target" onClick={addTargetHandler}>
+					Добавить цель
+				</div>
 			</div>
 			{/* <Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}> */}
 			{taskEditorIsOpen ? (
 				<TaskEditor
 					type="create"
+					colors={colors}
+					targets={targets}
 					// task={task}
 					submit={createTaskHandler}
 					cancelEditor={() => setTaskEditorIsOpen(false)}
@@ -119,7 +126,11 @@ const Backlog: React.FC<Props> = props => {
 					isDone={task.isDone}
 					level={task.level}
 					name={task.name}
+					color={task.color}
 					target={task.target}
+					subtask={task.subtask}
+					colors={colors}
+					targets={targets}
 					changeTask={changeTaskHandler}
 					deleteTask={deleteTaskHandler}
 					task={task}

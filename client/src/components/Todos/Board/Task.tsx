@@ -1,8 +1,11 @@
+import classNames from 'classnames';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import useColorName from '../../../hooks/color.hook';
 import { useInput } from '../../../hooks/input.hook';
 import { fetchAddSubtask, updateTask } from '../../../store/ducks/todos/actions';
 import {
+	ColorInterface,
 	SubtaskInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
@@ -13,6 +16,7 @@ import Subtask from './Subtask';
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
 	task: TaskInterface;
+	colors: ColorInterface[]
 	onDelete(id: string): void;
 	onChecked(task: TaskInterface): void;
 }
@@ -23,6 +27,7 @@ const Task: React.FC<Props> = props => {
 	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(false);
 	const [numOfSubtask, setNumOfSubtask] = useState(0);
 	const [numDoneSubtask, setNumDoneSubtask] = useState(0);
+	const {colorName} = useColorName(props.color, props.colors)
 
 	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
 
@@ -56,7 +61,21 @@ const Task: React.FC<Props> = props => {
 
 	const onAddSubtask = (e: React.KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === 'Enter' && input.valid) {
-			dispatch(fetchAddSubtask(input.value, props._id, props.level, props.target));
+			const subtask: SubtaskInterface = {
+				_id: '',
+				date: new Date(),
+				isDone: false,
+				level: props.level,
+				name: input.value,
+				target: props.target,
+				task: props._id,
+				color: props.color,
+			}
+			console.log(subtask);
+			console.log(props.color);
+			
+			
+			dispatch(fetchAddSubtask(subtask));
 			dispatch(updateTask({ ...props.task, isDone: false }, false));
 
 			input.clearValue();
@@ -69,7 +88,7 @@ const Task: React.FC<Props> = props => {
 
 	let task = (
 		<Fragment>
-			<div className="task__main">
+			<div className={classNames("task__main", {[`${colorName}`]: colorName})}>
 				<div className="task__content">
 					<Checkbox
 						checked={props.isDone}
@@ -105,6 +124,7 @@ const Task: React.FC<Props> = props => {
 									target={subtask.target}
 									task={subtask.task}
 									subtask={subtask}
+									colors={props.colors}
 									// parentTask={}
 								/>
 							);
@@ -128,7 +148,7 @@ const Task: React.FC<Props> = props => {
 	if (props.level === 1) {
 		task = (
 			<Fragment>
-				<div className="task__main">
+				<div className={classNames("task__main", {[`${colorName}`]: colorName})}>
 					<div className="task__content">
 						<Checkbox
 							checked={props.isDone}

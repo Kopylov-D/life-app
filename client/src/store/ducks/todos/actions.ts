@@ -15,6 +15,7 @@ import {
 	deleteSubtask,
 	deleteTarget,
 	deleteTask,
+	setError,
 	setLoadingStatus,
 	setTargets,
 	setTasks,
@@ -23,7 +24,12 @@ import {
 	syncState,
 	TodosActions,
 } from './actionCreators';
-import { SubtaskInterface, TaskInterface, TodosState } from './contracts/state';
+import {
+	SubtaskInterface,
+	TargetInterface,
+	TaskInterface,
+	TodosState,
+} from './contracts/state';
 
 function findChildsToDelete(initialId: string, todos: TodosState) {
 	const tasksFoDelete: string[] = [];
@@ -100,6 +106,7 @@ export function syncData(todos: TodosState): ThunkType {
 			await todosApi.syncData(todos);
 		} catch (e) {
 			console.log(e);
+			dispatch(setError(e));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 	};
@@ -128,12 +135,7 @@ export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
 		try {
 			const state = getState().todos;
 			let { tasks } = state;
-
-			console.log(subtask);
-
 			let parentTask = tasks.find(task => task._id === subtask.task);
-			console.log(parentTask);
-
 			const childTask = tasks.find(task => task.subtask === subtask._id);
 
 			if (subtask.isDone || childTask) {
@@ -154,6 +156,7 @@ export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
 				name: subtask.name,
 				notes: '',
 				target: subtask.target,
+				color: subtask.color,
 			};
 
 			dispatch(fetchAddTask(task));
@@ -174,6 +177,9 @@ export function updateTask(
 	return async (dispatch, getState) => {
 		const state = getState().todos;
 		let { tasks, subtasks } = state;
+
+		console.log(task);
+		
 
 		task.subtask && checkParents(task.subtask, task.isDone);
 		needCheckChilds && checkChilds(task._id, task.isDone);
@@ -238,6 +244,9 @@ export function updateTask(
 			});
 		}
 
+		console.log('task', task);
+		
+
 		try {
 			dispatch(syncState({ ...state, subtasks, tasks }));
 			dispatch(syncData({ ...state, subtasks, tasks }));
@@ -295,16 +304,10 @@ export function getTargets(): ThunkType {
 	};
 }
 
-export function updateTarget(
-	id: string,
-	name?: string,
-	notes?: string,
-	isDone?: boolean,
-	color?: string
-): ThunkType {
+export function updateTarget(target: TargetInterface): ThunkType {
 	return async dispatch => {
 		try {
-			const { data } = await todosApi.updateTarget(id, name, isDone, notes, color);
+			const { data } = await todosApi.updateTarget(target);
 			dispatch(changeTarget(data));
 		} catch (e) {
 			console.log(e);
@@ -337,7 +340,7 @@ export function fetchDeleteSubtask(id: string): ThunkType {
 					state
 				);
 				subtasksFoDelete.push(id);
-				tasksFoDelete.push(childTaskForDelete)
+				tasksFoDelete.push(childTaskForDelete);
 				dispatch(syncState({ ...state, subtasks, tasks }));
 				dispatch(deleteTask(childTaskForDelete));
 				await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
@@ -376,14 +379,16 @@ export function fetchDeleteTarget(id: string): ThunkType {
 }
 
 export function fetchAddSubtask(
-	name: string,
-	task: string,
-	level: number,
-	target: string | null = null
+	subtask: SubtaskInterface
+	// name: string,
+	// task: string,
+	// level: number,
+	// target: string | null = null,
+	// color: string
 ): ThunkType {
 	return async dispatch => {
 		try {
-			const { data } = await todosApi.addSubtask(name, task, level, target);
+			const { data } = await todosApi.addSubtask(subtask);
 			dispatch(addSubtask(data));
 		} catch (e) {
 			console.log(e);

@@ -10,6 +10,7 @@ const initialState: TodosState = {
 	colors: [],
 	cards: [],
 	loadingStatus: LoadingStatus.LOADING,
+	error: { name: '', message: '' }
 };
 
 export const todosReducer = (state = initialState, action: TodosActions): TodosState => {
@@ -58,6 +59,11 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 			return {
 				...state,
 				loadingStatus: action.payload,
+			};
+		case TodosActionTypes.SET_ERROR:
+			return {
+				...state,
+				error: action.payload,
 			};
 		case TodosActionTypes.SET_TASKS:
 			return {

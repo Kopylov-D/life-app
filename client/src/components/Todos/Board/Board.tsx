@@ -4,6 +4,7 @@ import { fetchAddCard } from '../../../store/ducks/todos/actions';
 import {
 	selectCards,
 	selectCardsNumber,
+	selectColors,
 	selectSubtasks,
 	selectTasks,
 } from '../../../store/ducks/todos/selectors';
@@ -21,6 +22,7 @@ export const Board: React.FC<any> = props => {
 	const cards = useSelector(selectCards);
 	const tasks = useSelector(selectTasks);
 	const subtasks = useSelector(selectSubtasks);
+	const colors = useSelector(selectColors)
 
 	const onCreateCartHandler = () => {
 		dispatch(fetchAddCard(cardsNumber + 1));
@@ -37,6 +39,7 @@ export const Board: React.FC<any> = props => {
 						name={card.name}
 						tasks={tasks}
 						subtasks={subtasks}
+						colors={colors}
 					/>
 				))}
 			</div>

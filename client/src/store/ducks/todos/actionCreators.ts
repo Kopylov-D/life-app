@@ -14,6 +14,7 @@ import {
 	DeleteSubtaskActionInterface,
 	DeleteTargetActionInterface,
 	DeleteTaskActionInterface,
+	SetErrorActionInterface,
 	SetLoadingStatusActionInterface,
 	SetTargetsActionInterface,
 	SetTasksActionInterface,
@@ -33,6 +34,7 @@ import {
 export type TodosActions =
 	| SetTargetsActionInterface
 	| SetLoadingStatusActionInterface
+	| SetErrorActionInterface
 	| SetTasksActionInterface
 	| AddTaskActionInterface
 	| ChangeTaskActionInterface
@@ -54,6 +56,11 @@ export const setLoadingStatus = (
 	payload: LoadingStatus
 ): SetLoadingStatusActionInterface => ({
 	type: TodosActionTypes.SET_LOADING_STATUS,
+	payload,
+});
+
+export const setError = (payload: Error): SetErrorActionInterface => ({
+	type: TodosActionTypes.SET_ERROR,
 	payload,
 });
 
@@ -127,7 +134,9 @@ export const addSubtask = (payload: SubtaskInterface): AddSubtaskActionInterface
 	payload,
 });
 
-export const changeSubtask = (payload: SubtaskInterface): ChangeSubtaskActionInterface => ({
+export const changeSubtask = (
+	payload: SubtaskInterface
+): ChangeSubtaskActionInterface => ({
 	type: TodosActionTypes.CHANGE_SUBTASK,
 	payload,
 });

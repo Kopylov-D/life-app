@@ -1,0 +1,22 @@
+@import '../../variables';
+
+.target-editor {
+
+  &__modal {
+    max-width: 300px;
+  }
+
+  & textarea {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  &__buttons {
+    display: flex;
+
+    & :first-child {
+      flex-grow: 1;
+      margin-right: 2rem;
+    }
+  }
+}

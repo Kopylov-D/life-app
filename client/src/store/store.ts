@@ -15,6 +15,7 @@ const syncMiddleWare: Middleware = store => next => action => {
 	const syncActions = ['ADD_TASK_TO_CARD'];
 
 	if (syncActions.includes(action.type)) {
+		// store.dispatch()
 	}
 
 	return next(action);
