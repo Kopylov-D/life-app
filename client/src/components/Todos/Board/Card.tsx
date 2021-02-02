@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInput } from '../../../hooks/input.hook';
 import useOutsideClick from '../../../hooks/outsideAlert.hook';
 import {
 	fetchDeleteCard,
 	fetchDeleteTask,
-	getTargets,
-	getTasks,
+
 	updateCard,
 	updateTask,
 } from '../../../store/ducks/todos/actions';
 import { CardInterface, ColorInterface, SubtaskInterface, TaskInterface } from '../../../store/ducks/todos/contracts/state';
-import { selectCardsNumber, selectTasks } from '../../../store/ducks/todos/selectors';
+import { selectCardsNumber } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Task from './Task';
 import TaskSelector from './TaskSelector';
+import close from '../../../assets/icons/Close.svg'
 
 interface Props extends CardInterface {
 	tasks: TaskInterface[]
@@ -86,9 +86,7 @@ const Card: React.FC<Props> = props => {
 						)}
 					</div>
 					{cardsNumber === props.level && (
-						<span className="card__delete material-icons" onClick={onCardDelete}>
-							clear
-						</span>
+						<img src={close} alt="" onClick={onCardDelete}/>
 					)}
 				</header>
 

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
-import Modal from '../../UI/Modal';
-import Button from '../../UI/Button';
 import Target from './Target';
 import { useInput } from '../../../hooks/input.hook';
-import Input from '../../UI/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	fetchAddTarget,
@@ -25,6 +22,7 @@ import {
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
 import TargetEditor from './TargetEditor';
+import add from '../../../assets/icons/Add.svg';
 
 interface Props {}
 
@@ -114,7 +112,7 @@ const Backlog: React.FC<Props> = props => {
 				// 	Добавить задачу
 				// </Button>
 				<div className="backlog__add-task" onClick={() => setTaskEditorIsOpen(true)}>
-					<span className="material-icons">add_task</span>Добавить задачу
+					<img src={add} alt="" /> Добавить задачу
 				</div>
 			)}
 			{tasks.map(task => (

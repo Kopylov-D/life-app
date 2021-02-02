@@ -12,6 +12,8 @@ import {
 import Checkbox from '../../UI/Checkbox';
 import Input from '../../UI/Input';
 import Subtask from './Subtask';
+import shevron from '../../../assets/icons/Shevron-down.svg';
+import trash from '../../../assets/icons/Trash.svg';
 
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
@@ -48,7 +50,6 @@ const Task: React.FC<Props> = props => {
 		setNumDoneSubtask(numDoneSubtaskCounter);
 
 		console.log(1);
-		
 	}, [props.subtasks]);
 
 	const onChecked = () => {
@@ -93,16 +94,22 @@ const Task: React.FC<Props> = props => {
 						value={props.name}
 					/>
 
-					<span className="task__expand material-icons" onClick={onToggleSubtasks}>
+					{/* <span className="task__expand material-icons">
 						{subtasksIsOpen ? 'expand_less' : 'expand_more'}
-					</span>
+					</span> */}
+
+					<img
+						onClick={onToggleSubtasks}
+						src={shevron}
+						alt=""
+						className={classNames('shevron', { 'shevron-up': subtasksIsOpen })}
+					/>
+
 					<div className="task__counter">
 						{numDoneSubtask}/{numOfSubtask}
 					</div>
 				</div>
-				<span className="task__button material-icons" onClick={onDeleteTask}>
-					delete
-				</span>
+				<img src={trash} alt="" onClick={onDeleteTask}/>
 			</div>
 
 			{subtasksIsOpen && (
@@ -153,20 +160,18 @@ const Task: React.FC<Props> = props => {
 							value={props.name}
 						/>
 
-						<span className="task__expand material-icons" onClick={onToggleSubtasks}>
+						{/* <span className="task__expand material-icons" onClick={onToggleSubtasks}>
 							{subtasksIsOpen ? 'expand_less' : 'expand_more'}
-						</span>
+						</span> */}
 					</div>
-					<span className="task__button material-icons" onClick={onDeleteTask}>
-						delete
-					</span>
+					<img src={trash} alt="" onClick={onDeleteTask}/>
 				</div>
 
-				{subtasksIsOpen && (
+				{/* {subtasksIsOpen && (
 					<div className="task__extend">
 						<textarea></textarea>
 					</div>
-				)}
+				)} */}
 			</Fragment>
 		);
 	}

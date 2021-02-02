@@ -61,4 +61,11 @@
 		font-size: 24px;
 		color: crimson;
 	}
+
+	.shevron {
+		cursor: pointer;
+		&-up {
+			transform: rotate(180deg);
+		}
+	}
 }

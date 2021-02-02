@@ -11,7 +11,7 @@ import Modal from '../../UI/Modal';
 import clock from '../../../assets/icons/Clock.svg';
 import trash from '../../../assets/icons/Trash.svg';
 import thunder from '../../../assets/icons/Priority.svg';
-import check from '../../../assets/icons/Check.svg';
+import check from '../../../assets/icons/Checked.svg';
 import Textarea from '../../UI/Textarea';
 
 interface Props {
