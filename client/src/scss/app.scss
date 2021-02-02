@@ -100,10 +100,16 @@ body {
 	&__header {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		height: $header-height;
 		background: $c-white;
 		border: $c-secondary;
 		border-radius: $block-radius;
+
+		&-navigation {
+			display: flex;
+			align-items: center;
+		}
 
 		& h1 {
 			font-size: 24px;
@@ -126,6 +132,72 @@ body {
 			& .active {
 				background: $c-primary;
 				color: white;
+			}
+		}
+
+		&-controls {
+			display: flex;
+			align-items: center;
+			color: $c-black;
+			stroke: $c-black;
+			margin-right: 2rem;
+
+			cursor: pointer;
+		}
+
+		&-logout {
+			// & button {
+			// 	display: flex;
+			// 	align-items: center;
+			// 	justify-content: space-between;
+			// 	padding: 7px;
+
+			&:hover {
+				color: $c-invalid;
+				stroke: $c-invalid;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 2px rgba($color: $c-invalid, $alpha: 0.5);
+				border-radius: 7px;
+			}
+
+			&:active {
+				transform: $scale;
+			}
+
+			// &:first-child {
+			// 	width: 100px;
+
+			// 	&:hover {
+			// 		color: $c-red;
+			// 		stroke: $c-red;
+			// 	}
+
+			// 	&:focus {
+			// 		box-shadow: 0 0 0 2px rgba($color: $c-red, $alpha: 0.5);
+			// 		border-radius: 7px;
+			// 	}
+			// }
+			// }
+		}
+
+		&-screen {
+			margin-right: 2rem;
+
+
+			& img:hover {
+				color: $c-primary;
+				stroke: $c-primary;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 2px rgba($color: $c-primary, $alpha: 0.5);
+				border-radius: 7px;
+			}
+
+			&:active {
+				transform: $scale;
 			}
 		}
 	}

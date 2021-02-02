@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import trash from '../../../assets/img/trash.svg';
 import gear from '../../../assets/img/gear.svg';
 
@@ -7,10 +7,10 @@ import {
 	ColorInterface,
 	TargetInterface,
 } from '../../../store/ducks/todos/contracts/state';
-import Checkbox from '../../UI/Checkbox';
-import TargetChanger from './TargetChanger';
+
 import classNames from 'classnames';
 import useColorName from '../../../hooks/color.hook';
+import TargetEditor from './TargetEditor';
 
 interface Props extends TargetInterface {
 	colors: ColorInterface[];
@@ -19,60 +19,47 @@ interface Props extends TargetInterface {
 }
 
 const Target: React.FC<Props> = props => {
-	const [changerIsOpen, setChangerIsOpen] = useState<boolean>(false);
-	// const [color, setColor] = useState<string>('');
+	const [editorIsOpen, setEditorIsOpen] = useState<boolean>(false);
+	const { colorName } = useColorName(props.color, props.colors);
 
-	const {colorName} = useColorName(props.color, props.colors);
-
-	// useEffect(() => {
-	// 	const color = props.colors.find(color => color._id === props.color)?.name
-	// 	color && setColor(color)
-	// }, [props.color])
-	// const onChecked = () => {
-	// 	const isCheked = !props.isDone;
-
-	// 	onChange(props.name, props.notes, isCheked);
+	// const onChange = (target: TargetInterface) => {
+	// 	props.changeTarget(target);
 	// };
-
-	const onDelete = () => {
-		props.deleteTarget(props._id);
-	};
-
-	// const onChange = () => {
-	// 	setChangerIsOpen(true);
-	// };
-
-	const onChange = (target: TargetInterface) => {
-		props.changeTarget(target);
-	};
 
 	return (
-		<div className={classNames('target', colorName)}>
-			<div className="target__content">
-				{/* <Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} /> */}
+		<Fragment>
+			<div
+				className={classNames('target', colorName)}
+				onClick={() => setEditorIsOpen(true)}
+			>
+				<div className="target__content">
+					{/* <Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} /> */}
 
-				<div className="target__name">{props.name}</div>
-			</div>
-			<div className="target__date">{formatDate(props.date)}</div>
-			<div className="target__options">
-				{/* <img src={trash} alt="" onClick={onDelete} /> */}
-				<img src={gear} alt="" onClick={() => setChangerIsOpen(true)} />
+					<div className="target__name">{props.name}</div>
+				</div>
+				<div className="target__date">{formatDate(props.date)}</div>
+				<div className="target__options">
+					{/* <img src={trash} alt="" onClick={onDelete} /> */}
+					{/* <img src={gear} alt="" onClick={() => setEditorIsOpen(true)} /> */}
+				</div>
 			</div>
 
-			{changerIsOpen && (
-				<TargetChanger
+			{editorIsOpen && (
+				<TargetEditor
 					_id={props._id}
 					isDone={props.isDone}
 					date={props.date}
 					name={props.name}
 					notes={props.notes}
 					color={props.color}
-					close={() => setChangerIsOpen(false)}
-					submitChanges={onChange}
+					type="edit"
+					closeEditor={() => setEditorIsOpen(false)}
+					submit={props.changeTarget}
+					deleteTarget={props.deleteTarget}
 					colors={props.colors}
 				/>
 			)}
-		</div>
+		</Fragment>
 	);
 };
 

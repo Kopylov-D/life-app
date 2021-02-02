@@ -178,9 +178,6 @@ export function updateTask(
 		const state = getState().todos;
 		let { tasks, subtasks } = state;
 
-		console.log(task);
-		
-
 		task.subtask && checkParents(task.subtask, task.isDone);
 		needCheckChilds && checkChilds(task._id, task.isDone);
 
@@ -244,9 +241,6 @@ export function updateTask(
 			});
 		}
 
-		console.log('task', task);
-		
-
 		try {
 			dispatch(syncState({ ...state, subtasks, tasks }));
 			dispatch(syncData({ ...state, subtasks, tasks }));
@@ -309,6 +303,7 @@ export function updateTarget(target: TargetInterface): ThunkType {
 		try {
 			const { data } = await todosApi.updateTarget(target);
 			dispatch(changeTarget(data));
+			
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -316,11 +311,12 @@ export function updateTarget(target: TargetInterface): ThunkType {
 	};
 }
 
-export function fetchAddTarget(name: string): ThunkType {
+export function fetchAddTarget(target: TargetInterface): ThunkType {
 	return async dispatch => {
 		try {
-			const { data } = await todosApi.addTarget(name);
+			const { data } = await todosApi.addTarget(target);
 			dispatch(addTarget(data));
+
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

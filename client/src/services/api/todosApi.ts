@@ -39,9 +39,9 @@ export const todosApi = {
 	deleteTask: (id: string) =>
 		axios.delete<Response<string>>(`/api/todos/tasks/${id}`).then(res => res.data),
 
-	addTarget: (name: string) =>
+	addTarget: (target: TargetInterface) =>
 		axios
-			.post<Response<TargetInterface>>('/api/todos/targets', { name })
+			.post<Response<TargetInterface>>('/api/todos/targets', target)
 			.then(res => res.data),
 
 	updateTarget: (target: TargetInterface) =>

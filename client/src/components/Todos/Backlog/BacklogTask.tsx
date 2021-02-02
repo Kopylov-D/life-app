@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { Fragment, useEffect, useState } from 'react';
-import gear from '../../../assets/img/gear.svg';
+import edit from '../../../assets/icons/Pencil.svg';
 import {
 	ColorInterface,
 	TargetInterface,
@@ -83,7 +83,7 @@ const BacklogTask: React.FC<Props> = props => {
 					</div>
 
 					<div className="options">
-						<img src={gear} alt="" onClick={() => setIsVisible(true)}></img>
+						<img src={edit} alt="" onClick={() => setIsVisible(true)}></img>
 					</div>
 				</div>
 			)}

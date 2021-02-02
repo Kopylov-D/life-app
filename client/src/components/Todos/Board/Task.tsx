@@ -16,7 +16,7 @@ import Subtask from './Subtask';
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
 	task: TaskInterface;
-	colors: ColorInterface[]
+	colors: ColorInterface[];
 	onDelete(id: string): void;
 	onChecked(task: TaskInterface): void;
 }
@@ -27,29 +27,29 @@ const Task: React.FC<Props> = props => {
 	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(false);
 	const [numOfSubtask, setNumOfSubtask] = useState(0);
 	const [numDoneSubtask, setNumDoneSubtask] = useState(0);
-	const {colorName} = useColorName(props.color, props.colors)
+	const { colorName } = useColorName(props.color, props.colors);
 
 	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
 
 	useEffect(() => {
-		let count = 0;
+		let numOfSubtaskCounter = 0;
+		let numDoneSubtaskCounter = 0;
 
 		props.subtasks.forEach(subtask => {
-			if (subtask.task === props._id) count++;
+			if (subtask.task === props._id) {
+				numOfSubtaskCounter++;
+				subtask.isDone && numDoneSubtaskCounter++;
+			}
 		});
 
-		setNumOfSubtask(count);
-	}, []);
+		//TODO Оптимизировать через редакс
 
-	useEffect(() => {
-		let count = 0;
+		setNumOfSubtask(numOfSubtaskCounter);
+		setNumDoneSubtask(numDoneSubtaskCounter);
 
-		props.subtasks.forEach(subtask => {
-			if (subtask.isDone && subtask.task === props._id) count++;
-		});
-
-		setNumDoneSubtask(count);
-	});
+		console.log(1);
+		
+	}, [props.subtasks]);
 
 	const onChecked = () => {
 		props.onChecked({ ...props.task, isDone: !props.isDone });
@@ -70,11 +70,7 @@ const Task: React.FC<Props> = props => {
 				target: props.target,
 				task: props._id,
 				color: props.color,
-			}
-			console.log(subtask);
-			console.log(props.color);
-			
-			
+			};
 			dispatch(fetchAddSubtask(subtask));
 			dispatch(updateTask({ ...props.task, isDone: false }, false));
 
@@ -88,7 +84,7 @@ const Task: React.FC<Props> = props => {
 
 	let task = (
 		<Fragment>
-			<div className={classNames("task__main", {[`${colorName}`]: colorName})}>
+			<div className={classNames('task__main', { [`${colorName}`]: colorName })}>
 				<div className="task__content">
 					<Checkbox
 						checked={props.isDone}
@@ -148,7 +144,7 @@ const Task: React.FC<Props> = props => {
 	if (props.level === 1) {
 		task = (
 			<Fragment>
-				<div className={classNames("task__main", {[`${colorName}`]: colorName})}>
+				<div className={classNames('task__main', { [`${colorName}`]: colorName })}>
 					<div className="task__content">
 						<Checkbox
 							checked={props.isDone}

@@ -3,28 +3,27 @@ import React, { useState } from 'react';
 import { ColorInterface } from '../store/ducks/todos/contracts/state';
 
 interface Props {
-  colors: ColorInterface[];
-  onColorSelect(id: string): void
+	colors: ColorInterface[];
+	initialColor?: string;
+	onColorSelect(id: string): void;
 }
 
-const Colorpicker: React.FC<Props> = ({ colors, onColorSelect }) => {
+const Colorpicker: React.FC<Props> = ({ colors, initialColor, onColorSelect }) => {
+	const [activeColorId, setActiveColorId] = useState(initialColor);
 
-	const [activeColorId, setActiveColorId] = useState('')
-  
-  const onColorClick = (id: string) => {
-		onColorSelect(id)
-		setActiveColorId(id)
-  }
+	const onColorClick = (id: string) => {
+		onColorSelect(id);
+		setActiveColorId(id);
+	};
 
 	return (
 		<div className="colorpicker">
 			{colors.map(color => (
 				<div
-					className={classNames('colorpicker__item', 
-						color.name, 
-						{ active: activeColorId === color._id }
-
-					)} 
+					key={color._id}
+					className={classNames('colorpicker__item', color.name, {
+						active: activeColorId === color._id,
+					})}
 					onClick={() => onColorClick(color._id)}
 				></div>
 			))}

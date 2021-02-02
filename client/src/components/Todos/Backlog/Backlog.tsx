@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Modal from '../../UI/Modal';
-import Table from '../../Table';
 import Button from '../../UI/Button';
 import Target from './Target';
 import { useInput } from '../../../hooks/input.hook';
@@ -25,6 +24,7 @@ import {
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
+import TargetEditor from './TargetEditor';
 
 interface Props {}
 
@@ -61,8 +61,8 @@ const Backlog: React.FC<Props> = props => {
 		dispatch(updateTarget(target));
 	};
 
-	const createTargetHandler = () => {
-		dispatch(fetchAddTarget(addTargetInput.value));
+	const createTargetHandler = (target: TargetInterface) => {
+		dispatch(fetchAddTarget(target));
 		setAddTargetModalIsOpen(true);
 	};
 
@@ -139,46 +139,13 @@ const Backlog: React.FC<Props> = props => {
 			{/* </Table> */}
 
 			{addTargetModalIsOpen && (
-				<Modal closeModal={() => setAddTargetModalIsOpen(false)} backdropType="black">
-					<Input
-						onChange={addTargetInput.onChange}
-						value={addTargetInput.value}
-						touched={addTargetInput.touched}
-						valid={addTargetInput.valid}
-						type="text"
-						placeholder="Новая цель"
-					/>
-
-					<Button onClick={createTargetHandler} size="small">
-						Добавить
-					</Button>
-					<Button onClick={() => setAddTargetModalIsOpen(false)} size="small">
-						Отмена
-					</Button>
-				</Modal>
+				<TargetEditor
+					type="create"
+					closeEditor={() => setAddTargetModalIsOpen(false)}
+					colors={colors}
+					submit={createTargetHandler}
+				/>
 			)}
-
-			{/* {addTaskModalIsOpen && <TaskChanger close={() => setAddTaskModalIsOpen(false)} />} */}
-
-			{/* {changeTargetModalIsOpen && (
-				<Modal closeModal={() => setChangeTargetModalIsOpen(false)} backdropType="black">
-					<Input
-						onChange={addTargetInput.onChange}
-						value={addTargetInput.value}
-						touched={addTargetInput.touched}
-						valid={addTargetInput.valid}
-						type="text"
-						placeholder="Новая цель"
-					/>
-
-					<Button onClick={createTargetHandler} size="small">
-						Изменить
-					</Button>
-					<Button onClick={() => setAddTargetModalIsOpen(false)} size="small">
-						Отмена
-					</Button>
-				</Modal>
-			)} */}
 		</div>
 	);
 };

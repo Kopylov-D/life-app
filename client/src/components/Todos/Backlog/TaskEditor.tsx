@@ -3,10 +3,10 @@ import Calendar from 'react-calendar';
 import { useInput } from '../../../hooks/input.hook';
 import Backdrop from '../../UI/Backdrop';
 import Input from '../../UI/Input';
-import calendar from '../../../assets/img/calendar.svg';
-import trash from '../../../assets/img/trash.svg';
-import warning from '../../../assets/img/warning.svg';
-import edit from '../../../assets/img/edit.svg';
+import clock from '../../../assets/icons/Clock.svg';
+import trash from '../../../assets/icons/Trash.svg';
+import thunder from '../../../assets/icons/Priority.svg';
+import edit from '../../../assets/icons/Edit-file.svg';
 import Button from '../../UI/Button';
 import Select from '../../UI/Select';
 import { useSelector } from 'react-redux';
@@ -19,8 +19,14 @@ import {
 import useColorName from '../../../hooks/color.hook';
 
 interface Props {
-	task?: TaskInterface;
 	type: 'edit' | 'create';
+	colors: ColorInterface[];
+	targets: TargetInterface[];
+	submit(task: TaskInterface): void;
+	cancelEditor(): void;
+	deleteTask?(id: string): void;
+
+	task?: TaskInterface;
 	_id?: string;
 	target?: string;
 	subtask?: string;
@@ -28,12 +34,6 @@ interface Props {
 	isDone?: boolean;
 	notes?: string;
 	color?: string;
-
-	colors: ColorInterface[];
-	targets: TargetInterface[];
-	submit(task: TaskInterface): void;
-	cancelEditor(): void;
-	deleteTask?(id: string): void;
 }
 
 const TaskEditor: React.FC<Props> = props => {
@@ -54,9 +54,6 @@ const TaskEditor: React.FC<Props> = props => {
 			onSubmit();
 		}
 	};
-
-	console.log(props.color);
-	
 
 	const { colorId } = useColorName(
 		props.color,
@@ -79,7 +76,7 @@ const TaskEditor: React.FC<Props> = props => {
 					name: input.value,
 					notes: notesInput,
 					target: parentTarget,
-					subtask: props.subtask
+					subtask: props.subtask,
 				};
 			} else {
 				task = {
@@ -133,10 +130,10 @@ const TaskEditor: React.FC<Props> = props => {
 							initialId={props.target}
 						/>
 					)}
-					<img src={calendar} alt="" onClick={onToggleCalendarHandler}></img>
-					<img src={edit} alt="" onClick={onToggleCalendarHandler}></img>
-					<img src={warning} alt="" onClick={onToggleCalendarHandler}></img>
-					{props.type === 'edit' && <img src={trash} alt="" onClick={deleteTask}></img>}
+					<img className='task-editor__icon' src={clock} alt="" onClick={onToggleCalendarHandler}></img>
+					<img className='task-editor__icon' src={edit} alt="" onClick={onToggleCalendarHandler}></img>
+					<img className='task-editor__icon' src={thunder} alt="" onClick={onToggleCalendarHandler}></img>
+					{props.type === 'edit' && <img className='task-editor__icon' src={trash} alt="" onClick={deleteTask}></img>}
 				</div>
 			</div>
 

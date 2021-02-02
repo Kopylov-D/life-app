@@ -1,22 +1,29 @@
 @import '../../variables';
 
 .target-editor {
+	&__modal {
+		max-width: 350px;
+	}
 
-  &__modal {
-    max-width: 300px;
-  }
+	& textarea {
+		width: 100%;
+		margin-bottom: 2rem;
+	}
 
-  & textarea {
-    width: 100%;
-    margin-bottom: 2rem;
-  }
+	&__options {
+		display: flex;
+		justify-content: space-evenly;
+		height: 20px;
+		align-items: stretch;
+		margin-bottom: 20px;
+	}
 
-  &__buttons {
-    display: flex;
+	&__buttons {
+		display: flex;
 
-    & :first-child {
-      flex-grow: 1;
-      margin-right: 2rem;
-    }
-  }
+		& :first-child {
+			flex-grow: 1;
+			margin-right: 2rem;
+		}
+	}
 }
