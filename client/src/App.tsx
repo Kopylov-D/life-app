@@ -11,6 +11,7 @@ import TodosPage from './pages/TodosPage';
 import StatisticPage from './pages/StatisticPage';
 
 import './scss/app.scss';
+import Alert from './components/UI/Alert';
 
 function App() {
 	const { isAuth } = useSelector((state: RootState) => state.auth);
@@ -34,6 +35,7 @@ function App() {
 	return (
 		<div className="app">
 			<BrowserRouter>
+				<Alert />
 				{isAuth ? <Main>{routes}</Main> : <Auth />}
 			</BrowserRouter>
 		</div>

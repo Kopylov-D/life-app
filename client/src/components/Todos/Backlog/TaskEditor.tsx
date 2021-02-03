@@ -17,6 +17,7 @@ import {
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
 import useColorName from '../../../hooks/color.hook';
+import EditFileIcon from '../../UI/Icons/EditFileIcon';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -131,7 +132,8 @@ const TaskEditor: React.FC<Props> = props => {
 						/>
 					)}
 					<img className='task-editor__icon' src={clock} alt="" onClick={onToggleCalendarHandler}></img>
-					<img className='task-editor__icon' src={edit} alt="" onClick={onToggleCalendarHandler}></img>
+					{/* <img className='task-editor__icon' src={edit} alt="" onClick={onToggleCalendarHandler}></img> */}
+					<EditFileIcon  />
 					<img className='task-editor__icon' src={thunder} alt="" onClick={onToggleCalendarHandler}></img>
 					{props.type === 'edit' && <img className='task-editor__icon' src={trash} alt="" onClick={deleteTask}></img>}
 				</div>

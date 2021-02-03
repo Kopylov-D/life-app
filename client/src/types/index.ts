@@ -63,3 +63,7 @@ export interface BackdropInterface  {
 	onClick(): void;
 	type?: 'black';
 };
+
+export enum Icons {
+	closec = 'closec'
+}

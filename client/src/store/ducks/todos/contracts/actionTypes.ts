@@ -1,4 +1,5 @@
 import { Action } from 'redux';
+import { AlertInterface } from '../../../middleaware/alert.middleware';
 import { LoadingStatus } from '../../../types';
 import {
 	CardInterface,
@@ -35,11 +36,18 @@ export enum TodosActionTypes {
 	ADD_CARD = 'ADD_CARD',
 	CHANGE_CARD = 'CHANGE_CARD',
 	DELETE_CARD = 'DELETE_CARD',
+
+	ALERT = 'ALERT'
 }
 
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_LOADING_STATUS;
 	payload: LoadingStatus;
+}
+
+export interface SetAlertActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.ALERT;
+	payload: AlertInterface;
 }
 
 export interface SetErrorActionInterface extends Action<TodosActionTypes> {

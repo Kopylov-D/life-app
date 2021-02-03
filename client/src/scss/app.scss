@@ -279,6 +279,33 @@ body {
 	top: 20%;
 }
 
+.shevron {
+	cursor: pointer;
+
+	&-up {
+		transform: rotate(180deg);
+	}
+	&-left {
+		transform: rotate(90deg);
+	}
+	&-right {
+		transform: rotate(-90deg);
+	}
+}
+.arrow {
+	cursor: pointer;
+
+	&--up {
+		transform: rotate(180deg);
+	}
+	&--left {
+		transform: rotate(90deg);
+	}
+	&--right {
+		transform: rotate(-90deg);
+	}
+}
+
 .color-income {
 	background-color: $c-income;
 }

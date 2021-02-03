@@ -1,4 +1,5 @@
 import { ThunkAction } from 'redux-thunk';
+import RefreshIcon from '../../../components/UI/Icons/RefreshIcon';
 import { todosApi } from '../../../services/api/todosApi';
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
@@ -15,6 +16,7 @@ import {
 	deleteSubtask,
 	deleteTarget,
 	deleteTask,
+	setAlert,
 	setError,
 	setLoadingStatus,
 	setTargets,
@@ -77,6 +79,9 @@ export function getTodosData(): ThunkType {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
+		// finally {
+		// 	dispatch(setLoadingStatus(LoadingStatus.LOADED))
+		// }
 	};
 }
 
@@ -103,6 +108,19 @@ export function syncData(todos: TodosState): ThunkType {
 	return async (dispatch, getState) => {
 		try {
 			// const todos = getState().todos;
+			await todosApi.syncData(todos);
+		} catch (e) {
+			console.log(e);
+			dispatch(setError(e));
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+		}
+	};
+}
+
+export function syncDataWithout(): ThunkType {
+	return async (dispatch, getState) => {
+		try {
+			const todos = getState().todos;
 			await todosApi.syncData(todos);
 		} catch (e) {
 			console.log(e);
@@ -140,6 +158,15 @@ export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
 
 			if (subtask.isDone || childTask) {
 				//warning
+
+				dispatch(
+					setAlert({
+						text: 'decompose',
+						id: new Date().getMilliseconds(),
+						// action: syncData
+						// icon: closec,
+					})
+				);
 				return;
 			}
 
@@ -303,7 +330,6 @@ export function updateTarget(target: TargetInterface): ThunkType {
 		try {
 			const { data } = await todosApi.updateTarget(target);
 			dispatch(changeTarget(data));
-			
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -316,7 +342,6 @@ export function fetchAddTarget(target: TargetInterface): ThunkType {
 		try {
 			const { data } = await todosApi.addTarget(target);
 			dispatch(addTarget(data));
-
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

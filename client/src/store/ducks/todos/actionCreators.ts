@@ -1,3 +1,4 @@
+import { AlertInterface } from '../../middleaware/alert.middleware';
 import { LoadingStatus } from '../../types';
 import {
 	AddCardActionInterface,
@@ -14,6 +15,7 @@ import {
 	DeleteSubtaskActionInterface,
 	DeleteTargetActionInterface,
 	DeleteTaskActionInterface,
+	SetAlertActionInterface,
 	SetErrorActionInterface,
 	SetLoadingStatusActionInterface,
 	SetTargetsActionInterface,
@@ -50,12 +52,20 @@ export type TodosActions =
 	| DeleteTargetActionInterface
 	| ChangeTargetActionInterface
 	| AddTaskToCardActionInterface
-	| SyncStateActionInterface;
+	| SyncStateActionInterface
+	| SetAlertActionInterface;
 
 export const setLoadingStatus = (
 	payload: LoadingStatus
 ): SetLoadingStatusActionInterface => ({
 	type: TodosActionTypes.SET_LOADING_STATUS,
+	payload,
+});
+
+export const setAlert = (
+	payload: AlertInterface
+): SetAlertActionInterface => ({
+	type: TodosActionTypes.ALERT,
 	payload,
 });
 

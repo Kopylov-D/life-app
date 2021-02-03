@@ -7,7 +7,6 @@ import {
 	CardInterface,
 	TodosState,
 } from '../../store/ducks/todos/contracts/state';
-import Subtask from '../../components/Todos/Board/Subtask';
 
 export const todosApi = {
 	getTodosData: () =>

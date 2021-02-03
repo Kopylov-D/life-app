@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import useOutsideClick from '../../hooks/outsideAlert.hook';
+import arrow from '../../assets/icons/Arrow-down.svg'
+import classNames from 'classnames';
 
 export interface SelectItems {
 	id: string;
@@ -50,9 +52,7 @@ const Select: React.FC<Props> = ({
 		<div className="select" ref={ref}>
 			<div className="select__input" onClick={toggleDropdown}>
 				<span>{label}</span>
-				<span className="material-icons">{`arrow_drop_${
-					isVisible ? 'up' : 'down'
-				}`}</span>
+				<img className={classNames('arrow', {'arrow--up': isVisible})} src={arrow} alt=""/>
 			</div>
 
 			{isVisible && (
