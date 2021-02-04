@@ -35,6 +35,7 @@ interface Props {
 	isDone?: boolean;
 	notes?: string;
 	color?: string;
+	inArchive?: boolean
 }
 
 const TaskEditor: React.FC<Props> = props => {
@@ -78,6 +79,7 @@ const TaskEditor: React.FC<Props> = props => {
 					notes: notesInput,
 					target: parentTarget,
 					subtask: props.subtask,
+					inArchive: props.inArchive!
 				};
 			} else {
 				task = {
@@ -89,6 +91,7 @@ const TaskEditor: React.FC<Props> = props => {
 					color: colorId && colorId,
 					notes: notesInput,
 					target: parentTarget,
+					inArchive: false
 				};
 			}
 

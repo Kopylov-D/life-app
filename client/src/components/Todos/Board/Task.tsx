@@ -119,13 +119,14 @@ const Task: React.FC<Props> = props => {
 							return (
 								<Subtask
 									key={subtask._id}
-									_id={subtask._id}
-									date={subtask.date}
-									isDone={subtask.isDone}
-									level={subtask.level}
-									name={subtask.name}
-									target={subtask.target}
-									task={subtask.task}
+									{...subtask}
+									// _id={subtask._id}
+									// date={subtask.date}
+									// isDone={subtask.isDone}
+									// level={subtask.level}
+									// name={subtask.name}
+									// target={subtask.target}
+									// task={subtask.task}
 									subtask={subtask}
 									colors={props.colors}
 									// parentTask={}

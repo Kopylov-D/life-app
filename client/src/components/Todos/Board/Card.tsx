@@ -95,14 +95,15 @@ const Card: React.FC<Props> = props => {
 						if (task.level === props.level) {
 							return (
 								<Task
-									key={task._id}
-									_id={task._id}
-									date={task.date}
-									isDone={task.isDone}
-									level={task.level}
-									name={task.name}
-									notes={task.notes}
-									color={task.color}
+									// key={task._id}
+									// _id={task._id}
+									// date={task.date}
+									// isDone={task.isDone}
+									// level={task.level}
+									// name={task.name}
+									// notes={task.notes}
+									// color={task.color}
+									{...task}
 									colors={props.colors}
 									subtasks={props.subtasks}
 									onChecked={onTaskCheck}

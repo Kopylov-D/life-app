@@ -1,8 +1,11 @@
 import { ThunkAction } from 'redux-thunk';
-import RefreshIcon from '../../../components/UI/Icons/RefreshIcon';
+// import RefreshIcon from '../../../components/UI/Icons/RefreshIcon';
 import { todosApi } from '../../../services/api/todosApi';
+// import { AlertActions, showAlert } from '../../middleaware/alert.middleware';
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
+import { showAlert } from '../common/actions';
+import { CommonActions } from '../common/contracts/actionTypes';
 import {
 	addCard,
 	addSubtask,
@@ -16,7 +19,7 @@ import {
 	deleteSubtask,
 	deleteTarget,
 	deleteTask,
-	setAlert,
+	// setAlert,
 	setError,
 	setLoadingStatus,
 	setTargets,
@@ -66,7 +69,12 @@ function findChildsToDelete(initialId: string, todos: TodosState) {
 	return { tasksFoDelete, subtasksFoDelete, subtasks, tasks };
 }
 
-type ThunkType = ThunkAction<Promise<void>, RootState, unknown, TodosActions>;
+type ThunkType = ThunkAction<
+	Promise<void>,
+	RootState,
+	unknown,
+	TodosActions | CommonActions
+>;
 
 export function getTodosData(): ThunkType {
 	return async dispatch => {
@@ -77,6 +85,7 @@ export function getTodosData(): ThunkType {
 			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
+			dispatch(showAlert({ text: e.message }));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 		// finally {
@@ -111,7 +120,13 @@ export function syncData(todos: TodosState): ThunkType {
 			await todosApi.syncData(todos);
 		} catch (e) {
 			console.log(e);
-			dispatch(setError(e));
+			dispatch(
+				showAlert({
+					text: 'Синхронизация не удалась. Повторите вручную',
+					type: 'error',
+					action: 'sync',
+				})
+			);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 	};
@@ -157,14 +172,11 @@ export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
 			const childTask = tasks.find(task => task.subtask === subtask._id);
 
 			if (subtask.isDone || childTask) {
-				//warning
-
 				dispatch(
-					setAlert({
-						text: 'decompose',
-						id: new Date().getMilliseconds(),
-						// action: syncData
-						// icon: closec,
+					showAlert({
+						text: 'Задача уже добавлена',
+						type: 'warning',
+						delay: 2000,
 					})
 				);
 				return;
@@ -190,6 +202,7 @@ export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
 
 			// const { data } = await todosApi.updateTask(task);
 			// dispatch(changeTask(data));
+
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -286,6 +299,8 @@ export function fetchDeleteTask(id: string, isBacklogTask: boolean = false): Thu
 		try {
 			const state = getState().todos;
 			const task = state.tasks.find(task => task._id === id);
+
+			// if (task.)
 			const { tasksFoDelete, subtasksFoDelete, subtasks, tasks } = findChildsToDelete(
 				id,
 				state

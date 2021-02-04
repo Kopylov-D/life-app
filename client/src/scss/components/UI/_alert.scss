@@ -1,26 +1,47 @@
 @import '../../variables';
 
 .alert {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
 
-  &__item {
-    background: brown;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    padding: 1rem;
-  
-    // height: 100px;
-    // width: 200px;
-  }
+	&__item {
+		// background: brown;
+		border-radius: 5px;
+		margin-bottom: 1rem;
+		padding: 2rem;
 
-  &__text {
-    margin-right: 1rem;
-  }
+		// height: 100px;
+		// width: 200px;
+	}
 
-  &__close {
-    cursor: pointer;
-  }
+	&__icon {
+		margin-right: 2rem;
+		cursor: pointer;
+	}
+
+	&__text {
+		margin-right: 2rem;
+	}
+
+	&__close {
+		cursor: pointer;
+	}
+
+	&--warning {
+		background: $light-orange;
+	}
+
+	&--error {
+		background: $light-red;
+	}
+
+	&--info {
+		background: $light-blue;
+	}
+
+	&--success {
+		background: $light-green;
+	}
 }

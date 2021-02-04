@@ -1,29 +1,49 @@
 import React, { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { hideAlert, selectAlerts } from '../../store/middleaware/alert.middleware';
+// import { hideAlert, selectAlerts } from '../../store/middleaware/alert.middleware';
 import close from '../../assets/icons/Close.svg';
+import refresh from '../../assets/icons/Refresh.svg';
+import classNames from 'classnames';
+import { syncDataWithout } from '../../store/ducks/todos/actions';
+import { hideAlert } from '../../store/ducks/common/actionCreators';
+import { selectAlerts } from '../../store/ducks/common/selectors';
 
-interface Props {}
-
-const Alert: React.FC<Props> = props => {
+const Alert: React.FC = () => {
 	const alerts = useSelector(selectAlerts);
 	const dispatch = useDispatch();
 
 	const closeAlert = (id: number) => {
 		dispatch(hideAlert(id));
-  };
-  
-  const onAlert = () => {
+	};
 
-  }
+	const onAlertClick = (action: string | undefined) => {
+		if (action === 'sync') {
+			dispatch(syncDataWithout());
+		}
+	};
+
+	console.log(alerts);
+	
 
 	if (alerts.length > 0 && alerts !== null) {
 		return (
-			<div className="alert">
+			<div className={classNames('alert')}>
 				{alerts.map(alert => (
-					<Fragment>
-						<div key={alert.id} className="alert__item">
-							{alert.icon && alert.icon}
+					<Fragment key={alert.id}>
+						<div
+							className={classNames('alert__item', {
+								[`alert--${alert.type}`]: alert.type,
+							})}
+						>
+							{/* {alert.icon && alert.icon} */}
+							{alert.action && (
+								<img
+									className="alert__icon"
+									src={refresh}
+									alt=""
+									onClick={() => onAlertClick(alert.action)}
+								/>
+							)}
 							<span className="alert__text">{alert.text}</span>
 							{!alert.delay && (
 								<img

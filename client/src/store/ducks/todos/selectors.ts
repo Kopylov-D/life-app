@@ -13,15 +13,7 @@ export const selectTargets = (state: RootState): TargetInterface[] => state.todo
 export const selectSubtasks = (state: RootState): SubtaskInterface[] =>
 	state.todos.subtasks;
 
-export const selectTasks = (state: RootState): TaskInterface[] =>  state.todos.tasks;
-	// return state.todos.tasks.map(task => {
-	// 	const color = state.todos.colors.find(color => color._id === task.color);
-	// 	if (color) {
-	// 		task.color = color.name;
-	// 	}
-	// 	return task;
-	// });
-// };
+export const selectTasks = (state: RootState): TaskInterface[] => state.todos.tasks.filter(task => task.inArchive === false);
 
 export const selectColors = (state: RootState): ColorInterface[] => state.todos.colors;
 
@@ -36,12 +28,10 @@ export const selectTasksList = (state: RootState) => {
 	const tasks = state.todos.tasks;
 
 	const items = tasks.map(task => {
-		// if (!task.subtask && !task.level) {
 		return {
 			id: task._id,
 			value: task.name,
 		};
-		// }
 	});
 
 	return items;
@@ -59,4 +49,10 @@ export const selectTargetsList = (state: RootState) => {
 	});
 
 	return items;
+};
+
+export const selectIssues = (state: RootState): TaskInterface[] => {
+	const tasks = state.todos.tasks;
+
+	return tasks.filter(task => task.inArchive === true || task.isDone === false);
 };

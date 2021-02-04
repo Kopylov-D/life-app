@@ -55,6 +55,11 @@ const TaskSchema: Schema = new Schema<TaskInterface>({
 		required: false,
 		type: Date,
 	},
+	inArchive: {
+		required: true,
+		type: Boolean,
+		default: false
+	}
 });
 
 type TaskModelDocumentInterface = TaskInterface & Document;

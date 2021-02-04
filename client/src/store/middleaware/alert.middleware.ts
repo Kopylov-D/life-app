@@ -1,98 +1,89 @@
-//reducer
+// //reducer
 
-import { Action, AnyAction, Dispatch, Middleware } from 'redux';
-import { Icons } from '../../types';
-import { syncData, syncDataWithout } from '../ducks/todos/actions';
-import { TodosState } from '../ducks/todos/contracts/state';
-import { RootState } from '../rootReducer';
+// import { Action, AnyAction, Dispatch, Middleware } from 'redux';
+// import { Icons } from '../../types';
+// import { syncData, syncDataWithout } from '../ducks/todos/actions';
+// import { TodosState } from '../ducks/todos/contracts/state';
+// import { RootState } from '../rootReducer';
 
-//action
 
-// export const showAlert = (payload: Alert): ShowAlertActionInterface => {
-
-// };
-
-//constants
-
-// interface AlertSt{
-
+// export enum AlertActionTypes {
+// 	SHOW_ALERT = 'SHOW_ALERT',
+// 	HIDE_ALERT = 'HIDE_ALERT',
 // }
 
-enum AlertActionTypes {
-	SHOW_ALERT = 'SHOW_ALERT',
-	HIDE_ALERT = 'HIDE_ALERT',
-}
 
-export interface AlertInterface {
-	text: string;
-  id: number;
-  type?: 'error' | 'success' | 'warning'
-  delay?: number;
-  icon?: Icons
-  action?(): void
-	// notificationType: typeof AlertActionTypes;
-}
 
-export interface ShowAlertActionInterface extends Action<AlertActionTypes> {
-	type: AlertActionTypes.SHOW_ALERT;
-	payload: AlertInterface;
-}
+// export interface AlertPayloadInterface {
+// 	text: string;
+// 	type?: 'error' | 'success' | 'warning';
+// 	delay?: number;
+// 	icon?: Icons;
+// 	action?(): void;
+// }
 
-export interface HideAlertActionInterface extends Action<AlertActionTypes> {
-	type: AlertActionTypes.HIDE_ALERT;
-	payload: number;
-}
+// export interface AlertInterface extends AlertPayloadInterface{
+// 	id: number;
+// }
 
-//actionCreators
+// export interface ShowAlertActionInterface extends Action<AlertActionTypes> {
+// 	type: AlertActionTypes.SHOW_ALERT;
+// 	payload: AlertPayloadInterface;
+// }
 
-export const showAlert = (payload: AlertInterface): ShowAlertActionInterface => ({
-	type: AlertActionTypes.SHOW_ALERT,
-	payload,
-});
+// export interface HideAlertActionInterface extends Action<AlertActionTypes> {
+// 	type: AlertActionTypes.HIDE_ALERT;
+// 	payload: number;
+// }
 
-export const hideAlert = (payload: number): HideAlertActionInterface => ({
-	type: AlertActionTypes.HIDE_ALERT,
-	payload,
-});
+// //actionCreators
 
-type all = AlertActions | 
+// export const showAlert = (payload: AlertInterface): ShowAlertActionInterface => ({
+// 	type: AlertActionTypes.SHOW_ALERT,
+// 	payload,
+// });
 
-export const alertMiddleware = (events: any): Middleware<{}, any, Dispatch<AnyAction>> => ({
-  dispatch,
-  getState
-}) => next => action => {
-	if (events.includes(action.type)) {
-    dispatch(showAlert(action.payload));
-    
-		action.payload.delay && setTimeout(() => {
-			dispatch(hideAlert(action.payload.id));
-		}, action.payload.delay);
-  }
-  
-  if (action.type === 'ERROR' ) {
+// export const hideAlert = (payload: number): HideAlertActionInterface => ({
+// 	type: AlertActionTypes.HIDE_ALERT,
+// 	payload,
+// });
 
-    // const todos: TodosState = getState().todos
-    dispatch(syncData(action.payload))
-  }
+// export const alertMiddleware = (
+// 	events: any
+// ): Middleware<{}, RootState, Dispatch<AnyAction>> => ({
+// 	dispatch,
+// 	getState,
+// }) => next => action => {
+// 	if (events.includes(action.type)) {
+// 		const id = new Date().getTime()
+// 		dispatch(showAlert({...action.payload, id}));
 
-	return next(action);
-};
+// 		action.payload.delay &&
+// 			setTimeout(() => {
+// 				dispatch(hideAlert(action.payload.id));
+// 			}, action.payload.delay);
+// 	}
 
-type AlertActions = ShowAlertActionInterface | HideAlertActionInterface;
+// 	// dispatch(syncData(getState().todos))
 
-const initialState: AlertInterface[] = [];
+// 	return next(action);
+// };
 
-export const alertReducer = (state = initialState, action: AlertActions) => {
-	switch (action.type) {
-		case AlertActionTypes.SHOW_ALERT: {
-			return [...state, action.payload];
-		}
-		case AlertActionTypes.HIDE_ALERT: {
-			return [...state].filter(n => n.id !== action.payload);
-		}
-		default:
-			return state;
-	}
-};
+// export type AlertActions = ShowAlertActionInterface | HideAlertActionInterface;
 
-export const selectAlerts = (state: RootState): AlertInterface[] => state.alert;
+// const initialState: AlertInterface[] = [];
+
+// export const alertReducer = (state = initialState, action: AlertActions) => {
+// 	switch (action.type) {
+// 		case AlertActionTypes.SHOW_ALERT: {
+// 			return [...state, action.payload];
+// 		}
+// 		case AlertActionTypes.HIDE_ALERT: {
+// 			return [...state].filter(n => n.id !== action.payload);
+// 		}
+// 		default:
+// 			return state;
+// 	}
+// };
+
+export const s = 1

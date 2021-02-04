@@ -82,12 +82,13 @@ const Backlog: React.FC<Props> = props => {
 				{targets.map(target => (
 					<Target
 						key={target._id}
-						_id={target._id}
-						notes={target.notes}
-						date={target.date}
-						isDone={target.isDone}
-						name={target.name}
-						color={target.color}
+						{...target}
+						// _id={target._id}
+						// notes={target.notes}
+						// date={target.date}
+						// isDone={target.isDone}
+						// name={target.name}
+						// color={target.color}
 						colors={colors}
 						deleteTarget={deleteTargetHandler}
 						changeTarget={changeTargetHandler}
@@ -118,15 +119,16 @@ const Backlog: React.FC<Props> = props => {
 			{tasks.map(task => (
 				<BacklogTask
 					key={task._id}
-					_id={task._id}
-					notes={task.notes}
-					date={task.date}
-					isDone={task.isDone}
-					level={task.level}
-					name={task.name}
-					color={task.color}
-					target={task.target}
-					subtask={task.subtask}
+					// _id={task._id}
+					// notes={task.notes}
+					// date={task.date}
+					// isDone={task.isDone}
+					// level={task.level}
+					// name={task.name}
+					// color={task.color}
+					// target={task.target}
+					// subtask={task.subtask}
+					{...task}
 					colors={colors}
 					targets={targets}
 					changeTask={changeTaskHandler}

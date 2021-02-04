@@ -29,6 +29,7 @@ export interface TaskInterface {
 	date: Date;
 	level: number;
 	expiresIn?: Date;
+	inArchive?: boolean
 }
 
 export interface SubtaskInterface {

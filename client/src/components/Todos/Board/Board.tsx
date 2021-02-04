@@ -34,9 +34,10 @@ export const Board: React.FC<any> = props => {
 				{cards.map(card => (
 					<Card
 						key={card._id}
-						_id={card._id}
-						level={card.level}
-						name={card.name}
+						// _id={card._id}
+						// level={card.level}
+						// name={card.name}
+						{...card}
 						tasks={tasks}
 						subtasks={subtasks}
 						colors={colors}
