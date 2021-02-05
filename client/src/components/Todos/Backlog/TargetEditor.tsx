@@ -19,7 +19,7 @@ interface Props {
 	colors: ColorInterface[];
 	submit(target: TargetInterface): void;
 	closeEditor(): void;
-	deleteTarget?(id: string): void;
+	deleteTargetHandler?(id: string): void;
 
 	_id?: string;
 	name?: string;
@@ -43,7 +43,7 @@ const TargetEditor: React.FC<Props> = ({
 	colors,
 	type,
 	submit,
-	deleteTarget,
+	deleteTargetHandler,
 	closeEditor,
 }) => {
 	const input = useInput({ initialValue: name });
@@ -106,7 +106,7 @@ console.log('sdsd');
 	};
 
 	const onDeleteTarget = () => {
-		type === 'edit' && deleteTarget!(_id);
+		type === 'edit' && deleteTargetHandler!(_id);
 	};
 
 	return (

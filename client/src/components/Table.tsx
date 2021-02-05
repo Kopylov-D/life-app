@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames';
+import arrow from '../assets/icons/Arrow-down.svg';
+import TableHeaderItem from './TableHeaderItem';
 
 type Props = {
 	class: string;
 	headerItems?: string[];
+	onHeaderItemClick?(direction: string): void;
 };
 
 const Table: React.FC<Props> = props => {
@@ -15,12 +18,19 @@ const Table: React.FC<Props> = props => {
 		>
 			{props.headerItems && (
 				<header
-					className={classNames( {
-						[`${props.class}__table`]: props.class,
-					}, 'table__header',)}
+					className={classNames(
+						{
+							[`${props.class}__table`]: props.class,
+						},
+						'table__header'
+					)}
 				>
 					{props.headerItems.map((item, index) => (
-						<div key={index}>{item}</div>
+						<TableHeaderItem
+							key={index}
+							name={item}
+							onHeaderItemClick={props.onHeaderItemClick}
+						/>
 					))}
 				</header>
 			)}

@@ -14,8 +14,8 @@ import TargetEditor from './TargetEditor';
 
 interface Props extends TargetInterface {
 	colors: ColorInterface[];
-	deleteTarget(id: string): void;
-	changeTarget(target: TargetInterface): void;
+	deleteTargetHandler(id: string): void;
+	changeTargetHandler(target: TargetInterface): void;
 }
 
 const Target: React.FC<Props> = props => {
@@ -54,8 +54,8 @@ const Target: React.FC<Props> = props => {
 					color={props.color}
 					type="edit"
 					closeEditor={() => setEditorIsOpen(false)}
-					submit={props.changeTarget}
-					deleteTarget={props.deleteTarget}
+					submit={props.changeTargetHandler}
+					deleteTargetHandler={props.deleteTargetHandler}
 					colors={props.colors}
 				/>
 			)}

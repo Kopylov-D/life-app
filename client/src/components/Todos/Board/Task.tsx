@@ -48,12 +48,10 @@ const Task: React.FC<Props> = props => {
 
 		setNumOfSubtask(numOfSubtaskCounter);
 		setNumDoneSubtask(numDoneSubtaskCounter);
-
-		console.log(1);
 	}, [props.subtasks]);
 
 	const onChecked = () => {
-		props.onChecked({ ...props.task, isDone: !props.isDone });
+		props.onChecked({ ...props.task, isDone: !props.isDone, inArchive: !props.inArchive });
 	};
 
 	const onDeleteTask = () => {

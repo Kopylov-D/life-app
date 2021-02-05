@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.issues {
+	&__table {
+		.table__header,
+		.table__item {
+			grid-template-columns:
+				minmax(30px, 30px)
+				minmax(50px, 1fr)
+				minmax(50px, 1fr)
+				minmax(50px, 1fr)
+				minmax(50px, 1fr)
+				minmax(50px, 1fr)
+				minmax(20px, 20px);
+		}
+	}
+}

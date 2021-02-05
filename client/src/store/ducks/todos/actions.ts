@@ -202,7 +202,6 @@ export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
 
 			// const { data } = await todosApi.updateTask(task);
 			// dispatch(changeTask(data));
-
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
@@ -249,6 +248,9 @@ export function updateTask(
 				tasks = tasks.map(task => {
 					if (task._id === initialId) {
 						task.isDone = isDone;
+						if (isDone === true) {
+							task.inArchive = true;
+						} else task.inArchive = false;
 						initialId = task.subtask;
 					}
 					return task;
@@ -269,6 +271,9 @@ export function updateTask(
 					tasks = tasks.map(task => {
 						if (task.subtask === subId) {
 							task.isDone = isDone;
+							if (isDone === true) {
+								task.inArchive = true;
+							} else task.inArchive = false;
 							nextInitialId = task._id;
 						}
 						return task;

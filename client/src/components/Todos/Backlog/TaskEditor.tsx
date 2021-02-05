@@ -27,15 +27,17 @@ interface Props {
 	cancelEditor(): void;
 	deleteTask?(id: string): void;
 
-	task?: TaskInterface;
+	// task?: TaskInterface;
 	_id?: string;
+	date?: Date;
 	target?: string;
 	subtask?: string;
 	name?: string;
+	level?: number;
 	isDone?: boolean;
 	notes?: string;
 	color?: string;
-	inArchive?: boolean
+	inArchive?: boolean;
 }
 
 const TaskEditor: React.FC<Props> = props => {
@@ -64,22 +66,24 @@ const TaskEditor: React.FC<Props> = props => {
 		props.targets
 	);
 
+	console.log(props.inArchive);
+
 	const onSubmit = () => {
 		if (input.valid) {
 			let task: TaskInterface;
 
 			if (props.type === 'edit') {
 				task = {
-					_id: props.task!._id,
-					date: props.task!.date,
-					isDone: props.task!.isDone,
-					level: props.task!.level,
+					_id: props._id!,
+					date: props.date!,
+					isDone: props.isDone!,
+					level: props.level!,
 					color: colorId ? colorId : props.color,
 					name: input.value,
 					notes: notesInput,
 					target: parentTarget,
 					subtask: props.subtask,
-					inArchive: props.inArchive!
+					inArchive: props.inArchive!,
 				};
 			} else {
 				task = {
@@ -91,7 +95,7 @@ const TaskEditor: React.FC<Props> = props => {
 					color: colorId && colorId,
 					notes: notesInput,
 					target: parentTarget,
-					inArchive: false
+					inArchive: false,
 				};
 			}
 
@@ -134,11 +138,33 @@ const TaskEditor: React.FC<Props> = props => {
 							initialId={props.target}
 						/>
 					)}
-					<img className='task-editor__icon' src={clock} alt="" onClick={onToggleCalendarHandler}></img>
-					{/* <img className='task-editor__icon' src={edit} alt="" onClick={onToggleCalendarHandler}></img> */}
-					<EditFileIcon  />
-					<img className='task-editor__icon' src={thunder} alt="" onClick={onToggleCalendarHandler}></img>
-					{props.type === 'edit' && <img className='task-editor__icon' src={trash} alt="" onClick={deleteTask}></img>}
+					<img
+						className="task-editor__icon"
+						src={clock}
+						alt=""
+						onClick={onToggleCalendarHandler}
+					></img>
+					<img
+						className="task-editor__icon"
+						src={edit}
+						alt=""
+						onClick={onToggleCalendarHandler}
+					></img>
+					{/* <EditFileIcon  /> */}
+					<img
+						className="task-editor__icon"
+						src={thunder}
+						alt=""
+						onClick={onToggleCalendarHandler}
+					></img>
+					{props.type === 'edit' && (
+						<img
+							className="task-editor__icon"
+							src={trash}
+							alt=""
+							onClick={deleteTask}
+						></img>
+					)}
 				</div>
 			</div>
 

@@ -1,51 +1,43 @@
 import classNames from 'classnames';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import edit from '../../../assets/icons/Pencil.svg';
 import {
 	ColorInterface,
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectTargetsList, selectTasksList } from '../../../store/ducks/todos/selectors';
 import Checkbox from '../../UI/Checkbox';
 import TaskEditor from './TaskEditor';
 import useOutsideClick from '../../../hooks/outsideAlert.hook';
 import useColorName from '../../../hooks/color.hook';
 
-interface Props extends TaskInterface {
-	deleteTask(id: string): void;
-	changeTask(task: TaskInterface): void;
+interface Props {
+	deleteTaskHandler(id: string): void;
+	changeTaskHandler(task: TaskInterface): void;
 
 	colors: ColorInterface[];
-	targets: TargetInterface[]
+	targets: TargetInterface[];
 	task: TaskInterface;
 }
 
-const BacklogTask: React.FC<Props> = props => {
-	const dispatch = useDispatch();
-	const [isDoneTask, setIsDoneTask] = useState<boolean>(props.isDone);
-	// const [color, setColor] = useState<string | undefined>(props.color);
-	const {colorName} = useColorName(props.color, props.colors);
-
-	const [changerIsOpen, setChangerIsOpen] = useState<boolean>(false);
-	const targetsList = useSelector(selectTargetsList);
-
-	const [taskEditorIsOpen, setTaskEditorIsOpen] = useState<boolean>(false);
+const BacklogTask: React.FC<Props> = ({
+	task,
+	targets,
+	colors,
+	deleteTaskHandler,
+	changeTaskHandler,
+}) => {
+	// const [isDoneTask, setIsDoneTask] = useState<boolean>(task.isDone);
+	const { colorName } = useColorName(task.color, colors);
 	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
-	// useEffect(() => {
-	// 	const color = props.colors.find(color => color._id === props.color)?.name
-	// 	color && setColor(color)
-	// }, [props.color])
-
 	const onChecked = () => {
-		setIsDoneTask(!isDoneTask);
-		props.changeTask({ ...props.task, isDone: !isDoneTask });
+		// setIsDoneTask(!isDoneTask);
+		changeTaskHandler({ ...task, isDone: !task.isDone, inArchive: !task.inArchive });
 	};
 
 	const onChangeTask = (task: TaskInterface) => {
-		props.changeTask({ ...task, isDone: isDoneTask });
+		changeTaskHandler({ ...task });
 		setIsVisible(false);
 	};
 
@@ -54,32 +46,24 @@ const BacklogTask: React.FC<Props> = props => {
 			{isVisible ? (
 				<div ref={ref}>
 					<TaskEditor
-						_id={props._id}
 						cancelEditor={() => setIsVisible(false)}
 						type="edit"
 						submit={onChangeTask}
-						deleteTask={props.deleteTask}
-						name={props.name}
-						target={props.target}
-						subtask={props.subtask}
-						task={props.task}
-						color={props.color}
-						colors={props.colors}
-						targets={props.targets}
+						deleteTask={deleteTaskHandler}
+						{...task}
+						colors={colors}
+						targets={targets}
 					/>
 				</div>
 			) : (
 				<div
-					className={classNames('backlog-task', 
-					{
+					className={classNames('backlog-task', {
 						[`${colorName}`]: colorName,
-					}
-					// color
-					)}
+					})}
 				>
 					<div className="backlog-task__content">
-						<Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} />
-						<div>{props.name}</div>
+						<Checkbox checked={task.isDone} id={task._id} onChangeHandler={onChecked} />
+						<div>{task.name}</div>
 					</div>
 
 					<div className="options">

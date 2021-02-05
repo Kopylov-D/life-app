@@ -35,18 +35,7 @@ const Backlog: React.FC<Props> = props => {
 
 	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(false);
 	const [taskEditorIsOpen, setTaskEditorIsOpen] = useState<boolean>(false);
-	// const [changeTargetModalIsOpen, setChangeTargetModalIsOpen] = useState<boolean>(false);
-
-	const addTargetInput = useInput(
-		{ initialValue: '' },
-		{ required: true, maxLength: 30 }
-	);
-
-	// const changeTargetInput = useInput(
-	// 	{ initialValue:  ''},
-	// 	{ required: true, maxLength: 30 }
-	// );
-
+	
 	const addTargetHandler = () => {
 		setAddTargetModalIsOpen(true);
 	};
@@ -90,8 +79,8 @@ const Backlog: React.FC<Props> = props => {
 						// name={target.name}
 						// color={target.color}
 						colors={colors}
-						deleteTarget={deleteTargetHandler}
-						changeTarget={changeTargetHandler}
+						deleteTargetHandler={deleteTargetHandler}
+						changeTargetHandler={changeTargetHandler}
 					/>
 				))}
 				<div className="target" onClick={addTargetHandler}>
@@ -128,11 +117,11 @@ const Backlog: React.FC<Props> = props => {
 					// color={task.color}
 					// target={task.target}
 					// subtask={task.subtask}
-					{...task}
+					// {...task}
 					colors={colors}
 					targets={targets}
-					changeTask={changeTaskHandler}
-					deleteTask={deleteTaskHandler}
+					changeTaskHandler={changeTaskHandler}
+					deleteTaskHandler={deleteTaskHandler}
 					task={task}
 				/>
 			))}
