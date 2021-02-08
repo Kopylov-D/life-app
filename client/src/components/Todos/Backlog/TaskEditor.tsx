@@ -18,6 +18,10 @@ import {
 } from '../../../store/ducks/todos/contracts/state';
 import useColorName from '../../../hooks/color.hook';
 import EditFileIcon from '../../UI/Icons/EditFileIcon';
+import { isArray } from 'util';
+import Modal from '../../UI/Modal';
+import Textarea from '../../UI/Textarea';
+import Dropdown from '../../UI/Dropdown';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -38,15 +42,18 @@ interface Props {
 	notes?: string;
 	color?: string;
 	inArchive?: boolean;
+	expiresIn?: Date;
 }
 
 const TaskEditor: React.FC<Props> = props => {
-	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
+	const [currentDate, setCurrentDate] = useState<Date>(props.expiresIn || new Date());
 	const input = useInput(
 		{ initialValue: props.name ? props.name : '' },
 		{ maxLength: 50 }
 	);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
+	const [noteEditorIsOpen, setNotesEditorIsOpen] = useState<boolean>(false);
+	const [priorityPickerIsOpen, setPriorityPickerIsOpen] = useState<boolean>(false);
 	const selectTargets = useSelector(selectTargetsList);
 	const [parentTarget, setParentTarget] = useState<string>();
 	const [priority, setPriority] = useState<string>();
@@ -66,8 +73,6 @@ const TaskEditor: React.FC<Props> = props => {
 		props.targets
 	);
 
-	console.log(props.inArchive);
-
 	const onSubmit = () => {
 		if (input.valid) {
 			let task: TaskInterface;
@@ -84,6 +89,7 @@ const TaskEditor: React.FC<Props> = props => {
 					target: parentTarget,
 					subtask: props.subtask,
 					inArchive: props.inArchive!,
+					expiresIn: currentDate,
 				};
 			} else {
 				task = {
@@ -96,6 +102,7 @@ const TaskEditor: React.FC<Props> = props => {
 					notes: notesInput,
 					target: parentTarget,
 					inArchive: false,
+					expiresIn: currentDate ? currentDate : undefined,
 				};
 			}
 
@@ -112,9 +119,27 @@ const TaskEditor: React.FC<Props> = props => {
 		setCalendarIsOpen(isOpen => !isOpen);
 	};
 
+	const onTogglePriorityPickerHandler = (e: React.MouseEvent) => {
+		console.log(e);
+		
+		setPriorityPickerIsOpen(!priorityPickerIsOpen)
+	};
+
 	const onChangeDateHandler = (value: Date | Date[]) => {
-		setCurrentDate(value);
+		if (Array.isArray(value)) {
+			setCurrentDate(value[0]);
+		} else setCurrentDate(value);
+
 		onToggleCalendarHandler();
+	};
+
+	const onChangeArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+		setNotesInput(e.target.value);
+	};
+
+	const OnCancelNotesEdit = () => {
+		setNotesEditorIsOpen(false);
+		setNotesInput(props.notes!);
 	};
 
 	return (
@@ -148,15 +173,33 @@ const TaskEditor: React.FC<Props> = props => {
 						className="task-editor__icon"
 						src={edit}
 						alt=""
-						onClick={onToggleCalendarHandler}
+						onClick={() => setNotesEditorIsOpen(true)}
 					></img>
 					{/* <EditFileIcon  /> */}
-					<img
-						className="task-editor__icon"
-						src={thunder}
-						alt=""
-						onClick={onToggleCalendarHandler}
-					></img>
+					<div>
+						<img
+							className="task-editor__icon with-dropdown"
+							src={thunder}
+							alt=""
+							onClick={onTogglePriorityPickerHandler}
+						></img>
+						{priorityPickerIsOpen && (
+							<Dropdown
+								items={[
+									{
+										title: 'dsfsdf',
+									},
+									{
+										title: 'dsfsdf',
+									},
+									{
+										title: 'dsfsdf',
+									},
+								]}
+							/>
+						)}
+					</div>
+
 					{props.type === 'edit' && (
 						<img
 							className="task-editor__icon"
@@ -182,6 +225,14 @@ const TaskEditor: React.FC<Props> = props => {
 					<Calendar value={currentDate} onChange={onChangeDateHandler} />
 					<Backdrop onClick={onToggleCalendarHandler} type="black" />
 				</div>
+			)}
+
+			{noteEditorIsOpen && (
+				<Modal closeModal={OnCancelNotesEdit}>
+					<Textarea value={notesInput} onChange={onChangeArea} />
+					<Button onClick={() => setNotesEditorIsOpen(false)}>Принять</Button>
+					<Button onClick={OnCancelNotesEdit}>Отмена</Button>
+				</Modal>
 			)}
 		</div>
 	);

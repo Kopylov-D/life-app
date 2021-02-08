@@ -3,10 +3,18 @@ import classNames from 'classnames';
 import arrow from '../assets/icons/Arrow-down.svg';
 import TableHeaderItem from './TableHeaderItem';
 
+export interface HeaderItemsInterface {
+	id: string
+	name: string
+	needSort: boolean
+	isActive: boolean
+}
+
 type Props = {
 	class: string;
-	headerItems?: string[];
-	onHeaderItemClick?(direction: string): void;
+	headerItems?: HeaderItemsInterface[];
+	onHeaderItemClick?(name: string, direction: string): void;
+	// isActive?: boolean
 };
 
 const Table: React.FC<Props> = props => {
@@ -28,8 +36,11 @@ const Table: React.FC<Props> = props => {
 					{props.headerItems.map((item, index) => (
 						<TableHeaderItem
 							key={index}
-							name={item}
-							onHeaderItemClick={props.onHeaderItemClick}
+							// name={item.name}
+							// needSort={item.needSort}
+							{...item}
+						  onHeaderItemClick={props.onHeaderItemClick}
+							// isActive={props.isActive}
 						/>
 					))}
 				</header>

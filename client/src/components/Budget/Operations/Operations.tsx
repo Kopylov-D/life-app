@@ -10,9 +10,15 @@ import {
 } from '../../../store/ducks/budget/selectors';
 import Loader from '../../UI/Loader';
 import DatePanel from '../DatePanel';
-import Table from '../../Table';
+import Table, { HeaderItemsInterface } from '../../Table';
 import NewTransaction from './NewTransaction';
 import Transaction from './Transaction';
+
+const headerItems: HeaderItemsInterface[] = [
+	{id: 'date', isActive: false, name: 'Дата', needSort: false },
+	{id: 'name', isActive: false, name: 'Значение', needSort: false },
+	{id: 'category', isActive: false, name: 'Категория', needSort: false },
+];
 
 const Operations: React.FC = () => {
 	const dispatch = useDispatch();
@@ -57,7 +63,7 @@ const Operations: React.FC = () => {
 				<Loader type="cube-grid" />
 			) : (
 				<div>
-					<Table class="" headerItems={['Дата', 'Значение', 'Категория']}>
+					<Table class="" headerItems={headerItems}>
 						<NewTransaction
 							categories={categories}
 							currentCategory={currentCategory}

@@ -1,26 +1,115 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import {
+	SetSortKey,
+	SetSortOrder,
+	SetVisibilityFilter,
+} from '../../../store/ducks/todos/actionCreators';
 import { updateTask, fetchDeleteTask } from '../../../store/ducks/todos/actions';
 import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
 import {
 	selectColors,
+	selectFiltredIssues,
 	selectIssues,
+	selectOrderedIssues,
 	selectTargets,
 	selectTargetsList,
 	selectTasks,
 } from '../../../store/ducks/todos/selectors';
-import Table from '../../Table';
+import Table, { HeaderItemsInterface } from '../../Table';
+import Toggle from '../../UI/Toggle';
 import IssuesItem from './IssuesItem';
 
 interface Props {}
 
+// const headerItems: HeaderItemsInterface[] = [
+// 	{ name: '', needSort: false, isActive: false },
+// 	{ name: 'Задача', needSort: true, isActive: false },
+// 	{ name: 'Приоритет', needSort: false, isActive: false },
+// 	{ name: 'Цель', needSort: false, isActive: false },
+// 	{ name: 'Истекает', needSort: true, isActive: false },
+// 	{ name: 'Создано', needSort: true, isActive: false },
+// ];
+
 const Issues: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 
-	const issues = useSelector(selectIssues);
+	const issues = useSelector(selectOrderedIssues);
 	const targetsList = useSelector(selectTargetsList);
 	const colors = useSelector(selectColors);
 	const targets = useSelector(selectTargets);
+
+	const [allIssues, setAllIssues] = useState<boolean>(true);
+	const [completedIssues, setCompletedIssues] = useState<boolean>(false);
+	const [notCompletedIssues, setNotCompletedIssues] = useState<boolean>(false);
+	const [activeIssues, setActiveIssues] = useState<boolean>(false);
+
+	const [headerItems, setHeaderItems] = useState<HeaderItemsInterface[]>([
+		{ id: '', name: '', needSort: false, isActive: false },
+		{ id: 'name', name: 'Задача', needSort: true, isActive: false },
+		{ id: 'priority', name: 'Приоритет', needSort: false, isActive: false },
+		{ id: 'target', name: 'Цель', needSort: false, isActive: false },
+		{ id: 'expiresIn', name: 'Истекает', needSort: true, isActive: false },
+		{ id: 'date', name: 'Создано', needSort: true, isActive: false },
+	]);
+
+	// const [toggleArr, setToggleArr] = useState([{''}]);
+
+	// const setFilter = filter => {
+	// 	switch (filter) {
+	// 		case 'all':
+	// 			return issues;
+	// 		case 'done':
+	// 			return issues.filter(i => i.isDone);
+	// 		case 'notDone':
+	// 			return issues.filter(i => !i.isDone);
+	// 		case 'active':
+	// 			return issues.filter(i => i.level > 0);
+	// 		default:
+	// 			return issues;
+	// 	}
+	// };
+
+	const showAll = () => {
+		setAllIssues(true);
+		setCompletedIssues(false);
+		setNotCompletedIssues(false);
+		setActiveIssues(false);
+
+		dispatch(SetVisibilityFilter('all'));
+	};
+
+	const showDone = () => {
+		setAllIssues(false);
+		setCompletedIssues(true);
+		setNotCompletedIssues(false);
+		setActiveIssues(false);
+
+		dispatch(SetVisibilityFilter('done'));
+	};
+
+	const showNotDone = () => {
+		setAllIssues(false);
+		setCompletedIssues(false);
+		setNotCompletedIssues(true);
+		setActiveIssues(false);
+
+		dispatch(SetVisibilityFilter('notDone'));
+	};
+
+	const onSort = (id: string, direction: 'asc' | 'desc') => {
+		// console.log(name, direction);
+		const updatedItems = headerItems.map(i => {
+			if (i.id === id) {
+				i.isActive = true;
+			} else i.isActive = false;
+			return i;
+		});
+
+		setHeaderItems(updatedItems);
+		dispatch(SetSortKey(id));
+		dispatch(SetSortOrder(direction));
+	};
 
 	const changeTaskHandler = (task: TaskInterface) => {
 		dispatch(updateTask(task));
@@ -32,10 +121,30 @@ const Issues: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className="issues">
-			<Table
-				class="issues"
-				headerItems={['', 'Задача', 'Приоритет', 'Цель', 'Истекает', 'Создано']}
-			>
+			<div className="issues__panel">
+				<Toggle
+					type="btn"
+					colorPrimary="primary"
+					textPrimary="Все"
+					flag={allIssues}
+					onSwitch={showAll}
+				/>
+				<Toggle
+					type="btn"
+					colorPrimary="primary"
+					textPrimary="Выполненные"
+					flag={completedIssues}
+					onSwitch={showDone}
+				/>
+				<Toggle
+					type="btn"
+					colorPrimary="primary"
+					textPrimary="Невыполненные"
+					flag={notCompletedIssues}
+					onSwitch={showNotDone}
+				/>
+			</div>
+			<Table class="issues" headerItems={headerItems} onHeaderItemClick={onSort}>
 				{issues.map(item => {
 					const targetName = targetsList.find(target => target.id === item.target)?.value;
 					return (

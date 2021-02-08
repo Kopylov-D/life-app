@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 type Item = {
-	id: string;
+	id?: string;
 	title: string;
-	isSelected: boolean;
-	onClick(): void;
+	isSelected?: boolean;
+	onClick?(): void;
 };
 
 type Props = {
@@ -27,7 +27,7 @@ const Dropdown: React.FC<Props> = ({ items }) => {
 
 	return (
 		<div className="dropdown">
-			<div className="dropdown__header">{headerTitle}</div>
+			{/* <div className="dropdown__header">{headerTitle}</div> */}
 			<ul className="dropdown__content">
 				{items.map(item => {
 					return (

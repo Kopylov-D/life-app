@@ -8,6 +8,9 @@ export interface TodosState {
 	cards: CardInterface[];
 	loadingStatus: LoadingStatus;
 	error: Error;
+	visibilityFilter: 'all' | 'done' | 'notDone' | 'active'
+	sortKey: string
+	sortOrder: 'asc' | 'desc'
 }
 
 export enum Priority {

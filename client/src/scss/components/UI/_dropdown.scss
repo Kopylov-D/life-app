@@ -1,0 +1,17 @@
+@import '../../variables';
+
+.with-dropdown {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  // right: 0%;
+
+
+  &__content {
+    padding: 1rem;
+    width: 100%;
+    background: cornsilk;
+  }
+}

@@ -185,7 +185,6 @@ body {
 		&-screen {
 			margin-right: 2rem;
 
-
 			& img:hover {
 				color: $c-primary;
 				stroke: $c-primary;
@@ -294,6 +293,10 @@ body {
 }
 .arrow {
 	cursor: pointer;
+
+	&--down {
+		transform: rotate(0);
+	}
 
 	&--up {
 		transform: rotate(180deg);

@@ -18,9 +18,12 @@ import {
 	// SetAlertActionInterface,
 	SetErrorActionInterface,
 	SetLoadingStatusActionInterface,
+	SetSortKeyActionInterface,
+	SetSortOrderActionInterface,
 	SetTargetsActionInterface,
 	SetTasksActionInterface,
 	SetTodosDataActionInterface,
+	SetVisibilityFilterActionInterface,
 	SyncStateActionInterface,
 	TodosActionTypes,
 } from './contracts/actionTypes';
@@ -53,12 +56,36 @@ export type TodosActions =
 	| ChangeTargetActionInterface
 	| AddTaskToCardActionInterface
 	| SyncStateActionInterface
-	// | SetAlertActionInterface;
+	| SetVisibilityFilterActionInterface
+	| SetSortKeyActionInterface
+	| SetSortOrderActionInterface;
+// | SetAlertActionInterface;
 
 export const setLoadingStatus = (
 	payload: LoadingStatus
 ): SetLoadingStatusActionInterface => ({
 	type: TodosActionTypes.SET_LOADING_STATUS,
+	payload,
+});
+
+export const SetVisibilityFilter = (
+	payload: TodosState['visibilityFilter']
+): SetVisibilityFilterActionInterface => ({
+	type: TodosActionTypes.SET_VISIBILITY_FILTER,
+	payload,
+});
+
+export const SetSortOrder = (
+	payload: TodosState['sortOrder']
+): SetSortOrderActionInterface => ({
+	type: TodosActionTypes.SET_SORT_ORDER,
+	payload,
+});
+
+export const SetSortKey = (
+	payload: TodosState['sortKey']
+): SetSortKeyActionInterface => ({
+	type: TodosActionTypes.SET_SORT_KEY,
 	payload,
 });
 

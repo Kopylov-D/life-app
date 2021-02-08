@@ -10,7 +10,10 @@ const initialState: TodosState = {
 	colors: [],
 	cards: [],
 	loadingStatus: LoadingStatus.LOADING,
-	error: { name: '', message: '' }
+	error: { name: '', message: '' },
+	visibilityFilter: 'all',
+	sortKey: 'date',
+	sortOrder: 'desc',
 };
 
 export const todosReducer = (state = initialState, action: TodosActions): TodosState => {
@@ -156,6 +159,21 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 			return {
 				...state,
 				targets,
+			};
+		case TodosActionTypes.SET_VISIBILITY_FILTER:
+			return {
+				...state,
+				visibilityFilter: action.payload,
+			};
+		case TodosActionTypes.SET_SORT_KEY:
+			return {
+				...state,
+				sortKey: action.payload,
+			};
+		case TodosActionTypes.SET_SORT_ORDER:
+			return {
+				...state,
+				sortOrder: action.payload,
 			};
 		default:
 			return state;

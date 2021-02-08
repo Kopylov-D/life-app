@@ -1,6 +1,15 @@
 @import '../../variables';
 
 .issues {
+
+	&__panel {
+		display: flex;
+		margin-bottom: 2rem;
+
+		& :first-child {
+			margin-right: 1rem;
+		}
+	}
 	&__table {
 		.table__header,
 		.table__item {

@@ -3,18 +3,23 @@ import classNames from 'classnames';
 import arrow from '../assets/icons/Arrow-down.svg';
 
 interface Props {
+	id: string
 	name: string;
-	onHeaderItemClick?(direction: string): void;
+	onHeaderItemClick?(name: string, direction: string): void;
+	needSort: boolean
+	isActive: boolean
+	// isActive?: boolean
 }
 
-const TableHeaderItem: React.FC<Props> = ({ name, onHeaderItemClick }) => {
-	const [hasSort, setHasSort] = useState<boolean>(!!onHeaderItemClick);
-	const [isActive, setIsActive] = useState<boolean>(!!onHeaderItemClick);
+const TableHeaderItem: React.FC<Props> = ({ id, name, needSort, isActive, onHeaderItemClick }) => {
+	// const [hasSort, setHasSort] = useState<boolean>(needSort);
+	// const [isActive, setIsActive] = useState<boolean>(false);
 	const [direction, setDirection] = useState<'asc' | 'desc'>('asc');
 
 	const onClick = () => {
-		if (hasSort) {
-			onHeaderItemClick!(direction);
+		if (needSort) {
+			onHeaderItemClick!(id, direction);
+			// setIsActive(true)
 			direction === 'asc' ? setDirection('desc') : setDirection('asc');
 		}
 	};
@@ -22,9 +27,9 @@ const TableHeaderItem: React.FC<Props> = ({ name, onHeaderItemClick }) => {
 	return (
 		<div className={classNames('table__header-item', { active: isActive })} onClick={onClick}>
 			<span>{name}</span>
-			{hasSort && (
+			{needSort && isActive && (
 				<img
-					className={classNames('arrow', { 'arrow-down': direction === 'desc' })}
+					className={classNames('arrow', { 'arrow--down': direction === 'desc' }, { 'arrow--up': direction === 'asc' })}
 					src={arrow}
 					alt=""
 				/>

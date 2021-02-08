@@ -15,7 +15,10 @@ export enum TodosActionTypes {
 	SET_LOADING_STATUS = 'SET_LOADING',
 	SET_ERROR = 'SET_ERROR',
 	SET_TODOS_DATA = 'SET_TODOS_DATA',
-	SYNC_STATE= 'SYNC_STATE',
+	SYNC_STATE = 'SYNC_STATE',
+	SET_VISIBILITY_FILTER = 'SET_VISIBILITY_FILTER',
+	SET_SORT_KEY = 'SET_SORT_KEY',
+	SET_SORT_ORDER = 'SET_SORT_ORDER',
 
 	ADD_TASK_TO_CARD = 'ADD_TASK_TO_CARD',
 
@@ -43,6 +46,21 @@ export enum TodosActionTypes {
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_LOADING_STATUS;
 	payload: LoadingStatus;
+}
+
+export interface SetVisibilityFilterActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_VISIBILITY_FILTER;
+	payload: TodosState['visibilityFilter'];
+}
+
+export interface SetSortKeyActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_SORT_KEY;
+	payload: TodosState['sortKey'];
+}
+
+export interface SetSortOrderActionInterface extends Action<TodosActionTypes> {
+	type: TodosActionTypes.SET_SORT_ORDER;
+	payload: TodosState['sortOrder'];
 }
 
 // export interface SetAlertActionInterface extends Action<TodosActionTypes> {
