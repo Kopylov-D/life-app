@@ -41,9 +41,10 @@ export type FiltredDateType = {
 };
 
 export enum Priority {
-	'high',
-	'middle',
-	'low',
+	none = 0,
+	high = 1,
+	middle = 2,
+	low = 3,
 }
 
 // export enum Level {

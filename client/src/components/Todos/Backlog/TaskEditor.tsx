@@ -13,15 +13,22 @@ import { useSelector } from 'react-redux';
 import { selectTargetsList } from '../../../store/ducks/todos/selectors';
 import {
 	ColorInterface,
+	Priority,
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
 import useColorName from '../../../hooks/color.hook';
 import EditFileIcon from '../../UI/Icons/EditFileIcon';
-import { isArray } from 'util';
 import Modal from '../../UI/Modal';
 import Textarea from '../../UI/Textarea';
 import Dropdown from '../../UI/Dropdown';
+
+const priorityPickerItems = [
+	{ id: 1, name: 'Высокий' },
+	{ id: 2, name: 'Средний' },
+	{ id: 3, name: 'Низкий' },
+	{ id: 0, name: 'Без приоритета' },
+];
 
 interface Props {
 	type: 'edit' | 'create';
@@ -43,6 +50,7 @@ interface Props {
 	color?: string;
 	inArchive?: boolean;
 	expiresIn?: Date;
+	priority?: Priority
 }
 
 const TaskEditor: React.FC<Props> = props => {
@@ -56,7 +64,7 @@ const TaskEditor: React.FC<Props> = props => {
 	const [priorityPickerIsOpen, setPriorityPickerIsOpen] = useState<boolean>(false);
 	const selectTargets = useSelector(selectTargetsList);
 	const [parentTarget, setParentTarget] = useState<string>();
-	const [priority, setPriority] = useState<string>();
+	const [priority, setPriority] = useState<Priority>(props.priority || Priority.none);
 	const [notesInput, setNotesInput] = useState<string>(props.notes!);
 	// const [color, setColor] = useState<string | undefined>(props.color);
 
@@ -90,6 +98,7 @@ const TaskEditor: React.FC<Props> = props => {
 					subtask: props.subtask,
 					inArchive: props.inArchive!,
 					expiresIn: currentDate,
+					priority
 				};
 			} else {
 				task = {
@@ -103,6 +112,7 @@ const TaskEditor: React.FC<Props> = props => {
 					target: parentTarget,
 					inArchive: false,
 					expiresIn: currentDate ? currentDate : undefined,
+					priority
 				};
 			}
 
@@ -121,12 +131,19 @@ const TaskEditor: React.FC<Props> = props => {
 
 	const onTogglePriorityPickerHandler = (e: React.MouseEvent) => {
 		console.log(e);
-		
-		setPriorityPickerIsOpen(!priorityPickerIsOpen)
+
+		setPriorityPickerIsOpen(!priorityPickerIsOpen);
 	};
+
+	const onChangePriorityHandler = (id: Priority) => {
+		setPriority(id)
+		setPriorityPickerIsOpen(false)
+	}
 
 	const onChangeDateHandler = (value: Date | Date[]) => {
 		if (Array.isArray(value)) {
+			console.log(value);
+			
 			setCurrentDate(value[0]);
 		} else setCurrentDate(value);
 
@@ -183,21 +200,7 @@ const TaskEditor: React.FC<Props> = props => {
 							alt=""
 							onClick={onTogglePriorityPickerHandler}
 						></img>
-						{priorityPickerIsOpen && (
-							<Dropdown
-								items={[
-									{
-										title: 'dsfsdf',
-									},
-									{
-										title: 'dsfsdf',
-									},
-									{
-										title: 'dsfsdf',
-									},
-								]}
-							/>
-						)}
+						{priorityPickerIsOpen && <Dropdown items={priorityPickerItems} onClick={onChangePriorityHandler} value={priority}/>}
 					</div>
 
 					{props.type === 'edit' && (

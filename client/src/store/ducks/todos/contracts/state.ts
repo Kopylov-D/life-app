@@ -14,9 +14,10 @@ export interface TodosState {
 }
 
 export enum Priority {
-	'high' = '1',
-	'middle' = '2',
-	'low' = '3',
+	none = 0,
+	high = 1,
+	middle = 2,
+	low = 3,
 }
 
 export interface TaskInterface {
