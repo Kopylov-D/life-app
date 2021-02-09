@@ -39,7 +39,7 @@ const TodosPage = () => {
 			<Menu items={menuItems} />
 			<div className="main__content">
 				{loading === LoadingStatus.LOADING ? (
-					<Loader />
+					<Loader size="small" type="cube-grid" />
 				) : (
 					<div className="todos">{routes}</div>
 				)}

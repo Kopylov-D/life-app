@@ -51,7 +51,11 @@ const Task: React.FC<Props> = props => {
 	}, [props.subtasks]);
 
 	const onChecked = () => {
-		props.onChecked({ ...props.task, isDone: !props.isDone, inArchive: !props.inArchive });
+		props.onChecked({
+			...props.task,
+			isDone: !props.isDone,
+			inArchive: !props.inArchive,
+		});
 	};
 
 	const onDeleteTask = () => {
@@ -87,14 +91,9 @@ const Task: React.FC<Props> = props => {
 				<div className="task__content">
 					<Checkbox
 						checked={props.isDone}
-						id={props._id}
 						onChangeHandler={onChecked}
 						value={props.name}
 					/>
-
-					{/* <span className="task__expand material-icons">
-						{subtasksIsOpen ? 'expand_less' : 'expand_more'}
-					</span> */}
 
 					<img
 						onClick={onToggleSubtasks}
@@ -107,7 +106,7 @@ const Task: React.FC<Props> = props => {
 						{numDoneSubtask}/{numOfSubtask}
 					</div>
 				</div>
-				<img src={trash} alt="" onClick={onDeleteTask}/>
+				<img src={trash} alt="" onClick={onDeleteTask} />
 			</div>
 
 			{subtasksIsOpen && (
@@ -118,16 +117,8 @@ const Task: React.FC<Props> = props => {
 								<Subtask
 									key={subtask._id}
 									{...subtask}
-									// _id={subtask._id}
-									// date={subtask.date}
-									// isDone={subtask.isDone}
-									// level={subtask.level}
-									// name={subtask.name}
-									// target={subtask.target}
-									// task={subtask.task}
 									subtask={subtask}
 									colors={props.colors}
-									// parentTask={}
 								/>
 							);
 						}
@@ -154,23 +145,12 @@ const Task: React.FC<Props> = props => {
 					<div className="task__content">
 						<Checkbox
 							checked={props.isDone}
-							id={props._id}
 							onChangeHandler={onChecked}
 							value={props.name}
 						/>
-
-						{/* <span className="task__expand material-icons" onClick={onToggleSubtasks}>
-							{subtasksIsOpen ? 'expand_less' : 'expand_more'}
-						</span> */}
 					</div>
-					<img src={trash} alt="" onClick={onDeleteTask}/>
+					<img src={trash} alt="" onClick={onDeleteTask} />
 				</div>
-
-				{/* {subtasksIsOpen && (
-					<div className="task__extend">
-						<textarea></textarea>
-					</div>
-				)} */}
 			</Fragment>
 		);
 	}

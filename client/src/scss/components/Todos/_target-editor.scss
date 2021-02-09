@@ -10,6 +10,10 @@
 		margin-bottom: 2rem;
 	}
 
+	&__checkbox {
+		height: 25px;
+	}
+
 	&__options {
 		display: flex;
 		justify-content: space-evenly;

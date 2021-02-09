@@ -28,12 +28,13 @@
 	&__custom {
 		position: relative;
 		display: inline-block;
-		width: 16px;
-		height: 16px;
+		width: 23px;
+		height: 23px;
 		background: $c-white;
 		border-radius: $border-radius;
+		border: 1px solid grey;
 		// vertical-align: middle;
-		margin-right: 10px;
+		// margin-right: 10px;
 
 		&::before {
 			content: '';

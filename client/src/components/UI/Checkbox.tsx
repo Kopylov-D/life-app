@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface Props {
-	id: string;
+	// id: string;
 	checked: boolean;
 	value?: string;
 	onChangeHandler(): void;
 }
 
-const Checkbox: React.FC<Props> = ({ id, checked, value, onChangeHandler }) => {
+const Checkbox: React.FC<Props> = ({ checked, value, onChangeHandler }) => {
 
 	const idHtmlFor = Math.random().toString()
 

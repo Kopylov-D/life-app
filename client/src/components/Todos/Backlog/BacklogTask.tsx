@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { Fragment, useState } from 'react';
-import edit from '../../../assets/icons/Pencil.svg';
+import { ReactComponent as Edit } from '../../../assets/icons/pencil-outline.svg';
 import {
 	ColorInterface,
 	TargetInterface,
@@ -10,6 +10,7 @@ import Checkbox from '../../UI/Checkbox';
 import TaskEditor from './TaskEditor';
 import useOutsideClick from '../../../hooks/outsideAlert.hook';
 import useColorName from '../../../hooks/color.hook';
+import Icon from '../../UI/Icons/Icon';
 
 interface Props {
 	deleteTaskHandler(id: string): void;
@@ -62,12 +63,14 @@ const BacklogTask: React.FC<Props> = ({
 					})}
 				>
 					<div className="backlog-task__content">
-						<Checkbox checked={task.isDone} id={task._id} onChangeHandler={onChecked} />
-						<div>{task.name}</div>
+						<Checkbox checked={task.isDone} onChangeHandler={onChecked} />
+						<div className='backlog-task__name'>{task.name}</div>
 					</div>
 
 					<div className="options">
-						<img src={edit} alt="" onClick={() => setIsVisible(true)}></img>
+						<Icon name="edit" onClick={() => setIsVisible(true)}>
+							<Edit />
+						</Icon>
 					</div>
 				</div>
 			)}

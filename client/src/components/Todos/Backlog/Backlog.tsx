@@ -35,7 +35,7 @@ const Backlog: React.FC<Props> = props => {
 
 	const [addTargetModalIsOpen, setAddTargetModalIsOpen] = useState<boolean>(false);
 	const [taskEditorIsOpen, setTaskEditorIsOpen] = useState<boolean>(false);
-	
+
 	const addTargetHandler = () => {
 		setAddTargetModalIsOpen(true);
 	};
@@ -72,12 +72,6 @@ const Backlog: React.FC<Props> = props => {
 					<Target
 						key={target._id}
 						{...target}
-						// _id={target._id}
-						// notes={target.notes}
-						// date={target.date}
-						// isDone={target.isDone}
-						// name={target.name}
-						// color={target.color}
 						colors={colors}
 						deleteTargetHandler={deleteTargetHandler}
 						changeTargetHandler={changeTargetHandler}
@@ -87,20 +81,15 @@ const Backlog: React.FC<Props> = props => {
 					Добавить цель
 				</div>
 			</div>
-			{/* <Table class="backlog" headerItems={['Срок выполнения', 'Название', 'Приоритет']}> */}
 			{taskEditorIsOpen ? (
 				<TaskEditor
 					type="create"
 					colors={colors}
 					targets={targets}
-					// task={task}
 					submit={createTaskHandler}
 					cancelEditor={() => setTaskEditorIsOpen(false)}
 				/>
 			) : (
-				// <Button  size="small">
-				// 	Добавить задачу
-				// </Button>
 				<div className="backlog__add-task" onClick={() => setTaskEditorIsOpen(true)}>
 					<img src={add} alt="" /> Добавить задачу
 				</div>
@@ -108,16 +97,6 @@ const Backlog: React.FC<Props> = props => {
 			{tasks.map(task => (
 				<BacklogTask
 					key={task._id}
-					// _id={task._id}
-					// notes={task.notes}
-					// date={task.date}
-					// isDone={task.isDone}
-					// level={task.level}
-					// name={task.name}
-					// color={task.color}
-					// target={task.target}
-					// subtask={task.subtask}
-					// {...task}
 					colors={colors}
 					targets={targets}
 					changeTaskHandler={changeTaskHandler}
@@ -125,7 +104,6 @@ const Backlog: React.FC<Props> = props => {
 					task={task}
 				/>
 			))}
-			{/* </Table> */}
 
 			{addTargetModalIsOpen && (
 				<TargetEditor

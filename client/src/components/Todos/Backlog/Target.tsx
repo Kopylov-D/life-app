@@ -52,6 +52,8 @@ const Target: React.FC<Props> = props => {
 					name={props.name}
 					notes={props.notes}
 					color={props.color}
+					expiresIn={props.expiresIn}
+					priority={props.priority}
 					type="edit"
 					closeEditor={() => setEditorIsOpen(false)}
 					submit={props.changeTargetHandler}
