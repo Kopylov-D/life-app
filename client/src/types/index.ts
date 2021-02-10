@@ -67,3 +67,9 @@ export interface BackdropInterface  {
 export enum Icons {
 	closec = 'closec'
 }
+
+export enum Colors {
+	red = 'red',
+	orange = 'orange',
+	blue = 'blue'
+}

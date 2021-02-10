@@ -17,6 +17,7 @@ import { toDate } from '../../../services/utils/dateUtils';
 import Calendar from '../Calendar';
 import PriorityPicker from '../../PriorityPicker';
 import Icon from '../../UI/Icons/Icon';
+import { setColor } from '../../../services/utils/commonUtils';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -127,6 +128,13 @@ const TargetEditor: React.FC<Props> = props => {
 				<Textarea value={notesInput} onChange={onChangeArea} />
 
 				<div className="target-editor__options">
+					<span className="target-editor__checkbox">
+						<Checkbox
+							checked={isChecked}
+							color={setColor(priority)}
+							onChangeHandler={() => setIsChecked(!isChecked)}
+						/>
+					</span>
 					<PriorityPicker
 						priority={priority}
 						changePriority={(id: number) => setPriority(id)}
@@ -134,12 +142,6 @@ const TargetEditor: React.FC<Props> = props => {
 					<Icon name="clock" onClick={() => setCalendarIsOpen(true)}>
 						<Clock />
 					</Icon>
-					<span className="target-editor__checkbox">
-						<Checkbox
-							checked={isChecked}
-							onChangeHandler={() => setIsChecked(!isChecked)}
-						/>
-					</span>
 
 					{props.type === 'edit' && (
 						<Icon name="trash" onClick={onDeleteTarget}>

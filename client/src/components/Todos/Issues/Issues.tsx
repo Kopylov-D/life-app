@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	SetSortKey,
@@ -9,35 +9,23 @@ import { updateTask, fetchDeleteTask } from '../../../store/ducks/todos/actions'
 import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
 import {
 	selectColors,
-	selectFiltredIssues,
-	selectIssues,
 	selectOrderedIssues,
 	selectTargets,
 	selectTargetsList,
-	selectTasks,
+	selectVisibilityFilter,
 } from '../../../store/ducks/todos/selectors';
 import Table, { HeaderItemsInterface } from '../../Table';
 import Toggle from '../../UI/Toggle';
 import IssuesItem from './IssuesItem';
 
-interface Props {}
-
-// const headerItems: HeaderItemsInterface[] = [
-// 	{ name: '', needSort: false, isActive: false },
-// 	{ name: 'Задача', needSort: true, isActive: false },
-// 	{ name: 'Приоритет', needSort: false, isActive: false },
-// 	{ name: 'Цель', needSort: false, isActive: false },
-// 	{ name: 'Истекает', needSort: true, isActive: false },
-// 	{ name: 'Создано', needSort: true, isActive: false },
-// ];
-
-const Issues: React.FC<Props> = (props: Props) => {
+const Issues: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const issues = useSelector(selectOrderedIssues);
 	const targetsList = useSelector(selectTargetsList);
 	const colors = useSelector(selectColors);
 	const targets = useSelector(selectTargets);
+	const visibilityFilter = useSelector(selectVisibilityFilter);
 
 	const [allIssues, setAllIssues] = useState<boolean>(true);
 	const [completedIssues, setCompletedIssues] = useState<boolean>(false);
@@ -50,25 +38,12 @@ const Issues: React.FC<Props> = (props: Props) => {
 		{ id: 'priority', name: 'Приоритет', needSort: false, isActive: false },
 		{ id: 'target', name: 'Цель', needSort: false, isActive: false },
 		{ id: 'expiresIn', name: 'Истекает', needSort: true, isActive: false },
-		{ id: 'date', name: 'Создано', needSort: true, isActive: false },
+		{ id: 'date', name: 'Создано', needSort: true, isActive: true },
 	]);
 
-	// const [toggleArr, setToggleArr] = useState([{''}]);
-
-	// const setFilter = filter => {
-	// 	switch (filter) {
-	// 		case 'all':
-	// 			return issues;
-	// 		case 'done':
-	// 			return issues.filter(i => i.isDone);
-	// 		case 'notDone':
-	// 			return issues.filter(i => !i.isDone);
-	// 		case 'active':
-	// 			return issues.filter(i => i.level > 0);
-	// 		default:
-	// 			return issues;
-	// 	}
-	// };
+	useEffect(() => {
+		showAll();
+	}, []);
 
 	const showAll = () => {
 		setAllIssues(true);
@@ -97,8 +72,16 @@ const Issues: React.FC<Props> = (props: Props) => {
 		dispatch(SetVisibilityFilter('notDone'));
 	};
 
+	const showActive = () => {
+		setAllIssues(false);
+		setCompletedIssues(false);
+		setNotCompletedIssues(false);
+		setActiveIssues(true);
+
+		dispatch(SetVisibilityFilter('active'));
+	};
+
 	const onSort = (id: string, direction: 'asc' | 'desc') => {
-		// console.log(name, direction);
 		const updatedItems = headerItems.map(i => {
 			if (i.id === id) {
 				i.isActive = true;
@@ -142,6 +125,13 @@ const Issues: React.FC<Props> = (props: Props) => {
 					textPrimary="Невыполненные"
 					flag={notCompletedIssues}
 					onSwitch={showNotDone}
+				/>
+				<Toggle
+					type="btn"
+					colorPrimary="primary"
+					textPrimary="Активные"
+					flag={activeIssues}
+					onSwitch={showActive}
 				/>
 			</div>
 			<Table class="issues" headerItems={headerItems} onHeaderItemClick={onSort}>

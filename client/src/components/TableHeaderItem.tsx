@@ -1,38 +1,59 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-import arrow from '../assets/icons/Arrow-down.svg';
+// import arrow from '../assets/icons/Arrow-down.svg';
+// import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down-outline.svg';
+// import { ReactComponent as ChevronUp } from '../assets/icons/chevron-up-outline.svg';
+import { ReactComponent as ArrowUp } from '../assets/icons/arrow-up-outline.svg';
+import { ReactComponent as ArrowDown } from '../assets/icons/arrow-down-outline.svg';
+import Icon from './UI/Icons/Icon';
 
 interface Props {
-	id: string
+	id: string;
 	name: string;
 	onHeaderItemClick?(name: string, direction: string): void;
-	needSort: boolean
-	isActive: boolean
+	needSort: boolean;
+	isActive: boolean;
 	// isActive?: boolean
 }
 
-const TableHeaderItem: React.FC<Props> = ({ id, name, needSort, isActive, onHeaderItemClick }) => {
-	// const [hasSort, setHasSort] = useState<boolean>(needSort);
-	// const [isActive, setIsActive] = useState<boolean>(false);
-	const [direction, setDirection] = useState<'asc' | 'desc'>('asc');
+const TableHeaderItem: React.FC<Props> = ({
+	id,
+	name,
+	needSort,
+	isActive,
+	onHeaderItemClick,
+}) => {
+	const [direction, setDirection] = useState<'asc' | 'desc'>('desc');
 
 	const onClick = () => {
 		if (needSort) {
-			onHeaderItemClick!(id, direction);
-			// setIsActive(true)
-			direction === 'asc' ? setDirection('desc') : setDirection('asc');
+			let newDirection = direction;
+			if (isActive)
+				direction === 'asc' ? (newDirection = 'desc') : (newDirection = 'asc');
+			setDirection(newDirection);
+			onHeaderItemClick!(id, newDirection);
 		}
 	};
 
 	return (
-		<div className={classNames('table__header-item', { active: isActive })} onClick={onClick}>
+		<div
+			className={classNames('header-item', { 'header-item--active': isActive })}
+			onClick={onClick}
+		>
 			<span>{name}</span>
-			{needSort && isActive && (
-				<img
-					className={classNames('arrow', { 'arrow--down': direction === 'desc' }, { 'arrow--up': direction === 'asc' })}
-					src={arrow}
-					alt=""
-				/>
+			{needSort && (
+				<div className={classNames('header-item__sort-icons', { active: isActive })}>
+					<Icon
+						name={classNames(
+							'arrow',
+							{ 'icon--ghost': needSort },
+							{ 'icon--hiddenn': isActive },
+							{ 'icon__arrow--active': isActive }
+						)}
+					>
+						{direction === 'asc' ? <ArrowUp /> : <ArrowDown />}
+					</Icon>
+				</div>
 			)}
 		</div>
 	);

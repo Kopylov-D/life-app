@@ -11,6 +11,7 @@ import TaskEditor from './TaskEditor';
 import useOutsideClick from '../../../hooks/outsideAlert.hook';
 import useColorName from '../../../hooks/color.hook';
 import Icon from '../../UI/Icons/Icon';
+import { setColor } from '../../../services/utils/commonUtils';
 
 interface Props {
 	deleteTaskHandler(id: string): void;
@@ -63,7 +64,7 @@ const BacklogTask: React.FC<Props> = ({
 					})}
 				>
 					<div className="backlog-task__content">
-						<Checkbox checked={task.isDone} onChangeHandler={onChecked} />
+						<Checkbox checked={task.isDone} color={setColor(task.priority)} onChangeHandler={onChecked} />
 						<div className='backlog-task__name'>{task.name}</div>
 					</div>
 

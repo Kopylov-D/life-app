@@ -13,10 +13,13 @@
 	&__content {
 		display: flex;
 		align-items: center;
+		overflow: hidden;
 	}
 
 	&__text {
 		margin-left: 5px;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	&__button {

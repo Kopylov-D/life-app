@@ -2,24 +2,25 @@
 
 .target-editor {
 	&__modal {
-		max-width: 350px;
+		// max-width: 350px;
+		min-width: 250px;
 	}
 
 	& textarea {
 		width: 100%;
 		margin-bottom: 2rem;
+		height: 100px;
 	}
 
 	&__checkbox {
-		height: 25px;
+		height: 20px;
 	}
 
 	&__options {
 		display: flex;
 		justify-content: space-evenly;
-		height: 20px;
 		align-items: stretch;
-		margin-bottom: 20px;
+		margin-bottom: 2rem;
 	}
 
 	&__buttons {

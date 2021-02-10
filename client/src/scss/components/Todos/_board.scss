@@ -1,6 +1,9 @@
 @import '../../variables';
 
 .board {
+	// max-width: 2000px;
+	position: absolute;
+	left: 20px;
 
 	&__cards {
 		display: flex;

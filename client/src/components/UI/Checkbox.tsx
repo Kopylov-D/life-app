@@ -1,15 +1,17 @@
+import classNames from 'classnames';
 import React from 'react';
+import { Colors } from '../../types';
 
 interface Props {
 	// id: string;
 	checked: boolean;
 	value?: string;
+	color?: Colors;
 	onChangeHandler(): void;
 }
 
-const Checkbox: React.FC<Props> = ({ checked, value, onChangeHandler }) => {
-
-	const idHtmlFor = Math.random().toString()
+const Checkbox: React.FC<Props> = ({ checked, value, color, onChangeHandler }) => {
+	const idHtmlFor = Math.random().toString();
 
 	return (
 		<label htmlFor={idHtmlFor} className="checkbox">
@@ -20,8 +22,10 @@ const Checkbox: React.FC<Props> = ({ checked, value, onChangeHandler }) => {
 				checked={checked}
 				onChange={onChangeHandler}
 			/>
-			<span className="checkbox__custom"></span>
-      <span className="checkbox__text">{value}</span>
+			<span
+				className={classNames('checkbox__custom', { [`checkbox--${color}`]: color })}
+			></span>
+			<span className="checkbox__text">{value}</span>
 		</label>
 	);
 };

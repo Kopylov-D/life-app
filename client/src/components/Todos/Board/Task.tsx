@@ -14,6 +14,7 @@ import Input from '../../UI/Input';
 import Subtask from './Subtask';
 import shevron from '../../../assets/icons/Shevron-down.svg';
 import trash from '../../../assets/icons/Trash.svg';
+import { setColor } from '../../../services/utils/commonUtils';
 
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
@@ -92,8 +93,11 @@ const Task: React.FC<Props> = props => {
 					<Checkbox
 						checked={props.isDone}
 						onChangeHandler={onChecked}
-						value={props.name}
+						// value={props.name}
+						color={setColor(props.priority)}
 					/>
+
+					<span className="task__text">{props.name}</span>
 
 					<img
 						onClick={onToggleSubtasks}
@@ -147,6 +151,7 @@ const Task: React.FC<Props> = props => {
 							checked={props.isDone}
 							onChangeHandler={onChecked}
 							value={props.name}
+							color={setColor(props.priority)}
 						/>
 					</div>
 					<img src={trash} alt="" onClick={onDeleteTask} />
