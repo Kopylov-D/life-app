@@ -9,11 +9,7 @@ import {
 } from '../../../store/ducks/todos/contracts/state';
 import trash from '../../../assets/icons/Trash.svg';
 import arrow from '../../../assets/icons/Arrow-left-square.svg';
-import Icon from '../../UI/Icons/Icon';
-import CloseIcon from '../../UI/Icons/CloseIcon';
-import EditFileIcon from '../../UI/Icons/EditFileIcon';
 
-// interface Props extends SubtaskInterface {}
 interface Props extends SubtaskInterface {
 	subtask: SubtaskInterface;
 	colors: ColorInterface[];

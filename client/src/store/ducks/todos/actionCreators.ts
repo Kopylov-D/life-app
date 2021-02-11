@@ -1,4 +1,5 @@
 // import { AlertInterface } from '../../middleaware/alert.middleware';
+import { AxiosAdapter, AxiosError } from 'axios';
 import { LoadingStatus } from '../../types';
 import {
 	AddCardActionInterface,
@@ -96,7 +97,7 @@ export const SetSortKey = (
 // 	payload,
 // });
 
-export const setError = (payload: Error): SetErrorActionInterface => ({
+export const setError = (payload: AxiosError): SetErrorActionInterface => ({
 	type: TodosActionTypes.SET_ERROR,
 	payload,
 });

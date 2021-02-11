@@ -1,5 +1,6 @@
 import { createStore, compose, applyMiddleware, Middleware } from 'redux';
 import thunk from 'redux-thunk';
+import { alertMiddleware } from './middleaware/alert.middleware';
 // import { syncData } from './ducks/todos/actions';
 // import { alertMiddleware } from './middleaware/alert.middleware';
 import { rootReducer } from './rootReducer';
@@ -17,6 +18,8 @@ const syncMiddleWare: Middleware = store => next => action => {
 
 	if (syncActions.includes(action.type)) {
 		// store.dispatch()
+		console.log(action.payload);
+		
 	}
 
 	return next(action);

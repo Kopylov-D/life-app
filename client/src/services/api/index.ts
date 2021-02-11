@@ -27,9 +27,11 @@ export const getAuthData = () => {
 export const instance: AxiosInstance = axios.create();
 
 instance.interceptors.request.use(config => {
-	config.headers['Authorization'] = `Bearer ${getAuthData().token}`;
+	const token = getAuthData().token;
+	config.headers['Authorization'] = `Bearer ${token}`;
 	return config;
 });
+
 
 export interface Response<T> {
 	message: string;

@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { Action } from 'redux';
 // import { AlertInterface } from '../../../middleaware/alert.middleware';
 import { LoadingStatus } from '../../../types';
@@ -70,7 +71,7 @@ export interface SetSortOrderActionInterface extends Action<TodosActionTypes> {
 
 export interface SetErrorActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_ERROR;
-	payload: Error;
+	payload: AxiosError;
 }
 
 export interface SyncStateActionInterface extends Action<TodosActionTypes> {

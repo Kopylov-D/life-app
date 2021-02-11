@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { LoadingStatus } from '../../../types';
 
 export interface TodosState {
@@ -7,7 +8,7 @@ export interface TodosState {
 	colors: ColorInterface[];
 	cards: CardInterface[];
 	loadingStatus: LoadingStatus;
-	error: Error;
+	error?: AxiosError;
 	visibilityFilter: 'all' | 'done' | 'notDone' | 'active'
 	sortKey: string
 	sortOrder: 'asc' | 'desc'

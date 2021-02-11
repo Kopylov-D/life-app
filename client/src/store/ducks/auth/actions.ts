@@ -1,103 +1,79 @@
+import { ThunkAction } from 'redux-thunk';
 import { authApi } from '../../../services/api/authApi';
 import { getAuthData } from '../../../services/api/index';
-import { AuthData } from '../../../types';
-import {
-	AUTH_START,
-	AUTH_SUCCESS,
-	AUTH_LOGOUT,
-	AUTH_MESSAGE,
-} from './actionTypes';
+import { RootState } from '../../rootReducer';
+import { LoadingStatus } from '../../types';
+import { showAlert } from '../common/actions';
+import { CommonActions } from '../common/contracts/actionTypes';
+import { AuthActions, setAuthData, setLoadingStatus, setLogout } from './actionCreators';
+import { AuthDataInterface } from './contracts/state';
 
-export function register(email: string, password: string) {
-	return async (dispatch: any) => {
-		dispatch(authStart());
+type ThunkType = ThunkAction<
+	Promise<void>,
+	RootState,
+	unknown,
+	AuthActions | CommonActions
+>;
+
+export function register(email: string, password: string): ThunkType {
+	return async dispatch => {
+		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
-			const { data } = await authApi.register(email, password);
-			dispatch(authMessage(data.message));
+			await authApi.register(email, password);
+			dispatch(
+				showAlert({
+					text: 'Пользователь создан! Выполните вход',
+					delay: 3000,
+					type: 'success',
+				})
+			);
+			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
-			dispatch(authMessage(e.message));
+			dispatch(showAlert({ text: e.message, delay: 3000, type: 'error' }));
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 	};
 }
 
-export function login(email: string, password: string) {
-	return async (dispatch: any) => {
-		dispatch(authStart());
+export function login(email: string, password: string): ThunkType {
+	return async dispatch => {
+		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
 			const { data } = await authApi.login(email, password);
-			const maxAge = 3600 * 24 * 30
+			console.log(data);
+			
+			const maxAge = 3600 * 24 * 30;
 			document.cookie = `jwtToken=${data.token}; max-age=${maxAge}`;
 			document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
-			dispatch(authSuccess(data));
-			dispatch(authMessage(''))
+			dispatch(setAuthData(data));
 		} catch (e) {
-			dispatch(authMessage(e.message));
 			console.log(e);
+			dispatch(showAlert({ text: e, delay: 3000, type: 'error' }));
+			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 	};
 }
 
-export function autoLogin() {
-	return async (dispatch: any) => {
+export function autoLogin(): ThunkType {
+	return async dispatch => {
 		const { token, userId } = getAuthData();
-
 		if (token && userId) {
-			const authData: AuthData = {
+			const authData: AuthDataInterface = {
 				token,
 				userId,
 			};
-			dispatch(authSuccess(authData));
+			dispatch(setAuthData(authData));
 		} else {
 			dispatch(logout());
 		}
 	};
 }
 
-export function logout() {
-	document.cookie = `jwtToken=''; max-age=-1`;
-	document.cookie = `userId=''; max-age=-1`;
-	return {
-		type: AUTH_LOGOUT,
-	};
-}
-
-type AuthStartType = {
-	type: typeof AUTH_START;
-};
-
-type AuthSuccessType = {
-	type: typeof AUTH_SUCCESS;
-	authData: AuthDataType;
-};
-
-type AuthMessageType = {
-	type: typeof AUTH_MESSAGE;
-	message: string;
-};
-
-type AuthDataType = {
-	message?: string;
-	token?: string | null;
-	userId?: string;
-};
-
-export function authStart(): AuthStartType {
-	return {
-		type: AUTH_START,
-	};
-}
-
-export function authSuccess(authData: AuthDataType): AuthSuccessType {
-	return {
-		type: AUTH_SUCCESS,
-		authData,
-	};
-}
-
-export function authMessage(message: string): AuthMessageType {
-	return {
-		type: AUTH_MESSAGE,
-		message,
+export function logout(): ThunkType {
+	return async dispatch => {
+		document.cookie = `jwtToken=''; max-age=-1`;
+		document.cookie = `userId=''; max-age=-1`;
+		dispatch(setLogout());
 	};
 }

@@ -10,7 +10,7 @@ const initialState: TodosState = {
 	colors: [],
 	cards: [],
 	loadingStatus: LoadingStatus.LOADING,
-	error: { name: '', message: '' },
+	error: undefined,
 	visibilityFilter: 'all',
 	sortKey: 'date',
 	sortOrder: 'desc',

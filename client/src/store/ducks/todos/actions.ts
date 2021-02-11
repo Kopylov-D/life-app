@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { ThunkAction } from 'redux-thunk';
 // import RefreshIcon from '../../../components/UI/Icons/RefreshIcon';
 import { todosApi } from '../../../services/api/todosApi';
@@ -157,8 +158,9 @@ export function fetchAddTask(task: TaskInterface): ThunkType {
 			const { data } = await todosApi.addTask(task);
 			dispatch(addTask(data));
 		} catch (e) {
-			console.log(e);
+			console.log(e.response.status);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+			dispatch(setError(e))
 		}
 	};
 }

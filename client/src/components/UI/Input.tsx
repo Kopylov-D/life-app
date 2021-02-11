@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import classnames from 'classnames';
-import { useInput } from '../../hooks/input.hook';
 
 interface Props {
 	value: string;
@@ -25,15 +24,16 @@ function isInvalid({ valid, touched }: Props) {
 // }
 
 const Input: React.FC<Props> = props => {
-	// const input = useInput({initialValue: ''})
+	const ref = useRef<HTMLInputElement>(null)
 
-	// let type: Props['type']
-	// props.type ? type = props.type : type = 'text'
-
+	useEffect(() => {
+		ref.current?.focus()
+	}, [])
 
 	const inputType = props.type || 'text';
 	const htmlFor = `${inputType}-${Math.random()}`;
 
+	// TDOD Переделать на уриверсальыный
 	const onClickHandler = () => {
 		props.onClick && props.onClick(true);
 	};
@@ -55,6 +55,7 @@ const Input: React.FC<Props> = props => {
 			)}
 
 			<input
+				ref={ref}
 				id={htmlFor}
 				type={inputType}
 				value={props.value}

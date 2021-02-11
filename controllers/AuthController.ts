@@ -8,7 +8,6 @@ import config from 'config';
 class AuthController {
 	async register(req: Request, res: Response) {
 		try {
-			console.log(req.body)
 			const errors = validationResult(req);
 
 			if (!errors.isEmpty()) {
@@ -21,18 +20,16 @@ class AuthController {
 			const candidate = await User.findOne({ email });
 
 			if (candidate) {
-				return res
-					.status(400)
-					.json({ message: 'Такой пользователь уже существует' });
+				return res.status(400).json({ message: 'Пользователь уже существует' });
 			}
 
 			const hashedPassword = await bcrypt.hash(password, 12);
 			const user = new User({ email, password: hashedPassword });
 			await user.save();
-			res.status(201).json({ message: 'Пользователь создан' });
+			res.status(201).json({ message: 'Пользователь создан!' });
 		} catch (e) {
 			res.status(500).json({
-				message: 'Что-то пошло не так!',
+				message: 'Что-то пошло не так...',
 			});
 		}
 	}
@@ -53,9 +50,7 @@ class AuthController {
 			const user = await User.findOne({ email });
 
 			if (!user) {
-				return res
-					.status(400)
-					.json({ message: 'Такой пользователь не найден' });
+				return res.status(400).json({ message: 'Пользователь не найден' });
 			}
 
 			const isMatch = await bcrypt.compare(password, user.password);
@@ -68,7 +63,7 @@ class AuthController {
 				expiresIn: '30d',
 			});
 
-			res.json({ token, userId: user.id });
+			res.json({ message: '', data: { token, userId: user.id } });
 		} catch (e) {
 			res.status(500).json({
 				message: 'Что-то пошло не так...',

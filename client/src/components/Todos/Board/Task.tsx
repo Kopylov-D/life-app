@@ -93,7 +93,6 @@ const Task: React.FC<Props> = props => {
 					<Checkbox
 						checked={props.isDone}
 						onChangeHandler={onChecked}
-						// value={props.name}
 						color={setColor(props.priority)}
 					/>
 
@@ -150,9 +149,9 @@ const Task: React.FC<Props> = props => {
 						<Checkbox
 							checked={props.isDone}
 							onChangeHandler={onChecked}
-							value={props.name}
 							color={setColor(props.priority)}
 						/>
+						<span className="task__text">{props.name}</span>
 					</div>
 					<img src={trash} alt="" onClick={onDeleteTask} />
 				</div>

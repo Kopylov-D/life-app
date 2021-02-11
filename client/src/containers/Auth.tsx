@@ -7,16 +7,26 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '../store/ducks/auth/actions';
 import { RootState } from '../store/rootReducer';
 
-import BgImg from '../assets/img/bg.png';
+// import BgImg from '../assets/img/bg.png';
+import BgImg from '../assets/img/bg1.jpg';
 import { useInput } from '../hooks/input.hook';
-
-// type FormControls = {
-// 	login: FormControl;
-// 	password: FormControl;
-// };
+import { NavLink, useLocation } from 'react-router-dom';
+import { selectLoadingStatus } from '../store/ducks/auth/selectors';
+import { LoadingStatus } from '../store/types';
 
 const Auth = () => {
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const isLogin = location.pathname === '/login';
+
+	console.log(isLogin);
+
+	// const { isLoading, message } = useSelector((state: RootState) => state.auth);
+
+	const loadingStatus = useSelector(selectLoadingStatus)
+
 	const [isFormValid, setIsFormValid] = React.useState<boolean>(false);
+
 	const email = useInput(
 		{ initialValue: '' },
 		{
@@ -40,9 +50,6 @@ const Auth = () => {
 	// 		{ required: true, minLength: 6, notCyrillic: true }
 	// 	),
 	// });
-
-	const { isLoading, message } = useSelector((state: RootState) => state.auth);
-	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (email.valid && password.valid) {
@@ -102,11 +109,19 @@ const Auth = () => {
 	// 	);
 	// };
 
-	const registerHandler = async () => {
+	const clickHandler = () => {
+		if (isLogin) {
+			loginHandler();
+		} else {
+			registerHandler();
+		}
+	};
+
+	const registerHandler = () => {
 		dispatch(register(email.value, password.value));
 	};
 
-	const loginHandler = async () => {
+	const loginHandler = () => {
 		dispatch(login(email.value, password.value));
 	};
 
@@ -121,8 +136,8 @@ const Auth = () => {
 		>
 			<div className={classNames('auth')}>
 				<form className={classNames('auth__main')} onSubmit={submitHandler}>
-					<header>Авторизация</header>
-					{message ? <Error textError={message} /> : null}
+					<header>{isLogin ? 'Авторизация' : 'Регистрация'}</header>
+					{/* {message ? <Error textError={message} /> : null} */}
 					<div className="auth__inputs">
 						<Input
 							onChange={email.onChange}
@@ -150,13 +165,19 @@ const Auth = () => {
 						<Button
 							disabled={!isFormValid}
 							color="primary"
-							onClick={loginHandler}
-							isLoading={isLoading}
+							onClick={clickHandler}
+							isLoading={loadingStatus === LoadingStatus.LOADING}
 						>
-							Войти
+							{isLogin ? 'Войти' : 'Зарегистрироваться'}
 						</Button>
 
-						<div onClick={registerHandler}>Зарегистрироваться</div>
+						<div>
+							{isLogin ? (
+								<NavLink to="/registration">Зарегистрироваться</NavLink>
+							) : (
+								<NavLink to="/login">Выполнить вход</NavLink>
+							)}
+						</div>
 					</div>
 				</form>
 			</div>

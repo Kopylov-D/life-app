@@ -1,61 +1,28 @@
-import {
-	AUTH_ERROR,
-	AUTH_LOGOUT,
-	// AUTH_RESTORE_SESSION,
-	AUTH_START,
-	AUTH_SUCCESS,
-	AUTH_MESSAGE
-} from './actionTypes';
+import { LoadingStatus } from '../../types';
+import { AuthActions } from './actionCreators';
+import { AuthActionTypes } from './contracts/actionTypes';
+import { AuthState } from './contracts/state';
 
-type InitialState = {
-	isAuth: boolean,
-	isLoading: boolean,
-	authData?: {}
-	message?: string | null
-}
-
-const initialState: InitialState = {
+const initialState: AuthState = {
 	isAuth: false,
-	isLoading: false,
+	loadingStatus: LoadingStatus.LOADED,
 	authData: {},
-	message: null
 };
 
-export const authReducer = (state = initialState, action: any): InitialState => {
+export const authReducer = (state = initialState, action: AuthActions): AuthState => {
 	switch (action.type) {
-		case AUTH_SUCCESS:
+		case AuthActionTypes.SET_AUTH_DATA:
 			return {
 				...state,
 				isAuth: true,
-				isLoading: false,
-				authData: action.authData,
-				// message: action.me
+				authData: action.payload,
 			};
-		case AUTH_START:
+		case AuthActionTypes.SET_LOADING_STATUS:
 			return {
 				...state,
-				isLoading: true,
+				loadingStatus: action.payload,
 			};
-		// case AUTH_RESTORE_SESSION:
-		// 	return {
-		// 		...state,
-		// 		authData: {
-		// 			session: action.session,
-		// 		},
-		// 	};
-		case AUTH_MESSAGE:
-			return {
-				...state,
-				isLoading: false,
-				message: action.message,
-			};
-		// case AUTH_ERROR:
-		// 	return {
-		// 		...state,
-		// 		isLoading: false,
-		// 		errorMessage: action.errorMessage,
-		// 	};
-		case AUTH_LOGOUT:
+		case AuthActionTypes.AUTH_LOGOUT:
 			return {
 				...state,
 				isAuth: false,

@@ -1,18 +1,21 @@
 // //reducer
 
+import { Dispatch } from 'react';
+import { Middleware, AnyAction } from 'redux';
+import { hideAlert } from '../ducks/common/actionCreators';
+import { showAlert } from '../ducks/common/actions';
+import { RootState } from '../rootReducer';
+
 // import { Action, AnyAction, Dispatch, Middleware } from 'redux';
 // import { Icons } from '../../types';
 // import { syncData, syncDataWithout } from '../ducks/todos/actions';
 // import { TodosState } from '../ducks/todos/contracts/state';
 // import { RootState } from '../rootReducer';
 
-
 // export enum AlertActionTypes {
 // 	SHOW_ALERT = 'SHOW_ALERT',
 // 	HIDE_ALERT = 'HIDE_ALERT',
 // }
-
-
 
 // export interface AlertPayloadInterface {
 // 	text: string;
@@ -48,15 +51,32 @@
 // 	payload,
 // });
 
+export const alertMiddleware = (events: any): Middleware<{}, RootState> => ({
+	dispatch,
+	getState,
+}) => next => action => {
+	if (events.includes(action.type)) {
+		const id = new Date().getTime();
+		// dispatch(showAlert({...action.payload, id}));
+
+		const log = action.payload;
+		console.log(log);
+
+		return next;
+	}
+};
 // export const alertMiddleware = (
 // 	events: any
-// ): Middleware<{}, RootState, Dispatch<AnyAction>> => ({
+// ): Middleware<{}, RootState> => ({
 // 	dispatch,
 // 	getState,
 // }) => next => action => {
 // 	if (events.includes(action.type)) {
 // 		const id = new Date().getTime()
-// 		dispatch(showAlert({...action.payload, id}));
+// 		// dispatch(showAlert({...action.payload, id}));
+
+//     const log = action.payload
+//     console.log(log);
 
 // 		action.payload.delay &&
 // 			setTimeout(() => {
@@ -86,4 +106,4 @@
 // 	}
 // };
 
-export const s = 1
+export const s = 1;

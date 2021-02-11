@@ -27,6 +27,9 @@ export const todosApi = {
 				_id: null,
 			})
 			.then(res => res.data),
+			// .catch(e => {
+			// 	throw new Error(e.response.status || 'Что-то пошло не так');
+			// }),
 
 	updateTask: (task: TaskInterface) =>
 		axios
