@@ -1,8 +1,5 @@
-import { AxiosError } from 'axios';
 import { ThunkAction } from 'redux-thunk';
-// import RefreshIcon from '../../../components/UI/Icons/RefreshIcon';
 import { todosApi } from '../../../services/api/todosApi';
-// import { AlertActions, showAlert } from '../../middleaware/alert.middleware';
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
 import { showAlert } from '../common/actions';
@@ -20,7 +17,6 @@ import {
 	deleteSubtask,
 	deleteTarget,
 	deleteTask,
-	// setAlert,
 	setError,
 	setLoadingStatus,
 	setTargets,
@@ -138,8 +134,18 @@ export function syncDataWithout(): ThunkType {
 		try {
 			const todos = getState().todos;
 			await todosApi.syncData(todos);
+			console.log('todos');
+			
 		} catch (e) {
 			console.log(e);
+			dispatch(
+				showAlert({
+					text: 'Синхронизация не удалась. Повторите вручную',
+					type: 'error',
+					action: 'sync',
+				})
+	
+			);
 			dispatch(setError(e));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
@@ -158,9 +164,9 @@ export function fetchAddTask(task: TaskInterface): ThunkType {
 			const { data } = await todosApi.addTask(task);
 			dispatch(addTask(data));
 		} catch (e) {
-			console.log(e.response.status);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-			dispatch(setError(e))
+			dispatch(showAlert({ text: e.response.data.message, type: 'error', delay: 3000 }));
+			dispatch(setError(e));
 		}
 	};
 }

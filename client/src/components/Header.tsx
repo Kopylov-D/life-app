@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store/ducks/auth/actions';
 import compress from '../assets/icons/Compress.svg';
+import { ReactComponent as Logo } from '../assets/icons/logo.svg';
+import Icon from './UI/Icons/Icon';
 
 const Header = () => {
 	const dispatch = useDispatch();
@@ -29,6 +31,9 @@ const Header = () => {
 	return (
 		<header className="main__header">
 			<div className="main__header-navigation">
+				<Icon name="logo">
+					<Logo />
+				</Icon>
 				<h1>LifeUp</h1>
 				<nav>
 					<NavLink to="/budget" activeClassName="active">

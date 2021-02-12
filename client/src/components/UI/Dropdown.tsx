@@ -19,12 +19,6 @@ const Dropdown: React.FC<Props> = ({ items, value, onClick }) => {
 	const [selectedId, setSelectedId] = useState<string | number | undefined>(value);
 
 	useEffect(() => {
-		// const currentItem = items.find(item => item.isSelected);
-		// if (currentItem) {
-		// 	setHeaderTitle(currentItem.name);
-		// } else {
-		// 	setHeaderTitle(items[0].name);
-		// }
 		setSelectedId(value)
 	}, [value]);
 

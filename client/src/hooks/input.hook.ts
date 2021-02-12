@@ -7,6 +7,7 @@ export interface Validations {
 	email?: boolean;
 	notCyrillic?: boolean;
 	isNumber?: boolean;
+	isEmpty?: boolean;
 }
 
 interface Config {
@@ -32,22 +33,16 @@ function useValidation(value: string, validations: Validations | null) {
 				case 'minLength':
 					if (value.length < validations[validation]!) {
 						setValid(false);
-						setErrorMessages(err => [
-							...err,
-							`Мин. длина - ${validations[validation]}`,
-						]);
+						setErrorMessages(err => [...err, `Мин. длина - ${validations[validation]}`]);
 					}
 					break;
 				case 'maxLength':
 					if (value.length > validations[validation]!) {
 						setValid(false);
-						setErrorMessages(err => [
-							...err,
-							`Макс. длина - ${validations[validation]}`,
-						]);
+						setErrorMessages(err => [...err, `Макс. длина - ${validations[validation]}`]);
 					}
 					break;
-				case 'required':
+				case 'isEmpty':
 					if (value.trim() === '') {
 						setValid(false);
 						setErrorMessages(err => [...err, 'Поле не должно быть пустым']);
@@ -87,6 +82,7 @@ function useValidation(value: string, validations: Validations | null) {
 export const useInput = (config: Config, validations: Validations = {}) => {
 	const [value, setValue] = useState(config.initialValue);
 	const [touched, setTouched] = useState<boolean>(false);
+	// const [isDirty, setTouched] = useState<boolean>(false);
 	const valid = useValidation(value, validations);
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,16 +91,22 @@ export const useInput = (config: Config, validations: Validations = {}) => {
 	};
 
 	const clearValue = () => {
-		setValue('')
-	}
+		setValue('');
+		// setTouched(false);
+	};
 
-	// const onTouched = (e: React.SyntheticEvent) => {
-	// 	setTouched(true);
-	// };
+	const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+		if (validations.required) {
+			setTouched(true);
+		} else {
+			setTouched(false);
+		}
+	};
 
 	return {
 		value,
 		onChange,
+		onBlur,
 		clearValue,
 		// onTouched,
 		touched,

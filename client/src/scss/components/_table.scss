@@ -28,7 +28,7 @@
 		// padding: 5px;
 		// position: sticky;
 		padding: 0 10px;
-
+		// border-bottom: 2px solid $c-background;
 	}
 	&__item {
 		// border-bottom: 1px solid rgba($color: #000000, $alpha: 0.3);
@@ -76,19 +76,14 @@
 }
 
 .header-item {
-
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 1rem;
-	border-bottom: 2px solid $c-background;
-
+	// border-bottom: 2px solid $c-background;
+	margin-bottom: 2px;
 
 	cursor: pointer;
-
-	& span {
-		// margin-right: 1rem;
-	}
 
 	&__sort-icons {
 		display: flex;
@@ -99,10 +94,8 @@
 
 	&--active {
 		background: $c-background;
-
 		border-bottom: 2px solid $c-primary;
-
-		
+		margin-bottom: 0;
 
 		// &::before {
 		// 	content: '';
@@ -111,5 +104,4 @@
 		// 	color: black;
 		// }
 	}
-
 }

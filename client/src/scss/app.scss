@@ -126,12 +126,13 @@ a {
 		&-navigation {
 			display: flex;
 			align-items: center;
+			margin-left: 2rem;
 		}
 
 		& h1 {
-			font-size: 24px;
-			margin-right: 60px;
-			margin-left: 20px;
+			font-size: 2.5rem;
+			margin-right: 6rem;
+			margin-left: 2rem;
 		}
 
 		& nav {
@@ -142,7 +143,7 @@ a {
 				border-radius: $border-radius;
 
 				&:hover {
-					box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+					box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 				}
 			}
 
@@ -350,59 +351,59 @@ a {
 }
 
 .grey {
-	background-color: #c9d1d3;
+	background-color: #c9d1d3a8;
 }
 
 .lime {
-	background-color: #b6e6bd;
+	background-color: #b6e6bd9c;
 }
 
 .purple {
-	background-color: #dfbedb;
+	background-color: #dfbedb8e;
 }
 
 .black {
-	background-color: #08001a;
+	background-color: #08001a3b;
 }
 
 .red {
-	background-color: #facdd4;
+	background-color: #facdd486;
 }
 
 .cyan {
-	background-color: #b6e2ed;
+	background-color: #b6e2ed8a;
 }
 
 .teal {
-	background-color: #b3e0dd;
+	background-color: #b3e0dda6;
 }
 
 .green {
-	background-color: #dcecc8;
+	background-color: #dcecc89a;
 }
 
 .blue {
-	background-color: #dfbedb;
+	background-color: #dfbedb8f;
 }
 
 .pink {
-	background-color: #f9bbd2;
+	background-color: #f9bbd28c;
 }
 
 .yellow {
-	background-color: #fcf9c6;
+	background-color: #fcf9c686;
 }
 
 .orange {
-	background-color: #ffe0b1;
+	background-color: #ffe0b183;
 }
 
 .brown {
-	background-color: #d8cdc9;
+	background-color: #d8cdc980;
 }
 
 .graphite {
-	background-color: #d0d9de;
+	background-color: #d0d9de93;
 }
 
 .icon {

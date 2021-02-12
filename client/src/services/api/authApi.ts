@@ -1,4 +1,3 @@
-import { AuthDataInterface } from '../../store/ducks/auth/contracts/state';
 import { instance as axios } from './index';
 import { Response } from './index';
 
@@ -16,10 +15,7 @@ export const authApi = {
 				email,
 				password,
 			})
-			.then(res => res.data)
-			.catch(e => {
-				throw new Error(e.response.data.message || 'Что-то пошло не так');
-			}),
+			.then(res => res.data),
 
 	login: (email: string, password: string) =>
 		axios
@@ -27,8 +23,5 @@ export const authApi = {
 				email,
 				password,
 			})
-			.then(res => res.data)
-			.catch(e => {
-				throw new Error(e.response.data.message || 'Что-то пошло не так');
-			}),
+			.then(res => res.data),
 };

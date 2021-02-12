@@ -5,51 +5,47 @@ import useOutsideClick from '../../../hooks/outsideAlert.hook';
 import {
 	fetchDeleteCard,
 	fetchDeleteTask,
-
 	updateCard,
 	updateTask,
 } from '../../../store/ducks/todos/actions';
-import { CardInterface, ColorInterface, SubtaskInterface, TaskInterface } from '../../../store/ducks/todos/contracts/state';
+import {
+	CardInterface,
+	ColorInterface,
+	SubtaskInterface,
+	TaskInterface,
+} from '../../../store/ducks/todos/contracts/state';
 import { selectCardsNumber } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Task from './Task';
 import TaskSelector from './TaskSelector';
-import close from '../../../assets/icons/Close.svg'
+import close from '../../../assets/icons/Close.svg';
 
 interface Props extends CardInterface {
-	tasks: TaskInterface[]
-	subtasks: SubtaskInterface[]
-	colors: ColorInterface[]
-	// headerName: string;
+	tasks: TaskInterface[];
+	subtasks: SubtaskInterface[];
+	colors: ColorInterface[];
 }
 
 const Card: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 
-	const [taskSelectorIsOpen, setTaskSelectorIsOpen] = useState(false);
-
-	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
-	// const [headerChangerIsOpen, setHeaderChangerIsOpen] = useState<boolean>(flag);
-	const headerInput = useInput({ initialValue: props.name });
 	const cardsNumber = useSelector(selectCardsNumber);
+
+	const [taskSelectorIsOpen, setTaskSelectorIsOpen] = useState(false);
+	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
+	const headerInput = useInput({ initialValue: props.name });
 
 	const onAddTaskToCard = () => {
 		setTaskSelectorIsOpen(true);
-		// dispatch(getTargets());
-		// dispatch(getTasks());
 	};
 
-	// useEffect(() => {
-	// 	React.rend
-	// }, [tasks])
-
 	const onTaskCheck = (task: TaskInterface) => {
-		dispatch(updateTask(task))
+		dispatch(updateTask(task));
 	};
 
 	const onTaskDelete = (id: string) => {
-		dispatch(fetchDeleteTask(id, ))
+		dispatch(fetchDeleteTask(id));
 	};
 
 	const onCardDelete = () => {
@@ -86,7 +82,7 @@ const Card: React.FC<Props> = props => {
 						)}
 					</div>
 					{cardsNumber === props.level && (
-						<img src={close} alt="" onClick={onCardDelete}/>
+						<img src={close} alt="" onClick={onCardDelete} />
 					)}
 				</header>
 
@@ -95,21 +91,13 @@ const Card: React.FC<Props> = props => {
 						if (task.level === props.level) {
 							return (
 								<Task
-									// key={task._id}
-									// _id={task._id}
-									// date={task.date}
-									// isDone={task.isDone}
-									// level={task.level}
-									// name={task.name}
-									// notes={task.notes}
-									// color={task.color}
+									key={task._id}
 									{...task}
 									colors={props.colors}
 									subtasks={props.subtasks}
 									onChecked={onTaskCheck}
 									onDelete={onTaskDelete}
 									task={task}
-					
 								/>
 							);
 						}
@@ -123,7 +111,13 @@ const Card: React.FC<Props> = props => {
 				</Button>
 			</footer>
 
-			{taskSelectorIsOpen && <TaskSelector close={() => setTaskSelectorIsOpen(false)} tasks={props.tasks} level={props.level}/>}
+			{taskSelectorIsOpen && (
+				<TaskSelector
+					close={() => setTaskSelectorIsOpen(false)}
+					tasks={props.tasks}
+					level={props.level}
+				/>
+			)}
 		</div>
 	);
 };

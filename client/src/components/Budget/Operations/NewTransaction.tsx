@@ -33,7 +33,7 @@ const NewTransaction: React.FC<Props> = ({
 
 	const input = useInput(
 		{ initialValue: '' },
-		{ required: true, isNumber: true, maxLength: 12 }
+		{ required: false, isNumber: true, maxLength: 12, isEmpty: true }
 	);
 
 	useEffect(() => {
@@ -86,6 +86,7 @@ const NewTransaction: React.FC<Props> = ({
 				valid={input.valid}
 				touched={input.touched}
 				onChange={input.onChange}
+				onBlur={input.onBlur}
 				onKeyPress={onKeyEnter}
 			/>
 			<Select

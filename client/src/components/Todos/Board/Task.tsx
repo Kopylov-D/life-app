@@ -32,7 +32,7 @@ const Task: React.FC<Props> = props => {
 	const [numDoneSubtask, setNumDoneSubtask] = useState(0);
 	const { colorName } = useColorName(props.color, props.colors);
 
-	const input = useInput({ initialValue: '' }, { maxLength: 50, required: true });
+	const input = useInput({ initialValue: '' }, { maxLength: 50, required: false, isEmpty: true });
 
 	useEffect(() => {
 		let numOfSubtaskCounter = 0;
@@ -130,6 +130,7 @@ const Task: React.FC<Props> = props => {
 						className="task"
 						onChange={input.onChange}
 						touched={input.touched}
+						onBlur={input.onBlur}
 						type="text"
 						valid={input.valid}
 						value={input.value}

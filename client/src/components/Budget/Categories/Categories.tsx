@@ -79,6 +79,7 @@ const Categories: React.FC = () => {
 				<Loader type='cube-grid' />
 			) : (
 				<div className="budget__categories">
+					<h2>Категории</h2>
 					<Table class="categories">
 						{categories.map(item => (
 							<CategoryItem

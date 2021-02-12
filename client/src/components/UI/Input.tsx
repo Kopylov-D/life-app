@@ -12,6 +12,7 @@ interface Props {
 	placeholder?: string;
 	messages?: Array<string>;
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;
+	onBlur?(event: React.FocusEvent<HTMLInputElement>): void;
 	onKeyPress?(event: React.KeyboardEvent<HTMLInputElement>): void;
 	onClick?(toggle: boolean): void;
 }
@@ -24,11 +25,11 @@ function isInvalid({ valid, touched }: Props) {
 // }
 
 const Input: React.FC<Props> = props => {
-	const ref = useRef<HTMLInputElement>(null)
+	const ref = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
-		ref.current?.focus()
-	}, [])
+		ref.current?.focus();
+	}, []);
 
 	const inputType = props.type || 'text';
 	const htmlFor = `${inputType}-${Math.random()}`;
@@ -36,6 +37,10 @@ const Input: React.FC<Props> = props => {
 	// TDOD Переделать на уриверсальыный
 	const onClickHandler = () => {
 		props.onClick && props.onClick(true);
+	};
+
+	const onBlurHAndler = (event: React.FocusEvent<HTMLInputElement>) => {
+		props.onBlur && props.onBlur(event);
 	};
 
 	return (
@@ -60,6 +65,7 @@ const Input: React.FC<Props> = props => {
 				type={inputType}
 				value={props.value}
 				onChange={event => props.onChange(event, props.value)}
+				onBlur={onBlurHAndler}
 				onKeyPress={props.onKeyPress}
 				placeholder={props.placeholder}
 			/>

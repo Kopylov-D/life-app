@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { hideAlert, selectAlerts } from '../../store/middleaware/alert.middleware';
 import close from '../../assets/icons/Close.svg';
 import refresh from '../../assets/icons/Refresh.svg';
 import classNames from 'classnames';
@@ -16,14 +15,12 @@ const Alert: React.FC = () => {
 		dispatch(hideAlert(id));
 	};
 
-	const onAlertClick = (action: string | undefined) => {
+	const onAlertClick = (id: number, action: string | undefined) => {
 		if (action === 'sync') {
 			dispatch(syncDataWithout());
+			closeAlert(id)
 		}
 	};
-
-	console.log(alerts);
-	
 
 	if (alerts.length > 0 && alerts !== null) {
 		return (
@@ -35,13 +32,12 @@ const Alert: React.FC = () => {
 								[`alert--${alert.type}`]: alert.type,
 							})}
 						>
-							{/* {alert.icon && alert.icon} */}
 							{alert.action && (
 								<img
 									className="alert__icon"
 									src={refresh}
 									alt=""
-									onClick={() => onAlertClick(alert.action)}
+									onClick={() => onAlertClick(alert.id, alert.action)}
 								/>
 							)}
 							<span className="alert__text">{alert.text}</span>

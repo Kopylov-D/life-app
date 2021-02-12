@@ -30,7 +30,7 @@ export function register(email: string, password: string): ThunkType {
 			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
-			dispatch(showAlert({ text: e.message, delay: 3000, type: 'error' }));
+			dispatch(showAlert({ text: e.response.data.message, delay: 3000, type: 'error' }));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 	};
@@ -41,15 +41,14 @@ export function login(email: string, password: string): ThunkType {
 		dispatch(setLoadingStatus(LoadingStatus.LOADING));
 		try {
 			const { data } = await authApi.login(email, password);
-			console.log(data);
-			
 			const maxAge = 3600 * 24 * 30;
 			document.cookie = `jwtToken=${data.token}; max-age=${maxAge}`;
 			document.cookie = `userId=${data.userId}; max-age=${maxAge}`;
 			dispatch(setAuthData(data));
+			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
-			dispatch(showAlert({ text: e, delay: 3000, type: 'error' }));
+			dispatch(showAlert({ text: e.response.data.message, delay: 3000, type: 'error' }));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 	};

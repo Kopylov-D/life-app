@@ -1,7 +1,7 @@
 // //reducer
 
 import { Dispatch } from 'react';
-import { Middleware, AnyAction } from 'redux';
+import { Middleware, AnyAction, Action } from 'redux';
 import { hideAlert } from '../ducks/common/actionCreators';
 import { showAlert } from '../ducks/common/actions';
 import { RootState } from '../rootReducer';
