@@ -1,8 +1,14 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 
-const useCoordinate = (initialIsVisible: boolean, key?: string) => {
+const useCoordinate = (initialIsVisible: boolean, myRef?: React.RefObject<HTMLElement | null | undefined>, key?: string) => {
 	const [isVisible, setIsVisible] = useState(initialIsVisible);
 	const ref = useRef<any>(null);
+
+
+	const rect = myRef?.current?.getClientRects()
+	console.log(myRef);
+	console.log(rect);
+	
 
 	const handleHideDropdown = (event: KeyboardEvent) => {
 		if (event.key === key) {

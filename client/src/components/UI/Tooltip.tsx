@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Props {
 	text?: string;
 	rect?: string;
-	ref?: React.Ref<any>;
+	parentRef?: React.RefObject<HTMLElement>;
 }
 
 const Tooltip: React.FC<Props> = props => {
 	const [isVisible, setIsVisible] = useState<boolean>(true);
 	const [x, setX] = useState<number>(0);
 	const [y, setY] = useState<number>(0);
+
+	useEffect(() => {
+		const rect = props.parentRef?.current?.getBoundingClientRect();
+		if (rect) {
+			setX(rect.x);
+			setY(rect.y);
+		}
+
+		return () => {};
+	}, []);
+
 
 	let style = {
 		left: x + window.scrollX + 'px',
@@ -26,11 +37,7 @@ const Tooltip: React.FC<Props> = props => {
 			by = hoverRect.y + hoverRect.height; // most bottom y
 	};
 
-	return (
-		<div className="tooltip">
-			text
-		</div>
-	);
+	return <div className="tooltip" style={style}>text</div>;
 };
 
 export default Tooltip;
