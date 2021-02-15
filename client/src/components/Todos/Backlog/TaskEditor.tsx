@@ -193,10 +193,12 @@ const TaskEditor: React.FC<Props> = props => {
 			)}
 
 			{noteEditorIsOpen && (
-				<Modal closeModal={OnCancelNotesEdit}>
+				<Modal closeModal={OnCancelNotesEdit} class="notes-editor">
 					<Textarea value={notesInput} onChange={onChangeArea} />
-					<Button onClick={() => setNotesEditorIsOpen(false)}>Принять</Button>
-					<Button onClick={OnCancelNotesEdit}>Отмена</Button>
+					<div className="notes-editor__footer">
+						<Button onClick={() => setNotesEditorIsOpen(false)}>Принять</Button>
+						<Button onClick={OnCancelNotesEdit}>Отмена</Button>
+					</div>
 				</Modal>
 			)}
 		</div>

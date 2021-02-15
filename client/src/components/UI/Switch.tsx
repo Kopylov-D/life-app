@@ -50,7 +50,7 @@ const Switch: React.FC<Props> = ({
 			<div
 				className={classNames(
 					'toggle__btn',
-					{ 'toggle__btn-active': flag },
+					{ 'toggle__btn--active': flag },
 					{ [colorRight ? colorRight : colorLeft]: !flag }
 				)}
 				onClick={() => onSwitch(false)}

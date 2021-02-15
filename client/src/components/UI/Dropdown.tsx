@@ -14,9 +14,10 @@ type Props = {
 };
 
 const Dropdown: React.FC<Props> = ({ items, value, onClick }) => {
-	const [headerTitle, setHeaderTitle] = useState<string>('');
-	const [isOpen, seIsOpen] = useState<boolean>(false);
+	// const [headerTitle, setHeaderTitle] = useState<string>('');
+	// const [isOpen, seIsOpen] = useState<boolean>(false);
 	const [selectedId, setSelectedId] = useState<string | number | undefined>(value);
+	
 
 	useEffect(() => {
 		setSelectedId(value)

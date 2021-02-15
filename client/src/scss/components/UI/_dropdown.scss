@@ -6,19 +6,32 @@
 
 .dropdown {
 	position: absolute;
-	// right: 0%;
+	right: 20%;
 
 	&__content {
-		padding: 1rem;
-		width: 100%;
-		background: cornsilk;
+		min-width: max-content;
+		// left: -50%;
+		background: $c-white;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 	}
 
 	&__item {
 		cursor: pointer;
+		padding: 2px 1rem;
 
 		&--active {
-			background: blue;
+			background-color: $c-primary;
+			color: $c-white;
+			border-radius: $border-radius;
+		}
+
+		&:hover {
+			&:not(.dropdown__item--active) {
+				background-color: $c-background;
+				border-radius: $border-radius;
+			}
 		}
 	}
 }

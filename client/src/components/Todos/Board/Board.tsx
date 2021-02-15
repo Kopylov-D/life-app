@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createRef, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddCard } from '../../../store/ducks/todos/actions';
 import {
@@ -10,23 +10,33 @@ import {
 } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Card from './Card';
-import { CardInterface } from '../../../store/ducks/todos/contracts/state';
+// import Tooltip from '../../UI/Tooltip';
 
-interface Props {
-	cards: CardInterface[];
-}
-
-export const Board: React.FC<any> = props => {
+export const Board: React.FC = () => {
 	const dispatch = useDispatch();
 	const cardsNumber = useSelector(selectCardsNumber);
 	const cards = useSelector(selectCards);
 	const tasks = useSelector(selectTasks);
 	const subtasks = useSelector(selectSubtasks);
-	const colors = useSelector(selectColors)
+	const colors = useSelector(selectColors);
 
-	const onCreateCartHandler = () => {
+	// const [isVisible, setIsVisible] = useState<boolean>(true);
+
+	// const ref = createRef<HTMLDivElement>();
+
+	// console.log(ref);
+	
+
+	const onCreateCardHandler = () => {
 		dispatch(fetchAddCard(cardsNumber + 1));
 	};
+
+	// const onMouseOver = () => {
+	// 	setIsVisible(true);
+	// };
+	// const onMouseLeave = () => {
+	// 	setIsVisible(false);
+	// };
 
 	return (
 		<div className="board">
@@ -34,9 +44,6 @@ export const Board: React.FC<any> = props => {
 				{cards.map(card => (
 					<Card
 						key={card._id}
-						// _id={card._id}
-						// level={card.level}
-						// name={card.name}
 						{...card}
 						tasks={tasks}
 						subtasks={subtasks}
@@ -44,7 +51,11 @@ export const Board: React.FC<any> = props => {
 					/>
 				))}
 			</div>
-			<Button onClick={onCreateCartHandler}>Создать карточку</Button>
+			<Button onClick={onCreateCardHandler}>Создать карточку</Button>
+			{/* <div ref={ref} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
+				asdffffffffffffffffffffffffffffff
+			</div>
+			{isVisible && <Tooltip ref={ref} />} */}
 		</div>
 	);
 };

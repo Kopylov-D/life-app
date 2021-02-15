@@ -57,12 +57,14 @@
 
 		transition-duration: 0.2s;
 
-		&-active {
+		&--active {
 			box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.7);
 		}
 
 		&:hover {
-			background: $c-background;
+			&:not(.toggle__btn-active) {
+				background: $c-background;
+			}
 		}
 	}
 }
