@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { ReactComponent as Edit } from '../../../assets/icons/pencil-outline.svg';
 import {
 	ColorInterface,
@@ -29,12 +29,10 @@ const BacklogTask: React.FC<Props> = ({
 	deleteTaskHandler,
 	changeTaskHandler,
 }) => {
-	// const [isDoneTask, setIsDoneTask] = useState<boolean>(task.isDone);
 	const { colorName } = useColorName(task.color, colors);
 	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
 	const onChecked = () => {
-		// setIsDoneTask(!isDoneTask);
 		changeTaskHandler({ ...task, isDone: !task.isDone, inArchive: !task.inArchive });
 	};
 
@@ -46,26 +44,30 @@ const BacklogTask: React.FC<Props> = ({
 	return (
 		<Fragment>
 			{isVisible ? (
-				<div ref={ref}>
-					<TaskEditor
-						cancelEditor={() => setIsVisible(false)}
-						type="edit"
-						submit={onChangeTask}
-						deleteTask={deleteTaskHandler}
-						{...task}
-						colors={colors}
-						targets={targets}
-					/>
-				</div>
+				// <div ref={ref}>
+				<TaskEditor
+					cancelEditor={() => setIsVisible(false)}
+					type="edit"
+					submit={onChangeTask}
+					deleteTask={deleteTaskHandler}
+					{...task}
+					colors={colors}
+					targets={targets}
+				/>
 			) : (
+				// </div>
 				<div
 					className={classNames('backlog-task', {
 						[`${colorName}`]: colorName,
 					})}
 				>
 					<div className="backlog-task__content">
-						<Checkbox checked={task.isDone} color={setColor(task.priority)} onChangeHandler={onChecked} />
-						<div className='backlog-task__name'>{task.name}</div>
+						<Checkbox
+							checked={task.isDone}
+							color={setColor(task.priority)}
+							onChangeHandler={onChecked}
+						/>
+						<div className="backlog-task__name">{task.name}</div>
 					</div>
 
 					<div className="options">

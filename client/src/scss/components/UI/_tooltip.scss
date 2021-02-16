@@ -1,7 +1,12 @@
 @import '../../variables';
 
 .tooltip {
-  position: fixed;
+  position: absolute;
+  // display: inline-block;
+  width: 200px;
+  height: 100px;
+  // left: 0;
+  // right: 0;
   background: red;
 }
 

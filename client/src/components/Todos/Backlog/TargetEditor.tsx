@@ -14,7 +14,7 @@ import { ReactComponent as Trash } from '../../../assets/icons/trash-outline.svg
 import Textarea from '../../UI/Textarea';
 import Checkbox from '../../UI/Checkbox';
 import { toDate } from '../../../services/utils/dateUtils';
-import Calendar from '../Calendar';
+import Calendar from '../../Calendar';
 import PriorityPicker from '../../PriorityPicker';
 import Icon from '../../UI/Icons/Icon';
 import { setColor } from '../../../services/utils/commonUtils';

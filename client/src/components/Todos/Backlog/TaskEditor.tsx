@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Calendar from 'react-calendar';
 import { useSelector } from 'react-redux';
 import { useInput } from '../../../hooks/input.hook';
 import Backdrop from '../../UI/Backdrop';
@@ -22,6 +21,7 @@ import Textarea from '../../UI/Textarea';
 import PriorityPicker from '../../PriorityPicker';
 import { toDate } from '../../../services/utils/dateUtils';
 import Icon from '../../UI/Icons/Icon';
+import Calendar from '../../Calendar';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -186,10 +186,11 @@ const TaskEditor: React.FC<Props> = props => {
 			</div>
 
 			{calendarIsOpen && (
-				<div className="calendar">
-					<Calendar value={currentDate} onChange={onChangeDateHandler} />
-					<Backdrop onClick={() => setCalendarIsOpen(false)} type="black" />
-				</div>
+				<Calendar
+					closeCalendar={() => setCalendarIsOpen(false)}
+					currentDate={currentDate}
+					onChange={onChangeDateHandler}
+				/>
 			)}
 
 			{noteEditorIsOpen && (

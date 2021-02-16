@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { Fragment } from 'react';
+import ReactDOM from 'react-dom';
 import { BackdropInterface } from '../../types';
 import Backdrop from './Backdrop';
 
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = props => {
-	return (
+	return ReactDOM.createPortal(
 		<Fragment>
 			<div
 				className={classNames('modal', {
@@ -19,13 +20,23 @@ const Modal: React.FC<Props> = props => {
 				})}
 			>
 				{props.title && <div className="modal__title">{props.title}</div>}
-				{/* <div className="modal__body">{props.children}</div> */}
 				{props.children}
 			</div>
 
 			<Backdrop onClick={props.closeModal} type={props.backdropType} />
-		</Fragment>
+		</Fragment>,
+		document.body
 	);
 };
 
 export default Modal;
+
+// const Modal =({ message, isOpen, onClose, children })=> {
+//   if (!isOpen) return null;
+//   return ReactDOM.createPortal(
+//      <div className="modal">
+//       <span>{message}</span>
+//       <button onClick={onClose}>Close</button>
+//      </div>
+//     ,document.body);
+//   }

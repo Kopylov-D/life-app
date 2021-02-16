@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Calendar from 'react-calendar';
+import Calendar from '../../Calendar';
 import Input from '../../UI/Input';
 import calendar from '../../../assets/img/calendar.svg';
 import Select from '../../UI/Select';
 import { CategoryInterface } from '../../../store/ducks/budget/types';
 import { formatDate } from '../../../services/utils/dateUtils';
-import Backdrop from '../../UI/Backdrop';
 import Toggle from '../../UI/Toggle';
 import { useInput } from '../../../hooks/input.hook';
 
@@ -28,7 +27,7 @@ const NewTransaction: React.FC<Props> = ({
 	const [categoryId, setCategoryId] = useState<string>('');
 	const [isExpense, setIsExpense] = useState<boolean>(false);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
-	const [currentDate, setCurrentDate] = useState<Date | Date[]>(new Date());
+	const [currentDate, setCurrentDate] = useState<Date>(new Date());
 	const [filtredCategories, setfiltredCategories] = useState<any>([]);
 
 	const input = useInput(
@@ -66,7 +65,7 @@ const NewTransaction: React.FC<Props> = ({
 		setCategoryId(id);
 	};
 
-	const onChangeDateHandler = (value: Date | Date[]) => {
+	const onChangeDateHandler = (value: Date) => {
 		setCurrentDate(value);
 		onToggleCalendarHandler();
 	};
@@ -107,10 +106,11 @@ const NewTransaction: React.FC<Props> = ({
 			</div>
 
 			{calendarIsOpen && (
-				<div className="calendar">
-					<Calendar value={currentDate} onChange={onChangeDateHandler} />
-					<Backdrop onClick={onToggleCalendarHandler} type="black" />
-				</div>
+				<Calendar
+					currentDate={currentDate}
+					onChange={onChangeDateHandler}
+					closeCalendar={onToggleCalendarHandler}
+				/>
 			)}
 		</div>
 	);

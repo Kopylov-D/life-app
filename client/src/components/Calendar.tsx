@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactCalendar from 'react-calendar';
-import Backdrop from '../UI/Backdrop';
+import Modal from './UI/Modal';
 
 interface Props {
 	currentDate: Date;
@@ -10,10 +10,9 @@ interface Props {
 
 const Calendar: React.FC<Props> = props => {
 	return (
-		<div className="calendar">
+		<Modal closeModal={props.closeCalendar} backdropType="black" class="react-calendar">
 			<ReactCalendar value={props.currentDate} onChange={props.onChange} />
-			<Backdrop onClick={props.closeCalendar} type="black" />
-		</div>
+		</Modal>
 	);
 };
 
