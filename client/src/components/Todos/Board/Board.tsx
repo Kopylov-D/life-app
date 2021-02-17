@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { createRef, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useCoordinate from '../../../hooks/useCoordinate.hook';
 import { fetchAddCard } from '../../../store/ducks/todos/actions';
@@ -21,16 +21,13 @@ export const Board: React.FC = () => {
 	const subtasks = useSelector(selectSubtasks);
 	const colors = useSelector(selectColors);
 
-	const parentRef = useRef<HTMLDivElement>(null);
-	const childRef = useRef<HTMLDivElement>(null);
-	const {coords, setIsVisible, isVisible} = useCoordinate(parentRef, childRef)
-
+	// const parentRef = useRef<HTMLDivElement>(null);
+	// const childRef = createRef<HTMLDivElement>();
+	const { coords, setIsVisible, isVisible, childRef, parentRef } = useCoordinate();
 
 	// const [isVisible, setIsVisible] = useState<boolean>(true);
 
-
-	// console.log(coords);
-	
+	// console.log(childRef);
 
 	const onCreateCardHandler = () => {
 		dispatch(fetchAddCard(cardsNumber + 1));
@@ -57,12 +54,19 @@ export const Board: React.FC = () => {
 				))}
 			</div>
 			<Button onClick={onCreateCardHandler}>Создать карточку</Button>
-		<div ref={parentRef}
-		 onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}
-		 >
+			<div
+				ref={parentRef}
+				style={{ display: 'inline-block' }}
+				onMouseOver={onMouseOver}
+				onMouseLeave={onMouseLeave}
+			>
 				asdf
 			</div>
-		<Tooltip selfRef={childRef} coords={coords} />
+			{isVisible && (
+				<Tooltip text="sdfsdagfgdsfg" selfRef={childRef} coords={coords}>
+					asdf
+				</Tooltip>
+			)}
 		</div>
 	);
 };

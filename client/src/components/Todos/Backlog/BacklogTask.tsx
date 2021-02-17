@@ -8,7 +8,7 @@ import {
 } from '../../../store/ducks/todos/contracts/state';
 import Checkbox from '../../UI/Checkbox';
 import TaskEditor from './TaskEditor';
-import useOutsideClick from '../../../hooks/outsideAlert.hook';
+import useOutsideClick from '../../../hooks/outsideClick.hook';
 import useColorName from '../../../hooks/color.hook';
 import Icon from '../../UI/Icons/Icon';
 import { setColor } from '../../../services/utils/commonUtils';

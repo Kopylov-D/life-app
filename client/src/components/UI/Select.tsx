@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import useOutsideClick from '../../hooks/outsideAlert.hook';
+import useOutsideClick from '../../hooks/outsideClick.hook';
 import arrow from '../../assets/icons/Arrow-down.svg'
 import classNames from 'classnames';
 

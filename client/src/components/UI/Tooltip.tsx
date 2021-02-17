@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { CoordinatesInterface } from '../../types';
 
 interface Props {
 	text?: string;
 	rect?: string;
 	// parentRef?: React.RefObject<HTMLElement>;
-	selfRef: React.RefObject<HTMLDivElement>;
-	coords: any
+	selfRef?: React.RefObject<HTMLDivElement>;
+	coords: CoordinatesInterface;
+	direction?: string;
 	// x: number;
 	// y: number;
 }
@@ -16,8 +18,7 @@ const Tooltip: React.FC<Props> = props => {
 	// const [x, setX] = useState<number>(props.x);
 	// const [y, setY] = useState<number>(props.y);
 
-	console.log(props.coords);
-	
+	// console.log(props.coords);
 
 	let style = {
 		left: props.coords.left + 'px',
@@ -27,13 +28,13 @@ const Tooltip: React.FC<Props> = props => {
 	useEffect(() => {
 		// const rect = props.parentRef?.current?.getBoundingClientRect();
 		// if (x && y) {
-			// setX(props.x);
-			// setY(props.y);
+		// setX(props.x);
+		// setY(props.y);
 
-			// style = {
-			// 	left: x + window.scrollX + 'px',
-			// 	top: y + window.scrollY + 'px',
-			// };
+		// style = {
+		// 	left: x + window.scrollX + 'px',
+		// 	top: y + window.scrollY + 'px',
+		// };
 		// }
 
 		return () => {};
@@ -51,9 +52,49 @@ const Tooltip: React.FC<Props> = props => {
 
 	return ReactDOM.createPortal(
 		<div ref={props.selfRef} className="tooltip" style={style}>
-			text
+			{props.text}
 		</div>,
 		document.body
+	);
+};
+
+const Tooltip1: React.FC<Props> = ({ children, text, direction }) => {
+	const tipRef = React.createRef<HTMLDivElement>();
+	const [isVisible, setIsVisible] = useState(true);
+
+	// console.log(tipRef);
+
+	function handleMouseEnter() {
+		// if (tipRef) {
+		// 	tipRef.current!.style.opacity = '1';
+		// 	tipRef.current!.style.marginLeft = '20px';
+		// }
+		setIsVisible(true);
+	}
+	function handleMouseLeave() {
+		// tipRef.current!.style.opacity = '0';
+		setIsVisible(false);
+
+		// tipRef.current!.style.marginLeft = '10px';
+	}
+
+	return (
+		<div
+			className="tooltip"
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+		>
+			{children}
+			{isVisible && (
+				<div
+					// style={{ left: '100px', top: '20px' }}
+					className={`tooltip__content ${direction || 'top'}`}
+					ref={tipRef}
+				>
+					{text}
+				</div>
+			)}
+		</div>
 	);
 };
 

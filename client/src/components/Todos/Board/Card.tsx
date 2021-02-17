@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInput } from '../../../hooks/input.hook';
-import useOutsideClick from '../../../hooks/outsideAlert.hook';
+import useOutsideClick from '../../../hooks/outsideClick.hook';
 import {
 	fetchDeleteCard,
 	fetchDeleteTask,
@@ -20,6 +20,7 @@ import Input from '../../UI/Input';
 import Task from './Task';
 import TaskSelector from './TaskSelector';
 import close from '../../../assets/icons/Close.svg';
+import Tooltip from '../../UI/Tooltip';
 
 interface Props extends CardInterface {
 	tasks: TaskInterface[];
@@ -90,15 +91,17 @@ const Card: React.FC<Props> = props => {
 					{props.tasks.map(task => {
 						if (task.level === props.level) {
 							return (
-								<Task
-									key={task._id}
-									{...task}
-									colors={props.colors}
-									subtasks={props.subtasks}
-									onChecked={onTaskCheck}
-									onDelete={onTaskDelete}
-									task={task}
-								/>
+								// <Tooltip text={task.name}>
+									<Task
+										key={task._id}
+										{...task}
+										colors={props.colors}
+										subtasks={props.subtasks}
+										onChecked={onTaskCheck}
+										onDelete={onTaskDelete}
+										task={task}
+									/>
+								// </Tooltip>
 							);
 						}
 					})}

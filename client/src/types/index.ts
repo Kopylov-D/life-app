@@ -73,3 +73,8 @@ export enum Colors {
 	orange = 'orange',
 	blue = 'blue'
 }
+
+export interface CoordinatesInterface {
+	left: number | null
+	top: number | null
+}

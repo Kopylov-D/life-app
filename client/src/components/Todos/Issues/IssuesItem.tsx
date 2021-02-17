@@ -7,7 +7,7 @@ import {
 } from '../../../store/ducks/todos/contracts/state';
 import edit from '../../../assets/icons/Edit.svg';
 import checked from '../../../assets/icons/checkmark-done-outline.svg';
-import useOutsideClick from '../../../hooks/outsideAlert.hook';
+import useOutsideClick from '../../../hooks/outsideClick.hook';
 import Checkbox from '../../UI/Checkbox';
 import TaskEditor from '../Backlog/TaskEditor';
 import CheckIcon from '../../UI/Icons/CheckIcon';

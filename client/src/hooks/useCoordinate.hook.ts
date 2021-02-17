@@ -1,22 +1,29 @@
-import { useEffect, useState } from 'react';
+import { createRef, useEffect, useRef, useState } from 'react';
+import { CoordinatesInterface } from '../types';
 
 const useCoordinate = (
 	// initialIsVisible: boolean,
-	parentRef?: React.RefObject<HTMLElement | null | undefined>,
-	childRef?: React.RefObject<HTMLElement | null | undefined>,
-	key?: string
+	// parentRef?: React.RefObject<HTMLElement | null | undefined>,
+	// childRef?: React.RefObject<HTMLElement | null | undefined>,
 ) => {
 	const [isVisible, setIsVisible] = useState(false);
-	// const ref = useRef<any>(null);
-	const [X, setX] = useState<number>(0);
-	const [Y, setY] = useState<number>(0);
-	const [coords, setCoords] = useState({});
-	const [rect, setRect] = useState<any | null | undefined>({});
+	const [coords, setCoords] = useState<CoordinatesInterface>({ left: 0, top: 0 });
+
+	const childRef = createRef<HTMLDivElement>()
+	const parentRef = useRef<HTMLDivElement>(null)
+
+	const childRect = childRef.current?.getBoundingClientRect();
+	const parentRect = parentRef.current?.getBoundingClientRect();
+
+	console.log(childRef);
+	
+
+	
 
 	// const hoverRect = parentRef?.current?.getBoundingClientRect();
 	// const ttRect = childRef?.current?.getBoundingClientRect();
 
-	// console.log(hoverRect);
+	// console.log(childRef);
 	// console.log(coords);
 
 	// console.log(hoverRect, ttRect);
@@ -99,20 +106,22 @@ const useCoordinate = (
 
 		// if (hoverRect) {
 		const update = () => {
-			const hoverRect = parentRef?.current?.getBoundingClientRect();
-			const ttRect = childRef?.current?.getBoundingClientRect();
-			if (hoverRect && ttRect) {
+			// const hoverRect = parentRef?.current?.getBoundingClientRect();
+
+
+			if (parentRect && childRect) {
 				setCoords({
-					left: hoverRect.x, // + hoverRect.width / 2, // add half the width of the button for centering
-					top: hoverRect.y + window.scrollY - ttRect.height, // add scrollY offset, as soon as getBountingClientRect takes on screen coords
+					left: parentRect.x - parentRect.width / 2, // add half the width of the button for centering
+					top: parentRect.y + window.scrollY - childRect.height, // add scrollY offset, as soon as getBountingClientRect takes on screen coords
 				});
-				console.log(hoverRect);
+				// console.log(childRef);
+				console.log(parentRect);
 			}
 		};
 
-		update()
-
 		
+
+		update();
 
 		// 		console.log('hoverRect', hoverRect);
 
@@ -131,7 +140,7 @@ const useCoordinate = (
 		// }
 
 		// console.log(hoverRect);
-	}, []);
+	}, [parentRef]);
 
 	// const handleHideDropdown = (event: KeyboardEvent) => {
 	// 	if (event.key === key) {
@@ -156,7 +165,7 @@ const useCoordinate = (
 	// 	};
 	// }, [X, Y]);
 
-	return { coords, isVisible, setIsVisible };
+	return { coords, isVisible, setIsVisible, childRef, parentRef };
 };
 
 export default useCoordinate;

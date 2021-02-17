@@ -15,6 +15,8 @@ import Subtask from './Subtask';
 import shevron from '../../../assets/icons/Shevron-down.svg';
 import trash from '../../../assets/icons/Trash.svg';
 import { setColor } from '../../../services/utils/commonUtils';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
+import Tooltip from '../../UI/Tooltip';
 
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
@@ -32,7 +34,12 @@ const Task: React.FC<Props> = props => {
 	const [numDoneSubtask, setNumDoneSubtask] = useState(0);
 	const { colorName } = useColorName(props.color, props.colors);
 
-	const input = useInput({ initialValue: '' }, { maxLength: 50, required: false, isEmpty: true });
+	const input = useInput(
+		{ initialValue: '' },
+		{ maxLength: 50, required: false, isEmpty: true }
+	);
+
+	const { coords, setIsVisible, isVisible, childRef, parentRef } = useCoordinate();
 
 	useEffect(() => {
 		let numOfSubtaskCounter = 0;
@@ -86,6 +93,13 @@ const Task: React.FC<Props> = props => {
 		setSubtasksIsOpen(!subtasksIsOpen);
 	};
 
+	const onMouseOver = () => {
+		setIsVisible(true);
+	};
+	const onMouseLeave = () => {
+		setIsVisible(false);
+	};
+
 	let task = (
 		<Fragment>
 			<div className={classNames('task__main', { [`${colorName}`]: colorName })}>
@@ -96,7 +110,18 @@ const Task: React.FC<Props> = props => {
 						color={setColor(props.priority)}
 					/>
 
-					<span className="task__text">{props.name}</span>
+					<span
+						className="task__text"
+						onMouseOver={onMouseOver}
+						onMouseLeave={onMouseLeave}
+						ref={parentRef}
+					>
+						{props.name}
+					</span>
+
+					{ (
+						<Tooltip text={props.name} selfRef={childRef} coords={coords} />
+					)}
 
 					<img
 						onClick={onToggleSubtasks}
