@@ -3,9 +3,9 @@
 .table {
 	$parent: &;
 
-	max-width: 800px;
-	overflow: hidden;
-	text-overflow: ellipsis;
+	// max-width: 800px;
+	// overflow: hidden;
+	// text-overflow: ellipsis;
 	white-space: nowrap;
 
 	&__header,

@@ -23,7 +23,7 @@ export const Board: React.FC = () => {
 
 	// const parentRef = useRef<HTMLDivElement>(null);
 	// const childRef = createRef<HTMLDivElement>();
-	const { coords, setIsVisible, isVisible, childRef, parentRef } = useCoordinate();
+	// const { coords, setIsVisible, isVisible, childRef, parentRef } = useCoordinate();
 
 	// const [isVisible, setIsVisible] = useState<boolean>(true);
 
@@ -33,12 +33,12 @@ export const Board: React.FC = () => {
 		dispatch(fetchAddCard(cardsNumber + 1));
 	};
 
-	const onMouseOver = () => {
-		setIsVisible(true);
-	};
-	const onMouseLeave = () => {
-		setIsVisible(false);
-	};
+	// const onMouseOver = () => {
+	// 	setIsVisible(true);
+	// };
+	// const onMouseLeave = () => {
+	// 	setIsVisible(false);
+	// };
 
 	return (
 		<div className="board">
@@ -55,18 +55,18 @@ export const Board: React.FC = () => {
 			</div>
 			<Button onClick={onCreateCardHandler}>Создать карточку</Button>
 			<div
-				ref={parentRef}
+				// ref={parentRef}
 				style={{ display: 'inline-block' }}
-				onMouseOver={onMouseOver}
-				onMouseLeave={onMouseLeave}
+				// onMouseOver={onMouseOver}
+				// onMouseLeave={onMouseLeave}
 			>
 				asdf
 			</div>
-			{isVisible && (
+			{/* {isVisible && (
 				<Tooltip text="sdfsdagfgdsfg" selfRef={childRef} coords={coords}>
 					asdf
 				</Tooltip>
-			)}
+			)} */}
 		</div>
 	);
 };

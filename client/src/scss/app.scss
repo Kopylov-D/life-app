@@ -231,6 +231,23 @@ a {
 		border-radius: $block-radius;
 	}
 
+	&__toggle-menu {
+		z-index: 1000;
+		position: relative;
+		background: $c-white;
+		border: 2px solid $c-primary;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		color: $c-black;
+		display: inline-block;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: -8px;
+		cursor: pointer;
+	}
+
 	&__menu {
 		width: $menu-width;
 		position: absolute;
@@ -289,7 +306,7 @@ a {
 
 .react-calendar {
 	border-radius: 4px;
-	
+
 	&__modal {
 		padding: 0;
 	}
@@ -419,6 +436,16 @@ a {
 		opacity: 0.3;
 	}
 
+	&--left {
+		transform: rotate(90deg);
+	}
+	&--right {
+		transform: rotate(-90deg);
+	}
+	&--up {
+		transform: rotate(180deg);
+	}
+
 	& :hover {
 		color: #08001a;
 	}
@@ -428,8 +455,8 @@ a {
 		height: 100%;
 	}
 
-	&__priority {
-	}
+	// &__priority {
+	// }
 
 	&__trash {
 		color: brown;
@@ -448,6 +475,7 @@ a {
 	&__arrow {
 		height: 16px;
 		width: auto;
+
 		&--active {
 			color: $c-black;
 			opacity: 1;

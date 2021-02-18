@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { createRef, Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import useColorName from '../../../hooks/color.hook';
 import { useInput } from '../../../hooks/input.hook';
@@ -38,6 +38,8 @@ const Task: React.FC<Props> = props => {
 		{ initialValue: '' },
 		{ maxLength: 50, required: false, isEmpty: true }
 	);
+
+	// const parentRef1 = createRef<HTMLDivElement>()
 
 	const { coords, setIsVisible, isVisible, childRef, parentRef } = useCoordinate();
 
@@ -119,8 +121,13 @@ const Task: React.FC<Props> = props => {
 						{props.name}
 					</span>
 
-					{ (
-						<Tooltip text={props.name} selfRef={childRef} coords={coords} />
+					{isVisible && (
+						<Tooltip
+							text={props.name}
+							selfRef={childRef}
+							coords={coords}
+							isVisible={isVisible}
+						/>
 					)}
 
 					<img

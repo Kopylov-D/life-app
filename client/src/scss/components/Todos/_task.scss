@@ -25,15 +25,13 @@
 		display: flex;
 		align-items: center;
 		overflow: hidden;
-		width: 100%;
-		// flex-shrink: 0;
+		width: auto;
 	}
 	
 	&__text {
 		overflow: hidden;
 		text-overflow: ellipsis;
 		margin-left: 1rem;
-		
 	}
 
 	&__counter {

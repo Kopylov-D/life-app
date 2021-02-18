@@ -1,7 +1,6 @@
 @import '../../variables';
 
 .issues {
-
 	&__panel {
 		display: flex;
 		margin-bottom: 2rem;
@@ -11,11 +10,13 @@
 		}
 	}
 	&__table {
+		// width: 100%;
+		max-width: auto;
 		.table__header,
 		.table__item {
 			grid-template-columns:
 				minmax(20px, 20px)
-				minmax(50px, 1fr)
+				minmax(50px, 3fr)
 				minmax(50px, 1fr)
 				minmax(50px, 1fr)
 				minmax(50px, 1fr)

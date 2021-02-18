@@ -55,9 +55,12 @@ export type CategorySelect = {
 export type MenuItem = {
 	to: string
 	title: string
-	img?: string
+	icon?: Icons
 	component?: React.FC
+	bage?: number | string
 }
+
+
 
 export interface BackdropInterface  {
 	onClick(): void;
@@ -65,7 +68,10 @@ export interface BackdropInterface  {
 };
 
 export enum Icons {
-	closec = 'closec'
+	closec = 'closec',
+	board = 'board',
+	backlog = 'backlog',
+	issues = 'issues',
 }
 
 export enum Colors {

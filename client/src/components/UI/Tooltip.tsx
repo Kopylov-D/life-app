@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { CoordinatesInterface } from '../../types';
 
@@ -9,21 +9,27 @@ interface Props {
 	selfRef?: React.RefObject<HTMLDivElement>;
 	coords: CoordinatesInterface;
 	direction?: string;
+	isVisible?: boolean;
 	// x: number;
 	// y: number;
 }
 
 const Tooltip: React.FC<Props> = props => {
 	const [isVisible, setIsVisible] = useState<boolean>(true);
+	const [opacity, setOpacity] = useState<boolean>(true);
 	// const [x, setX] = useState<number>(props.x);
 	// const [y, setY] = useState<number>(props.y);
-
-	// console.log(props.coords);
 
 	let style = {
 		left: props.coords.left + 'px',
 		top: props.coords.top + 'px',
 	};
+
+	let tooltipBody = (
+		<div ref={props.selfRef} className="tooltip" style={style}>
+			{props.text}
+		</div>
+	);
 
 	useEffect(() => {
 		// const rect = props.parentRef?.current?.getBoundingClientRect();
@@ -37,8 +43,14 @@ const Tooltip: React.FC<Props> = props => {
 		// };
 		// }
 
+		// if (!props.isVisible) {
+		// 	tooltipBody = (<div></div>)
+		// 	console.log(props.isVisible);
+
+		// }
+
 		return () => {};
-	});
+	}, [props.isVisible]);
 
 	// const show = (hoverRect: any) => {
 	// 	const docWidth = document.documentElement.clientWidth;
@@ -50,18 +62,17 @@ const Tooltip: React.FC<Props> = props => {
 	// 		by = hoverRect.y + hoverRect.height; // most bottom y
 	// };
 
-	return ReactDOM.createPortal(
-		<div ref={props.selfRef} className="tooltip" style={style}>
-			{props.text}
-		</div>,
-		document.body
-	);
+	return ReactDOM.createPortal(tooltipBody, document.body);
 };
 
-const Tooltip1: React.FC<Props> = ({ children, text, direction }) => {
+const Tooltip1: React.FC<Props> = ({ children, text, direction, coords }) => {
 	const tipRef = React.createRef<HTMLDivElement>();
 	const [isVisible, setIsVisible] = useState(true);
 
+	let style = {
+		left: coords.left + 'px',
+		top: coords.top + 'px',
+	};
 	// console.log(tipRef);
 
 	function handleMouseEnter() {
@@ -78,6 +89,13 @@ const Tooltip1: React.FC<Props> = ({ children, text, direction }) => {
 		// tipRef.current!.style.marginLeft = '10px';
 	}
 
+	let tooltipBody = ReactDOM.createPortal(
+		<div ref={tipRef} className={`tooltip__content ${direction || 'top'}`} style={style}>
+			{text}
+		</div>,
+		document.body
+	);
+
 	return (
 		<div
 			className="tooltip"
@@ -85,15 +103,15 @@ const Tooltip1: React.FC<Props> = ({ children, text, direction }) => {
 			onMouseLeave={handleMouseLeave}
 		>
 			{children}
-			{isVisible && (
-				<div
-					// style={{ left: '100px', top: '20px' }}
-					className={`tooltip__content ${direction || 'top'}`}
-					ref={tipRef}
-				>
-					{text}
-				</div>
-			)}
+			{isVisible &&
+				// <div
+				// 	// style={{ left: '100px', top: '20px' }}
+				// 	className={`tooltip__content ${direction || 'top'}`}
+				// 	ref={tipRef}
+				// >
+				// 	{text}
+				// </div>
+				tooltipBody}
 		</div>
 	);
 };
