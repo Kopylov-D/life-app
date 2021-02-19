@@ -10,6 +10,18 @@
 	border-radius: $block-radius;
 	margin-right: $gap;
 
+	&__left-group {
+		display: flex;
+		align-items: center;
+	}
+
+	&__icon {
+		margin-right: 2rem;
+	}
+
+	&__title {
+	}
+
 	& ul {
 		margin: 25px;
 		display: flex;
@@ -20,17 +32,25 @@
 		padding: 8px 5px;
 		border-radius: $border-radius;
 		color: black;
-    display: flex;
-    justify-content: space-between;
+		display: flex;
+		justify-content: space-between;
 
 		&:hover {
 			background: $c-background;
 			cursor: pointer;
+
+			& .icon {
+				color: $c-black;
+			}
 		}
 
 		&.active {
 			background: $c-primary;
 			color: white;
+
+			& .icon {
+				color: $c-white;
+			}
 		}
 	}
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Icons, MenuItem } from '../types';
+import { MenuItem } from '../types';
 
 // import { ReactComponent as BoardIcon } from '../assets/icons/clipboard-outline.svg';
 // import { ReactComponent as BacklogIcon } from '../assets/icons/file-tray-stacked-outline.svg';
@@ -22,8 +22,6 @@ type Props = {
 const Menu: React.FC<Props> = ({ items, isOpen = true }) => {
 	const [display, setDisplay] = useState<'none' | 'block'>();
 
-	console.log(items);
-
 	useEffect(() => {
 		isOpen ? setDisplay('block') : setDisplay('none');
 	}, [isOpen]);
@@ -36,15 +34,17 @@ const Menu: React.FC<Props> = ({ items, isOpen = true }) => {
 
 					return (
 						<NavLink key={item.to} to={item.to}>
-							<div className="menu__icon">
-								{IconComponent && (
-									<Icon name={item.title}>
-										<IconComponent />
-									</Icon>
-								)}
+							<div className="menu__left-group">
+								<div className="menu__icon">
+									{IconComponent && (
+										<Icon name={item.icon!}>
+											<IconComponent />
+										</Icon>
+									)}
+								</div>
+								<div className="menu__title">{item.title}</div>
 							</div>
-							<div className="menu__title">{item.title}</div>
-							<div className="menu__bage">3</div>
+							{/* <div className="menu__bage">3</div> */}
 						</NavLink>
 					);
 				})}
