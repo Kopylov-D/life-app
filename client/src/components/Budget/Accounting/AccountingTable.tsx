@@ -1,5 +1,5 @@
 import React from 'react';
-import { CategoryInterface } from '../../../store/ducks/budget/types';
+import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
 import Table, { HeaderItemsInterface } from '../../Table';
 
 type Props = {
@@ -9,15 +9,15 @@ type Props = {
 };
 
 const headerItems: HeaderItemsInterface[] = [
-	{id: 'category', isActive: false, name: 'Категория', needSort: false },
-	{id: 'value', isActive: false, name: 'Сумма', needSort: false },
+	{ id: 'category', isActive: false, name: 'Категория', needSort: false },
+	{ id: 'value', isActive: false, name: 'Сумма', needSort: false },
 ];
 
 const AccountingTable: React.FC<Props> = ({ categories, isExpense, title }) => {
 	return (
 		<div>
 			<div className="accounting__table-header">{title}</div>
-			<Table class="accounting" headerItems={headerItems}>
+			<Table className="accounting" headerItems={headerItems}>
 				{categories.map(item => {
 					if (item.isExpense === isExpense) {
 						return (

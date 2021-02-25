@@ -1,8 +1,10 @@
-import classNames from 'classnames';
-import React, { createRef, Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { CSSTransition } from 'react-transition-group';
+import classNames from 'classnames';
 import useColorName from '../../../hooks/color.hook';
 import { useInput } from '../../../hooks/input.hook';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
 import { fetchAddSubtask, updateTask } from '../../../store/ducks/todos/actions';
 import {
 	ColorInterface,
@@ -12,11 +14,10 @@ import {
 import Checkbox from '../../UI/Checkbox';
 import Input from '../../UI/Input';
 import Subtask from './Subtask';
-import shevron from '../../../assets/icons/Shevron-down.svg';
-import trash from '../../../assets/icons/Trash.svg';
 import { setColor } from '../../../services/utils/commonUtils';
-import useCoordinate from '../../../hooks/useCoordinate.hook';
 import Tooltip from '../../UI/Tooltip';
+import Icon from '../../UI/Icons/Icon';
+import { ChevronIcon, TrashIcon } from '../../UI/Icons';
 
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
@@ -32,6 +33,7 @@ const Task: React.FC<Props> = props => {
 	const [subtasksIsOpen, setSubtasksIsOpen] = useState<boolean>(false);
 	const [numOfSubtask, setNumOfSubtask] = useState(0);
 	const [numDoneSubtask, setNumDoneSubtask] = useState(0);
+	const [isDone, setIsDone] = useState(props.isDone);
 	const { colorName } = useColorName(props.color, props.colors);
 
 	const input = useInput(
@@ -61,11 +63,16 @@ const Task: React.FC<Props> = props => {
 	}, [props.subtasks]);
 
 	const onChecked = () => {
-		props.onChecked({
-			...props.task,
-			isDone: !props.isDone,
-			inArchive: !props.inArchive,
-		});
+		setIsDone(!isDone);
+		setTimeout(
+			() =>
+				props.onChecked({
+					...props.task,
+					isDone: !props.isDone,
+					inArchive: !props.inArchive,
+				}),
+			1000
+		);
 	};
 
 	const onDeleteTask = () => {
@@ -107,7 +114,7 @@ const Task: React.FC<Props> = props => {
 			<div className={classNames('task__main', { [`${colorName}`]: colorName })}>
 				<div className="task__content">
 					<Checkbox
-						checked={props.isDone}
+						checked={isDone}
 						onChangeHandler={onChecked}
 						color={setColor(props.priority)}
 					/>
@@ -129,22 +136,30 @@ const Task: React.FC<Props> = props => {
 							isVisible={isVisible}
 						/>
 					)}
-
-					<img
+					<Icon
+						classNames="chevron"
+						direction={subtasksIsOpen ? 'up' : undefined}
 						onClick={onToggleSubtasks}
-						src={shevron}
-						alt=""
-						className={classNames('shevron', { 'shevron-up': subtasksIsOpen })}
-					/>
+					>
+						<ChevronIcon />
+					</Icon>
 
 					<div className="task__counter">
 						{numDoneSubtask}/{numOfSubtask}
 					</div>
 				</div>
-				<img src={trash} alt="" onClick={onDeleteTask} />
+				<Icon classNames="trash">
+					<TrashIcon />
+				</Icon>
 			</div>
 
-			{subtasksIsOpen && (
+			<CSSTransition
+				in={subtasksIsOpen}
+				classNames="subtask"
+				mountOnEnter
+				unmountOnExit
+				timeout={200}
+			>
 				<div className="task__extend">
 					{props.subtasks.map(subtask => {
 						if (subtask.task === props._id) {
@@ -170,7 +185,7 @@ const Task: React.FC<Props> = props => {
 						onKeyPress={onAddSubtask}
 					/>
 				</div>
-			)}
+			</CSSTransition>
 		</Fragment>
 	);
 
@@ -180,13 +195,15 @@ const Task: React.FC<Props> = props => {
 				<div className={classNames('task__main', { [`${colorName}`]: colorName })}>
 					<div className="task__content">
 						<Checkbox
-							checked={props.isDone}
+							checked={isDone}
 							onChangeHandler={onChecked}
 							color={setColor(props.priority)}
 						/>
 						<span className="task__text">{props.name}</span>
 					</div>
-					<img src={trash} alt="" onClick={onDeleteTask} />
+					<Icon classNames="trash" onClick={onDeleteTask}>
+						<TrashIcon />
+					</Icon>
 				</div>
 			</Fragment>
 		);

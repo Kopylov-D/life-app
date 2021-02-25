@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store/ducks/auth/actions';
-import compress from '../assets/icons/Compress.svg';
-import { ReactComponent as Logo } from '../assets/icons/logo.svg';
+import { ContractIcon, ExpandIcon, LogoIcon, LogoutIcon } from './UI/Icons';
+// import compress from '../assets/icons/Compress.svg';
+
+// import { ReactComponent as Logo } from '../assets/icons/logo.svg';
 import Icon from './UI/Icons/Icon';
 
 const Header = () => {
@@ -30,51 +32,45 @@ const Header = () => {
 	return (
 		<header className="main__header">
 			<div className="main__header-navigation">
-				<Icon name="logo">
-					<Logo />
+				<Icon classNames="logo">
+					<LogoIcon />
 				</Icon>
 				<h1>LifeUp</h1>
 				<nav>
 					<NavLink to="/budget" activeClassName="active">
 						Финансы
 					</NavLink>
-					<NavLink to="/notes" activeClassName="active">
+					{/* <NavLink to="/notes" activeClassName="active">
 						Заметки
-					</NavLink>
+					</NavLink> */}
 					<NavLink to="/todos" activeClassName="active">
 						Задачи
 					</NavLink>
-					<NavLink to="/statistic" activeClassName="active">
+					{/* <NavLink to="/statistic" activeClassName="active">
 						Статистика
-					</NavLink>
+					</NavLink> */}
 				</nav>
 			</div>
 
 			<div className="main__header-controls">
 				<div className="main__header-screen" onClick={toggleFullScreen}>
 					{isFullScreen ? (
-						<img src={compress} alt="" />
+						<Icon classNames="contract">
+							<ContractIcon />
+						</Icon>
 					) : (
-						<svg
-							width="20"
-							height="20"
-							viewBox="0 0 20 20"
-							fill="none"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M6 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V6M19 6V3C19 2.46957 18.7893 1.96086 18.4142 1.58579C18.0391 1.21071 17.5304 1 17 1H14M14 19H17C17.5304 19 18.0391 18.7893 18.4142 18.4142C18.7893 18.0391 19 17.5304 19 17V14M1 14V17C1 17.5304 1.21071 18.0391 1.58579 18.4142C1.96086 18.7893 2.46957 19 3 19H6"
-								strokeWidth="2"
-								strokeLinecap="round"
-								strokeLinejoin="round"
-							/>
-						</svg>
+						<Icon classNames="expand">
+							<ExpandIcon />
+						</Icon>
 					)}
 				</div>
 
-				<div className="main__header-logout" onClick={logoutHandler}>
+				<div className="main__header-logout">
+					<Icon classNames="logout" onClick={logoutHandler}>
+						<LogoutIcon />
+					</Icon>
 					{/* <span>Выйти</span> */}
-					<svg
+					{/* <svg
 						width="24"
 						height="24"
 						viewBox="0 0 24 24"
@@ -101,7 +97,7 @@ const Header = () => {
 								strokeLinejoin="round"
 							/>
 						</g>
-					</svg>
+					</svg> */}
 				</div>
 			</div>
 		</header>

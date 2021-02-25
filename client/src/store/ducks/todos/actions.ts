@@ -82,7 +82,7 @@ export function getTodosData(): ThunkType {
 			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
-			dispatch(showAlert({ text: e.message }));
+			dispatch(showAlert({ text: e.response.data.message }));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 		// finally {
@@ -113,7 +113,6 @@ export function addTasksToCard(tasksList: string[], level: number): ThunkType {
 export function syncData(todos: TodosState): ThunkType {
 	return async (dispatch, getState) => {
 		try {
-			// const todos = getState().todos;
 			await todosApi.syncData(todos);
 		} catch (e) {
 			console.log(e);
@@ -135,7 +134,6 @@ export function syncDataWithout(): ThunkType {
 			const todos = getState().todos;
 			await todosApi.syncData(todos);
 			console.log('todos');
-			
 		} catch (e) {
 			console.log(e);
 			dispatch(
@@ -144,7 +142,6 @@ export function syncDataWithout(): ThunkType {
 					type: 'error',
 					action: 'sync',
 				})
-	
 			);
 			dispatch(setError(e));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));

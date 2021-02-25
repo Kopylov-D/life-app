@@ -5,33 +5,29 @@
 	flex-direction: column;
 	align-items: flex-end;
 
-	
 	&__main {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		align-self: stretch;
-		// width: 100%;
 		height: 32px;
 		background: $c-white;
 		border-radius: $border-radius;
 		padding: 0px 10px;
-		margin-bottom: 2px;	
-		// flex-shrink: 0;
-
+		margin-bottom: 2px;
 	}
-	
+
 	&__content {
 		display: flex;
 		align-items: center;
 		overflow: hidden;
 		width: auto;
 	}
-	
+
 	&__text {
 		overflow: hidden;
 		text-overflow: ellipsis;
-		margin-left: 1rem;
+		margin: 0 1rem;
 	}
 
 	&__counter {
@@ -40,13 +36,11 @@
 		align-items: center;
 		justify-content: center;
 		height: 22px;
-		// width: 30px;
 		font-size: 10px;
 		background: rgba($color: $c-primary, $alpha: 0.6);
 		color: $c-white;
-		// padding: 1px 2px;
 		border-radius: 2px;
-		margin-left: 5px;
+		margin: 0 5px;
 		padding: 0 5px;
 	}
 
@@ -79,6 +73,46 @@
 		cursor: pointer;
 		&-up {
 			transform: rotate(180deg);
+		}
+	}
+
+	&-enter-active {
+		opacity: 1;
+		animation: add-todo 300ms ease-in alternate-reverse;
+	}
+
+	&-exit {
+		opacity: 0;
+	}
+
+	&-exit-active {
+		opacity: 1;
+		animation: remove-todo 300ms ease-in;
+	}
+
+	@keyframes add-todo {
+		0% {
+			transform: translateY(0);
+		}
+
+		30% {
+			opacity: 0.7;
+			transform: translateY(30px) rotate(15deg);
+		}
+
+		100% {
+			opacity: 0;
+			transform: translateY(-200px) rotate(3deg);
+		}
+	}
+
+	@keyframes remove-todo {
+		0% {
+			transform: scale(1);
+		}
+
+		100% {
+			transform: scale(0);
 		}
 	}
 }

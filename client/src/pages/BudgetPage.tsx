@@ -5,13 +5,13 @@ import Accounting from '../components/Budget/Accounting/Accounting';
 import Operations from '../components/Budget/Operations/Operations';
 import Reports from '../components/Budget/Reports/Reports';
 import Menu from '../components/Menu';
-import { MenuItem } from '../types';
+import { Icons, MenuItem } from '../types';
 
-const menuItems: Array<MenuItem> = [
-	{ to: '/budget/operation', title: 'Операции', component: Operations },
-	{ to: '/budget/accounting', title: 'Сводка', component: Accounting },
-	{ to: '/budget/categories', title: 'Категории', component: Categories },
-	{ to: '/budget/report', title: 'Отчеты', component: Reports },
+const menuItems: MenuItem[] = [
+	{ to: '/budget/operation', title: 'Операции', component: Operations, icon: Icons.operations},
+	{ to: '/budget/accounting', title: 'Сводка', component: Accounting, icon: Icons.accounting },
+	{ to: '/budget/categories', title: 'Категории', component: Categories, icon: Icons.categories },
+	{ to: '/budget/report', title: 'Отчеты', component: Reports, icon: Icons.report },
 ];
 
 const BudgetPage: React.FC = () => {

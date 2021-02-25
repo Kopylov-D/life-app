@@ -1,7 +1,6 @@
 @import '../../variables';
 
 .board {
-	// max-width: 2000px;
 	position: absolute;
 	left: 20px;
 
@@ -10,9 +9,5 @@
 		justify-content: flex-start;
 		flex-shrink: 1;
 		margin-bottom: 20px;
-		// flex-wrap: wrap;
 	}
-
-	// overflow: auto;
-
 }

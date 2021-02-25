@@ -1,5 +1,8 @@
-import { BudgetDataInterface } from '../../store/ducks/budget/contracts/state';
-import { CategoryInterface, TransactionInterface } from '../../store/ducks/budget/types';
+import {
+	BudgetDataInterface,
+	CategoryInterface,
+	TransactionInterface,
+} from '../../store/ducks/budget/contracts/state';
 import { instance as axios, Response } from './index';
 
 export const budgetApi = {

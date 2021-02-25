@@ -1,56 +1,21 @@
 @import '../variables';
 
 .colorpicker {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 1rem auto;
-  width: 220px;
-  justify-content: center;
-  // padding: 1rem 0;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 1rem auto;
+	width: 220px;
+	justify-content: center;
 
-  &__item {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+	&__item {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		margin: 5px;
+		cursor: pointer;
+	}
 
-    margin: 5px;
-    cursor: pointer;
-  }
-
-  & .active {
-    // border: 1px solid black;
-    box-shadow: 0 0 3px inset black;
-  }
-
-  // &--grey {
-  //   background-color: #c9d1d3;
-  // }
-
-  // &--lime {
-  //   background-color: #b6e6bd;
-  // }
-
-  // &--purple {
-  //   background-color: #c355f5;
-  // }
-
-  // &--black {
-  //   background-color: #08001a;
-  // }
-
-  // &--red {
-  //   background-color: #ff6464;
-  // }
-
-  // &--green {
-  //   background-color: #42b883;
-  // }
-
-  // &--blue {
-  //   background-color: #64c4ed;
-  // }
-
-  // &--pink {
-  //   background-color: #ffbbcc;
-  // }
+	& .active {
+		box-shadow: 0 0 3px inset black;
+	}
 }

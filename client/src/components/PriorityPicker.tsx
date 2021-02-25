@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react';
-import { ReactComponent as PriorityIcon } from '../assets/icons/flag-outline.svg';
+import React, { useState } from 'react';
+import { setColor } from '../services/utils/commonUtils';
 import { Priority } from '../store/ducks/todos/contracts/state';
 import Dropdown from './UI/Dropdown';
-import CheckIcon from './UI/Icons/CheckIcon';
+import { PriorityIcon } from './UI/Icons';
 import Icon from './UI/Icons/Icon';
 
 interface Props {
@@ -18,7 +18,6 @@ const priorityPickerItems = [
 ];
 
 const PriorityPicker: React.FC<Props> = props => {
-	// const [priority, setPriority] = useState<Priority>(props.priority || Priority.none);
 	const [priorityPickerIsOpen, setPriorityPickerIsOpen] = useState<boolean>(false);
 
 	const onTogglePriorityPickerHandler = (e: React.MouseEvent) => {
@@ -31,16 +30,13 @@ const PriorityPicker: React.FC<Props> = props => {
 	};
 
 	return (
-		<div className='with-dropdown'>
-			{/* <img
-				className="task-editor__icon with-dropdown"
-				src={thunder}
-				alt=""
+		<div className="with-dropdown">
+			<Icon
+				classNames={`priority icon--${setColor(props.priority)}`}
 				onClick={onTogglePriorityPickerHandler}
-			></img> */}
-				<Icon name="priority" onClick={onTogglePriorityPickerHandler}>
-					<PriorityIcon />
-				</Icon>
+			>
+				<PriorityIcon />
+			</Icon>
 
 			{priorityPickerIsOpen && (
 				<Dropdown

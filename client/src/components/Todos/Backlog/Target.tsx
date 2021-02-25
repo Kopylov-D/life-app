@@ -1,14 +1,14 @@
 import React, { Fragment, useState } from 'react';
-import trash from '../../../assets/img/trash.svg';
-import gear from '../../../assets/img/gear.svg';
+import { CSSTransition } from 'react-transition-group';
+import classNames from 'classnames';
+// import trash from '../../../assets/img/trash.svg';
+// import gear from '../../../assets/img/gear.svg';
 
 import { formatDate } from '../../../services/utils/dateUtils';
 import {
 	ColorInterface,
 	TargetInterface,
 } from '../../../store/ducks/todos/contracts/state';
-
-import classNames from 'classnames';
 import useColorName from '../../../hooks/color.hook';
 import TargetEditor from './TargetEditor';
 
@@ -44,7 +44,13 @@ const Target: React.FC<Props> = props => {
 				</div>
 			</div>
 
-			{editorIsOpen && (
+			<CSSTransition
+				in={editorIsOpen}
+				timeout={200}
+				classNames="modal"
+				mountOnEnter
+				unmountOnExit
+			>
 				<TargetEditor
 					_id={props._id}
 					isDone={props.isDone}
@@ -60,7 +66,7 @@ const Target: React.FC<Props> = props => {
 					deleteTargetHandler={props.deleteTargetHandler}
 					colors={props.colors}
 				/>
-			)}
+			</CSSTransition>
 		</Fragment>
 	);
 };

@@ -1,27 +1,25 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useInput } from '../../../hooks/input.hook';
-import Backdrop from '../../UI/Backdrop';
-import Input from '../../UI/Input';
-import { ReactComponent as Clock } from '../../../assets/icons/time-outline.svg';
-import { ReactComponent as Trash } from '../../../assets/icons/trash-outline.svg';
-import { ReactComponent as Edit } from '../../../assets/icons/create-outline.svg';
-import Button from '../../UI/Button';
-import Select from '../../UI/Select';
-import { selectTargetsList } from '../../../store/ducks/todos/selectors';
 import {
 	ColorInterface,
 	Priority,
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
+import { selectTargetsList } from '../../../store/ducks/todos/selectors';
+import { useInput } from '../../../hooks/input.hook';
 import useColorName from '../../../hooks/color.hook';
+import { toDate } from '../../../services/utils/dateUtils';
+import Input from '../../UI/Input';
+import Button from '../../UI/Button';
+import Select from '../../UI/Select';
 import Modal from '../../UI/Modal';
 import Textarea from '../../UI/Textarea';
 import PriorityPicker from '../../PriorityPicker';
-import { toDate } from '../../../services/utils/dateUtils';
-import Icon from '../../UI/Icons/Icon';
 import Calendar from '../../Calendar';
+import Icon from '../../UI/Icons/Icon';
+import { CalendarIcon, EditIcon, TrashIcon } from '../../UI/Icons';
+import NotesEditor from './NotesEditor';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -50,14 +48,14 @@ const TaskEditor: React.FC<Props> = props => {
 
 	const input = useInput(
 		{ initialValue: props.name ? props.name : '' },
-		{ maxLength: 50 }
+		{ maxLength: 50, isEmpty: true }
 	);
 
 	const [currentDate, setCurrentDate] = useState<Date>(
 		props.expiresIn ? toDate(props.expiresIn) : new Date()
 	);
 	const [calendarIsOpen, setCalendarIsOpen] = useState<boolean>(false);
-	const [noteEditorIsOpen, setNotesEditorIsOpen] = useState<boolean>(false);
+	const [notesEditorIsOpen, setNotesEditorIsOpen] = useState<boolean>(false);
 	const [parentTarget, setParentTarget] = useState<string>();
 	const [priority, setPriority] = useState<Priority>(props.priority || Priority.none);
 	const [notesInput, setNotesInput] = useState<string>(props.notes!);
@@ -127,11 +125,11 @@ const TaskEditor: React.FC<Props> = props => {
 		setCalendarIsOpen(false);
 	};
 
-	const onChangeArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+	const onChangeNotes = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setNotesInput(e.target.value);
 	};
 
-	const OnCancelNotesEdit = () => {
+	const onCancelNotesEdit = () => {
 		setNotesEditorIsOpen(false);
 		setNotesInput(props.notes!);
 	};
@@ -157,11 +155,11 @@ const TaskEditor: React.FC<Props> = props => {
 							initialId={props.target}
 						/>
 					)}
-					<Icon name="clock" onClick={() => setCalendarIsOpen(true)}>
-						<Clock />
+					<Icon classNames="clock" onClick={() => setCalendarIsOpen(true)}>
+						<CalendarIcon />
 					</Icon>
-					<Icon name="edit" onClick={() => setNotesEditorIsOpen(true)}>
-						<Edit />
+					<Icon classNames="edit" onClick={() => setNotesEditorIsOpen(true)}>
+						<EditIcon />
 					</Icon>
 					<PriorityPicker
 						priority={priority}
@@ -169,15 +167,15 @@ const TaskEditor: React.FC<Props> = props => {
 					/>
 
 					{props.type === 'edit' && (
-						<Icon name="trash" onClick={deleteTask}>
-							<Trash />
+						<Icon classNames="trash" onClick={deleteTask}>
+							<TrashIcon />
 						</Icon>
 					)}
 				</div>
 			</div>
 
 			<div className="task-editor__footer">
-				<Button onClick={onSubmit} size="small">
+				<Button onClick={onSubmit} size="small" disabled={!input.valid}>
 					{props.type === 'create' ? 'Добавить задачу' : 'Сохранить'}
 				</Button>
 				<Button onClick={props.cancelEditor} size="small" color="secondary">
@@ -193,15 +191,24 @@ const TaskEditor: React.FC<Props> = props => {
 				/>
 			)}
 
-			{noteEditorIsOpen && (
-				<Modal closeModal={OnCancelNotesEdit} class="notes-editor">
-					<Textarea value={notesInput} onChange={onChangeArea} />
-					<div className="notes-editor__footer">
-						<Button onClick={() => setNotesEditorIsOpen(false)}>Принять</Button>
-						<Button onClick={OnCancelNotesEdit}>Отмена</Button>
-					</div>
-				</Modal>
-			)}
+			{
+				notesEditorIsOpen && (
+					<NotesEditor
+						closeEditor={() => setNotesEditorIsOpen(false)}
+						onCancelNotesEdit={onCancelNotesEdit}
+						notesValue={notesInput}
+						onChangeNotes={onChangeNotes}
+					/>
+				)
+
+				// <Modal closeModal={OnCancelNotesEdit} class="notes-editor">
+				// 	<Textarea value={notesInput} onChange={onChangeArea} />
+				// 	<div className="notes-editor__footer">
+				// 		<Button onClick={() => setNotesEditorIsOpen(false)}>Принять</Button>
+				// 		<Button onClick={OnCancelNotesEdit}>Отмена</Button>
+				// 	</div>
+				// </Modal>
+			}
 		</div>
 	);
 };

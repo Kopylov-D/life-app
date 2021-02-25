@@ -5,12 +5,13 @@ import {
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
-import edit from '../../../assets/icons/Edit.svg';
-import checked from '../../../assets/icons/checkmark-done-outline.svg';
 import useOutsideClick from '../../../hooks/outsideClick.hook';
-import Checkbox from '../../UI/Checkbox';
+// import Checkbox from '../../UI/Checkbox';
 import TaskEditor from '../Backlog/TaskEditor';
-import CheckIcon from '../../UI/Icons/CheckIcon';
+// import {ReactComponent as Check} from '../../../assets/icons/checkmark-done-outline.svg';
+// import { ReactComponent as Edit } from '../../../assets/icons/pencil-outline.svg';
+import Icon from '../../UI/Icons/Icon';
+import { CheckIcon, PencilIcon } from '../../UI/Icons';
 
 interface Props {
 	task: TaskInterface;
@@ -60,12 +61,12 @@ const IssuesItem: React.FC<Props> = ({
 				<div className="issues-item table__item">
 					{/* <Checkbox checked={task.isDone} id={task._id} onChangeHandler={onChecked} /> */}
 					<div className="issues-item__status">
-						{task.isDone && <CheckIcon/>}
+						{task.isDone && <CheckIcon />}
 						{/* {task.isDone && <img src={checked} alt="" />} */}
 					</div>
 					<div className="issues-item__task">{task.name}</div>
 					<div className="issues-item__priority">
-						{task.priority ? task.priority : '-'}
+						{task.priority ? '!'.repeat(4 - task.priority) : '-'}
 					</div>
 					<div className="issues-item__target">{target ? target : '-'}</div>
 					<div className="issues-item__expiresIn">
@@ -75,7 +76,10 @@ const IssuesItem: React.FC<Props> = ({
 						{task.date ? formatDate(task.date) : '-'}
 					</div>
 					<div className="issues-item__options">
-						<img src={edit} alt="" onClick={() => setIsVisible(true)} />
+						<Icon classNames="edit" onClick={() => setIsVisible(true)}>
+							<PencilIcon />
+						</Icon>
+						{/* <img src={edit} alt=""  /> */}
 					</div>
 				</div>
 			)}

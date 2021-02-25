@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTasksToCard } from '../../../store/ducks/todos/actions';

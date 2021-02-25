@@ -7,8 +7,8 @@ import {
 	ColorInterface,
 	SubtaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
-import trash from '../../../assets/icons/Trash.svg';
-import arrow from '../../../assets/icons/Arrow-left-square.svg';
+import Icon from '../../UI/Icons/Icon';
+import { TrashIcon, UndoIcon } from '../../UI/Icons';
 
 interface Props extends SubtaskInterface {
 	subtask: SubtaskInterface;
@@ -30,17 +30,16 @@ const Subtask: React.FC<Props> = props => {
 	return (
 		<div className={classNames('subtask', colorName)}>
 			<div className="subtask__content">
-				<img
-					className="subtask__button"
-					src={arrow}
-					alt=""
-					onClick={onDecomposeSubtask}
-				/>
+				<Icon classNames="undo subtask__button" onClick={onDecomposeSubtask}>
+					<UndoIcon />
+				</Icon>
 				<div className={classNames('subtask__text', { done: props.isDone })}>
 					{props.name}
 				</div>
 			</div>
-			<img className="subtask__button" src={trash} alt="" onClick={onDeleteSubtask} />
+			<Icon classNames="trash" onClick={onDeleteSubtask}>
+				<TrashIcon />
+			</Icon>
 		</div>
 	);
 };

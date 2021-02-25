@@ -10,8 +10,8 @@
 	}
 
 	&__list {
-    overflow: auto;
-    overflow-x: hidden;
+		overflow: auto;
+		overflow-x: hidden;
 		max-height: 300px;
 		min-height: 100px;
 		margin-bottom: 20px;
@@ -32,11 +32,13 @@
 
 		&.active {
 			background: $c-primary;
+			color: $c-white;
 			transform: translate(10px);
 		}
 
 		&:hover {
-			background: grey;
+			background: rgba($color: $c-background, $alpha: 0.5);
+			color: $c-black;
 		}
 	}
 

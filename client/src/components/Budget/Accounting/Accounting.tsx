@@ -13,22 +13,24 @@ import Proportion from './Proportion';
 
 const Accounting: React.FC = () => {
 	const dispatch = useDispatch();
-	
+
 	const { categories, proportion } = useSelector(selectCategoriesWithAmount);
 	const options = useSelector(selectOptions);
 	const isLoading = useSelector(selectIsLoading);
 
-	const changeDateHandler = (year: string, month: string, all: boolean, fullYear: boolean) => {
+	const changeDateHandler = (
+		year: string,
+		month: string,
+		all: boolean,
+		fullYear: boolean
+	) => {
 		dispatch(getBudgetData(year, month, all, fullYear));
 	};
 
 	return (
-		<div className="budget__accounting">
+		<div className="accounting">
 			<div className="budget__panel">
-				<DatePanel
-					startDate={options.startDate}
-					changeDate={changeDateHandler}
-				/>
+				<DatePanel startDate={options.startDate} changeDate={changeDateHandler} />
 				<Proportion proportion={proportion} />
 			</div>
 
@@ -36,16 +38,8 @@ const Accounting: React.FC = () => {
 				<Loader size="small" type="cube-grid" />
 			) : (
 				<div className="accounting__tables">
-					<AccountingTable
-						categories={categories}
-						isExpense={true}
-						title="Расходы"
-					/>
-					<AccountingTable
-						categories={categories}
-						isExpense={false}
-						title="Доходы"
-					/>
+					<AccountingTable categories={categories} isExpense={true} title="Расходы" />
+					<AccountingTable categories={categories} isExpense={false} title="Доходы" />
 				</div>
 			)}
 		</div>

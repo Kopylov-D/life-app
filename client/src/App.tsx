@@ -35,9 +35,9 @@ function App() {
 			<Main>
 				<Switch>
 					<Route path="/budget" component={BudgetPage} />
-					<Route path="/notes" component={NotesPage} />
+					{/* <Route path="/notes" component={NotesPage} /> */}
 					<Route path="/todos" component={TodosPage} />
-					<Route path="/statistic" component={StatisticPage} />
+					{/* <Route path="/statistic" component={StatisticPage} /> */}
 
 					<Redirect to="/todos" />
 				</Switch>
@@ -47,10 +47,8 @@ function App() {
 
 	return (
 		<div className="app">
-			<BrowserRouter>
-				<Alert />
-				{routes}
-			</BrowserRouter>
+			<Alert />
+			<BrowserRouter>{routes}</BrowserRouter>
 		</div>
 	);
 }

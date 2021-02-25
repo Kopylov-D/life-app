@@ -1,18 +1,17 @@
 @import '../../variables';
 
-
 .modal {
-  position: fixed;
-  transform: translate(-50%, 0);
-  left: 50%;
+	position: fixed;
+	transform: translate(-50%, 0);
+	left: 50%;
 	top: 20%;
-	
+
 	background-color: #ffffff;
 	color: #000000;
 	max-width: 800px;
 	border-radius: $border-radius;
 	padding: 2rem;
-	box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: .25);
+	box-shadow: 0px 0px 4px rgba($color: #000000, $alpha: 0.25);
 	z-index: 110;
 
 	&__title {
@@ -20,4 +19,22 @@
 		text-align: center;
 		margin-bottom: 1rem;
 	}
+}
+
+.modal-enter {
+	opacity: 0;
+	transform: translateX(-50%) scale(0.5);
+}
+.modal-enter-active {
+	opacity: 1;
+	transform: translateX(-50%) scale(1);
+	transition: all 200ms;
+}
+.modal-exit {
+	opacity: 1;
+}
+.modal-exit-active {
+	opacity: 0;
+	transform: translateX(-50%) scale(0.5);
+	transition: all 200ms;
 }

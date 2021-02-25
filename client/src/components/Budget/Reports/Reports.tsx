@@ -54,12 +54,9 @@ const Reports = () => {
 	};
 
 	return (
-		<div className="budget__reports">
+		<div className="reports">
 			<div className="budget__panel">
-				<DatePanel
-					changeDate={changeDateHandler}
-					startDate={options.startDate}
-				/>
+				<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
 			</div>
 
 			{isLoading ? (
@@ -81,11 +78,7 @@ const Reports = () => {
 								<stop offset={off} stopColor="red" stopOpacity={1} />
 							</linearGradient>
 						</defs>
-						<XAxis
-							// padding={{ left: 10, right: 10 }}
-							dataKey="date"
-							interval="preserveStart"
-						/>
+						<XAxis dataKey="date" interval="preserveStart" />
 						<YAxis padding={{ bottom: 20, top: 20 }} interval="preserveStart" />
 						<CartesianGrid strokeDasharray="3 3" />
 						<Tooltip />

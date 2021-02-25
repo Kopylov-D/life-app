@@ -1,4 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
+import { setLogout } from '../../store/ducks/auth/actionCreators';
+import { store } from '../../store/store';
 
 export const getAuthData = () => {
 	const jwtTokenCookie: RegExpMatchArray | null = document.cookie.match(
@@ -17,7 +19,6 @@ export const getAuthData = () => {
 			userId,
 		};
 	}
-
 	return {
 		token: null,
 		userId: null,
@@ -32,6 +33,16 @@ instance.interceptors.request.use(config => {
 	return config;
 });
 
+instance.interceptors.response.use(
+	config => {
+		return config;
+	},
+	error => {
+		if (error.response.status === 401) {
+			store.dispatch(setLogout());
+		}
+	}
+);
 
 export interface Response<T> {
 	message: string;

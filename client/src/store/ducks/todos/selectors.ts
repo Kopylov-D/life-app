@@ -103,19 +103,34 @@ export const selectOrderedIssues = createSelector(
 	selectSortOrder,
 	selectSortKey,
 	(issues, order, key): TaskInterface[] => {
-		const sorted = issues.sort((a: any, b: any) => {
-			if (a[key] === undefined) return 0;
-			if (order === 'asc') {
-				if (a[key] > b[key]) {
-					return 1;
-				} else {
-					return -1;
-				}
+		const sorted = issues.sort((a: TaskInterface, b: TaskInterface) => {
+			if (key === '' || a[key] === undefined || b[key] === undefined) {
+				return 0;
 			} else {
-				if (a[key] < b[key]) {
-					return 1;
+				let abase = a[key];
+				let bbase = b[key];
+
+				// if (typeof abase === 'string' && typeof bbase === 'string') {
+				// 	console.log(abase);
+				// 	abase = abase.toLowerCase();
+				// 	bbase = bbase.toLowerCase();
+				// 	console.log(abase);
+				// 	console.log(typeof abase);
+					
+				// }
+
+				if (order === 'asc') {
+					if (abase! > bbase!) {
+						return 1;
+					} else {
+						return -1;
+					}
 				} else {
-					return -1;
+					if (abase! < bbase!) {
+						return 1;
+					} else {
+						return -1;
+					}
 				}
 			}
 		});

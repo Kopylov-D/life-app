@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-// import { parseToDate, toDate } from '../../services/utils/dateUtils';
 import { selectIsLoading } from '../../store/ducks/budget/selectors';
-import Button from '../UI/Button';
-// import shevron from '../../assets/icons/Shevron-down.svg';
-import arrow from '../../assets/icons/Arrow-down.svg';
-import classNames from 'classnames';
 import { toDate } from '../../services/utils/dateUtils';
+import Button from '../UI/Button';
+import Icon from '../UI/Icons/Icon';
+import { ChevronIcon } from '../UI/Icons';
 
 type Props = {
 	startDate: string;
@@ -43,11 +41,15 @@ const YearChanger: React.FC<Props> = props => {
 	return (
 		<div className="year-changer">
 			<Button onClick={prevYearHandler} type="count" disabled={isLoading}>
-				<img className={classNames('arrow', 'arrow--left')} src={arrow} alt="" />
+				<Icon classNames="chevron" direction="left">
+					<ChevronIcon />
+				</Icon>
 			</Button>
 			<span>{year} </span>
 			<Button onClick={nextYearHandler} type="count" disabled={isLoading}>
-				<img className={classNames('arrow', 'arrow--right')} src={arrow} alt="" />
+				<Icon classNames="chevron" direction="right">
+					<ChevronIcon />
+				</Icon>
 			</Button>
 		</div>
 	);

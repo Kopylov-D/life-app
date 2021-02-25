@@ -1,6 +1,7 @@
 import React, { createRef, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useCoordinate from '../../../hooks/useCoordinate.hook';
+import { CSSTransition } from 'react-transition-group';
+// import useCoordinate from '../../../hooks/useCoordinate.hook';
 import { fetchAddCard } from '../../../store/ducks/todos/actions';
 import {
 	selectCards,
@@ -11,7 +12,7 @@ import {
 } from '../../../store/ducks/todos/selectors';
 import Button from '../../UI/Button';
 import Card from './Card';
-import Tooltip from '../../UI/Tooltip';
+// import Tooltip from '../../UI/Tooltip';
 
 export const Board: React.FC = () => {
 	const dispatch = useDispatch();
@@ -20,6 +21,8 @@ export const Board: React.FC = () => {
 	const tasks = useSelector(selectTasks);
 	const subtasks = useSelector(selectSubtasks);
 	const colors = useSelector(selectColors);
+
+	const [flag, setflag] = useState(false)
 
 	// const parentRef = useRef<HTMLDivElement>(null);
 	// const childRef = createRef<HTMLDivElement>();
@@ -31,6 +34,7 @@ export const Board: React.FC = () => {
 
 	const onCreateCardHandler = () => {
 		dispatch(fetchAddCard(cardsNumber + 1));
+		setflag(true)
 	};
 
 	// const onMouseOver = () => {
@@ -54,19 +58,9 @@ export const Board: React.FC = () => {
 				))}
 			</div>
 			<Button onClick={onCreateCardHandler}>Создать карточку</Button>
-			<div
-				// ref={parentRef}
-				style={{ display: 'inline-block' }}
-				// onMouseOver={onMouseOver}
-				// onMouseLeave={onMouseLeave}
-			>
-				asdf
-			</div>
-			{/* {isVisible && (
-				<Tooltip text="sdfsdagfgdsfg" selfRef={childRef} coords={coords}>
-					asdf
-				</Tooltip>
-			)} */}
+			<CSSTransition in={flag} classNames='transition' timeout={500} mountOnEnter unmountOnExit>
+				<div>egrshbklbmjkdfnablfnbdjfnbkrljbrwb</div>
+			</CSSTransition>
 		</div>
 	);
 };

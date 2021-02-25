@@ -6,22 +6,27 @@
 @import './UI/modal';
 @import './UI/select';
 @import './UI/dropdown';
-@import './UI/switch';
+@import './UI/toggle';
 @import './UI/backdrop';
 @import './UI/yearchanger';
 @import './UI/tooltip';
 @import './UI/checkbox';
 @import './UI/text-area';
+@import './UI/icons';
 
-@import './categories';
 @import './error';
 @import './table';
 @import './colorpicker';
 @import './menu';
+@import './date-panel';
 
-@import './Budget/categoryChanger';
+@import './Budget/category-editor';
 @import './Budget/accounting';
+@import './Budget/new-transaction';
 @import './Budget/categories';
+@import './Budget/proportion';
+@import './Budget/reports';
+@import './Budget/operations';
 
 @import './Todos/card';
 @import './Todos/task';
@@ -37,6 +42,3 @@
 @import './Todos/issues';
 @import './Todos/issues-item';
 @import './Todos/notes-editor';
-
-
-

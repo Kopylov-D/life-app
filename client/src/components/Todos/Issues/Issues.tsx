@@ -6,7 +6,7 @@ import {
 	SetVisibilityFilter,
 } from '../../../store/ducks/todos/actionCreators';
 import { updateTask, fetchDeleteTask } from '../../../store/ducks/todos/actions';
-import { TaskInterface } from '../../../store/ducks/todos/contracts/state';
+import { TaskInterface, TodosState } from '../../../store/ducks/todos/contracts/state';
 import {
 	selectColors,
 	selectOrderedIssues,
@@ -81,16 +81,16 @@ const Issues: React.FC = () => {
 		dispatch(SetVisibilityFilter('active'));
 	};
 
-	const onSort = (id: string, direction: 'asc' | 'desc') => {
+	const onSort = (_id: TodosState['sortKey'], direction: 'asc' | 'desc') => {
 		const updatedItems = headerItems.map(i => {
-			if (i.id === id) {
+			if (i.id === _id) {
 				i.isActive = true;
 			} else i.isActive = false;
 			return i;
 		});
 
 		setHeaderItems(updatedItems);
-		dispatch(SetSortKey(id));
+		dispatch(SetSortKey(_id));
 		dispatch(SetSortOrder(direction));
 	};
 
@@ -134,7 +134,7 @@ const Issues: React.FC = () => {
 					onSwitch={showActive}
 				/>
 			</div>
-			<Table class="issues" headerItems={headerItems} onHeaderItemClick={onSort}>
+			<Table className="issues" headerItems={headerItems} onHeaderItemClick={onSort}>
 				{issues.map(item => {
 					const targetName = targetsList.find(target => target.id === item.target)?.value;
 					return (

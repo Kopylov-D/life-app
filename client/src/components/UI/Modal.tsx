@@ -1,6 +1,7 @@
 import classNames from 'classnames';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { CSSTransition } from 'react-transition-group';
 import { BackdropInterface } from '../../types';
 import Backdrop from './Backdrop';
 
@@ -12,31 +13,39 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = props => {
-	return ReactDOM.createPortal(
-		<Fragment>
-			<div
-				className={classNames('modal', {
-					[`${props.class}__modal`]: props.class,
-				})}
-			>
-				{props.title && <div className="modal__title">{props.title}</div>}
-				{props.children}
-			</div>
+	const [flag, setflag] = useState(false);
 
-			<Backdrop onClick={props.closeModal} type={props.backdropType} />
-		</Fragment>,
+	useEffect(() => {
+		setflag(true);
+
+		return () => {
+		setflag(false);
+		
+		}
+	}, []);
+
+	return ReactDOM.createPortal(
+		<div
+			className={classNames('modal', {
+				[`${props.class}__modal`]: props.class,
+			})}
+		>
+			{props.title && <div className="modal__title">{props.title}</div>}
+			{props.children}
+			<CSSTransition
+				in={flag}
+				// onExit={() => setflag(false)}
+				// onExit={() => setflag(false)}
+				timeout={200}
+				mountOnEnter
+				unmountOnExit
+				classNames="backdrop"
+			>
+				<Backdrop onClick={props.closeModal} type={props.backdropType} />
+			</CSSTransition>
+		</div>,
 		document.body
 	);
 };
 
 export default Modal;
-
-// const Modal =({ message, isOpen, onClose, children })=> {
-//   if (!isOpen) return null;
-//   return ReactDOM.createPortal(
-//      <div className="modal">
-//       <span>{message}</span>
-//       <button onClick={onClose}>Close</button>
-//      </div>
-//     ,document.body);
-//   }

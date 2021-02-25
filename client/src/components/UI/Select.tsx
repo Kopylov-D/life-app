@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import useOutsideClick from '../../hooks/outsideClick.hook';
-import arrow from '../../assets/icons/Arrow-down.svg'
+// import arrow from '../../assets/icons/Arrow-down.svg'
 import classNames from 'classnames';
+import Icon from './Icons/Icon';
+import { ChevronIcon } from './Icons';
 
 export interface SelectItems {
 	id: string;
 	value: string;
-	some?: any
+	some?: any;
 }
 
 interface Props {
@@ -52,7 +54,10 @@ const Select: React.FC<Props> = ({
 		<div className="select" ref={ref}>
 			<div className="select__input" onClick={toggleDropdown}>
 				<span>{label}</span>
-				<img className={classNames('arrow', {'arrow--up': isVisible})} src={arrow} alt=""/>
+				<Icon classNames="chevron" direction={isVisible ? 'up' : undefined}>
+					<ChevronIcon />
+				</Icon>
+				{/* <img className={classNames('arrow', {'arrow--up': isVisible})} src={arrow} alt=""/> */}
 			</div>
 
 			{isVisible && (

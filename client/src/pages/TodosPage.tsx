@@ -5,14 +5,13 @@ import Menu from '../components/Menu';
 import Backlog from '../components/Todos/Backlog/Backlog';
 import { Board } from '../components/Todos/Board/Board';
 import Issues from '../components/Todos/Issues/Issues';
-// import Button from '../components/UI/Button';
-import { ReactComponent as Arrow } from '../assets/icons/arrow-down-outline.svg';
 import Loader from '../components/UI/Loader';
 import { getTodosData } from '../store/ducks/todos/actions';
 import { selectLoadingStatus } from '../store/ducks/todos/selectors';
 import { LoadingStatus } from '../store/types';
 import { Icons, MenuItem } from '../types';
 import Icon from '../components/UI/Icons/Icon';
+import { ChevronIcon } from '../components/UI/Icons';
 
 const menuItems: MenuItem[] = [
 	{ title: 'Доска', to: '/todos/board', component: Board, icon: Icons.board },
@@ -38,7 +37,6 @@ const TodosPage = () => {
 			{menuItems.map(item => (
 				<Route key={item.to} path={item.to} component={item.component} />
 			))}
-
 			<Redirect to="/todos/board" />
 		</Switch>
 	);
@@ -50,11 +48,9 @@ const TodosPage = () => {
 				style={{ left: menuIsOpen ? '240px' : 0 }}
 				onClick={toggleMenu}
 			>
-				<Icon name="arrow" direction={menuIsOpen ? 'left' : 'right'}>
-					<Arrow />
+				<Icon classNames="arrow" direction={menuIsOpen ? 'left' : 'right'}>
+					<ChevronIcon />
 				</Icon>
-
-				{/* <Button onClick={toggleMenu} type='toggle'>-</Button> */}
 			</div>
 			<div className="main__content" style={{ left: menuIsOpen ? '253px' : 0 }}>
 				{loading === LoadingStatus.LOADING ? (
@@ -63,7 +59,6 @@ const TodosPage = () => {
 					<div className="todos">{routes}</div>
 				)}
 			</div>
-			;
 		</BrowserRouter>
 	);
 };

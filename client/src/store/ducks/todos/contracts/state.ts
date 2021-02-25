@@ -1,4 +1,5 @@
 import { AxiosError } from 'axios';
+import { HeaderItemsInterface } from '../../../../components/Table';
 import { LoadingStatus } from '../../../types';
 
 export interface TodosState {
@@ -10,7 +11,7 @@ export interface TodosState {
 	loadingStatus: LoadingStatus;
 	error?: AxiosError;
 	visibilityFilter: 'all' | 'done' | 'notDone' | 'active'
-	sortKey: string
+	sortKey: '' | keyof TaskInterface
 	sortOrder: 'asc' | 'desc'
 }
 

@@ -1,6 +1,11 @@
 import React, { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addTransaction, deleteTransaction, getBudgetData } from '../../../store/ducks/budget/actions';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import {
+	addTransaction,
+	deleteTransaction,
+	getBudgetData,
+} from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
 	selectCurrentCategory,
@@ -15,9 +20,9 @@ import NewTransaction from './NewTransaction';
 import Transaction from './Transaction';
 
 const headerItems: HeaderItemsInterface[] = [
-	{id: 'date', isActive: false, name: 'Дата', needSort: false },
-	{id: 'name', isActive: false, name: 'Значение', needSort: false },
-	{id: 'category', isActive: false, name: 'Категория', needSort: false },
+	{ id: 'date', isActive: false, name: 'Дата', needSort: false },
+	{ id: 'name', isActive: false, name: 'Значение', needSort: false },
+	{ id: 'category', isActive: false, name: 'Категория', needSort: false },
 ];
 
 const Operations: React.FC = () => {
@@ -54,36 +59,42 @@ const Operations: React.FC = () => {
 	return (
 		<Fragment>
 			<div className="budget__panel">
-				<DatePanel
-					changeDate={changeDateHandler}
-					startDate={options.startDate}
-				/>
+				<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
 			</div>
 			{isLoading ? (
 				<Loader type="cube-grid" />
 			) : (
 				<div>
-					<Table class="" headerItems={headerItems}>
+					<Table className="operations" headerItems={headerItems}>
 						<NewTransaction
 							categories={categories}
 							currentCategory={currentCategory}
 							onAddTransaction={onAddTransactionHandler}
 						/>
 
-						{transactions.map(item => {
-							return (
-								<Transaction
-									key={item._id}
-									_id={item._id}
-									category={item.category}
-									user={item.user}
-									date={item.date}
-									amount={item.amount}
-									isExpense={item.isExpense}
-									onDeleteTransaction={onDeleteTransactionHandler}
-								/>
-							);
-						})}
+						<TransitionGroup>
+							{transactions.map(item => {
+								return (
+									<CSSTransition
+										timeout={200}
+										key={item._id}
+										classNames="transaction"
+										mountOnEnter
+										unmountOnExit
+									>
+										<Transaction
+											_id={item._id}
+											category={item.category}
+											user={item.user}
+											date={item.date}
+											amount={item.amount}
+											isExpense={item.isExpense}
+											onDeleteTransaction={onDeleteTransactionHandler}
+										/>
+									</CSSTransition>
+								);
+							})}
+						</TransitionGroup>
 					</Table>
 				</div>
 			)}

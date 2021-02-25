@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useInput } from '../../../hooks/input.hook';
 import {
 	ColorInterface,
 	Priority,
 	TargetInterface,
 } from '../../../store/ducks/todos/contracts/state';
+import { setColor } from '../../../services/utils/commonUtils';
+import { toDate } from '../../../services/utils/dateUtils';
 import Colorpicker from '../../Colorpicker';
 import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Modal from '../../UI/Modal';
-import { ReactComponent as Clock } from '../../../assets/icons/time-outline.svg';
-import { ReactComponent as Trash } from '../../../assets/icons/trash-outline.svg';
 import Textarea from '../../UI/Textarea';
 import Checkbox from '../../UI/Checkbox';
-import { toDate } from '../../../services/utils/dateUtils';
 import Calendar from '../../Calendar';
 import PriorityPicker from '../../PriorityPicker';
 import Icon from '../../UI/Icons/Icon';
-import { setColor } from '../../../services/utils/commonUtils';
+import { CalendarIcon, TrashIcon } from '../../UI/Icons';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -37,7 +36,10 @@ interface Props {
 }
 
 const TargetEditor: React.FC<Props> = props => {
-	const input = useInput({ initialValue: props.name || '' });
+	const input = useInput(
+		{ initialValue: props.name || '' },
+		{ required: true, maxLength: 30, isEmpty: true }
+	);
 	const [notesInput, setNotesInput] = useState<string>(props.notes || '');
 	const [colorId, setColorId] = useState<string | undefined>(props.color);
 	const [currentDate, setCurrentDate] = useState<Date>(
@@ -107,7 +109,7 @@ const TargetEditor: React.FC<Props> = props => {
 	};
 
 	return (
-		<div className="target-editor">
+		<Fragment>
 			<Modal class="target-editor" closeModal={props.closeEditor} backdropType="black">
 				<Input
 					onChange={input.onChange}
@@ -139,19 +141,19 @@ const TargetEditor: React.FC<Props> = props => {
 						priority={priority}
 						changePriority={(id: number) => setPriority(id)}
 					/>
-					<Icon name="clock" onClick={() => setCalendarIsOpen(true)}>
-						<Clock />
+					<Icon classNames="calendar" onClick={() => setCalendarIsOpen(true)}>
+						<CalendarIcon />
 					</Icon>
 
 					{props.type === 'edit' && (
-						<Icon name="trash" onClick={onDeleteTarget}>
-							<Trash />
+						<Icon classNames="trash" onClick={onDeleteTarget}>
+							<TrashIcon />
 						</Icon>
 					)}
 				</div>
 
 				<div className="target-editor__buttons">
-					<Button onClick={submitChanges} size="small">
+					<Button onClick={submitChanges} size="small" disabled={!input.valid}>
 						{props.type === 'edit' ? 'Изменить' : 'Создать'}
 					</Button>
 					<Button onClick={props.closeEditor} size="small" color="secondary">
@@ -167,7 +169,7 @@ const TargetEditor: React.FC<Props> = props => {
 					closeCalendar={() => setCalendarIsOpen(false)}
 				/>
 			)}
-		</div>
+		</Fragment>
 	);
 };
 

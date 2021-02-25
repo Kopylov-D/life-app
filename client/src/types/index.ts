@@ -1,5 +1,3 @@
-import { CategoryInterface } from '../store/ducks/budget/types';
-
 export type AuthData = {
 	token: string;
 	userId: string;
@@ -9,13 +7,6 @@ export type User = {
 	_id: string;
 	email: string;
 	password: string;
-};
-
-export type Selector = {
-	months?: Month[];
-	years?: number[];
-	categories?: CategoryInterface[];
-	items: (CategoryInterface | Month)[];
 };
 
 export type Month = {
@@ -53,34 +44,36 @@ export type CategorySelect = {
 };
 
 export type MenuItem = {
-	to: string
-	title: string
-	icon?: Icons
-	component?: React.FC
-	bage?: number | string
-}
+	to: string;
+	title: string;
+	icon?: Icons;
+	component?: React.FC;
+	bage?: number | string;
+};
 
-
-
-export interface BackdropInterface  {
+export interface BackdropInterface {
 	onClick(): void;
 	type?: 'black';
-};
+}
 
 export enum Icons {
 	closec = 'closec',
 	board = 'board',
 	backlog = 'backlog',
 	issues = 'issues',
+	accounting = 'accounting',
+	categories = 'categories',
+	operations = 'operations',
+	report = 'report',
 }
 
 export enum Colors {
 	red = 'red',
 	orange = 'orange',
-	blue = 'blue'
+	blue = 'blue',
 }
 
 export interface CoordinatesInterface {
-	left: number | null
-	top: number | null
+	left: number | null;
+	top: number | null;
 }

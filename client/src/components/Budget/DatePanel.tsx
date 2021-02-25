@@ -19,7 +19,7 @@ export const months: Month[] = [
 	{ id: '11', value: 'Декабрь' },
 ];
 
-type Props = {
+interface Props {
 	startDate: string;
 	changeDate(year: string, month: string, all: boolean, fullYear: boolean): void;
 };
@@ -57,7 +57,7 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 	};
 
 	return (
-		<div className="budget__panel-selectors">
+		<div className="date-panel">
 			<Select items={months} onItemClick={onMonthClickHandler} initialId={month} />
 			<YearChanger startDate={startDate} changeYear={onChangeYearHandler} year={year} />
 

@@ -25,7 +25,7 @@ import {
 	BudgetDataType,
 	BudgetActionsTypes,
 } from './contracts/actionTypes';
-import { CategoryInterface } from './types';
+import { CategoryInterface } from './contracts/state';
 
 type ThunkType = ThunkAction<Promise<void>, RootState, unknown, BudgetActionsTypes>;
 

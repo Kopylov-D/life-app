@@ -1,9 +1,4 @@
-import {
-	TransactionInterface,
-	CategoryInterface,
-	BalanceInterface,
-} from '../types';
-import { OptionsInterface } from './state';
+import { BalanceInterface, CategoryInterface, OptionsInterface, TransactionInterface } from './state';
 
 export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
 export const GET_BUDGETDATA = 'GET_BUDGETDATA';

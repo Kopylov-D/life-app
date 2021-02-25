@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useInput } from '../../../hooks/input.hook';
+import { formatDate } from '../../../services/utils/dateUtils';
+import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
 import Calendar from '../../Calendar';
 import Input from '../../UI/Input';
-import calendar from '../../../assets/img/calendar.svg';
 import Select from '../../UI/Select';
-import { CategoryInterface } from '../../../store/ducks/budget/types';
-import { formatDate } from '../../../services/utils/dateUtils';
 import Toggle from '../../UI/Toggle';
-import { useInput } from '../../../hooks/input.hook';
+import { CalendarIcon } from '../../UI/Icons';
+import Icon from '../../UI/Icons/Icon';
+import Table from '../../Table';
 
 interface Props {
 	categories: CategoryInterface[];
@@ -36,7 +38,6 @@ const NewTransaction: React.FC<Props> = ({
 	);
 
 	useEffect(() => {
-		// setCategoryId(currentCategory._id);
 		const cat = categories.filter(item => item.isExpense === isExpense);
 		const items = cat.map(item => {
 			return {
@@ -75,36 +76,41 @@ const NewTransaction: React.FC<Props> = ({
 	};
 
 	return (
-		<div className="table__item">
-			<div>{formatDate(currentDate)}</div>
-			<Input
-				value={input.value}
-				placeholder="Новая операция"
-				className="table"
-				type="text"
-				valid={input.valid}
-				touched={input.touched}
-				onChange={input.onChange}
-				onBlur={input.onBlur}
-				onKeyPress={onKeyEnter}
-			/>
-			<Select
-				items={filtredCategories}
-				initialId={currentCategory && currentCategory._id}
-				onItemClick={setCurrentCategoryId}
-			/>
-			<div className="options">
-				<Toggle
-					textPrimary="расходы"
-					textSecondary="доходы"
-					colorPrimary="color-expense"
-					colorSecondary="color-income"
-					onSwitch={setIsExpense}
-					flag={isExpense}
-				/>
-				<img src={calendar} alt="" onClick={onToggleCalendarHandler}></img>
-			</div>
-
+		<Fragment>
+			<Table className="operations">
+				<div className="table__item new-transaction">
+					<div>{formatDate(currentDate)}</div>
+					<Input
+						value={input.value}
+						placeholder="Новая операция"
+						className="table"
+						type="text"
+						valid={input.valid}
+						touched={input.touched}
+						onChange={input.onChange}
+						onBlur={input.onBlur}
+						onKeyPress={onKeyEnter}
+					/>
+					<Select
+						items={filtredCategories}
+						initialId={currentCategory && currentCategory._id}
+						onItemClick={setCurrentCategoryId}
+					/>
+					<div className="table__options new-transaction__options">
+						<Toggle
+							textPrimary="расходы"
+							textSecondary="доходы"
+							colorPrimary="color-expense"
+							colorSecondary="color-income"
+							onSwitch={setIsExpense}
+							flag={isExpense}
+						/>
+						<Icon classNames="calendar">
+							<CalendarIcon onClick={onToggleCalendarHandler} />
+						</Icon>
+					</div>
+				</div>
+			</Table>
 			{calendarIsOpen && (
 				<Calendar
 					currentDate={currentDate}
@@ -112,7 +118,7 @@ const NewTransaction: React.FC<Props> = ({
 					closeCalendar={onToggleCalendarHandler}
 				/>
 			)}
-		</div>
+		</Fragment>
 	);
 };
 

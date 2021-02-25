@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import close from '../../assets/icons/Close.svg';
-import refresh from '../../assets/icons/Refresh.svg';
 import classNames from 'classnames';
 import { syncDataWithout } from '../../store/ducks/todos/actions';
 import { hideAlert } from '../../store/ducks/common/actionCreators';
 import { selectAlerts } from '../../store/ducks/common/selectors';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { CloseIcon, RefreshIcon } from './Icons';
+import Icon from './Icons/Icon';
 
 const Alert: React.FC = () => {
 	const alerts = useSelector(selectAlerts);
@@ -18,43 +19,40 @@ const Alert: React.FC = () => {
 	const onAlertClick = (id: number, action: string | undefined) => {
 		if (action === 'sync') {
 			dispatch(syncDataWithout());
-			closeAlert(id)
+			closeAlert(id);
 		}
 	};
 
-	if (alerts.length > 0 && alerts !== null) {
-		return (
-			<div className={classNames('alert')}>
-				{alerts.map(alert => (
-					<Fragment key={alert.id}>
-						<div
-							className={classNames('alert__item', {
-								[`alert--${alert.type}`]: alert.type,
-							})}
-						>
-							{alert.action && (
-								<img
-									className="alert__icon"
-									src={refresh}
-									alt=""
-									onClick={() => onAlertClick(alert.id, alert.action)}
-								/>
-							)}
-							<span className="alert__text">{alert.text}</span>
-							{!alert.delay && (
-								<img
-									className="alert__close"
-									src={close}
-									alt=""
-									onClick={() => closeAlert(alert.id)}
-								/>
-							)}
-						</div>
-					</Fragment>
-				))}
-			</div>
-		);
-	} else return null;
+	// if (alerts.length > 0 && alerts !== null) {
+	return (
+		<TransitionGroup className="alert">
+			{alerts.map(alert => (
+				<CSSTransition timeout={200} classNames="alert__item" key={alert.id}>
+					<div
+						className={classNames('alert__item', {
+							[`alert--${alert.type}`]: alert.type,
+						})}
+					>
+						{alert.action && (
+							<Icon
+								classNames="refresh alert__icon"
+								onClick={() => onAlertClick(alert.id, alert.action)}
+							>
+								<RefreshIcon />
+							</Icon>
+						)}
+						<span className="alert__text">{alert.text}</span>
+						{!alert.delay && (
+							<Icon classNames="refresh" onClick={() => closeAlert(alert.id)}>
+								<CloseIcon />
+							</Icon>
+						)}
+					</div>
+				</CSSTransition>
+			))}
+		</TransitionGroup>
+	);
+	// } else return null;
 };
 
 export default Alert;

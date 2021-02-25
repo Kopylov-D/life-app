@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Target from './Target';
-import { useInput } from '../../../hooks/input.hook';
+// import { useInput } from '../../../hooks/input.hook';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	fetchAddTarget,
@@ -22,7 +22,11 @@ import {
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
 import TargetEditor from './TargetEditor';
-import add from '../../../assets/icons/Add.svg';
+// import add from '../../../assets/icons/Add.svg';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+// import Modal from '../../UI/Modal';
+import Icon from '../../UI/Icons/Icon';
+import { AddCircleIcon, AddIcon } from '../../UI/Icons';
 
 interface Props {}
 
@@ -79,6 +83,9 @@ const Backlog: React.FC<Props> = props => {
 				))}
 				<div className="target" onClick={addTargetHandler}>
 					Добавить цель
+					<Icon classNames="add target__icon">
+						<AddIcon />
+					</Icon>
 				</div>
 			</div>
 			{taskEditorIsOpen ? (
@@ -91,28 +98,46 @@ const Backlog: React.FC<Props> = props => {
 				/>
 			) : (
 				<div className="backlog__add-task" onClick={() => setTaskEditorIsOpen(true)}>
-					<img src={add} alt="" /> Добавить задачу
+					<Icon classNames="add-circle icon__add-task">
+						<AddCircleIcon />
+					</Icon>
+					<span>Добавить задачу</span>
 				</div>
 			)}
-			{tasks.map(task => (
-				<BacklogTask
-					key={task._id}
-					colors={colors}
-					targets={targets}
-					changeTaskHandler={changeTaskHandler}
-					deleteTaskHandler={deleteTaskHandler}
-					task={task}
-				/>
-			))}
+			<TransitionGroup>
+				{tasks.map(task => (
+					<CSSTransition
+						key={task._id}
+						timeout={200}
+						classNames="task"
+						mountOnEnter
+						unmountOnExit
+					>
+						<BacklogTask
+							colors={colors}
+							targets={targets}
+							changeTaskHandler={changeTaskHandler}
+							deleteTaskHandler={deleteTaskHandler}
+							task={task}
+						/>
+					</CSSTransition>
+				))}
+			</TransitionGroup>
 
-			{addTargetModalIsOpen && (
+			<CSSTransition
+				in={addTargetModalIsOpen}
+				timeout={200}
+				classNames="modal"
+				mountOnEnter
+				unmountOnExit
+			>
 				<TargetEditor
 					type="create"
 					closeEditor={() => setAddTargetModalIsOpen(false)}
 					colors={colors}
 					submit={createTargetHandler}
 				/>
-			)}
+			</CSSTransition>
 		</div>
 	);
 };

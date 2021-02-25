@@ -11,12 +11,11 @@
 	font-size: 16px;
 	user-select: none;
 	cursor: pointer;
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
 
-	transition-duration: .1s;
+	transition-duration: 0.1s;
 
 	&-count {
 		min-width: $element-height;
@@ -25,7 +24,7 @@
 		height: $element-height;
 		background: $c-white;
 		color: $c-primary;
-		border: 1px solid $c-primary;
+		border: $border;
 	}
 
 	&-toggle {
@@ -35,6 +34,8 @@
 
 		&--active {
 			background-color: rgba($c-primary, $alpha: 0.5);
+			box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.25);
+			background: $c-primary;
 		}
 	}
 

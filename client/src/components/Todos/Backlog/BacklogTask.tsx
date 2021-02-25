@@ -1,17 +1,19 @@
 import classNames from 'classnames';
-import React, { Fragment } from 'react';
-import { ReactComponent as Edit } from '../../../assets/icons/pencil-outline.svg';
+import React, { Fragment, useState } from 'react';
+
 import {
 	ColorInterface,
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
-import Checkbox from '../../UI/Checkbox';
-import TaskEditor from './TaskEditor';
+import { setColor } from '../../../services/utils/commonUtils';
 import useOutsideClick from '../../../hooks/outsideClick.hook';
 import useColorName from '../../../hooks/color.hook';
+import TaskEditor from './TaskEditor';
+import Checkbox from '../../UI/Checkbox';
 import Icon from '../../UI/Icons/Icon';
-import { setColor } from '../../../services/utils/commonUtils';
+import { PencilIcon } from '../../UI/Icons';
+import { isDOMComponent } from 'react-dom/test-utils';
 
 interface Props {
 	deleteTaskHandler(id: string): void;
@@ -29,11 +31,17 @@ const BacklogTask: React.FC<Props> = ({
 	deleteTaskHandler,
 	changeTaskHandler,
 }) => {
+	const [isDone, setIsDone] = useState(task.isDone);
 	const { colorName } = useColorName(task.color, colors);
 	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
 	const onChecked = () => {
-		changeTaskHandler({ ...task, isDone: !task.isDone, inArchive: !task.inArchive });
+		setIsDone(!isDone)
+		setTimeout(
+			() =>
+				changeTaskHandler({ ...task, isDone: !isDone, inArchive: !task.inArchive }),
+			1000
+		);
 	};
 
 	const onChangeTask = (task: TaskInterface) => {
@@ -63,7 +71,7 @@ const BacklogTask: React.FC<Props> = ({
 				>
 					<div className="backlog-task__content">
 						<Checkbox
-							checked={task.isDone}
+							checked={isDone}
 							color={setColor(task.priority)}
 							onChangeHandler={onChecked}
 						/>
@@ -71,8 +79,8 @@ const BacklogTask: React.FC<Props> = ({
 					</div>
 
 					<div className="options">
-						<Icon name="edit" onClick={() => setIsVisible(true)}>
-							<Edit />
+						<Icon classNames="edit" onClick={() => setIsVisible(true)}>
+							<PencilIcon />
 						</Icon>
 					</div>
 				</div>

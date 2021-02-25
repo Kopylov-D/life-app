@@ -15,7 +15,6 @@ export interface Params {
 
 interface Props {
 	title: string;
-	// onSubmit(e: React.SyntheticEvent): void;
 	onClick(params: Params): void;
 	onCloseClick(): void;
 }

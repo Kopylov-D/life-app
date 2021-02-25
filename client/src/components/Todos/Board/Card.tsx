@@ -19,8 +19,11 @@ import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Task from './Task';
 import TaskSelector from './TaskSelector';
-import close from '../../../assets/icons/Close.svg';
-import Tooltip from '../../UI/Tooltip';
+// import close from '../../../assets/icons/Close.svg';
+// import Tooltip from '../../UI/Tooltip';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import Icon from '../../UI/Icons/Icon';
+import { CloseIcon } from '../../UI/Icons';
 
 interface Props extends CardInterface {
 	tasks: TaskInterface[];
@@ -83,17 +86,26 @@ const Card: React.FC<Props> = props => {
 						)}
 					</div>
 					{cardsNumber === props.level && (
-						<img src={close} alt="" onClick={onCardDelete} />
+						<Icon classNames="close" onClick={onCardDelete}>
+							<CloseIcon />
+						</Icon>
 					)}
 				</header>
 
-				<ul className="card__content">
+				{/* <ul className="card__content"> */}
+				<TransitionGroup className="card__content">
 					{props.tasks.map(task => {
 						if (task.level === props.level) {
 							return (
 								// <Tooltip text={task.name}>
+								<CSSTransition
+									key={task._id}
+									timeout={300}
+									classNames="task"
+									unmountOnExit
+								>
 									<Task
-										key={task._id}
+										// key={task._id}
 										{...task}
 										colors={props.colors}
 										subtasks={props.subtasks}
@@ -101,11 +113,15 @@ const Card: React.FC<Props> = props => {
 										onDelete={onTaskDelete}
 										task={task}
 									/>
+								</CSSTransition>
+
 								// </Tooltip>
 							);
 						}
 					})}
-				</ul>
+				</TransitionGroup>
+
+				{/* </ul> */}
 			</div>
 
 			<footer className="card__footer">

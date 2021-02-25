@@ -7,16 +7,16 @@ type Props = {
 
 const Proportion: React.FC<Props> = ({ proportion }) => {
 	return (
-		<div className="budget__proportion">
+		<div className="proportion">
 			<div
-				className="budget__proportion-top"
+				className="proportion-top"
 				style={{ width: proportion.percentExpense + '%' }}
 			>
 				{proportion.expense}
 			</div>
 
 			<div
-				className="budget__proportion-bottom"
+				className="proportion-bottom"
 				style={{ width: proportion.percentIncome + '%' }}
 			>
 				{proportion.income}

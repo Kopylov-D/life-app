@@ -10,7 +10,7 @@ html {
 
 body {
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';
 	background: $c-background;
 	color: $c-black;
 	box-sizing: border-box;
@@ -88,10 +88,8 @@ a {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		// align-items: center;
 
 		& > button {
-			// margin-right: 10px;
 			margin-bottom: 15px;
 		}
 
@@ -161,49 +159,34 @@ a {
 			margin-right: 2rem;
 
 			cursor: pointer;
+
+			.icon {
+				color: $c-black;
+				height: 30px;
+			}
 		}
 
 		&-logout {
-			// & button {
-			// 	display: flex;
-			// 	align-items: center;
-			// 	justify-content: space-between;
-			// 	padding: 7px;
-
-			&:hover {
+			& :hover {
 				color: $c-invalid;
 				stroke: $c-invalid;
 			}
 
-			&:focus {
+			& :focus {
 				box-shadow: 0 0 0 2px rgba($color: $c-invalid, $alpha: 0.5);
 				border-radius: 7px;
 			}
 
-			&:active {
+			& :active {
 				transform: $scale;
 			}
-
-			// &:first-child {
-			// 	width: 100px;
-
-			// 	&:hover {
-			// 		color: $c-red;
-			// 		stroke: $c-red;
-			// 	}
-
-			// 	&:focus {
-			// 		box-shadow: 0 0 0 2px rgba($color: $c-red, $alpha: 0.5);
-			// 		border-radius: 7px;
-			// 	}
-			// }
-			// }
 		}
 
 		&-screen {
 			margin-right: 2rem;
+			color: $c-black;
 
-			& img:hover {
+			& :hover {
 				color: $c-primary;
 				stroke: $c-primary;
 			}
@@ -282,7 +265,6 @@ a {
 	}
 
 	&__component-frame {
-		// background: $c-white;
 		border-radius: $block-radius;
 		flex-grow: 1;
 	}
@@ -300,7 +282,6 @@ a {
 		height: $footer-height;
 		background: $c-white;
 		border-radius: $block-radius;
-		// z-index: 1;
 	}
 }
 
@@ -309,37 +290,6 @@ a {
 
 	&__modal {
 		padding: 0;
-	}
-}
-
-.shevron {
-	cursor: pointer;
-
-	&-up {
-		transform: rotate(180deg);
-	}
-	&-left {
-		transform: rotate(90deg);
-	}
-	&-right {
-		transform: rotate(-90deg);
-	}
-}
-.arrow {
-	cursor: pointer;
-
-	&--down {
-		transform: rotate(0);
-	}
-
-	&--up {
-		transform: rotate(180deg);
-	}
-	&--left {
-		transform: rotate(90deg);
-	}
-	&--right {
-		transform: rotate(-90deg);
 	}
 }
 
@@ -379,7 +329,7 @@ a {
 }
 
 .black {
-	background-color: #08001a3b;
+	background-color: #000000;
 }
 
 .red {
@@ -420,65 +370,4 @@ a {
 
 .graphite {
 	background-color: #d0d9de93;
-}
-
-.icon {
-	cursor: pointer;
-	color: grey;
-	height: 25px;
-	width: 25px;
-
-	&--hidden {
-		display: none;
-	}
-
-	&--ghost {
-		opacity: 0.3;
-	}
-
-	&--left {
-		transform: rotate(90deg);
-	}
-	&--right {
-		transform: rotate(-90deg);
-	}
-	&--up {
-		transform: rotate(180deg);
-	}
-
-	& :hover {
-		color: #08001a;
-	}
-
-	& svg {
-		width: auto;
-		height: 100%;
-	}
-
-	// &__priority {
-	// }
-
-	&__trash {
-		color: brown;
-
-		& :hover {
-			color: $c-invalid;
-		}
-	}
-
-	&__chevron {
-		height: 16px;
-		width: auto;
-		color: #b3e0dd;
-	}
-
-	&__arrow {
-		height: 16px;
-		width: auto;
-
-		&--active {
-			color: $c-black;
-			opacity: 1;
-		}
-	}
 }

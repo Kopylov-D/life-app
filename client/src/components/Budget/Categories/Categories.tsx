@@ -10,13 +10,13 @@ import {
 	selectCategories,
 	selectIsLoading,
 } from '../../../store/ducks/budget/selectors';
-import { CategoryInterface } from '../../../store/ducks/budget/types';
 import Button from '../../UI/Button'
 import  Loader from '../../UI/Loader';
 import { Params } from '../Operations/OperationModal';
 import CategoryItem from './CategoryItem';
-import CategoryModal from './CategoryChanger';
+import CategoryModal from './CategoryEditor';
 import Table from '../../Table';
+import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
 
 const Categories: React.FC = () => {
 	const dispatch = useDispatch();
@@ -78,9 +78,9 @@ const Categories: React.FC = () => {
 			{isLoading ? (
 				<Loader type='cube-grid' />
 			) : (
-				<div className="budget__categories">
+				<div className="categories">
 					<h2>Категории</h2>
-					<Table class="categories">
+					<Table className="categories">
 						{categories.map(item => (
 							<CategoryItem
 								key={item._id}

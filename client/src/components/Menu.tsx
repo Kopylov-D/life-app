@@ -37,7 +37,7 @@ const Menu: React.FC<Props> = ({ items, isOpen = true }) => {
 							<div className="menu__left-group">
 								<div className="menu__icon">
 									{IconComponent && (
-										<Icon name={item.icon!}>
+										<Icon classNames={item.icon!}>
 											<IconComponent />
 										</Icon>
 									)}
