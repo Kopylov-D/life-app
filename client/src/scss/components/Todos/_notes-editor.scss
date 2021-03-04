@@ -4,6 +4,13 @@
 	&__modal {
 		min-width: 300px;
 	}
+
+	&__header {
+		margin-bottom: 2rem;
+		font-size: 2rem;
+		text-align: center;
+	}
+
 	&__textarea {
 		margin-bottom: 1rem;
 		min-height: 20rem;

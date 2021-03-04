@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectCategoriesWithAmount,
-	selectIsLoading,
+	selectLoadingStatus,
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';
+import { LoadingStatus } from '../../../store/types';
 import Loader from '../../UI/Loader';
 import DatePanel from '../DatePanel';
 import AccountingTable from './AccountingTable';
@@ -16,7 +17,11 @@ const Accounting: React.FC = () => {
 
 	const { categories, proportion } = useSelector(selectCategoriesWithAmount);
 	const options = useSelector(selectOptions);
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
+
+	useEffect(() => {
+		dispatch(getBudgetData());
+	}, []);
 
 	const changeDateHandler = (
 		year: string,
@@ -34,7 +39,7 @@ const Accounting: React.FC = () => {
 				<Proportion proportion={proportion} />
 			</div>
 
-			{isLoading ? (
+			{loadingStatus === LoadingStatus.LOADING ? (
 				<Loader size="small" type="cube-grid" />
 			) : (
 				<div className="accounting__tables">

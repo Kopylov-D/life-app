@@ -1,9 +1,10 @@
 import { CurrentDate } from '../../../../types';
+import { LoadingStatus } from '../../../types';
 
 export type BudgetState = {
 	transactions: TransactionInterface[];
 	categories: CategoryInterface[];
-	isLoading: boolean;
+	loadingStatus: LoadingStatus;
 	error: Error;
 	date: CurrentDate;
 	currentCategory: CategoryInterface;
@@ -30,7 +31,7 @@ export interface TransactionInterface {
 	user: string;
 	amount: number;
 	isExpense: boolean;
-	date: string;
+	date: Date;
 }
 
 export interface CategoryInterface {

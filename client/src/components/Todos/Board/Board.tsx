@@ -58,9 +58,6 @@ export const Board: React.FC = () => {
 				))}
 			</div>
 			<Button onClick={onCreateCardHandler}>Создать карточку</Button>
-			<CSSTransition in={flag} classNames='transition' timeout={500} mountOnEnter unmountOnExit>
-				<div>egrshbklbmjkdfnablfnbdjfnbkrljbrwb</div>
-			</CSSTransition>
 		</div>
 	);
 };

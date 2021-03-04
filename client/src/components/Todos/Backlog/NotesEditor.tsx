@@ -13,6 +13,7 @@ interface Props {
 const NotesEditor: React.FC<Props> = props => {
 	return (
 		<Modal closeModal={props.closeEditor} class="notes-editor">
+			<h4 className='notes-editor__header'>Заметки</h4>
 			<Textarea
 				value={props.notesValue}
 				onChange={props.onChangeNotes}

@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import { formatDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
 import { LoadingStatus } from '../../types';
 import {
@@ -57,15 +56,6 @@ export const selectTargetsList = (state: RootState) => {
 
 export const selectIssues = (state: RootState): TaskInterface[] => {
 	const tasks = state.todos.tasks;
-
-	// const items: TaskInterface[] = []
-
-	// tasks.map(task => {
-	// 	if (task.inArchive === true || task.isDone === false) {
-	// 		if (task.expiresIn) task.expiresIn = formatDate(task.expiresIn)
-	// 	}
-	// })
-
 	return tasks.filter(task => task.inArchive === true || task.isDone === false);
 };
 
@@ -110,14 +100,10 @@ export const selectOrderedIssues = createSelector(
 				let abase = a[key];
 				let bbase = b[key];
 
-				// if (typeof abase === 'string' && typeof bbase === 'string') {
-				// 	console.log(abase);
-				// 	abase = abase.toLowerCase();
-				// 	bbase = bbase.toLowerCase();
-				// 	console.log(abase);
-				// 	console.log(typeof abase);
-					
-				// }
+				if (typeof abase === 'string' && typeof bbase === 'string') {
+					abase = abase.toLowerCase();
+					bbase = bbase.toLowerCase();
+				}
 
 				if (order === 'asc') {
 					if (abase! > bbase!) {

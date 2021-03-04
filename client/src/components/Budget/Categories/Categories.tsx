@@ -1,35 +1,34 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	deleteCategory,
-	changeCategory,
-	addCategory,
+	fetchAddCategory,
+	fetchDeleteCategory,
 	getCategories,
+	updateCategory,
 } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
-	selectIsLoading,
+	selectLoadingStatus,
 } from '../../../store/ducks/budget/selectors';
-import Button from '../../UI/Button'
-import  Loader from '../../UI/Loader';
+import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
+import { LoadingStatus } from '../../../store/types';
+import Button from '../../UI/Button';
+import Loader from '../../UI/Loader';
 import { Params } from '../Operations/OperationModal';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryEditor';
 import Table from '../../Table';
-import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
 
 const Categories: React.FC = () => {
 	const dispatch = useDispatch();
 	const categories = useSelector(selectCategories);
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
 
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-	const [newCategoryModalIsOpen, setNewCategoryModalIsOpen] = useState<boolean>(
-		false
-	);
-	const [currentCategory, setCurrentCategory] = useState<
-		CategoryInterface | undefined
-	>();
+	const [newCategoryModalIsOpen, setNewCategoryModalIsOpen] = useState<boolean>(false);
+	const [currentCategory, setCurrentCategory] = useState<CategoryInterface | undefined>();
+
+
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -45,18 +44,19 @@ const Categories: React.FC = () => {
 	};
 
 	const onDeleteCategoryHandler = async (id: string) => {
-		dispatch(deleteCategory(id));
+		dispatch(fetchDeleteCategory(id));
 	};
 
 	const onOkModalClick = (params: Params): void => {
-		dispatch(
-			changeCategory(
-				currentCategory!._id,
-				params.value,
-				'red',
-				params.isExpense
-			)
-		);
+		const category: CategoryInterface = {
+			_id: currentCategory!._id,
+			name: params.value,
+			amount: currentCategory!.amount,
+			color: currentCategory!.color,
+			user: currentCategory!.user,
+			isExpense: params.isExpense,
+		};
+		dispatch(updateCategory(category));
 		setModalIsOpen(false);
 	};
 
@@ -70,13 +70,21 @@ const Categories: React.FC = () => {
 	};
 
 	const addCategoryHandler = async (name: string, isExpense: boolean) => {
-		dispatch(addCategory(name, isExpense));
+		const category: CategoryInterface = {
+			_id: '',
+			name,
+			amount: 0,
+			color: '',
+			user: '',
+			isExpense,
+		};
+		dispatch(fetchAddCategory(category));
 	};
 
 	return (
 		<Fragment>
-			{isLoading ? (
-				<Loader type='cube-grid' />
+			{loadingStatus === LoadingStatus.LOADING ? (
+				<Loader type="cube-grid" />
 			) : (
 				<div className="categories">
 					<h2>Категории</h2>
@@ -93,7 +101,7 @@ const Categories: React.FC = () => {
 						))}
 					</Table>
 					<Button
-						color='primary'
+						color="primary"
 						size="small"
 						disabled={false}
 						onClick={() => setNewCategoryModalIsOpen(toggle => !toggle)}
@@ -117,6 +125,8 @@ const Categories: React.FC = () => {
 							onCloseClick={onCancelModalClick}
 						/>
 					)}
+
+					
 				</div>
 			)}
 		</Fragment>

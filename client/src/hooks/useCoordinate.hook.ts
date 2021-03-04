@@ -1,73 +1,80 @@
 import { useEffect, useRef, useState } from 'react';
 import { CoordinatesInterface } from '../types';
 
-const useCoordinate = () =>
-	// initialIsVisible: boolean,
-	// parentRef1?: React.RefObject<HTMLElement | null | undefined>,
-	// childRef?: React.RefObject<HTMLElement | null | undefined>,
-	{
-		const [isVisible, setIsVisible] = useState(false);
-		const [coords, setCoords] = useState<CoordinatesInterface>({ left: 0, top: 0 });
+export const setPlacement = (
+	parentRect: any,
+	childRect: any,
+	placement: string = 'auto'
+): CoordinatesInterface => {
+	let left: CoordinatesInterface['left'] = 0;
+	let top: CoordinatesInterface['top'] = 0;
 
-		// const [childRect, setchildRect] = useState<any>();
-		// const [parentRect, setparentRect] = useState<any>();
+	if (placement === 'bottom-left') {
+		left = parentRect.left - childRect.width + parentRect.width;
+		top = parentRect.top + parentRect.height;
+	}
 
-		const childRef = useRef<HTMLDivElement>(null);
-		const parentRef = useRef<HTMLDivElement>(null);
+	if (placement === 'bottom') {
+		left = parentRect.left;
+		top = childRect.top;
+	}
 
-		useEffect(() => {
-			const update = () => {
-				const parentRect = parentRef.current?.getBoundingClientRect();
-				if (parentRect) {
-					console.log(parentRect);
+	if (placement === 'top') {
+		left = parentRect.x;
+		top = parentRect.y + window.scrollY - childRect.height;
+	}
 
-					setCoords({
-						left: parentRect.x, // - parentRect.width / 2, // add half the width of the button for centering
-						top: parentRect.y + parentRect.height, // add scrollY offset, as soon as getBountingClientRect takes on screen coords
-					});
-				}
+	if (placement === 'auto') {
+		left = parentRect.x;
+		top = parentRect.y + window.scrollY - childRect.height;
+		let rightBorder = left + childRect.width;
+		let clientWidth = document.documentElement.clientWidth;
 
-				// if (parentRect && childRect) {
-				// 	setCoords({
-				// 		left: parentRect.x - parentRect.width / 2, // add half the width of the button for centering
-				// 		top: parentRect.y + window.scrollY - childRect.height, // add scrollY offset, as soon as getBountingClientRect takes on screen coords
-				// 	});
-				// }
-			};
+		if (left < 0) left = 0;
+		if (rightBorder > clientWidth) {
+			left = clientWidth - childRect.width - 5;
+		}
+	}
 
-			document.addEventListener('scroll', update);
-			update();
-		}, [parentRef, childRef]);
+	return { left, top };
+};
 
-		// useEffect(() => {
-		// 	setchildRect(childRef.current?.getBoundingClientRect());
-		// 	setparentRect(parentRef.current?.getBoundingClientRect());
-		// }, [childRef, parentRef]);
+const useCoordinate = (placement?: string) => {
+	const [isVisible, setIsVisible] = useState(false);
+	const [coords, setCoords] = useState<CoordinatesInterface>({ left: -200, top: -200 });
 
-		// const handleHideDropdown = (event: KeyboardEvent) => {
-		// 	if (event.key === key) {
-		// 		setIsVisible(false);
-		// 	}
-		// };
+	const childRef = useRef<HTMLDivElement>(null);
+	const parentRef = useRef<HTMLDivElement>(null);
 
-		// const handleClickOutside = (event: MouseEvent) => {
-		// 	if (ref !== null && ref.current && !ref.current.contains(event.target)) {
-		// 		setIsVisible(false);
-		// 	}
-		// };
+	useEffect(() => {
+		if (!isVisible) {
+			setCoords({ left: -200, top: -200 });
+		}
+		updateCoords();
+	}, [isVisible]);
 
-		// useEffect(() => {
-		// 	console.log('x', X, 'y', Y);
+	const updateCoords = () => {
+		let parentRect = parentRef.current?.getBoundingClientRect();
+		let childRect = childRef.current?.getBoundingClientRect();
 
-		// 	// document.addEventListener('keydown', handleHideDropdown, true);
-		// 	// document.addEventListener('mousedown', handleClickOutside, true);
-		// 	return () => {
-		// 		// document.removeEventListener('keydown', handleHideDropdown, true);
-		// 		// document.removeEventListener('mousedown', handleClickOutside, true);
-		// 	};
-		// }, [X, Y]);
+		// if (parentRect && !childRect) {
+		// 	setCoords({ left: parentRect.x, top: parentRect.y + parentRect.height });
+		// }
 
-		return { coords, isVisible, setIsVisible, childRef, parentRef };
+		if (parentRect && childRect) {
+			let coords = setPlacement(parentRect, childRect, placement);
+			setCoords(coords);
+		}
 	};
+
+	return {
+		coords,
+		isVisible,
+		setIsVisible,
+		childRef,
+		parentRef,
+		updateCoords,
+	};
+};
 
 export default useCoordinate;

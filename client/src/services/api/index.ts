@@ -41,6 +41,7 @@ instance.interceptors.response.use(
 		if (error.response.status === 401) {
 			store.dispatch(setLogout());
 		}
+		return Promise.reject(error);
 	}
 );
 

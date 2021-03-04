@@ -63,7 +63,7 @@ class AuthController {
 				expiresIn: '30d',
 			});
 
-			res.json({ message: '', data: { token, userId: user.id } });
+			res.json({ message: 'Вход выполнен', data: { token, userId: user.id } });
 		} catch (e) {
 			res.status(500).json({
 				message: 'Что-то пошло не так...',

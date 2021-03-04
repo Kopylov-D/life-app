@@ -1,9 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { TransactionInterface } from '../../../store/ducks/budget/contracts/state';
 import { TrashIcon } from '../../UI/Icons';
 import Icon from '../../UI/Icons/Icon';
+import Toast from '../../UI/Toast';
 
 interface Props extends TransactionInterface {
 	onDeleteTransaction(_id: string): void;
@@ -17,6 +19,8 @@ const Transaction: React.FC<Props> = ({
 	isExpense,
 	onDeleteTransaction,
 }) => {
+	const toastCoords = useCoordinate('bottom-left');
+
 	return (
 		<div
 			className={classNames(
@@ -30,10 +34,23 @@ const Transaction: React.FC<Props> = ({
 			<div>{category.name}</div>
 
 			<div className="table__options">
-				<Icon classNames="trash" onClick={() => onDeleteTransaction(_id)}>
-					<TrashIcon />
-				</Icon>
+				<div ref={toastCoords.parentRef}>
+					<Icon classNames="trash" onClick={() => toastCoords.setIsVisible(true)}>
+						<TrashIcon />
+					</Icon>
+				</div>
 			</div>
+
+			{toastCoords.isVisible && (
+				<Toast
+					coords={toastCoords.coords}
+					submitHandler={() => onDeleteTransaction(_id)}
+					selfRef={toastCoords.childRef}
+					textSbmt="Удалить"
+					text="Удалить операцию?"
+					cancelHandler={() => toastCoords.setIsVisible(false)}
+				/>
+			)}
 		</div>
 	);
 };

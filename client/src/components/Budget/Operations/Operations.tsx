@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
-	addTransaction,
-	deleteTransaction,
+	fetchAddTransaction,
+	fetchDeleteTransaction,
 	getBudgetData,
 } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
 	selectCurrentCategory,
-	selectIsLoading,
 	selectOptions,
 	selectTransactions,
 } from '../../../store/ducks/budget/selectors';
@@ -18,6 +17,9 @@ import DatePanel from '../DatePanel';
 import Table, { HeaderItemsInterface } from '../../Table';
 import NewTransaction from './NewTransaction';
 import Transaction from './Transaction';
+import { selectLoadingStatus } from '../../../store/ducks/auth/selectors';
+import { TransactionInterface } from '../../../store/ducks/budget/contracts/state';
+import { LoadingStatus } from '../../../store/types';
 
 const headerItems: HeaderItemsInterface[] = [
 	{ id: 'date', isActive: false, name: 'Дата', needSort: false },
@@ -32,7 +34,11 @@ const Operations: React.FC = () => {
 	const categories = useSelector(selectCategories);
 	const currentCategory = useSelector(selectCurrentCategory);
 	const options = useSelector(selectOptions);
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
+
+	useEffect(() => {
+		dispatch(getBudgetData());
+	}, []);
 
 	const changeDateHandler = (
 		year: string,
@@ -47,13 +53,24 @@ const Operations: React.FC = () => {
 		categoryId: string,
 		amount: number,
 		isExpense: boolean,
-		currentDate: Date | Date[]
+		currentDate: Date
 	) => {
-		dispatch(addTransaction(categoryId, amount, isExpense, currentDate));
+		const transaction: TransactionInterface = {
+			_id: '',
+			category: {
+				_id: categoryId,
+				name: '',
+			},
+			amount,
+			isExpense,
+			user: '',
+			date: currentDate,
+		};
+		dispatch(fetchAddTransaction(transaction));
 	};
 
 	const onDeleteTransactionHandler = (_id: string) => {
-		dispatch(deleteTransaction(_id));
+		dispatch(fetchDeleteTransaction(_id));
 	};
 
 	return (
@@ -61,7 +78,7 @@ const Operations: React.FC = () => {
 			<div className="budget__panel">
 				<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
 			</div>
-			{isLoading ? (
+			{loadingStatus === LoadingStatus.LOADING ? (
 				<Loader type="cube-grid" />
 			) : (
 				<div>

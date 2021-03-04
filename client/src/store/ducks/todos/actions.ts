@@ -82,7 +82,7 @@ export function getTodosData(): ThunkType {
 			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
 		} catch (e) {
 			console.log(e);
-			dispatch(showAlert({ text: e.response.data.message }));
+			// dispatch(showAlert({ text: e.response.data.message }));
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
 		}
 		// finally {
@@ -451,6 +451,7 @@ export function fetchAddCard(level: number): ThunkType {
 		} catch (e) {
 			console.log(e);
 			dispatch(setLoadingStatus(LoadingStatus.ERROR));
+			// dispatch(setError(e.response.data))
 		}
 	};
 }

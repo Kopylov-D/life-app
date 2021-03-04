@@ -20,11 +20,12 @@ class BudgetController {
 
 	async addTransaction(req: RequestWithUser, res: Response) {
 		try {
-			const { amount, categoryId, date, isExpense } = req.body;
+			const { amount, category, date, isExpense } = req.body;
+
 			const newTransaction = new Transaction({
 				amount,
 				user: req.user,
-				category: categoryId,
+				category: category._id,
 				date,
 				isExpense,
 			});

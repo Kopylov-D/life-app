@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	Area,
@@ -15,19 +15,24 @@ import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectBalanceWithFormatDate,
 	selectColumns,
-	selectIsLoading,
+	selectLoadingStatus,
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';
+import { LoadingStatus } from '../../../store/types';
 import Loader from '../../UI/Loader';
 import DatePanel from '../DatePanel';
 
 const Reports = () => {
 	const dispatch = useDispatch();
 
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
 	const options = useSelector(selectOptions);
 	const columns = useSelector(selectColumns);
 	const balance = useSelector(selectBalanceWithFormatDate);
+
+	useEffect(() => {
+		dispatch(getBudgetData());
+	}, []);
 
 	const gradientOffset = () => {
 		const dataMax = Math.max(...balance.map(i => i.value));
@@ -59,7 +64,7 @@ const Reports = () => {
 				<DatePanel changeDate={changeDateHandler} startDate={options.startDate} />
 			</div>
 
-			{isLoading ? (
+			{loadingStatus === LoadingStatus.LOADING ? (
 				<Loader type="cube-grid" />
 			) : balance.length < 1 ? (
 				'Нет данных за выбранный период'

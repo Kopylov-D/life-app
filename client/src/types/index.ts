@@ -74,6 +74,6 @@ export enum Colors {
 }
 
 export interface CoordinatesInterface {
-	left: number | null;
-	top: number | null;
+	left: number ;
+	top: number;
 }

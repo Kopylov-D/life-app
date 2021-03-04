@@ -1,9 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
-// import trash from '../../../assets/img/trash.svg';
-// import gear from '../../../assets/img/gear.svg';
-
 import { formatDate } from '../../../services/utils/dateUtils';
 import {
 	ColorInterface,
@@ -22,9 +19,6 @@ const Target: React.FC<Props> = props => {
 	const [editorIsOpen, setEditorIsOpen] = useState<boolean>(false);
 	const { colorName } = useColorName(props.color, props.colors);
 
-	// const onChange = (target: TargetInterface) => {
-	// 	props.changeTarget(target);
-	// };
 
 	return (
 		<Fragment>
@@ -33,20 +27,15 @@ const Target: React.FC<Props> = props => {
 				onClick={() => setEditorIsOpen(true)}
 			>
 				<div className="target__content">
-					{/* <Checkbox checked={props.isDone} id={props._id} onChangeHandler={onChecked} /> */}
-
 					<div className="target__name">{props.name}</div>
 				</div>
 				<div className="target__date">{formatDate(props.date)}</div>
-				<div className="target__options">
-					{/* <img src={trash} alt="" onClick={onDelete} /> */}
-					{/* <img src={gear} alt="" onClick={() => setEditorIsOpen(true)} /> */}
-				</div>
+				<div className="target__options"></div>
 			</div>
 
 			<CSSTransition
 				in={editorIsOpen}
-				timeout={200}
+				timeout={100}
 				classNames="modal"
 				mountOnEnter
 				unmountOnExit

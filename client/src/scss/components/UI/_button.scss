@@ -57,6 +57,10 @@
 		background: rgba($c-primary, $alpha: 0.9);
 		color: $c-white;
 		border: none;
+
+		&.danger {
+			background: rgba($c-red, $alpha: 0.9);
+		}
 	}
 
 	&:active {

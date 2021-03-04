@@ -6,18 +6,11 @@ import {
 import { instance as axios, Response } from './index';
 
 export const budgetApi = {
-	addTransaction: (
-		categoryId: string,
-		amount: number,
-		isExpense: boolean,
-		date: Date | Date[] | undefined
-	) =>
+	addTransaction: (transaction: TransactionInterface) =>
 		axios
 			.post<Response<TransactionInterface>>('/api/budget/transactions', {
-				categoryId,
-				amount,
-				date,
-				isExpense,
+				...transaction,
+				_id: null,
 			})
 			.then(res => res.data)
 			.catch(e => {
@@ -46,17 +39,15 @@ export const budgetApi = {
 				throw new Error(e.response.data.message || 'Что-то пошло не так');
 			}),
 
-	addCategory: (name: string, isExpense: boolean) =>
+	addCategory: (category: CategoryInterface) =>
 		axios
-			.post<Response<CategoryInterface>>('/api/budget/categories', { name, isExpense })
+			.post<Response<CategoryInterface>>('/api/budget/categories', { ...category })
 			.then(res => res.data),
 
-	changeCategory: (_id: string, name: string, color: string, isExpense: boolean) =>
+	changeCategory: (category: CategoryInterface) =>
 		axios
-			.patch<Response<null>>(`/api/budget/categories/${_id}`, {
-				name,
-				color,
-				isExpense,
+			.patch<Response<null>>(`/api/budget/categories/${category._id}`, {
+				...category,
 			})
 			.then(res => res.data),
 

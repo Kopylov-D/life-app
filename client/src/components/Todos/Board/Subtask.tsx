@@ -9,6 +9,8 @@ import {
 } from '../../../store/ducks/todos/contracts/state';
 import Icon from '../../UI/Icons/Icon';
 import { TrashIcon, UndoIcon } from '../../UI/Icons';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
+import Toast from '../../UI/Toast';
 
 interface Props extends SubtaskInterface {
 	subtask: SubtaskInterface;
@@ -18,6 +20,7 @@ interface Props extends SubtaskInterface {
 const Subtask: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const { colorName } = useColorName(props.color, props.colors);
+	const toastCoords = useCoordinate('bottom-left');
 
 	const onDeleteSubtask = () => {
 		dispatch(fetchDeleteSubtask(props._id));
@@ -37,9 +40,21 @@ const Subtask: React.FC<Props> = props => {
 					{props.name}
 				</div>
 			</div>
-			<Icon classNames="trash" onClick={onDeleteSubtask}>
-				<TrashIcon />
-			</Icon>
+			<div ref={toastCoords.parentRef}>
+				<Icon classNames="trash" onClick={() => toastCoords.setIsVisible(true)}>
+					<TrashIcon />
+				</Icon>
+			</div>
+			{toastCoords.isVisible && (
+				<Toast
+					text="Вы действительно хотите удалить?"
+					cancelHandler={() => toastCoords.setIsVisible(false)}
+					submitHandler={onDeleteSubtask}
+					selfRef={toastCoords.childRef}
+					textSbmt="Удалить"
+					coords={toastCoords.coords}
+				/>
+			)}
 		</div>
 	);
 };

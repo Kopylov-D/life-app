@@ -1,80 +1,54 @@
-import { BalanceInterface, CategoryInterface, OptionsInterface, TransactionInterface } from './state';
+import { Action } from 'redux';
+import { LoadingStatus } from '../../../types';
+import { BudgetDataInterface, CategoryInterface, TransactionInterface } from './state';
 
-export const GET_TRANSACTIONS = 'GET_TRANSACTIONS';
-export const GET_BUDGETDATA = 'GET_BUDGETDATA';
-export const FETCH_START = 'FETCH_START';
-export const FETCH_SUCCESS = 'FETCH_SUCCESS';
-export const FETCH_ERROR = 'FETCH_ERROR';
-export const ADD_TRANSACTION = 'ADD_TRANSACTION';
-export const DELETE_TRANSACTION = 'DELETE_TRANSACTION';
-export const ADD_CATEGORY = 'ADD_CATEGORY';
-export const UPDATE_CATEGORIES = 'UPDATE_CATEGORIES';
-export const GET_CATEGORIES = 'GET_CATEGORIES';
-export const DELETE_CATEGORY = 'DELETE_CATEGORY';
+export enum BudgetActionsTypes {
+	SET_LOADING_STATUS = 'SET_LOADING_STATUS',
+	SET_BUDGETDATA = 'SET_BUDGETDATA',
+	ADD_TRANSACTION = 'ADD_TRANSACTION',
+	DELETE_TRANSACTION = 'DELETE_TRANSACTION',
+	ADD_CATEGORY = 'ADD_CATEGORY',
+	CHANGE_CATEGORY = 'CHANGE_CATEGORY',
+	SET_CATEGORIES = 'SET_CATEGORIES',
+	DELETE_CATEGORY = 'DELETE_CATEGORY',
+}
 
-export type BudgetActionsTypes =
-	| FetchStartType
-	| FetchSuccsessType
-	| FetchErrorType
-	| GetBudgetDataType
-	| UpdateCategoriesType
-	| DeleteCategoryType
-	| GetCategoriesType
-	| DeleteTransactionType
-	| AddTransactionType
-	| AddCategoryType;
+export interface SetLoadingStatusActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.SET_LOADING_STATUS;
+	payload: LoadingStatus;
+}
 
-export type FetchStartType = {
-	type: typeof FETCH_START;
-};
+export interface SetBudgetDataActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.SET_BUDGETDATA;
+	payload: BudgetDataInterface;
+}
 
-export type FetchSuccsessType = {
-	type: typeof FETCH_SUCCESS;
-};
+export interface AddTransactionActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.ADD_TRANSACTION;
+	payload: TransactionInterface;
+}
 
-export type FetchErrorType = {
-	type: typeof FETCH_ERROR;
-	error: Error;
-};
-
-export type GetBudgetDataType = {
-	type: typeof GET_BUDGETDATA;
-	payload: BudgetDataType;
-};
-
-export type BudgetDataType = {
-	transactions: TransactionInterface[];
-	categories: CategoryInterface[];
-	options: OptionsInterface;
-	balance: BalanceInterface[];
-};
-
-export type UpdateCategoriesType = {
-	type: typeof UPDATE_CATEGORIES;
-	payload: CategoryInterface[];
-};
-
-export type DeleteCategoryType = {
-	type: typeof DELETE_CATEGORY;
+export interface DeleteTransactionActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.DELETE_TRANSACTION;
 	payload: string;
-};
+}
 
-export type GetCategoriesType = {
-	type: typeof GET_CATEGORIES;
-	payload: CategoryInterface[];
-};
-
-export type DeleteTransactionType = {
-	type: typeof DELETE_TRANSACTION;
+export interface DeleteCategoryActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.DELETE_CATEGORY;
 	payload: string;
-};
+}
 
-export type AddCategoryType = {
-	type: typeof ADD_CATEGORY;
+export interface AddCategoryActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.ADD_CATEGORY;
 	payload: CategoryInterface;
-};
+}
 
-export type AddTransactionType = {
-	type: typeof ADD_TRANSACTION;
-	payload: TransactionInterface
-};
+export interface ChangeCategoryActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.CHANGE_CATEGORY;
+	payload: CategoryInterface;
+}
+
+export interface SetCategoriesActionInterface extends Action<BudgetActionsTypes> {
+	type: BudgetActionsTypes.SET_CATEGORIES;
+	payload: CategoryInterface[];
+}

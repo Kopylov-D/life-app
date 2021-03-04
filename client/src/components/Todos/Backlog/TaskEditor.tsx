@@ -20,6 +20,8 @@ import Calendar from '../../Calendar';
 import Icon from '../../UI/Icons/Icon';
 import { CalendarIcon, EditIcon, TrashIcon } from '../../UI/Icons';
 import NotesEditor from './NotesEditor';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
+import Toast from '../../UI/Toast';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -50,6 +52,9 @@ const TaskEditor: React.FC<Props> = props => {
 		{ initialValue: props.name ? props.name : '' },
 		{ maxLength: 50, isEmpty: true }
 	);
+
+	const toastCoords = useCoordinate('bottom-left');
+	
 
 	const [currentDate, setCurrentDate] = useState<Date>(
 		props.expiresIn ? toDate(props.expiresIn) : new Date()
@@ -167,12 +172,25 @@ const TaskEditor: React.FC<Props> = props => {
 					/>
 
 					{props.type === 'edit' && (
-						<Icon classNames="trash" onClick={deleteTask}>
-							<TrashIcon />
-						</Icon>
+						<div ref={toastCoords.parentRef}>
+							<Icon classNames="trash" onClick={() => toastCoords.setIsVisible(true)}>
+								<TrashIcon />
+							</Icon>
+						</div>
 					)}
 				</div>
 			</div>
+
+			{toastCoords.isVisible && (
+				<Toast
+					text="Вы действительно хотите удалить?"
+					cancelHandler={() => toastCoords.setIsVisible(false)}
+					submitHandler={deleteTask}
+					selfRef={toastCoords.childRef}
+					textSbmt="Удалить"
+					coords={toastCoords.coords}
+				/>
+			)}
 
 			<div className="task-editor__footer">
 				<Button onClick={onSubmit} size="small" disabled={!input.valid}>
@@ -191,24 +209,14 @@ const TaskEditor: React.FC<Props> = props => {
 				/>
 			)}
 
-			{
-				notesEditorIsOpen && (
-					<NotesEditor
-						closeEditor={() => setNotesEditorIsOpen(false)}
-						onCancelNotesEdit={onCancelNotesEdit}
-						notesValue={notesInput}
-						onChangeNotes={onChangeNotes}
-					/>
-				)
-
-				// <Modal closeModal={OnCancelNotesEdit} class="notes-editor">
-				// 	<Textarea value={notesInput} onChange={onChangeArea} />
-				// 	<div className="notes-editor__footer">
-				// 		<Button onClick={() => setNotesEditorIsOpen(false)}>Принять</Button>
-				// 		<Button onClick={OnCancelNotesEdit}>Отмена</Button>
-				// 	</div>
-				// </Modal>
-			}
+			{notesEditorIsOpen && (
+				<NotesEditor
+					closeEditor={() => setNotesEditorIsOpen(false)}
+					onCancelNotesEdit={onCancelNotesEdit}
+					notesValue={notesInput}
+					onChangeNotes={onChangeNotes}
+				/>
+			)}
 		</div>
 	);
 };

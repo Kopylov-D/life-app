@@ -63,10 +63,6 @@ class TodosController {
 				});
 			}
 
-			// await Object.keys(req.body).map(item => {
-			// 	if (item === )
-			// })
-
 			res.status(201).json({ message: 'sync complete' });
 		} catch (e) {
 			res.status(300).json({ message: e });
@@ -75,8 +71,6 @@ class TodosController {
 
 	async addTask(req: RequestWithUser, res: Response) {
 		try {
-			console.log(req.body);
-			
 			const color = extractColorId(req.body)
 			const task = new Task({ ...req.body, _id: Types.ObjectId(), user: req.user, color });
 			await task.save();

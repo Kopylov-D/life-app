@@ -18,6 +18,7 @@ import { setColor } from '../../../services/utils/commonUtils';
 import Tooltip from '../../UI/Tooltip';
 import Icon from '../../UI/Icons/Icon';
 import { ChevronIcon, TrashIcon } from '../../UI/Icons';
+import Toast from '../../UI/Toast';
 
 interface Props extends TaskInterface {
 	subtasks: SubtaskInterface[];
@@ -41,9 +42,8 @@ const Task: React.FC<Props> = props => {
 		{ maxLength: 50, required: false, isEmpty: true }
 	);
 
-	// const parentRef1 = createRef<HTMLDivElement>()
-
-	const { coords, setIsVisible, isVisible, childRef, parentRef } = useCoordinate();
+	const toastCoords = useCoordinate('bottom-left');
+	const tooltipCoords = useCoordinate();
 
 	useEffect(() => {
 		let numOfSubtaskCounter = 0;
@@ -103,10 +103,10 @@ const Task: React.FC<Props> = props => {
 	};
 
 	const onMouseOver = () => {
-		setIsVisible(true);
+		tooltipCoords.setIsVisible(true);
 	};
 	const onMouseLeave = () => {
-		setIsVisible(false);
+		tooltipCoords.setIsVisible(false);
 	};
 
 	let task = (
@@ -123,17 +123,16 @@ const Task: React.FC<Props> = props => {
 						className="task__text"
 						onMouseOver={onMouseOver}
 						onMouseLeave={onMouseLeave}
-						ref={parentRef}
+						ref={tooltipCoords.parentRef}
 					>
 						{props.name}
 					</span>
 
-					{isVisible && (
+					{tooltipCoords.isVisible && (
 						<Tooltip
 							text={props.name}
-							selfRef={childRef}
-							coords={coords}
-							isVisible={isVisible}
+							selfRef={tooltipCoords.childRef}
+							coords={tooltipCoords.coords}
 						/>
 					)}
 					<Icon
@@ -148,9 +147,16 @@ const Task: React.FC<Props> = props => {
 						{numDoneSubtask}/{numOfSubtask}
 					</div>
 				</div>
-				<Icon classNames="trash">
-					<TrashIcon />
-				</Icon>
+				<div ref={toastCoords.parentRef}>
+					<Icon
+						classNames="trash"
+						onClick={() => {
+							toastCoords.setIsVisible(true);
+						}}
+					>
+						<TrashIcon />
+					</Icon>
+				</div>
 			</div>
 
 			<CSSTransition
@@ -201,15 +207,36 @@ const Task: React.FC<Props> = props => {
 						/>
 						<span className="task__text">{props.name}</span>
 					</div>
-					<Icon classNames="trash" onClick={onDeleteTask}>
-						<TrashIcon />
-					</Icon>
+					<div ref={toastCoords.parentRef}>
+						<Icon
+							classNames="trash"
+							onClick={() => {
+								toastCoords.setIsVisible(true);
+							}}
+						>
+							<TrashIcon />
+						</Icon>
+					</div>
 				</div>
 			</Fragment>
 		);
 	}
 
-	return <div className="task">{task}</div>;
+	return (
+		<div className="task">
+			{task}
+			{toastCoords.isVisible && (
+				<Toast
+					coords={toastCoords.coords}
+					submitHandler={onDeleteTask}
+					selfRef={toastCoords.childRef}
+					textSbmt="Удалить"
+					text="Вы действительно хотите удалить?"
+					cancelHandler={() => toastCoords.setIsVisible(false)}
+				/>
+			)}
+		</div>
+	);
 };
 
 export default Task;

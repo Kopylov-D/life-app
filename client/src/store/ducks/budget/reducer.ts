@@ -1,22 +1,12 @@
-import {
-	FETCH_START,
-	FETCH_SUCCESS,
-	GET_TRANSACTIONS,
-	ADD_CATEGORY,
-	UPDATE_CATEGORIES,
-	GET_CATEGORIES,
-	DELETE_CATEGORY,
-	ADD_TRANSACTION,
-	DELETE_TRANSACTION,
-	GET_BUDGETDATA,
-	BudgetActionsTypes,
-} from './contracts/actionTypes';
+import { LoadingStatus } from '../../types';
+import { BudgetActions } from './actionCreators';
+import { BudgetActionsTypes } from './contracts/actionTypes';
 import { BudgetState } from './contracts/state';
 
 const initialState: BudgetState = {
 	transactions: [],
 	categories: [],
-	isLoading: true,
+	loadingStatus: LoadingStatus.LOADING,
 	error: { name: '', message: '' },
 	date: {
 		year: 2020,
@@ -38,34 +28,32 @@ const initialState: BudgetState = {
 
 export const budgetReducer = (
 	state = initialState,
-	action: BudgetActionsTypes
+	action: BudgetActions
 ): BudgetState => {
 	switch (action.type) {
-		case FETCH_START:
+		case BudgetActionsTypes.SET_LOADING_STATUS:
 			return {
 				...state,
-				isLoading: true,
+				loadingStatus: action.payload,
 			};
-		case FETCH_SUCCESS:
-			return {
-				...state,
-				isLoading: false,
-			};
-		case GET_BUDGETDATA:
+		case BudgetActionsTypes.SET_BUDGETDATA:
 			return {
 				...state,
 				transactions: action.payload.transactions,
 				categories: action.payload.categories,
-				currentCategory: action.payload.categories.length > 0 ? action.payload.categories[0] : state.currentCategory,
+				currentCategory:
+					action.payload.categories.length > 0
+						? action.payload.categories[0]
+						: state.currentCategory,
 				options: action.payload.options,
 				balance: action.payload.balance,
 			};
-		case ADD_CATEGORY:
+		case BudgetActionsTypes.ADD_CATEGORY:
 			return {
 				...state,
 				categories: [...state.categories, action.payload],
 			};
-		case ADD_TRANSACTION:
+		case BudgetActionsTypes.ADD_TRANSACTION:
 			const transaction = action.payload;
 			const category = state.categories.find(
 				item => item._id === transaction.category._id
@@ -83,29 +71,31 @@ export const budgetReducer = (
 				transactions: [newTransaction, ...state.transactions],
 				currentCategory: category!,
 			};
-		case DELETE_TRANSACTION:
+		case BudgetActionsTypes.DELETE_TRANSACTION:
 			return {
 				...state,
-				transactions: state.transactions.filter(
-					item => item._id !== action.payload
-				),
+				transactions: state.transactions.filter(item => item._id !== action.payload),
 			};
-		case UPDATE_CATEGORIES:
+		case BudgetActionsTypes.CHANGE_CATEGORY:
+			const categories = state.categories.map(category => {
+				if (category._id === action.payload._id) {
+					return action.payload;
+				}
+				return category;
+			});
+			return {
+				...state,
+				categories,
+			};
+		case BudgetActionsTypes.SET_CATEGORIES:
 			return {
 				...state,
 				categories: action.payload,
 			};
-		case GET_CATEGORIES:
+		case BudgetActionsTypes.DELETE_CATEGORY:
 			return {
 				...state,
-				categories: action.payload,
-			};
-		case DELETE_CATEGORY:
-			return {
-				...state,
-				categories: state.categories.filter(
-					item => item._id !== action.payload
-				),
+				categories: state.categories.filter(item => item._id !== action.payload),
 			};
 		default:
 			return state;

@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
+import { LoadingStatus } from '../../types';
 import {
 	BalanceInterface,
 	CategoryInterface,
@@ -13,7 +14,8 @@ export const selectTransactions = (state: RootState): TransactionInterface[] =>
 export const selectCategories = (state: RootState): CategoryInterface[] =>
 	state.budget.categories;
 
-export const selectIsLoading = (state: RootState): boolean => state.budget.isLoading;
+export const selectLoadingStatus = (state: RootState): LoadingStatus =>
+	state.budget.loadingStatus;
 
 export const selectCurrentCategory = (state: RootState) => state.budget.currentCategory;
 

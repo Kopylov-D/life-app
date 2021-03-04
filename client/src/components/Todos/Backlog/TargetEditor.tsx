@@ -17,6 +17,8 @@ import Calendar from '../../Calendar';
 import PriorityPicker from '../../PriorityPicker';
 import Icon from '../../UI/Icons/Icon';
 import { CalendarIcon, TrashIcon } from '../../UI/Icons';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
+import Toast from '../../UI/Toast';
 
 interface Props {
 	type: 'edit' | 'create';
@@ -40,6 +42,7 @@ const TargetEditor: React.FC<Props> = props => {
 		{ initialValue: props.name || '' },
 		{ required: true, maxLength: 30, isEmpty: true }
 	);
+	const toastCoords = useCoordinate('bottom-left');
 	const [notesInput, setNotesInput] = useState<string>(props.notes || '');
 	const [colorId, setColorId] = useState<string | undefined>(props.color);
 	const [currentDate, setCurrentDate] = useState<Date>(
@@ -146,9 +149,22 @@ const TargetEditor: React.FC<Props> = props => {
 					</Icon>
 
 					{props.type === 'edit' && (
-						<Icon classNames="trash" onClick={onDeleteTarget}>
-							<TrashIcon />
-						</Icon>
+						<div ref={toastCoords.parentRef}>
+							<Icon classNames="trash" onClick={() => toastCoords.setIsVisible(true)}>
+								<TrashIcon />
+							</Icon>
+						</div>
+					)}
+
+					{toastCoords.isVisible && (
+						<Toast
+							coords={toastCoords.coords}
+							submitHandler={onDeleteTarget}
+							selfRef={toastCoords.childRef}
+							textSbmt="Удалить"
+							text="Вы действительно хотите удалить?"
+							cancelHandler={() => toastCoords.setIsVisible(false)}
+						/>
 					)}
 				</div>
 

@@ -1,5 +1,5 @@
 // import { AlertInterface } from '../../middleaware/alert.middleware';
-import { AxiosAdapter, AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { LoadingStatus } from '../../types';
 import {
 	AddCardActionInterface,
@@ -16,7 +16,6 @@ import {
 	DeleteSubtaskActionInterface,
 	DeleteTargetActionInterface,
 	DeleteTaskActionInterface,
-	// SetAlertActionInterface,
 	SetErrorActionInterface,
 	SetLoadingStatusActionInterface,
 	SetSortKeyActionInterface,
@@ -60,7 +59,6 @@ export type TodosActions =
 	| SetVisibilityFilterActionInterface
 	| SetSortKeyActionInterface
 	| SetSortOrderActionInterface;
-// | SetAlertActionInterface;
 
 export const setLoadingStatus = (
 	payload: LoadingStatus
@@ -89,13 +87,6 @@ export const SetSortKey = (
 	type: TodosActionTypes.SET_SORT_KEY,
 	payload,
 });
-
-// export const setAlert = (
-// 	payload: AlertInterface
-// ): SetAlertActionInterface => ({
-// 	type: TodosActionTypes.ALERT,
-// 	payload,
-// });
 
 export const setError = (payload: AxiosError): SetErrorActionInterface => ({
 	type: TodosActionTypes.SET_ERROR,

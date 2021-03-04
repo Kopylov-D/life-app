@@ -7,7 +7,7 @@ type Props = {
 	disabled?: boolean;
 	isLoading?: boolean;
 	type?: 'count' | 'toggle';
-	color?: 'primary' | 'secondary';
+	color?: 'primary' | 'secondary' | 'danger';
 	size?: 'small' | 'large';
 };
 

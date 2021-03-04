@@ -162,7 +162,7 @@ a {
 
 			.icon {
 				color: $c-black;
-				height: 30px;
+				height: 25px;
 			}
 		}
 
@@ -215,7 +215,7 @@ a {
 	}
 
 	&__toggle-menu {
-		z-index: 1000;
+		z-index: 10;
 		position: relative;
 		background: $c-white;
 		border: 2px solid $c-primary;
@@ -291,83 +291,4 @@ a {
 	&__modal {
 		padding: 0;
 	}
-}
-
-.color-income {
-	background-color: $c-income;
-}
-
-.color-expense {
-	background-color: $c-expense;
-}
-
-.primary {
-	color: $c-white;
-	background-color: $c-primary;
-}
-
-.secondary {
-	color: $c-primary;
-	background-color: $c-secondary;
-	border: $c-primary 1px solid;
-}
-
-.done {
-	text-decoration: line-through;
-}
-
-.grey {
-	background-color: #c9d1d3a8;
-}
-
-.lime {
-	background-color: #b6e6bd9c;
-}
-
-.purple {
-	background-color: #dfbedb8e;
-}
-
-.black {
-	background-color: #000000;
-}
-
-.red {
-	background-color: #facdd486;
-}
-
-.cyan {
-	background-color: #b6e2ed8a;
-}
-
-.teal {
-	background-color: #b3e0dda6;
-}
-
-.green {
-	background-color: #dcecc89a;
-}
-
-.blue {
-	background-color: #dfbedb8f;
-}
-
-.pink {
-	background-color: #f9bbd28c;
-}
-
-.yellow {
-	background-color: #fcf9c686;
-}
-
-.orange {
-	background-color: #ffe0b183;
-}
-
-.brown {
-	background-color: #d8cdc980;
-}
-
-.graphite {
-	background-color: #d0d9de93;
 }

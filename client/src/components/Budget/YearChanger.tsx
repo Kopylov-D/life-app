@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIsLoading } from '../../store/ducks/budget/selectors';
 import { toDate } from '../../services/utils/dateUtils';
 import Button from '../UI/Button';
 import Icon from '../UI/Icons/Icon';
 import { ChevronIcon } from '../UI/Icons';
+import { selectLoadingStatus } from '../../store/ducks/budget/selectors';
+import { LoadingStatus } from '../../store/types';
 
 type Props = {
 	startDate: string;
@@ -14,7 +15,7 @@ type Props = {
 
 const YearChanger: React.FC<Props> = props => {
 	const [year, setYear] = useState<number>(new Date().getFullYear());
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
 
 	useEffect(() => {
 		setYear(props.year);
@@ -40,13 +41,21 @@ const YearChanger: React.FC<Props> = props => {
 
 	return (
 		<div className="year-changer">
-			<Button onClick={prevYearHandler} type="count" disabled={isLoading}>
+			<Button
+				onClick={prevYearHandler}
+				type="count"
+				disabled={loadingStatus === LoadingStatus.LOADING}
+			>
 				<Icon classNames="chevron" direction="left">
 					<ChevronIcon />
 				</Icon>
 			</Button>
 			<span>{year} </span>
-			<Button onClick={nextYearHandler} type="count" disabled={isLoading}>
+			<Button
+				onClick={nextYearHandler}
+				type="count"
+				disabled={loadingStatus === LoadingStatus.LOADING}
+			>
 				<Icon classNames="chevron" direction="right">
 					<ChevronIcon />
 				</Icon>

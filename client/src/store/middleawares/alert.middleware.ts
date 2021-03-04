@@ -1,9 +1,8 @@
-// //reducer
-
 import { Dispatch } from 'react';
 import { Middleware, AnyAction, Action } from 'redux';
-import { hideAlert } from '../ducks/common/actionCreators';
+import { hideAlert, setError } from '../ducks/common/actionCreators';
 import { showAlert } from '../ducks/common/actions';
+import { getTodosData } from '../ducks/todos/actions';
 import { RootState } from '../rootReducer';
 
 // import { Action, AnyAction, Dispatch, Middleware } from 'redux';
@@ -56,8 +55,7 @@ export const alertMiddleware = (events: any): Middleware<{}, RootState> => ({
 	getState,
 }) => next => action => {
 	if (events.includes(action.type)) {
-		const id = new Date().getTime();
-		// dispatch(showAlert({...action.payload, id}));
+		// dispatch(showAlert({text: ''}));
 
 		const log = action.payload;
 		console.log(log);
@@ -66,16 +64,16 @@ export const alertMiddleware = (events: any): Middleware<{}, RootState> => ({
 	}
 };
 
-// const syncMiddleWare: Middleware = store => next => action => {
-// 	const syncActions = ['SET_ERROR'];
+export const syncMiddleWare: Middleware = store => next => action => {
+	const syncActions = ['SET_ERROR'];
 
-// 	if (syncActions.includes(action.type)) {
-// 		const error = action.payload.response.data.message;
-// 		console.log(error);
-// 	}
+	if (syncActions.includes(action.type)) {
+		const error = action.payload;
+		console.log(error);
+	}
 
-// 	if (action.type === 'SET_LOADING' && action.payload === LoadingStatus.ERROR) {
-// 	}
+	// 	if (action.type === 'SET_LOADING' && action.payload === LoadingStatus.ERROR) {
+};
 
 // 	return next(action);
 // };
