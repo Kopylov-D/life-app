@@ -12,11 +12,11 @@ import {
 } from '../../../store/ducks/budget/selectors';
 import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
 import { LoadingStatus } from '../../../store/types';
+import { CategoryEditorParams } from '../../../types';
 import Button from '../../UI/Button';
 import Loader from '../../UI/Loader';
-import { Params } from '../Operations/OperationModal';
 import CategoryItem from './CategoryItem';
-import CategoryModal from './CategoryEditor';
+import CategoryEditor from './CategoryEditor';
 import Table from '../../Table';
 
 const Categories: React.FC = () => {
@@ -27,8 +27,6 @@ const Categories: React.FC = () => {
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
 	const [newCategoryModalIsOpen, setNewCategoryModalIsOpen] = useState<boolean>(false);
 	const [currentCategory, setCurrentCategory] = useState<CategoryInterface | undefined>();
-
-
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -47,7 +45,7 @@ const Categories: React.FC = () => {
 		dispatch(fetchDeleteCategory(id));
 	};
 
-	const onOkModalClick = (params: Params): void => {
+	const onOkModalClick = (params: CategoryEditorParams): void => {
 		const category: CategoryInterface = {
 			_id: currentCategory!._id,
 			name: params.value,
@@ -60,7 +58,7 @@ const Categories: React.FC = () => {
 		setModalIsOpen(false);
 	};
 
-	const onOkNewCategoryModalClick = (params: Params): void => {
+	const onOkNewCategoryModalClick = (params: CategoryEditorParams): void => {
 		addCategoryHandler(params.value, params.isExpense!);
 		setNewCategoryModalIsOpen(false);
 	};
@@ -110,7 +108,7 @@ const Categories: React.FC = () => {
 					</Button>
 
 					{newCategoryModalIsOpen && (
-						<CategoryModal
+						<CategoryEditor
 							title="Новая категория"
 							onClick={onOkNewCategoryModalClick}
 							onCloseClick={() => setNewCategoryModalIsOpen(false)}
@@ -118,15 +116,13 @@ const Categories: React.FC = () => {
 					)}
 
 					{modalIsOpen && (
-						<CategoryModal
+						<CategoryEditor
 							title="Изменить категорию"
 							category={currentCategory}
 							onClick={onOkModalClick}
 							onCloseClick={onCancelModalClick}
 						/>
 					)}
-
-					
 				</div>
 			)}
 		</Fragment>

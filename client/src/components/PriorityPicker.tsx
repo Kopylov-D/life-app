@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setColor } from '../services/utils/commonUtils';
+import { matchColor } from '../services/utils/matchColor';
 import { Priority } from '../store/ducks/todos/contracts/state';
 import Dropdown from './UI/Dropdown';
 import { PriorityIcon } from './UI/Icons';
@@ -32,7 +32,7 @@ const PriorityPicker: React.FC<Props> = props => {
 	return (
 		<div className="with-dropdown">
 			<Icon
-				classNames={`priority icon--${setColor(props.priority)}`}
+				classNames={`priority icon--${matchColor(props.priority)}`}
 				onClick={onTogglePriorityPickerHandler}
 			>
 				<PriorityIcon />

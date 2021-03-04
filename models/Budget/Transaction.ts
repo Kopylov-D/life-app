@@ -24,7 +24,7 @@ const TransactionSchema: Schema = new Schema<TransactionType>({
 	},
 	isExpense: {
 		required: true,
-		type: Boolean
+		type: Boolean,
 	},
 });
 

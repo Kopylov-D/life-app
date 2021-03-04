@@ -7,33 +7,18 @@ import { Target } from '../models/Todos/Target';
 import { Task } from '../models/Todos/Task';
 import {
 	CardInterface,
-	ColorInterface,
 	RequestWithUser,
 	SubtaskInterface,
 	TargetInterface,
 	TaskInterface,
 } from '../types/types';
-
-function extractColorId(body: any) {
-	if (body.color) {
-		return body.color
-	} else {
-		return undefined
-	}
-	
-}
-// function extractColorId(color: ColorInterface) {
-// 	return color._id
-// }
+import extractColorId from '../utils/exctractColorId';
 
 class TodosController {
 	async syncTodos(req: RequestWithUser, res: Response) {
 		try {
-			const { targets, subtasks, tasks, cards } = req.body;
-
 			if (req.body.tasks) {
 				const tasks: TaskInterface[] = req.body.tasks;
-
 				tasks.forEach(async task => {
 					await Task.findByIdAndUpdate(task._id, { $set: task });
 				});
@@ -41,7 +26,6 @@ class TodosController {
 
 			if (req.body.targets) {
 				const targets: TargetInterface[] = req.body.targets;
-
 				targets.forEach(async target => {
 					await Target.findByIdAndUpdate(target._id, { $set: target });
 				});
@@ -49,7 +33,6 @@ class TodosController {
 
 			if (req.body.subtasks) {
 				const subtasks: SubtaskInterface[] = req.body.subtasks;
-
 				subtasks.forEach(async subtask => {
 					await Subtask.findByIdAndUpdate(subtask._id, { $set: subtask });
 				});
@@ -57,13 +40,12 @@ class TodosController {
 
 			if (req.body.cards) {
 				const cards: CardInterface[] = req.body.cards;
-
 				cards.forEach(async card => {
 					await Card.findByIdAndUpdate(card._id, { $set: card });
 				});
 			}
 
-			res.status(201).json({ message: 'sync complete' });
+			res.status(201).json({ message: 'Синхронизация завершена' });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
@@ -71,8 +53,13 @@ class TodosController {
 
 	async addTask(req: RequestWithUser, res: Response) {
 		try {
-			const color = extractColorId(req.body)
-			const task = new Task({ ...req.body, _id: Types.ObjectId(), user: req.user, color });
+			const color = extractColorId(req.body);
+			const task = new Task({
+				...req.body,
+				_id: Types.ObjectId(),
+				user: req.user,
+				color,
+			});
 			await task.save();
 			res.status(201).json({ message: 'task create', data: task });
 		} catch (e) {
@@ -93,24 +80,19 @@ class TodosController {
 	async multiplyDelete(req: RequestWithUser, res: Response) {
 		try {
 			if (req.body.tasksId) {
-				// await (await Task.find({user: req.user})).forEach(task => {
-				// 	if (task._id)
-				// })
 				const tasksId: string[] = req.body.tasksId;
-
 				tasksId.forEach(async taskId => {
 					await Task.findByIdAndDelete(taskId);
 				});
 			}
 			if (req.body.subtasksId) {
 				const subtasksId: string[] = req.body.subtasksId;
-
 				subtasksId.forEach(async subtaskId => {
 					await Subtask.findByIdAndDelete(subtaskId);
 				});
 			}
-			
-			res.status(200).json({ message: 'data is deleted' });
+
+			res.status(200).json({ message: 'Удаление завершено' });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -140,7 +122,7 @@ class TodosController {
 			});
 
 			await target.save();
-			res.status(201).json({ message: 'target added', data: target });
+			res.status(201).json({ message: 'Цель создана', data: target });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -148,34 +130,14 @@ class TodosController {
 
 	async updateTarget(req: RequestWithUser, res: Response) {
 		try {
-			const {
-				name,
-				isDone,
-				color,
-				priority,
-				expiresIn,
-				notes,
-			}: TargetInterface = req.body;
-
-			const target = {
-				user: req.user,
-				name,
-				isDone: isDone && isDone,
-				color: color && color,
-				priority: priority && priority,
-				notes: notes && notes,
-				expiresIn: expiresIn && expiresIn,
-			};
-
 			const { id } = req.params;
 			const updatedTarget = await Target.findByIdAndUpdate(
 				id,
 				{ $set: req.body },
 				{ new: true }
 			);
-			// const updatedTarget = await Target.findOne({ _id: id });
 
-			res.status(201).json({ message: 'target updated', data: updatedTarget });
+			res.status(201).json({ message: 'Цель обновлена', data: updatedTarget });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -185,7 +147,7 @@ class TodosController {
 		try {
 			const { id } = req.params;
 			await Target.findByIdAndDelete(id);
-			res.status(200).json({ message: 'target is deleted' });
+			res.status(200).json({ message: 'Цель удалена' });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -203,7 +165,7 @@ class TodosController {
 			});
 
 			await card.save();
-			res.status(201).json({ message: 'card added', data: card });
+			res.status(201).json({ message: 'Карточка добавлена', data: card });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -213,7 +175,7 @@ class TodosController {
 		try {
 			const subtask = new Subtask({ ...req.body, _id: Types.ObjectId(), user: req.user });
 			await subtask.save();
-			res.status(201).json({ message: 'subtask added', data: subtask });
+			res.status(201).json({ message: 'Подзадача добавлена', data: subtask });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -221,9 +183,9 @@ class TodosController {
 
 	async deleteSubtask(req: RequestWithUser, res: Response) {
 		try {
-			const { id } = req.params;			
+			const { id } = req.params;
 			await Subtask.findByIdAndDelete(id);
-			res.status(200).json({ message: 'subtask is deleted' });
+			res.status(200).json({ message: 'Подзадача удалена' });
 		} catch (e) {
 			res.status(500).json({ message: e });
 		}
@@ -265,15 +227,6 @@ class TodosController {
 
 	async updateCard(req: RequestWithUser, res: Response) {
 		try {
-			// const { name, color, level }: CardInterface = req.body;
-
-			// const card = {
-			// 	// user: req.user,
-			// 	name,
-			// 	level: level && level,
-			// 	color: color && color,
-			// };
-
 			const { id } = req.params;
 
 			const updatedCard = await Card.findOneAndUpdate(
@@ -282,9 +235,7 @@ class TodosController {
 				{ new: true }
 			);
 
-			// const ncard = await Card.findOne({ _id: id });
-
-			res.status(200).json({ message: 'card is updated', data: updatedCard });
+			res.status(200).json({ message: 'Карточка изменена', data: updatedCard });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
@@ -294,7 +245,7 @@ class TodosController {
 		try {
 			const { id } = req.params;
 			await Card.findByIdAndDelete(id);
-			res.status(200).json({ message: 'card is deleted' });
+			res.status(200).json({ message: 'Карточка удалена' });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}
@@ -302,44 +253,7 @@ class TodosController {
 
 	async updateTask(req: RequestWithUser, res: Response) {
 		try {
-			const {
-				target,
-				subtask,
-				name,
-				color,
-				priority,
-				expiresIn,
-				level,
-				notes,
-				isDone,
-			}: TaskInterface = req.body;
-
-			// for (let i = 0; )
-
-			const task = {
-				target: target && target,
-				subtask: subtask && subtask,
-				name,
-				isDone,
-				level: level && level,
-				notes: notes && notes,
-				color: color && color,
-				priority: priority && priority,
-				expiresIn: expiresIn && expiresIn,
-			};
-
 			const { id } = req.params;
-
-			// await Card.findOneAndUpdate(
-			// 	{ _id: id },
-			// 	{
-			// 		$set: {
-			// 			name,
-			// 			// level: level && level,
-			// 			color,
-			// 		},
-			// 	}
-			// );
 
 			Task.schema.path('level').validate(function (value: string | null) {
 				return value !== null && value !== '';
@@ -349,16 +263,9 @@ class TodosController {
 				{ _id: id },
 				{ $set: req.body },
 				{ new: true }
-				// { runValidators: true },
-				// function (err) {
-				// 	// console.log(err);
-				// 	;
-				// }
 			);
 
-			// const updatedTask = await Task.findOne({ _id: id });
-
-			res.status(200).json({ message: 'task is updated', data: updatedTask });
+			res.status(200).json({ message: 'Задача обновлена', data: updatedTask });
 		} catch (e) {
 			res.status(300).json({ message: e });
 		}

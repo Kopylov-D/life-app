@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
-// import arrow from '../assets/icons/Arrow-down.svg';
-// import { ReactComponent as ChevronDown } from '../assets/icons/chevron-down-outline.svg';
-// import { ReactComponent as ChevronUp } from '../assets/icons/chevron-up-outline.svg';
-// import { ReactComponent as ArrowUp } from '../assets/icons/arrow-up-outline.svg';
-// import { ReactComponent as ArrowDown } from '../assets/icons/arrow-down-outline.svg';
 import Icon from './UI/Icons/Icon';
 import { ChevronIcon } from './UI/Icons';
 
@@ -14,7 +9,6 @@ interface Props {
 	onHeaderItemClick?(name: string, direction: string): void;
 	needSort: boolean;
 	isActive: boolean;
-	// isActive?: boolean
 }
 
 const TableHeaderItem: React.FC<Props> = ({

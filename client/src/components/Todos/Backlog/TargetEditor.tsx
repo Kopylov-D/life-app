@@ -1,11 +1,13 @@
 import React, { Fragment, useState } from 'react';
 import { useInput } from '../../../hooks/input.hook';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
 import {
 	ColorInterface,
 	Priority,
 	TargetInterface,
 } from '../../../store/ducks/todos/contracts/state';
-import { setColor } from '../../../services/utils/commonUtils';
+import { Placement } from '../../../types';
+import { matchColor } from '../../../services/utils/matchColor';
 import { toDate } from '../../../services/utils/dateUtils';
 import Colorpicker from '../../Colorpicker';
 import Button from '../../UI/Button';
@@ -17,7 +19,6 @@ import Calendar from '../../Calendar';
 import PriorityPicker from '../../PriorityPicker';
 import Icon from '../../UI/Icons/Icon';
 import { CalendarIcon, TrashIcon } from '../../UI/Icons';
-import useCoordinate from '../../../hooks/useCoordinate.hook';
 import Toast from '../../UI/Toast';
 
 interface Props {
@@ -42,7 +43,7 @@ const TargetEditor: React.FC<Props> = props => {
 		{ initialValue: props.name || '' },
 		{ required: true, maxLength: 30, isEmpty: true }
 	);
-	const toastCoords = useCoordinate('bottom-left');
+	const toastCoords = useCoordinate(Placement.bottomLeft);
 	const [notesInput, setNotesInput] = useState<string>(props.notes || '');
 	const [colorId, setColorId] = useState<string | undefined>(props.color);
 	const [currentDate, setCurrentDate] = useState<Date>(
@@ -136,7 +137,7 @@ const TargetEditor: React.FC<Props> = props => {
 					<span className="target-editor__checkbox">
 						<Checkbox
 							checked={isChecked}
-							color={setColor(priority)}
+							color={matchColor(priority)}
 							onChangeHandler={() => setIsChecked(!isChecked)}
 						/>
 					</span>

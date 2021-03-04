@@ -14,24 +14,20 @@ type Props = {
 };
 
 const Dropdown: React.FC<Props> = ({ items, value, onClick }) => {
-	// const [headerTitle, setHeaderTitle] = useState<string>('');
-	// const [isOpen, seIsOpen] = useState<boolean>(false);
 	const [selectedId, setSelectedId] = useState<string | number | undefined>(value);
-	
 
 	useEffect(() => {
-		setSelectedId(value)
+		setSelectedId(value);
 	}, [value]);
 
 	return (
 		<div className="dropdown">
-			{/* <div className="dropdown__header">{headerTitle}</div> */}
 			<ul className="dropdown__content">
 				{items.map(item => {
 					return (
 						<li
 							className={classNames('dropdown__item', {
-								['dropdown__item--active']: item.id === selectedId,
+								'dropdown__item--active': item.id === selectedId,
 							})}
 							key={item.id}
 							onClick={() => onClick(item.id)}

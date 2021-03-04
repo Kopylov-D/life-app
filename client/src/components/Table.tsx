@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import TableHeaderItem from './TableHeaderItem';
 import { TargetInterface, TaskInterface } from '../store/ducks/todos/contracts/state';

@@ -17,4 +17,3 @@ export interface AlertPayloadInterface {
 export interface AlertInterface extends AlertPayloadInterface {
 	id: number;
 }
-

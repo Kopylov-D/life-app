@@ -1,13 +1,16 @@
 import { LoadingStatus } from '../../types';
 import {
 	AuthActionTypes,
-  AuthLogoutActionInterface,
+	AuthLogoutActionInterface,
 	SetAuthDataActionInterface,
 	SetLoadingStatusActionInterface,
 } from './contracts/actionTypes';
 import { AuthDataInterface } from './contracts/state';
 
-export type AuthActions = SetLoadingStatusActionInterface | SetAuthDataActionInterface | AuthLogoutActionInterface;
+export type AuthActions =
+	| SetLoadingStatusActionInterface
+	| SetAuthDataActionInterface
+	| AuthLogoutActionInterface;
 
 export const setLoadingStatus = (
 	payload: LoadingStatus
@@ -19,10 +22,8 @@ export const setLoadingStatus = (
 export const setAuthData = (payload: AuthDataInterface): SetAuthDataActionInterface => ({
 	type: AuthActionTypes.SET_AUTH_DATA,
 	payload,
-})
+});
 
 export const setLogout = (): AuthLogoutActionInterface => ({
 	type: AuthActionTypes.AUTH_LOGOUT,
 });
-
-

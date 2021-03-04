@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Target from './Target';
-// import { useInput } from '../../../hooks/input.hook';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import {
 	fetchAddTarget,
 	fetchAddTask,
@@ -11,26 +10,22 @@ import {
 	updateTask,
 } from '../../../store/ducks/todos/actions';
 import {
+	TargetInterface,
+	TaskInterface,
+} from '../../../store/ducks/todos/contracts/state';
+import {
 	selectColors,
 	selectTargets,
 	selectTasks,
 } from '../../../store/ducks/todos/selectors';
 import BacklogTask from './BacklogTask';
 import TaskEditor from './TaskEditor';
-import {
-	TargetInterface,
-	TaskInterface,
-} from '../../../store/ducks/todos/contracts/state';
 import TargetEditor from './TargetEditor';
-// import add from '../../../assets/icons/Add.svg';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-// import Modal from '../../UI/Modal';
+import Target from './Target';
 import Icon from '../../UI/Icons/Icon';
 import { AddCircleIcon, AddIcon } from '../../UI/Icons';
 
-interface Props {}
-
-const Backlog: React.FC<Props> = props => {
+const Backlog: React.FC = () => {
 	const dispatch = useDispatch();
 
 	const targets = useSelector(selectTargets);

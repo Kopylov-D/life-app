@@ -3,6 +3,7 @@ import React from 'react';
 import useCoordinate from '../../../hooks/useCoordinate.hook';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { TransactionInterface } from '../../../store/ducks/budget/contracts/state';
+import { Placement } from '../../../types';
 import { TrashIcon } from '../../UI/Icons';
 import Icon from '../../UI/Icons/Icon';
 import Toast from '../../UI/Toast';
@@ -19,7 +20,7 @@ const Transaction: React.FC<Props> = ({
 	isExpense,
 	onDeleteTransaction,
 }) => {
-	const toastCoords = useCoordinate('bottom-left');
+	const toastCoords = useCoordinate(Placement.bottomLeft);
 
 	return (
 		<div

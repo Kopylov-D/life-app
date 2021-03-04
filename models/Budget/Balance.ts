@@ -25,7 +25,4 @@ const BalanceSchema: Schema = new Schema<BalanceType>({
 
 export type BalanceModelDocumentInterface = BalanceType & Document;
 
-export const Balance = model<BalanceModelDocumentInterface>(
-	'Balance',
-	BalanceSchema
-);
+export const Balance = model<BalanceModelDocumentInterface>('Balance', BalanceSchema);

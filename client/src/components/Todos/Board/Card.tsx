@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { useInput } from '../../../hooks/input.hook';
 import useOutsideClick from '../../../hooks/outsideClick.hook';
 import {
@@ -19,9 +20,6 @@ import Button from '../../UI/Button';
 import Input from '../../UI/Input';
 import Task from './Task';
 import TaskSelector from './TaskSelector';
-// import close from '../../../assets/icons/Close.svg';
-// import Tooltip from '../../UI/Tooltip';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Icon from '../../UI/Icons/Icon';
 import { CloseIcon } from '../../UI/Icons';
 
@@ -92,12 +90,10 @@ const Card: React.FC<Props> = props => {
 					)}
 				</header>
 
-				{/* <ul className="card__content"> */}
 				<TransitionGroup className="card__content">
 					{props.tasks.map(task => {
 						if (task.level === props.level) {
 							return (
-								// <Tooltip text={task.name}>
 								<CSSTransition
 									key={task._id}
 									timeout={300}
@@ -105,7 +101,6 @@ const Card: React.FC<Props> = props => {
 									unmountOnExit
 								>
 									<Task
-										// key={task._id}
 										{...task}
 										colors={props.colors}
 										subtasks={props.subtasks}
@@ -114,14 +109,11 @@ const Card: React.FC<Props> = props => {
 										task={task}
 									/>
 								</CSSTransition>
-
-								// </Tooltip>
 							);
 						}
 					})}
 				</TransitionGroup>
 
-				{/* </ul> */}
 			</div>
 
 			<footer className="card__footer">

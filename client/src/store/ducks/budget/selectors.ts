@@ -1,7 +1,12 @@
 import { createSelector } from 'reselect';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
-import { LoadingStatus } from '../../types';
+import {
+	BalanceChartInterface,
+	ColumnsChartInterface,
+	LoadingStatus,
+	SelectCategoriesWithAmount,
+} from '../../types';
 import {
 	BalanceInterface,
 	CategoryInterface,
@@ -31,16 +36,6 @@ export const selectBalanceWithFormatDate = createSelector(selectBalance, balance
 		return item;
 	});
 });
-
-export type SelectCategoriesWithAmount = {
-	categories: CategoryInterface[];
-	proportion: {
-		income: number;
-		expense: number;
-		percentIncome: number;
-		percentExpense: number;
-	};
-};
 
 export const selectCategoriesWithAmount = createSelector(
 	selectTransactions,
@@ -79,22 +74,10 @@ export const selectCategoriesWithAmount = createSelector(
 	}
 );
 
-type DataChartType = {
-	name: string;
-	value: number;
-	balance: number;
-};
-
-type PropChart = {
-	name: string;
-	expense: number;
-	income: number;
-};
-
 export const selectDataChart = createSelector(
 	selectTransactions,
-	(transactions: TransactionInterface[]): DataChartType[] => {
-		const result: DataChartType[] = [];
+	(transactions: TransactionInterface[]): BalanceChartInterface[] => {
+		const result: BalanceChartInterface[] = [];
 
 		let sum = 0;
 		let name = '';
@@ -135,8 +118,8 @@ export const selectDataChart = createSelector(
 
 export const selectColumns = createSelector(
 	selectTransactions,
-	(transactions: TransactionInterface[]): PropChart[] => {
-		const result: PropChart[] = [];
+	(transactions: TransactionInterface[]): ColumnsChartInterface[] => {
+		const result: ColumnsChartInterface[] = [];
 
 		let name = '';
 		let expense = 0;

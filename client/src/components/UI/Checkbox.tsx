@@ -1,9 +1,8 @@
-import classNames from 'classnames';
 import React from 'react';
+import classNames from 'classnames';
 import { Colors } from '../../types';
 
 interface Props {
-	// id: string;
 	checked: boolean;
 	value?: string;
 	color?: Colors;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { CoordinatesInterface } from '../../types';
 import Backdrop from './Backdrop';
@@ -10,22 +10,27 @@ type Props = {
 	textSbmt?: string;
 	textClc?: string;
 	selfRef?: React.RefObject<HTMLDivElement>;
-	placement?: string;
 	submitHandler(): void;
 	cancelHandler(): void;
 };
 
 const Toast: React.FC<Props> = props => {
-	let style;
+	let style = {
+		transform: 'translate(-50%, 0)',
+		left: 50 + '%',
+		top: 30 + '%',
+	};
+
 	if (props.coords) {
 		style = {
+			transform: 'translate(0, 0)',
 			left: props.coords.left + 'px',
 			top: props.coords.top + 'px',
 		};
 	}
 
 	return ReactDOM.createPortal(
-		<div className="toast" style={style && style} ref={props.selfRef && props.selfRef}>
+		<div className="toast" style={style} ref={props.selfRef && props.selfRef}>
 			<div className="toast__body">{props.text}</div>
 			<div className="toast__footer">
 				<Button onClick={props.submitHandler} color="danger" size="small">

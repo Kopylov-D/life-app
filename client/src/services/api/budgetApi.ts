@@ -12,15 +12,11 @@ export const budgetApi = {
 				...transaction,
 				_id: null,
 			})
-			.then(res => res.data)
-			.catch(e => {
-				throw new Error(e.response.data.message || 'Что-то пошло не так');
-			}),
+			.then(res => res.data),
+
 	//ошибка, когда не поставлен слеш перед началом
 	deleteTransaction: (_id: string) =>
-		axios.delete<Response<Object>>(`/api/budget/transactions/${_id}`).catch(e => {
-			throw new Error(e.response.data.message || 'Что-то пошло не так');
-		}),
+		axios.delete<Response<null>>(`/api/budget/transactions/${_id}`).then(res => res.data),
 
 	fetchBudgetData: (year: string, month: string, all: boolean, fullYear: boolean) =>
 		axios
@@ -34,10 +30,7 @@ export const budgetApi = {
 	fetchCategories: () =>
 		axios
 			.get<Response<CategoryInterface[]>>('/api/budget/categories')
-			.then(res => res.data)
-			.catch(e => {
-				throw new Error(e.response.data.message || 'Что-то пошло не так');
-			}),
+			.then(res => res.data),
 
 	addCategory: (category: CategoryInterface) =>
 		axios

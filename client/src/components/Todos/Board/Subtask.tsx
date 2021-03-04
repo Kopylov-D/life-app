@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import React from 'react';
+import classNames from 'classnames';
 import { useDispatch } from 'react-redux';
 import useColorName from '../../../hooks/color.hook';
 import { decomposeSubtask, fetchDeleteSubtask } from '../../../store/ducks/todos/actions';
@@ -11,6 +11,7 @@ import Icon from '../../UI/Icons/Icon';
 import { TrashIcon, UndoIcon } from '../../UI/Icons';
 import useCoordinate from '../../../hooks/useCoordinate.hook';
 import Toast from '../../UI/Toast';
+import { Placement } from '../../../types';
 
 interface Props extends SubtaskInterface {
 	subtask: SubtaskInterface;
@@ -20,7 +21,7 @@ interface Props extends SubtaskInterface {
 const Subtask: React.FC<Props> = props => {
 	const dispatch = useDispatch();
 	const { colorName } = useColorName(props.color, props.colors);
-	const toastCoords = useCoordinate('bottom-left');
+	const toastCoords = useCoordinate(Placement.bottomLeft);
 
 	const onDeleteSubtask = () => {
 		dispatch(fetchDeleteSubtask(props._id));

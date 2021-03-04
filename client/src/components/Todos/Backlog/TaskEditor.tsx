@@ -6,21 +6,20 @@ import {
 	TargetInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
+import { Placement } from '../../../types';
 import { selectTargetsList } from '../../../store/ducks/todos/selectors';
 import { useInput } from '../../../hooks/input.hook';
 import useColorName from '../../../hooks/color.hook';
+import useCoordinate from '../../../hooks/useCoordinate.hook';
 import { toDate } from '../../../services/utils/dateUtils';
 import Input from '../../UI/Input';
 import Button from '../../UI/Button';
 import Select from '../../UI/Select';
-import Modal from '../../UI/Modal';
-import Textarea from '../../UI/Textarea';
 import PriorityPicker from '../../PriorityPicker';
 import Calendar from '../../Calendar';
 import Icon from '../../UI/Icons/Icon';
 import { CalendarIcon, EditIcon, TrashIcon } from '../../UI/Icons';
 import NotesEditor from './NotesEditor';
-import useCoordinate from '../../../hooks/useCoordinate.hook';
 import Toast from '../../UI/Toast';
 
 interface Props {
@@ -53,8 +52,7 @@ const TaskEditor: React.FC<Props> = props => {
 		{ maxLength: 50, isEmpty: true }
 	);
 
-	const toastCoords = useCoordinate('bottom-left');
-	
+	const toastCoords = useCoordinate(Placement.bottomLeft);
 
 	const [currentDate, setCurrentDate] = useState<Date>(
 		props.expiresIn ? toDate(props.expiresIn) : new Date()

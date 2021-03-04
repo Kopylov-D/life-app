@@ -1,6 +1,11 @@
-import { AxiosError } from "axios";
-import { ShowAlertActionInterface, CommonActionTypes, HideAlertActionInterface, SetErrorActionInterface } from "./contracts/actionTypes";
-import { AlertInterface } from "./contracts/state";
+import { AxiosError } from 'axios';
+import {
+	ShowAlertActionInterface,
+	CommonActionTypes,
+	HideAlertActionInterface,
+	SetErrorActionInterface,
+} from './contracts/actionTypes';
+import { AlertInterface } from './contracts/state';
 
 export const setAlert = (payload: AlertInterface): ShowAlertActionInterface => ({
 	type: CommonActionTypes.SHOW_ALERT,

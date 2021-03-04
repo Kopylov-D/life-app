@@ -25,7 +25,7 @@ const SubtaskSchema: Schema = new Schema<SubtaskInterface>({
 	isDone: {
 		required: true,
 		type: Boolean,
-		default: false
+		default: false,
 	},
 	color: {
 		required: false,
@@ -54,7 +54,4 @@ const SubtaskSchema: Schema = new Schema<SubtaskInterface>({
 
 type SubtaskModelDocumentInterface = SubtaskInterface & Document;
 
-export const Subtask = model<SubtaskModelDocumentInterface>(
-	'Subtask',
-	SubtaskSchema
-);
+export const Subtask = model<SubtaskModelDocumentInterface>('Subtask', SubtaskSchema);

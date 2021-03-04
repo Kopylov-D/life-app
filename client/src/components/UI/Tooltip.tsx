@@ -14,7 +14,6 @@ const Tooltip: React.FC<Props> = props => {
 		top: props.coords.top + 'px',
 	};
 
-
 	let tooltipBody = (
 		<div ref={props.selfRef} className="tooltip" style={style}>
 			{props.text}

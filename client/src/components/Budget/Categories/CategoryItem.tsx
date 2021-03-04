@@ -1,5 +1,6 @@
 import React from 'react';
 import useCoordinate from '../../../hooks/useCoordinate.hook';
+import { Placement } from '../../../types';
 import { SettingsIcon, TrashIcon } from '../../UI/Icons';
 import Icon from '../../UI/Icons/Icon';
 import Toast from '../../UI/Toast';
@@ -13,7 +14,7 @@ interface Props {
 }
 
 const CategoryItem: React.FC<Props> = props => {
-	const toastCoords = useCoordinate('bottom-left');
+	const toastCoords = useCoordinate(Placement.bottomLeft);
 
 	const deleteCategory = () => {
 		props.onDeleteCategory(props._id);

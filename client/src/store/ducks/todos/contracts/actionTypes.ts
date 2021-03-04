@@ -1,10 +1,8 @@
 import { AxiosError } from 'axios';
 import { Action } from 'redux';
-// import { AlertInterface } from '../../../middleaware/alert.middleware';
 import { LoadingStatus } from '../../../types';
 import {
 	CardInterface,
-	ColorInterface,
 	SubtaskInterface,
 	TargetInterface,
 	TaskInterface,
@@ -40,8 +38,6 @@ export enum TodosActionTypes {
 	ADD_CARD = 'ADD_CARD',
 	CHANGE_CARD = 'CHANGE_CARD',
 	DELETE_CARD = 'DELETE_CARD',
-
-	// ALERT = 'ALERT'
 }
 
 export interface SetLoadingStatusActionInterface extends Action<TodosActionTypes> {
@@ -63,11 +59,6 @@ export interface SetSortOrderActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_SORT_ORDER;
 	payload: TodosState['sortOrder'];
 }
-
-// export interface SetAlertActionInterface extends Action<TodosActionTypes> {
-// 	type: TodosActionTypes.ALERT;
-// 	payload: AlertInterface;
-// }
 
 export interface SetErrorActionInterface extends Action<TodosActionTypes> {
 	type: TodosActionTypes.SET_ERROR;

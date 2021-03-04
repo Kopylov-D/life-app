@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useOutsideClick from '../../hooks/outsideClick.hook';
-// import arrow from '../../assets/icons/Arrow-down.svg'
-import classNames from 'classnames';
 import Icon from './Icons/Icon';
 import { ChevronIcon } from './Icons';
-
-export interface SelectItems {
-	id: string;
-	value: string;
-	some?: any;
-}
+import { SelectItems } from '../../types';
 
 interface Props {
 	items: SelectItems[];
@@ -57,7 +50,6 @@ const Select: React.FC<Props> = ({
 				<Icon classNames="chevron" direction={isVisible ? 'up' : undefined}>
 					<ChevronIcon />
 				</Icon>
-				{/* <img className={classNames('arrow', {'arrow--up': isVisible})} src={arrow} alt=""/> */}
 			</div>
 
 			{isVisible && (

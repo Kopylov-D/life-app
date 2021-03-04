@@ -20,9 +20,6 @@ interface Props {
 function isInvalid({ valid, touched }: Props) {
 	return !valid && touched;
 }
-// function isInvalid({ valid, shouldValidate, touched }: Props) {
-// 	return !valid && shouldValidate && touched;
-// }
 
 const Input: React.FC<Props> = props => {
 	const ref = useRef<HTMLInputElement>(null);
@@ -34,12 +31,11 @@ const Input: React.FC<Props> = props => {
 	const inputType = props.type || 'text';
 	const htmlFor = `${inputType}-${Math.random()}`;
 
-	// TDOD Переделать на уриверсальыный
 	const onClickHandler = () => {
 		props.onClick && props.onClick(true);
 	};
 
-	const onBlurHAndler = (event: React.FocusEvent<HTMLInputElement>) => {
+	const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
 		props.onBlur && props.onBlur(event);
 	};
 
@@ -65,7 +61,7 @@ const Input: React.FC<Props> = props => {
 				type={inputType}
 				value={props.value}
 				onChange={event => props.onChange(event, props.value)}
-				onBlur={onBlurHAndler}
+				onBlur={onBlurHandler}
 				onKeyPress={props.onKeyPress}
 				placeholder={props.placeholder}
 			/>

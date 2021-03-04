@@ -1,9 +1,7 @@
-import { model, Schema, Document, Types } from 'mongoose';
+import { model, Schema, Document } from 'mongoose';
 import { UserType } from '../types/types';
 
-
 const UserSchema: Schema = new Schema<UserType>({
-  // _id: Types.ObjectId,
 	email: {
 		type: String,
 		required: true,
@@ -14,19 +12,10 @@ const UserSchema: Schema = new Schema<UserType>({
 		required: true,
 	},
 	balance: {
-		type: Array
-	}
+		type: Array,
+	},
 });
 
-// UserSchema.set('toJSON', {
-//   transform: function (_, obj) {
-//     delete obj.password;
-//     delete obj.confirmHash;
-//     return obj;
-//   },
-// });
-
-export type UserModelDocumentInterface = UserType & Document
+export type UserModelDocumentInterface = UserType & Document;
 
 export const User = model<UserModelDocumentInterface>('User', UserSchema);
-

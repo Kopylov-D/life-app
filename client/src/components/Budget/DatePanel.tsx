@@ -22,7 +22,7 @@ export const months: Month[] = [
 interface Props {
 	startDate: string;
 	changeDate(year: string, month: string, all: boolean, fullYear: boolean): void;
-};
+}
 
 const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 	const currentMonth = new Date().getMonth().toString();
@@ -60,7 +60,6 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 		<div className="date-panel">
 			<Select items={months} onItemClick={onMonthClickHandler} initialId={month} />
 			<YearChanger startDate={startDate} changeYear={onChangeYearHandler} year={year} />
-
 			<Toggle
 				type="btn"
 				colorPrimary="primary"
@@ -68,7 +67,6 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 				flag={allTime}
 				onSwitch={allTimeToggle}
 			/>
-
 			<Toggle
 				type="btn"
 				colorPrimary="primary"

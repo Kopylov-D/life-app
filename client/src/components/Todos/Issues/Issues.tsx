@@ -12,7 +12,6 @@ import {
 	selectOrderedIssues,
 	selectTargets,
 	selectTargetsList,
-	selectVisibilityFilter,
 } from '../../../store/ducks/todos/selectors';
 import Table, { HeaderItemsInterface } from '../../Table';
 import Toggle from '../../UI/Toggle';
@@ -25,7 +24,6 @@ const Issues: React.FC = () => {
 	const targetsList = useSelector(selectTargetsList);
 	const colors = useSelector(selectColors);
 	const targets = useSelector(selectTargets);
-	const visibilityFilter = useSelector(selectVisibilityFilter);
 
 	const [allIssues, setAllIssues] = useState<boolean>(true);
 	const [completedIssues, setCompletedIssues] = useState<boolean>(false);

@@ -79,14 +79,9 @@ export const todosReducer = (state = initialState, action: TodosActions): TodosS
 				tasks: [...state.tasks, action.payload],
 			};
 		case TodosActionTypes.DELETE_TASK:
-			// let { deltasks, delsubtasks } = state;
-			// const deltasks = state.tasks.filter(task => task._id !== action.payload);
-			// const delsubtasks = state.subtasks.filter(subtask => subtask.task !== action.payload);
-
 			return {
 				...state,
 				tasks: state.tasks.filter(task => task._id !== action.payload),
-				// subtasks: state.subtasks.filter(subtask => subtask.task !== action.payload),
 			};
 		case TodosActionTypes.CHANGE_TASK:
 			const tasks = state.tasks.map(task => {

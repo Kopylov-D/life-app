@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
-import { syncDataWithout } from '../../store/ducks/todos/actions';
+import { syncData } from '../../store/ducks/todos/actions';
 import { hideAlert } from '../../store/ducks/common/actionCreators';
 import { selectAlerts } from '../../store/ducks/common/selectors';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -18,12 +18,11 @@ const Alert: React.FC = () => {
 
 	const onAlertClick = (id: number, action: string | undefined) => {
 		if (action === 'sync') {
-			dispatch(syncDataWithout());
+			dispatch(syncData());
 			closeAlert(id);
 		}
 	};
 
-	// if (alerts.length > 0 && alerts !== null) {
 	return (
 		<TransitionGroup className="alert">
 			{alerts.map(alert => (
@@ -52,7 +51,6 @@ const Alert: React.FC = () => {
 			))}
 		</TransitionGroup>
 	);
-	// } else return null;
 };
 
 export default Alert;

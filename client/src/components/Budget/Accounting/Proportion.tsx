@@ -1,5 +1,5 @@
 import React from 'react';
-import { SelectCategoriesWithAmount } from '../../../store/ducks/budget/selectors';
+import { SelectCategoriesWithAmount } from '../../../store/types';
 
 type Props = {
 	proportion: SelectCategoriesWithAmount['proportion'];
@@ -8,10 +8,7 @@ type Props = {
 const Proportion: React.FC<Props> = ({ proportion }) => {
 	return (
 		<div className="proportion">
-			<div
-				className="proportion-top"
-				style={{ width: proportion.percentExpense + '%' }}
-			>
+			<div className="proportion-top" style={{ width: proportion.percentExpense + '%' }}>
 				{proportion.expense}
 			</div>
 

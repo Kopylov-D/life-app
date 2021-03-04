@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { MenuItem } from '../types';
-
-// import { ReactComponent as BoardIcon } from '../assets/icons/clipboard-outline.svg';
-// import { ReactComponent as BacklogIcon } from '../assets/icons/file-tray-stacked-outline.svg';
-// import { ReactComponent as IssuesIcon } from '../assets/icons/albums-outline.svg';
 import Icon from './UI/Icons/Icon';
 import { icons } from './UI/Icons';
 
@@ -12,12 +8,6 @@ type Props = {
 	items: MenuItem[];
 	isOpen?: boolean;
 };
-
-// const icons = [
-// 	{ name: Icons.board, component: BoardIcon },
-// 	{ name: Icons.backlog, component: BacklogIcon },
-// 	{ name: Icons.issues, component: IssuesIcon },
-// ];
 
 const Menu: React.FC<Props> = ({ items, isOpen = true }) => {
 	const [display, setDisplay] = useState<'none' | 'block'>();
@@ -44,7 +34,6 @@ const Menu: React.FC<Props> = ({ items, isOpen = true }) => {
 								</div>
 								<div className="menu__title">{item.title}</div>
 							</div>
-							{/* <div className="menu__bage">3</div> */}
 						</NavLink>
 					);
 				})}

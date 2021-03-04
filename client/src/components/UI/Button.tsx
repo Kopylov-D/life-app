@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import Loader from './Loader';
 
@@ -20,7 +20,6 @@ const Button: React.FC<Props> = ({
 	children,
 	onClick,
 }) => {
-
 	return (
 		<button
 			className={classNames(

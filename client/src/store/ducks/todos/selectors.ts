@@ -100,6 +100,9 @@ export const selectOrderedIssues = createSelector(
 				let abase = a[key];
 				let bbase = b[key];
 
+				console.log(abase);
+				
+
 				if (typeof abase === 'string' && typeof bbase === 'string') {
 					abase = abase.toLowerCase();
 					bbase = bbase.toLowerCase();

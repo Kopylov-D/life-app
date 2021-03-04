@@ -49,11 +49,3 @@ export interface Response<T> {
 	message: string;
 	data: T;
 }
-
-// export const {jwtToken} = getAuthData()
-
-// const instance = axios.create({
-// 	headers: {
-// 		"Authorization": `Bearer ${getAuthData().jwtToken}`
-// }
-// })

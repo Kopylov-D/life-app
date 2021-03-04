@@ -1,7 +1,7 @@
 import { Priority } from '../../store/ducks/todos/contracts/state';
 import { Colors } from '../../types';
 
-export const setColor = (priority: Priority | undefined): Colors | undefined => {
+export const matchColor = (priority: Priority | undefined): Colors | undefined => {
 	switch (priority) {
 		case Priority.high:
 			return Colors.red;

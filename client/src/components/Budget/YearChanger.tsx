@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { toDate } from '../../services/utils/dateUtils';
+import { selectLoadingStatus } from '../../store/ducks/budget/selectors';
+import { LoadingStatus } from '../../store/types';
 import Button from '../UI/Button';
 import Icon from '../UI/Icons/Icon';
 import { ChevronIcon } from '../UI/Icons';
-import { selectLoadingStatus } from '../../store/ducks/budget/selectors';
-import { LoadingStatus } from '../../store/types';
 
-type Props = {
+interface Props {
 	startDate: string;
 	year: number;
 	changeYear(year: number): void;

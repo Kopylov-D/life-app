@@ -47,10 +47,6 @@ export enum Priority {
 	low = 3,
 }
 
-// export enum Level {
-// 	'one'
-// }
-
 export interface TaskInterface {
 	_id: string;
 	user: string;

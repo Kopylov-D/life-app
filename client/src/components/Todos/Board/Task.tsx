@@ -5,16 +5,17 @@ import classNames from 'classnames';
 import useColorName from '../../../hooks/color.hook';
 import { useInput } from '../../../hooks/input.hook';
 import useCoordinate from '../../../hooks/useCoordinate.hook';
+import { matchColor } from '../../../services/utils/matchColor';
 import { fetchAddSubtask, updateTask } from '../../../store/ducks/todos/actions';
 import {
 	ColorInterface,
 	SubtaskInterface,
 	TaskInterface,
 } from '../../../store/ducks/todos/contracts/state';
+import { Placement } from '../../../types';
 import Checkbox from '../../UI/Checkbox';
 import Input from '../../UI/Input';
 import Subtask from './Subtask';
-import { setColor } from '../../../services/utils/commonUtils';
 import Tooltip from '../../UI/Tooltip';
 import Icon from '../../UI/Icons/Icon';
 import { ChevronIcon, TrashIcon } from '../../UI/Icons';
@@ -42,7 +43,7 @@ const Task: React.FC<Props> = props => {
 		{ maxLength: 50, required: false, isEmpty: true }
 	);
 
-	const toastCoords = useCoordinate('bottom-left');
+	const toastCoords = useCoordinate(Placement.bottomLeft);
 	const tooltipCoords = useCoordinate();
 
 	useEffect(() => {
@@ -55,9 +56,6 @@ const Task: React.FC<Props> = props => {
 				subtask.isDone && numDoneSubtaskCounter++;
 			}
 		});
-
-		//TODO Оптимизировать через редакс
-
 		setNumOfSubtask(numOfSubtaskCounter);
 		setNumDoneSubtask(numDoneSubtaskCounter);
 	}, [props.subtasks]);
@@ -116,7 +114,7 @@ const Task: React.FC<Props> = props => {
 					<Checkbox
 						checked={isDone}
 						onChangeHandler={onChecked}
-						color={setColor(props.priority)}
+						color={matchColor(props.priority)}
 					/>
 
 					<span
@@ -203,7 +201,7 @@ const Task: React.FC<Props> = props => {
 						<Checkbox
 							checked={isDone}
 							onChangeHandler={onChecked}
-							color={setColor(props.priority)}
+							color={matchColor(props.priority)}
 						/>
 						<span className="task__text">{props.name}</span>
 					</div>

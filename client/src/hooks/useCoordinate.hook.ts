@@ -1,30 +1,30 @@
 import { useEffect, useRef, useState } from 'react';
-import { CoordinatesInterface } from '../types';
+import { CoordinatesInterface, Placement } from '../types';
 
-export const setPlacement = (
+const setPlacement = (
 	parentRect: any,
 	childRect: any,
-	placement: string = 'auto'
+	placement: Placement = Placement.auto
 ): CoordinatesInterface => {
 	let left: CoordinatesInterface['left'] = 0;
 	let top: CoordinatesInterface['top'] = 0;
 
-	if (placement === 'bottom-left') {
+	if (placement === Placement.bottomLeft) {
 		left = parentRect.left - childRect.width + parentRect.width;
 		top = parentRect.top + parentRect.height;
 	}
 
-	if (placement === 'bottom') {
+	if (placement === Placement.bottom) {
 		left = parentRect.left;
 		top = childRect.top;
 	}
 
-	if (placement === 'top') {
+	if (placement === Placement.top) {
 		left = parentRect.x;
 		top = parentRect.y + window.scrollY - childRect.height;
 	}
 
-	if (placement === 'auto') {
+	if (placement === Placement.auto) {
 		left = parentRect.x;
 		top = parentRect.y + window.scrollY - childRect.height;
 		let rightBorder = left + childRect.width;
@@ -39,7 +39,7 @@ export const setPlacement = (
 	return { left, top };
 };
 
-const useCoordinate = (placement?: string) => {
+const useCoordinate = (placement?: Placement) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [coords, setCoords] = useState<CoordinatesInterface>({ left: -200, top: -200 });
 

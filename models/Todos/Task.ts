@@ -25,12 +25,12 @@ const TaskSchema: Schema = new Schema<TaskInterface>({
 	isDone: {
 		required: true,
 		type: Boolean,
-		default: false
+		default: false,
 	},
 	notes: {
 		required: false,
 		type: String,
-		default: ''
+		default: '',
 	},
 	color: {
 		required: false,
@@ -58,8 +58,8 @@ const TaskSchema: Schema = new Schema<TaskInterface>({
 	inArchive: {
 		required: true,
 		type: Boolean,
-		default: false
-	}
+		default: false,
+	},
 });
 
 type TaskModelDocumentInterface = TaskInterface & Document;

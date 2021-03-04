@@ -62,9 +62,6 @@ class BudgetController {
 					{ upsert: true }
 				);
 			});
-
-			// const balance = await Balance.find({ user: req.user });
-			// res.status(201).json({ message: 'Транзакция добавлена', balance, transaction });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -152,10 +149,6 @@ class BudgetController {
 			res
 				.status(200)
 				.json({ message: '', data: { transactions, categories, options, balance } });
-
-			// console.log(firstTr[0].date);
-			// const date = firstTr[0].date;
-			// const startFrom = Date.parse(date.toISOString());
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}

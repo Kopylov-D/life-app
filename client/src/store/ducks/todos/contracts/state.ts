@@ -1,5 +1,4 @@
 import { AxiosError } from 'axios';
-import { HeaderItemsInterface } from '../../../../components/Table';
 import { LoadingStatus } from '../../../types';
 
 export interface TodosState {
@@ -10,9 +9,9 @@ export interface TodosState {
 	cards: CardInterface[];
 	loadingStatus: LoadingStatus;
 	error?: AxiosError;
-	visibilityFilter: 'all' | 'done' | 'notDone' | 'active'
-	sortKey: '' | keyof TaskInterface
-	sortOrder: 'asc' | 'desc'
+	visibilityFilter: 'all' | 'done' | 'notDone' | 'active';
+	sortKey: '' | keyof TaskInterface;
+	sortOrder: 'asc' | 'desc';
 }
 
 export enum Priority {
@@ -24,7 +23,6 @@ export enum Priority {
 
 export interface TaskInterface {
 	_id: string;
-	// user: string;
 	target?: string;
 	subtask?: string;
 	name: string;
@@ -35,12 +33,11 @@ export interface TaskInterface {
 	date: Date;
 	level: number;
 	expiresIn?: Date;
-	inArchive?: boolean
+	inArchive?: boolean;
 }
 
 export interface SubtaskInterface {
 	_id: string;
-	// user: string;
 	target?: string;
 	task: string;
 	name: string;
@@ -60,7 +57,6 @@ export interface ColorInterface {
 
 export interface TargetInterface {
 	_id: string;
-	// user: string;
 	name: string;
 	isDone: boolean;
 	notes: string;

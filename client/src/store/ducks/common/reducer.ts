@@ -6,7 +6,6 @@ const initialState: CommonState = {
 	errors: [],
 };
 
-
 export const commonReducer = (
 	state = initialState,
 	action: CommonActions

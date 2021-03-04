@@ -1,15 +1,4 @@
-export type AuthData = {
-	token: string;
-	userId: string;
-};
-
-export type User = {
-	_id: string;
-	email: string;
-	password: string;
-};
-
-export type Month = {
+export interface Month {
 	id: string;
 	value:
 		| 'Январь'
@@ -25,31 +14,32 @@ export type Month = {
 		| 'Ноябрь'
 		| 'Декабрь'
 		| 'Весь год';
-};
+}
 
-export type Year = {
-	id: number;
-	name: string;
-};
+export interface SelectItems {
+	id: string;
+	value: string;
+	some?: any;
+}
 
-export type CurrentDate = {
+export interface CurrentDate {
 	year: number;
 	month: number;
-};
+}
 
-export type CategorySelect = {
+export interface CategorySelect {
 	id: string;
 	title: string;
 	isSelected: boolean;
-};
+}
 
-export type MenuItem = {
+export interface MenuItem {
 	to: string;
 	title: string;
 	icon?: Icons;
 	component?: React.FC;
 	bage?: number | string;
-};
+}
 
 export interface BackdropInterface {
 	onClick(): void;
@@ -57,7 +47,7 @@ export interface BackdropInterface {
 }
 
 export enum Icons {
-	closec = 'closec',
+	close = 'close',
 	board = 'board',
 	backlog = 'backlog',
 	issues = 'issues',
@@ -74,6 +64,20 @@ export enum Colors {
 }
 
 export interface CoordinatesInterface {
-	left: number ;
+	left: number;
 	top: number;
+}
+
+export interface CategoryEditorParams {
+	value: string;
+	type?: 'add' | 'change';
+	isExpense: boolean;
+	color?: string;
+}
+
+export enum Placement {
+	auto = 'auto',
+	top = 'top',
+	bottom = 'bottom',
+	bottomLeft = 'bittom-left',
 }

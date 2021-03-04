@@ -20,7 +20,6 @@ const TargetSchema: Schema = new Schema<TargetInterface>({
 	notes: {
 		required: false,
 		type: String,
-		// default: ''
 	},
 	color: {
 		required: false,

@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
 import classNames from 'classnames';
+import { CSSTransition } from 'react-transition-group';
 import { formatDate } from '../../../services/utils/dateUtils';
 import {
 	ColorInterface,
@@ -18,7 +18,6 @@ interface Props extends TargetInterface {
 const Target: React.FC<Props> = props => {
 	const [editorIsOpen, setEditorIsOpen] = useState<boolean>(false);
 	const { colorName } = useColorName(props.color, props.colors);
-
 
 	return (
 		<Fragment>

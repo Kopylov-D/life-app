@@ -7,11 +7,7 @@ interface DataStoredInToken {
 	userId: string;
 }
 
-export const auth = async (
-	req: RequestWithUser,
-	res: Response,
-	next: NextFunction
-) => {
+export const auth = async (req: RequestWithUser, res: Response, next: NextFunction) => {
 	if (req.method === 'OPTIONS') {
 		return next();
 	}
@@ -24,10 +20,7 @@ export const auth = async (
 		}
 
 		const token: string = authorization.split(' ')[1];
-		const decoded = jwt.verify(
-			token,
-			config.get('jwtSecret')
-		) as DataStoredInToken;
+		const decoded = jwt.verify(token, config.get('jwtSecret')) as DataStoredInToken;
 
 		req.user = decoded.userId;
 		next();

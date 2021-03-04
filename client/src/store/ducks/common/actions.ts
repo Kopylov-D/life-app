@@ -8,7 +8,7 @@ type ThunkType = ThunkAction<Promise<void>, RootState, unknown, CommonActions>;
 
 export const showAlert = (alert: AlertPayloadInterface): ThunkType => {
 	return async dispatch => {
-		const {text, delay, type = 'info', action} = alert
+		const { text, delay, type = 'info', action } = alert;
 		const id = new Date().getTime();
 		dispatch(setAlert({ text, type, delay, action, id }));
 

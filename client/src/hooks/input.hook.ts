@@ -7,6 +7,7 @@ export interface Validations {
 	email?: boolean;
 	notCyrillic?: boolean;
 	isNumber?: boolean;
+	isPositiveNumber?: boolean;
 	isEmpty?: boolean;
 }
 
@@ -65,8 +66,16 @@ function useValidation(value: string, validations: Validations | null) {
 					break;
 				case 'isNumber':
 					if (Number.isNaN(+value)) {
+						console.log(+value);
+
 						setValid(false);
 						setErrorMessages(err => [...err, 'Значение не является числом']);
+					}
+					break;
+				case 'isPositiveNumber':
+					if (Number.isNaN(+value) || +value <= 0) {
+						setValid(false);
+						setErrorMessages(err => [...err, 'Значение должно быть больше 0']);
 					}
 					break;
 			}
@@ -82,7 +91,6 @@ function useValidation(value: string, validations: Validations | null) {
 export const useInput = (config: Config, validations: Validations = {}) => {
 	const [value, setValue] = useState(config.initialValue);
 	const [touched, setTouched] = useState<boolean>(false);
-	// const [isDirty, setTouched] = useState<boolean>(false);
 	const valid = useValidation(value, validations);
 
 	const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +100,6 @@ export const useInput = (config: Config, validations: Validations = {}) => {
 
 	const clearValue = () => {
 		setValue('');
-		// setTouched(false);
 	};
 
 	const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -108,7 +115,6 @@ export const useInput = (config: Config, validations: Validations = {}) => {
 		onChange,
 		onBlur,
 		clearValue,
-		// onTouched,
 		touched,
 		...valid,
 	};

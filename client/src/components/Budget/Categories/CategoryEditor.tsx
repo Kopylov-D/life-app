@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
 import { useInput } from '../../../hooks/input.hook';
+import { CategoryEditorParams } from '../../../types';
 import Input from '../../UI/Input';
 import Button from '../../UI/Button';
 import Modal from '../../UI/Modal';
 import Toggle from '../../UI/Toggle';
-import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
-
-export interface Params {
-	value: string;
-	type?: 'add' | 'change';
-	isExpense: boolean;
-	color?: string;
-}
 
 interface Props {
 	title: string;
 	category?: CategoryInterface;
-	onClick(params: Params): void;
+	onClick(params: CategoryEditorParams): void;
 	onCloseClick(): void;
 }
 

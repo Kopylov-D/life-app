@@ -204,6 +204,7 @@ a {
 
 	&__content {
 		padding: 15px;
+		min-width: 600px;
 		overflow: auto;
 		position: absolute;
 		bottom: $footer-height + $gap;

@@ -1,4 +1,4 @@
-import { Document, model, Schema, Types } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 import { ColorInterface } from '../../types/types';
 
 const ColorSchema: Schema = new Schema<ColorInterface>({
