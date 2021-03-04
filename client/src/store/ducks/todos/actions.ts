@@ -244,6 +244,7 @@ export function updateTask(
 						task.isDone = isDone;
 						if (isDone === true) {
 							task.inArchive = true;
+							task.level = 0
 						} else task.inArchive = false;
 						initialId = task.subtask;
 					}
@@ -267,6 +268,7 @@ export function updateTask(
 							task.isDone = isDone;
 							if (isDone === true) {
 								task.inArchive = true;
+								task.level = 0
 							} else task.inArchive = false;
 							nextInitialId = task._id;
 						}

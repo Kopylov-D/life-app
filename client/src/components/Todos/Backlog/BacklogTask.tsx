@@ -36,7 +36,7 @@ const BacklogTask: React.FC<Props> = ({
 	const onChecked = () => {
 		setIsDone(!isDone);
 		setTimeout(
-			() => changeTaskHandler({ ...task, isDone: !isDone, inArchive: !task.inArchive }),
+			() => changeTaskHandler({ ...task, isDone: !isDone, inArchive: !task.inArchive, level: 0 }),
 			1000
 		);
 	};
