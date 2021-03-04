@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const StatisticPage = () => {
-  return (
-    <div>
-      Statistic
-    </div>
-  )
-}
+	return <div>Statistic</div>;
+};
 
-export default StatisticPage
+export default StatisticPage;

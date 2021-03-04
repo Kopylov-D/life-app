@@ -11,7 +11,7 @@ type Props = {
 	type?: 'switch' | 'btn';
 };
 
-const Switch: React.FC<Props> = ({
+const Toggle: React.FC<Props> = ({
 	textPrimary,
 	textSecondary,
 	colorPrimary,
@@ -23,13 +23,17 @@ const Switch: React.FC<Props> = ({
 	let toggle = (
 		<div className="toggle__switch" onClick={() => onSwitch(!flag)}>
 			<div
-				className={classNames('toggle__switch-item', { [colorPrimary]: flag, active: flag })}
+				className={classNames('toggle__switch-item', {
+					[colorPrimary]: flag,
+					active: flag,
+				})}
 			>
 				{textPrimary}
 			</div>
 			<div
 				className={classNames('toggle__switch-item', {
-					[colorSecondary ? colorSecondary : colorPrimary]: !flag, active: !flag
+					[colorSecondary ? colorSecondary : colorPrimary]: !flag,
+					active: !flag,
 				})}
 			>
 				{textSecondary}
@@ -42,7 +46,7 @@ const Switch: React.FC<Props> = ({
 			<div
 				className={classNames(
 					'toggle__btn',
-					{ 'toggle__btn-active': flag },
+					{ 'toggle__btn--active': flag },
 					{ [colorPrimary]: flag }
 				)}
 				onClick={() => onSwitch(flag)}
@@ -55,4 +59,4 @@ const Switch: React.FC<Props> = ({
 	return <div className="toggle">{toggle}</div>;
 };
 
-export default Switch;
+export default Toggle;

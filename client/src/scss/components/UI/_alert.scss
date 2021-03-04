@@ -1,0 +1,61 @@
+@import '../../variables';
+
+.alert {
+	position: absolute;
+	bottom: 20px;
+	right: 20px;
+	z-index: 1000;
+
+	&__item {
+		border-radius: 5px;
+		margin-bottom: 1rem;
+		padding: 2rem;
+
+		&-enter {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		&-enter-active {
+			opacity: 1;
+			transform: translateY(0);
+			transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+		}
+		&-exit {
+			opacity: 1;
+		}
+		&-exit-active {
+			opacity: 0;
+			transform: translateY(20px);
+			transition: all 200ms cubic-bezier(0.645, 0.045, 0.355, 1);
+		}
+	}
+
+	&__icon {
+		margin-right: 2rem;
+		cursor: pointer;
+	}
+
+	&__text {
+		margin-right: 2rem;
+	}
+
+	&__close {
+		cursor: pointer;
+	}
+
+	&--warning {
+		background: $light-orange;
+	}
+
+	&--error {
+		background: $light-red;
+	}
+
+	&--info {
+		background: $light-blue;
+	}
+
+	&--success {
+		background: $light-green;
+	}
+}

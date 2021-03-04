@@ -1,0 +1,23 @@
+@import '../../variables';
+
+.accounting {
+	&__tables {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	&__table {
+		&-header {
+			text-align: center;
+			font-size: 18px;
+			margin-bottom: 15px;
+		}
+
+		.table__item,
+		.table__header {
+			grid-template-columns:
+				minmax(110px, 3fr)
+				minmax(50px, 1fr);
+		}
+	}
+}

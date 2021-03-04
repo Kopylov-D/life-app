@@ -1,51 +1,41 @@
-import { type } from 'os';
 import { createSelector } from 'reselect';
 import { formatDate } from '../../../services/utils/dateUtils';
 import { RootState } from '../../rootReducer';
-import { OptionsInterface } from './contracts/state';
+import {
+	BalanceChartInterface,
+	ColumnsChartInterface,
+	LoadingStatus,
+	SelectCategoriesWithAmount,
+} from '../../types';
 import {
 	BalanceInterface,
 	CategoryInterface,
+	OptionsInterface,
 	TransactionInterface,
-} from './types';
+} from './contracts/state';
 
 export const selectTransactions = (state: RootState): TransactionInterface[] =>
 	state.budget.transactions;
 export const selectCategories = (state: RootState): CategoryInterface[] =>
 	state.budget.categories;
 
-export const selectIsLoading = (state: RootState): boolean =>
-	state.budget.isLoading;
+export const selectLoadingStatus = (state: RootState): LoadingStatus =>
+	state.budget.loadingStatus;
 
-export const selectCurrentCategory = (state: RootState) =>
-	state.budget.currentCategory;
+export const selectCurrentCategory = (state: RootState) => state.budget.currentCategory;
 
-export const selectOptions = (state: RootState): OptionsInterface =>
-	state.budget.options;
+export const selectOptions = (state: RootState): OptionsInterface => state.budget.options;
 
 export const selectBalance = (state: RootState): BalanceInterface[] => {
 	return state.budget.balance;
 };
 
-export const selectBalanceWithFormatDate = createSelector(
-	selectBalance,
-	balance => {
-		return balance.map(item => {
-			item.date = formatDate(item.date);
-			return item;
-		});
-	}
-);
-
-export type SelectCategoriesWithAmount = {
-	categories: CategoryInterface[];
-	proportion: {
-		income: number;
-		expense: number;
-		percentIncome: number;
-		percentExpense: number;
-	};
-};
+export const selectBalanceWithFormatDate = createSelector(selectBalance, balance => {
+	return balance.map(item => {
+		item.date = formatDate(item.date);
+		return item;
+	});
+});
 
 export const selectCategoriesWithAmount = createSelector(
 	selectTransactions,
@@ -57,19 +47,17 @@ export const selectCategoriesWithAmount = createSelector(
 		let expense = 0;
 		let income = 0;
 
-		const categoriesWithAmount = categories.map(
-			(category: CategoryInterface) => {
-				category.amount = 0;
-				transactions.forEach((transaction: TransactionInterface) => {
-					if (transaction.category._id === category._id) {
-						const value = transaction.amount;
-						category.amount += value;
-						category.isExpense ? (expense += value) : (income += value);
-					}
-				});
-				return category;
-			}
-		);
+		const categoriesWithAmount = categories.map((category: CategoryInterface) => {
+			category.amount = 0;
+			transactions.forEach((transaction: TransactionInterface) => {
+				if (transaction.category._id === category._id) {
+					const value = transaction.amount;
+					category.amount += value;
+					category.isExpense ? (expense += value) : (income += value);
+				}
+			});
+			return category;
+		});
 
 		const percentIncome = (income * 100) / (expense + income);
 		const percentExpense = 100 - percentIncome;
@@ -86,22 +74,10 @@ export const selectCategoriesWithAmount = createSelector(
 	}
 );
 
-type DataChartType = {
-	name: string;
-	value: number;
-	balance: number;
-};
-
-type PropChart = {
-	name: string;
-	expense: number;
-	income: number;
-};
-
 export const selectDataChart = createSelector(
 	selectTransactions,
-	(transactions: TransactionInterface[]): DataChartType[] => {
-		const result: DataChartType[] = [];
+	(transactions: TransactionInterface[]): BalanceChartInterface[] => {
+		const result: BalanceChartInterface[] = [];
 
 		let sum = 0;
 		let name = '';
@@ -112,10 +88,7 @@ export const selectDataChart = createSelector(
 				sum = transaction.amount;
 				name = formatDate(transaction.date);
 			} else {
-				if (
-					formatDate(transaction.date) ===
-					formatDate(transactions[index - 1].date)
-				) {
+				if (formatDate(transaction.date) === formatDate(transactions[index - 1].date)) {
 					transaction.isExpense
 						? (sum -= transaction.amount)
 						: (sum += transaction.amount);
@@ -145,8 +118,8 @@ export const selectDataChart = createSelector(
 
 export const selectColumns = createSelector(
 	selectTransactions,
-	(transactions: TransactionInterface[]): PropChart[] => {
-		const result: PropChart[] = [];
+	(transactions: TransactionInterface[]): ColumnsChartInterface[] => {
+		const result: ColumnsChartInterface[] = [];
 
 		let name = '';
 		let expense = 0;

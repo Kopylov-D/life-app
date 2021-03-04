@@ -1,0 +1,48 @@
+@import '../../variables';
+
+.target {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 20px 10px;
+	margin-right: 20px;
+	width: 160px;
+	height: 125px;
+	border: 1px solid $c-background;
+	border-radius: $border-radius;
+	margin-bottom: 2rem;
+	font-size: 1.4rem;
+	cursor: pointer;
+
+	&__content {
+		display: flex;
+		align-items: center;
+	}
+
+	&__name {
+		margin-right: 1rem;
+	}
+
+	&__date {
+		font-size: $f-small;
+	}
+
+	&__icon {
+		height: 40px;
+		width: 40px;
+		align-self: center;
+		justify-self: center;
+	}
+
+	&:active {
+		transform: scale(0.9);
+	}
+
+	&:hover {
+		color: $c-black;
+		transform: scale(1.02);
+		transition: all 200ms ease-in;
+	}
+}

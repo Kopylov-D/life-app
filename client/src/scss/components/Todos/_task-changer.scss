@@ -1,0 +1,22 @@
+@import '../../variables';
+
+.task-changer {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+
+	&__content {
+		margin-top: 10px;
+	}
+
+	&__buttons {
+		display: flex;
+		justify-content: space-between;
+		margin-top: 10px;
+
+		& :first-child {
+			flex-grow: 1;
+			margin-right: 10px;
+		}
+	}
+}

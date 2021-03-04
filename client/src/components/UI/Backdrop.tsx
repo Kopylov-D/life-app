@@ -1,17 +1,19 @@
 import classNames from 'classnames';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
-type Props = {
+interface Props {
 	onClick(): void;
-	type?: string;
-};
+	type?: 'black' | 'transparent';
+}
 
-const Backdrop: React.FC<Props> = ({ type, onClick }) => {
-	return (
+const Backdrop: React.FC<Props> = ({ type = 'transparent', onClick }) => {
+	return ReactDOM.createPortal(
 		<div
 			className={classNames('backdrop', { [`backdrop-${type}`]: type })}
 			onClick={onClick}
-		></div>
+		></div>,
+		document.body
 	);
 };
 

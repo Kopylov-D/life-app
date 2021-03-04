@@ -11,22 +11,21 @@ class BudgetController {
 			const existing = await User.findById(req.user);
 			if (existing) {
 				const transactions = await Transaction.find({}).populate('category');
-				return res.json({ data: transactions });
+				return res.json({ message: 'test', data: transactions });
 			}
 		} catch (e) {
-			res
-				.status(500)
-				.json({ message: 'Что-то пошло не так, попробуйте снова' });
+			res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова' });
 		}
 	}
 
 	async addTransaction(req: RequestWithUser, res: Response) {
 		try {
-			const { amount, categoryId, date, isExpense } = req.body;
+			const { amount, category, date, isExpense } = req.body;
+
 			const newTransaction = new Transaction({
 				amount,
 				user: req.user,
-				category: categoryId,
+				category: category._id,
 				date,
 				isExpense,
 			});
@@ -37,7 +36,7 @@ class BudgetController {
 				_id: newTransaction._id,
 			}).populate('category', 'name');
 
-			res.status(201).json({ message: 'Транзакция добавлена', transaction });
+			res.status(201).json({ message: 'Транзакция добавлена', data: transaction });
 
 			const transactions = await Transaction.find({ user: req.user }).sort({
 				date: 1,
@@ -63,9 +62,6 @@ class BudgetController {
 					{ upsert: true }
 				);
 			});
-
-			// const balance = await Balance.find({ user: req.user });
-			// res.status(201).json({ message: 'Транзакция добавлена', balance, transaction });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -89,7 +85,7 @@ class BudgetController {
 			const { name, isExpense } = req.body;
 			const category = new Category({ user: req.user, isExpense, name });
 			await category.save();
-			res.status(201).json({ message: 'Категория создана', category });
+			res.status(201).json({ message: 'Категория создана', data: category });
 		} catch (e) {
 			console.log(e);
 			res.status(500).json({ message: 'Что-то пошло не так' });
@@ -150,11 +146,9 @@ class BudgetController {
 				date: optionsDate,
 			}).sort({ date: 1 });
 
-			res.status(200).json({ transactions, categories, options, balance });
-
-			// console.log(firstTr[0].date);
-			// const date = firstTr[0].date;
-			// const startFrom = Date.parse(date.toISOString());
+			res
+				.status(200)
+				.json({ message: '', data: { transactions, categories, options, balance } });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -165,7 +159,7 @@ class BudgetController {
 			const transactions = await Transaction.find({ user: req.user })
 				.sort({ date: -1 })
 				.populate('category', 'name');
-			res.status(200).json({ transactions });
+			res.status(200).json({ message: '', data: transactions });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -174,7 +168,7 @@ class BudgetController {
 	async getCategories(req: RequestWithUser, res: Response) {
 		try {
 			const categories = await Category.find({ user: req.user });
-			res.status(200).json(categories);
+			res.status(200).json({ message: '', data: categories });
 		} catch (e) {
 			res.status(500).json({ message: 'Что-то пошло не так' });
 		}
@@ -193,7 +187,6 @@ class BudgetController {
 		try {
 			const { name, color, isExpense } = req.body;
 			const { id } = req.params;
-			console.log(id);
 			await Category.findByIdAndUpdate(id, { name, color, isExpense });
 			res.json({ message: 'Категория обновлена' });
 		} catch (error) {
@@ -204,7 +197,6 @@ class BudgetController {
 	async deleteCategory(req: RequestWithUser, res: Response) {
 		try {
 			const { id } = req.params;
-			console.log(req.params);
 			// if (!Types.ObjectId.isValid(_id)) return res.status(404).send(`No post with id: ${_id}`);
 			await Transaction.deleteMany({ category: id });
 			await Category.findByIdAndRemove(id);

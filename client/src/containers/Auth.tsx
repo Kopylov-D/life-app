@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
+import { selectLoadingStatus } from '../store/ducks/auth/selectors';
+import { LoadingStatus } from '../store/types';
+import { useInput } from '../hooks/input.hook';
 import Input from '../components/UI/Input';
 import Button from '../components/UI/Button';
-import Error from '../components/Error';
-import { useDispatch, useSelector } from 'react-redux';
 import { login, register } from '../store/ducks/auth/actions';
-import { RootState } from '../store/rootReducer';
-
-import BgImg from '../assets/img/bg.png';
-import { useInput } from '../hooks/input.hook';
-
-// type FormControls = {
-// 	login: FormControl;
-// 	password: FormControl;
-// };
+import BgImg from '../assets/img/bg1.jpg';
 
 const Auth = () => {
+	const dispatch = useDispatch();
+	const location = useLocation();
+	const isLogin = location.pathname === '/login';
+	const loadingStatus = useSelector(selectLoadingStatus);
+
 	const [isFormValid, setIsFormValid] = React.useState<boolean>(false);
+
 	const email = useInput(
 		{ initialValue: '' },
 		{
@@ -30,20 +31,6 @@ const Auth = () => {
 		{ required: true, minLength: 6, notCyrillic: true }
 	);
 
-	// const [formControls, setFormControls] = React.useState<FormControls>({
-	// 	login: createControl(
-	// 		{ type: 'text', placeholder: 'Email' },
-	// 		{ required: true, notCyrillic: true }
-	// 	),
-	// 	password: createControl(
-	// 		{ type: 'password', placeholder: 'Пароль' },
-	// 		{ required: true, minLength: 6, notCyrillic: true }
-	// 	),
-	// });
-
-	const { isLoading, message } = useSelector((state: RootState) => state.auth);
-	const dispatch = useDispatch();
-
 	useEffect(() => {
 		if (email.valid && password.valid) {
 			setIsFormValid(true);
@@ -56,57 +43,19 @@ const Auth = () => {
 		event.preventDefault();
 	};
 
-	// const renderInputs = () => {
-	// 	return (Object.keys(formControls) as Array<keyof typeof formControls>).map(
-	// 		(controlName: keyof typeof formControls, index: number) => {
-	// 			const control = formControls[controlName];
-	// 			// разобраться как вынести функцию наружу
-	// 			const onChangeHandler2 = (
-	// 				event: React.ChangeEvent<HTMLInputElement>
-	// 				// controlName: keyof typeof formControls
-	// 			): void => {
-	// 				const newFormControls = { ...formControls };
-	// 				const control = { ...formControls[controlName] };
+	const clickHandler = () => {
+		if (isLogin) {
+			loginHandler();
+		} else {
+			registerHandler();
+		}
+	};
 
-	// 				control.value = event.target.value;
-	// 				control.touched = true;
-	// 				control.valid = validate(control.value, control.validation);
-
-	// 				newFormControls[controlName] = control;
-
-	// 				let formValid = true;
-	// 				(Object.keys(formControls) as Array<
-	// 					keyof typeof formControls
-	// 				>).forEach((name: keyof typeof formControls) => {
-	// 					formValid = newFormControls[name].valid && formValid;
-	// 				});
-
-	// 				setFormControls(newFormControls);
-	// 				setIsFormValid(formValid);
-	// 			};
-
-	// 			return (
-	// 				<Input
-	// 					key={index}
-	// 					label={control.label}
-	// 					placeholder={control.placeholder}
-	// 					type={control.type}
-	// 					value={control.value}
-	// 					valid={control.valid}
-	// 					touched={control.touched}
-	// 					shouldValidate={!!control.validation}
-	// 					onChange={onChangeHandler2}
-	// 				/>
-	// 			);
-	// 		}
-	// 	);
-	// };
-
-	const registerHandler = async () => {
+	const registerHandler = () => {
 		dispatch(register(email.value, password.value));
 	};
 
-	const loginHandler = async () => {
+	const loginHandler = () => {
 		dispatch(login(email.value, password.value));
 	};
 
@@ -121,8 +70,7 @@ const Auth = () => {
 		>
 			<div className={classNames('auth')}>
 				<form className={classNames('auth__main')} onSubmit={submitHandler}>
-					<header>Авторизация</header>
-					{message ? <Error textError={message} /> : null}
+					<header>{isLogin ? 'Авторизация' : 'Регистрация'}</header>
 					<div className="auth__inputs">
 						<Input
 							onChange={email.onChange}
@@ -150,13 +98,19 @@ const Auth = () => {
 						<Button
 							disabled={!isFormValid}
 							color="primary"
-							onClick={loginHandler}
-							isLoading={isLoading}
+							onClick={clickHandler}
+							isLoading={loadingStatus === LoadingStatus.LOADING}
 						>
-							Войти
+							{isLogin ? 'Войти' : 'Зарегистрироваться'}
 						</Button>
 
-						<div onClick={registerHandler}>Зарегистрироваться</div>
+						<div>
+							{isLogin ? (
+								<NavLink to="/registration">Зарегистрироваться</NavLink>
+							) : (
+								<NavLink to="/login">Выполнить вход</NavLink>
+							)}
+						</div>
 					</div>
 				</form>
 			</div>

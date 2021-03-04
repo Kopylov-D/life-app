@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import classnames from 'classnames';
 
 interface Props {
 	value: string;
-	type: 'text' | 'password' | 'checkbox';
+	type?: 'text' | 'password' | 'checkbox';
 	label?: string;
-	valid: boolean;
-	touched: boolean;
+	valid?: boolean;
+	touched?: boolean;
 	shouldValidate?: boolean;
 	className?: string;
 	placeholder?: string;
 	messages?: Array<string>;
 	onChange(event: React.ChangeEvent<HTMLInputElement>, controlName: any): void;
+	onBlur?(event: React.FocusEvent<HTMLInputElement>): void;
 	onKeyPress?(event: React.KeyboardEvent<HTMLInputElement>): void;
 	onClick?(toggle: boolean): void;
 }
@@ -19,16 +20,23 @@ interface Props {
 function isInvalid({ valid, touched }: Props) {
 	return !valid && touched;
 }
-// function isInvalid({ valid, shouldValidate, touched }: Props) {
-// 	return !valid && shouldValidate && touched;
-// }
 
 const Input: React.FC<Props> = props => {
+	const ref = useRef<HTMLInputElement>(null);
+
+	useEffect(() => {
+		ref.current?.focus();
+	}, []);
+
 	const inputType = props.type || 'text';
 	const htmlFor = `${inputType}-${Math.random()}`;
 
 	const onClickHandler = () => {
 		props.onClick && props.onClick(true);
+	};
+
+	const onBlurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
+		props.onBlur && props.onBlur(event);
 	};
 
 	return (
@@ -48,10 +56,12 @@ const Input: React.FC<Props> = props => {
 			)}
 
 			<input
+				ref={ref}
 				id={htmlFor}
 				type={inputType}
 				value={props.value}
 				onChange={event => props.onChange(event, props.value)}
+				onBlur={onBlurHandler}
 				onKeyPress={props.onKeyPress}
 				placeholder={props.placeholder}
 			/>

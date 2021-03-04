@@ -1,3 +1,63 @@
+@import '../../variables';
+
 .toggle {
-  min-width: 20px;
+	border-radius: 5px;
+	height: $element-height;
+	user-select: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	cursor: pointer;
+
+	&__switch {
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		height: $element-height;
+		min-width: 40px;
+		border-radius: 6px;
+		background-color: $c-white;
+		padding: 2px;
+		border: $border;
+
+		transition-duration: $transition-duration;
+
+		&-item {
+			text-align: center;
+			padding: 1px 8px;
+			line-height: $element-height - 4px;
+			min-width: 20px;
+			border-radius: $border-radius;
+
+			transition-duration: $transition-duration;
+
+			&.active {
+				box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+			}
+		}
+	}
+
+	&__btn {
+		height: $element-height;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #ffffff;
+		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+		border-radius: 4px;
+		padding: 0 4px;
+
+		transition-duration: 0.2s;
+
+		&--active {
+			box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.7);
+		}
+
+		&:hover {
+			&:not(.toggle__btn--active) {
+				background: $c-background;
+			}
+		}
+	}
 }

@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { parseToDate } from '../../services/utils/dateUtils';
-import { selectIsLoading } from '../../store/ducks/budget/selectors';
+import { toDate } from '../../services/utils/dateUtils';
+import { selectLoadingStatus } from '../../store/ducks/budget/selectors';
+import { LoadingStatus } from '../../store/types';
 import Button from '../UI/Button';
+import Icon from '../UI/Icons/Icon';
+import { ChevronIcon } from '../UI/Icons';
 
-type Props = {
+interface Props {
 	startDate: string;
 	year: number;
 	changeYear(year: number): void;
@@ -12,14 +15,14 @@ type Props = {
 
 const YearChanger: React.FC<Props> = props => {
 	const [year, setYear] = useState<number>(new Date().getFullYear());
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
 
 	useEffect(() => {
 		setYear(props.year);
 	}, []);
 
 	const prevYearHandler = () => {
-		const minYear = parseToDate(props.startDate).getFullYear();
+		const minYear = toDate(props.startDate).getFullYear();
 		let newYear = year - 1;
 		if (newYear >= minYear) {
 			setYear(newYear);
@@ -38,12 +41,24 @@ const YearChanger: React.FC<Props> = props => {
 
 	return (
 		<div className="year-changer">
-			<Button onClick={prevYearHandler} type="count" disabled={isLoading}>
-				<span className="material-icons">chevron_left</span>
+			<Button
+				onClick={prevYearHandler}
+				type="count"
+				disabled={loadingStatus === LoadingStatus.LOADING}
+			>
+				<Icon classNames="chevron" direction="left">
+					<ChevronIcon />
+				</Icon>
 			</Button>
 			<span>{year} </span>
-			<Button onClick={nextYearHandler} type="count" disabled={isLoading}>
-				<span className="material-icons">chevron_right</span>
+			<Button
+				onClick={nextYearHandler}
+				type="count"
+				disabled={loadingStatus === LoadingStatus.LOADING}
+			>
+				<Icon classNames="chevron" direction="right">
+					<ChevronIcon />
+				</Icon>
 			</Button>
 		</div>
 	);

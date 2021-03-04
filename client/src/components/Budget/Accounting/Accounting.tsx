@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getBudgetData } from '../../../store/ducks/budget/actions';
 import {
 	selectCategoriesWithAmount,
-	selectIsLoading,
+	selectLoadingStatus,
 	selectOptions,
 } from '../../../store/ducks/budget/selectors';
+import { LoadingStatus } from '../../../store/types';
 import Loader from '../../UI/Loader';
 import DatePanel from '../DatePanel';
 import AccountingTable from './AccountingTable';
@@ -13,39 +14,37 @@ import Proportion from './Proportion';
 
 const Accounting: React.FC = () => {
 	const dispatch = useDispatch();
-	
+
 	const { categories, proportion } = useSelector(selectCategoriesWithAmount);
 	const options = useSelector(selectOptions);
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
 
-	const changeDateHandler = (year: string, month: string, all: boolean, fullYear: boolean) => {
+	useEffect(() => {
+		dispatch(getBudgetData());
+	}, []);
+
+	const changeDateHandler = (
+		year: string,
+		month: string,
+		all: boolean,
+		fullYear: boolean
+	) => {
 		dispatch(getBudgetData(year, month, all, fullYear));
 	};
 
 	return (
-		<div className="budget__accounting">
+		<div className="accounting">
 			<div className="budget__panel">
-				<DatePanel
-					startDate={options.startDate}
-					changeDate={changeDateHandler}
-				/>
+				<DatePanel startDate={options.startDate} changeDate={changeDateHandler} />
 				<Proportion proportion={proportion} />
 			</div>
 
-			{isLoading ? (
+			{loadingStatus === LoadingStatus.LOADING ? (
 				<Loader size="small" type="cube-grid" />
 			) : (
-				<div className="budget__tables">
-					<AccountingTable
-						categories={categories}
-						isExpense={true}
-						title="Расходы"
-					/>
-					<AccountingTable
-						categories={categories}
-						isExpense={false}
-						title="Доходы"
-					/>
+				<div className="accounting__tables">
+					<AccountingTable categories={categories} isExpense={true} title="Расходы" />
+					<AccountingTable categories={categories} isExpense={false} title="Доходы" />
 				</div>
 			)}
 		</div>

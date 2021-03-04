@@ -1,6 +1,6 @@
 .backdrop {
 	position: fixed;
-	z-index: 1;
+	z-index: 90;
 	top: 0;
 	right: 0;
 	left: 0;
@@ -8,7 +8,20 @@
 
 	&-black {
 		background: rgba($color: #000000, $alpha: 0.7);
-		filter: blur(50px);
-		-webkit-filter: blur(50px);
 	}
+}
+
+.backdrop-enter {
+	opacity: 0;
+}
+.backdrop-enter-active {
+	opacity: 1;
+	transition: all 200ms;
+}
+.backdrop-exit {
+	opacity: 1;
+}
+.backdrop-exit-active {
+	opacity: 0;
+	transition: opacity 200ms;
 }

@@ -1,5 +1,5 @@
-import classNames from 'classnames';
 import React, { useEffect } from 'react';
+import classNames from 'classnames';
 
 type Props = {
 	size?: 'small' | 'normal';
@@ -44,8 +44,10 @@ const Loader: React.FC<Props> = ({ size = 'normal', type = 'spinner' }) => {
 	};
 
 	return (
-		<div className={classNames(`lds-${type}`, `lds-${type}-${size}`)}>
-			{setLoader()}
+		<div className="loader">
+			<div className={classNames(`lds-${type}`, `lds-${type}-${size}`)}>
+				{setLoader()}
+			</div>
 		</div>
 	);
 };

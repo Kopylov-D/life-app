@@ -1,0 +1,48 @@
+@import '../../variables';
+
+.backlog {
+	&__targets {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&__add-task {
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+
+		& svg {
+			padding-right: 1rem;
+		}
+
+		&:hover {
+			color: $c-primary;
+		}
+
+		.icon__add-task {
+			margin-right: 1rem;
+
+			&:hover {
+				color: $c-primary;
+			}
+		}
+	}
+}
+
+.modal-enter {
+	opacity: 0;
+	transform: translateX(-50%) scale(0.5);
+}
+.modal-enter-active {
+	opacity: 1;
+	transform: translateX(-50%) scale(1);
+	transition: all 200ms;
+}
+.modal-exit {
+	opacity: 1;
+}
+.modal-exit-active {
+	opacity: 0;
+	transition: opacity 200ms;
+}

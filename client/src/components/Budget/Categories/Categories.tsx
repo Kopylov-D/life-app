@@ -1,35 +1,32 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	deleteCategory,
-	changeCategory,
-	addCategory,
+	fetchAddCategory,
+	fetchDeleteCategory,
 	getCategories,
+	updateCategory,
 } from '../../../store/ducks/budget/actions';
 import {
 	selectCategories,
-	selectIsLoading,
+	selectLoadingStatus,
 } from '../../../store/ducks/budget/selectors';
-import { CategoryInterface } from '../../../store/ducks/budget/types';
-import Button from '../../UI/Button'
-import  Loader from '../../UI/Loader';
-import { Params } from '../Operations/OperationModal';
+import { CategoryInterface } from '../../../store/ducks/budget/contracts/state';
+import { LoadingStatus } from '../../../store/types';
+import { CategoryEditorParams } from '../../../types';
+import Button from '../../UI/Button';
+import Loader from '../../UI/Loader';
 import CategoryItem from './CategoryItem';
-import CategoryModal from './CategoryChanger';
-import Table from '../Table';
+import CategoryEditor from './CategoryEditor';
+import Table from '../../Table';
 
 const Categories: React.FC = () => {
 	const dispatch = useDispatch();
 	const categories = useSelector(selectCategories);
-	const isLoading = useSelector(selectIsLoading);
+	const loadingStatus = useSelector(selectLoadingStatus);
 
 	const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
-	const [newCategoryModalIsOpen, setNewCategoryModalIsOpen] = useState<boolean>(
-		false
-	);
-	const [currentCategory, setCurrentCategory] = useState<
-		CategoryInterface | undefined
-	>();
+	const [newCategoryModalIsOpen, setNewCategoryModalIsOpen] = useState<boolean>(false);
+	const [currentCategory, setCurrentCategory] = useState<CategoryInterface | undefined>();
 
 	useEffect(() => {
 		if (categories.length < 1) {
@@ -45,22 +42,23 @@ const Categories: React.FC = () => {
 	};
 
 	const onDeleteCategoryHandler = async (id: string) => {
-		dispatch(deleteCategory(id));
+		dispatch(fetchDeleteCategory(id));
 	};
 
-	const onOkModalClick = (params: Params): void => {
-		dispatch(
-			changeCategory(
-				currentCategory!._id,
-				params.value,
-				'red',
-				params.isExpense
-			)
-		);
+	const onOkModalClick = (params: CategoryEditorParams): void => {
+		const category: CategoryInterface = {
+			_id: currentCategory!._id,
+			name: params.value,
+			amount: currentCategory!.amount,
+			color: currentCategory!.color,
+			user: currentCategory!.user,
+			isExpense: params.isExpense,
+		};
+		dispatch(updateCategory(category));
 		setModalIsOpen(false);
 	};
 
-	const onOkNewCategoryModalClick = (params: Params): void => {
+	const onOkNewCategoryModalClick = (params: CategoryEditorParams): void => {
 		addCategoryHandler(params.value, params.isExpense!);
 		setNewCategoryModalIsOpen(false);
 	};
@@ -70,16 +68,25 @@ const Categories: React.FC = () => {
 	};
 
 	const addCategoryHandler = async (name: string, isExpense: boolean) => {
-		dispatch(addCategory(name, isExpense));
+		const category: CategoryInterface = {
+			_id: '',
+			name,
+			amount: 0,
+			color: '',
+			user: '',
+			isExpense,
+		};
+		dispatch(fetchAddCategory(category));
 	};
 
 	return (
 		<Fragment>
-			{isLoading ? (
-				<Loader type='cube-grid' />
+			{loadingStatus === LoadingStatus.LOADING ? (
+				<Loader type="cube-grid" />
 			) : (
-				<div className="budget__categories">
-					<Table class="budget-categories">
+				<div className="categories">
+					<h2>Категории</h2>
+					<Table className="categories">
 						{categories.map(item => (
 							<CategoryItem
 								key={item._id}
@@ -92,16 +99,16 @@ const Categories: React.FC = () => {
 						))}
 					</Table>
 					<Button
-						color='primary'
+						color="primary"
 						size="small"
 						disabled={false}
 						onClick={() => setNewCategoryModalIsOpen(toggle => !toggle)}
 					>
-						+
+						Создать категорию
 					</Button>
 
 					{newCategoryModalIsOpen && (
-						<CategoryModal
+						<CategoryEditor
 							title="Новая категория"
 							onClick={onOkNewCategoryModalClick}
 							onCloseClick={() => setNewCategoryModalIsOpen(false)}
@@ -109,7 +116,7 @@ const Categories: React.FC = () => {
 					)}
 
 					{modalIsOpen && (
-						<CategoryModal
+						<CategoryEditor
 							title="Изменить категорию"
 							category={currentCategory}
 							onClick={onOkModalClick}

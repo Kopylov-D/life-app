@@ -3,8 +3,6 @@ export const formatDate = (date: Date | Date[] | string, type: string = ''): str
 		date = new Date(Date.parse(date));
 	}
 
-	console.log(date)
-
 	switch (type) {
 		case 'short':
 			return date.toLocaleString('ru', {
@@ -20,11 +18,7 @@ export const formatDate = (date: Date | Date[] | string, type: string = ''): str
 	}
 };
 
-export const parseToDate = (date: string) => {
-	return new Date(Date.parse(date));
-};
-
-export const toDate = (date: Date | Date[] | string) => {
+export const toDate = (date: Date | string) => {
 	if (typeof date === 'string') {
 		date = new Date(date);
 	}

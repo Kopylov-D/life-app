@@ -7,6 +7,8 @@ export interface Validations {
 	email?: boolean;
 	notCyrillic?: boolean;
 	isNumber?: boolean;
+	isPositiveNumber?: boolean;
+	isEmpty?: boolean;
 }
 
 interface Config {
@@ -32,22 +34,16 @@ function useValidation(value: string, validations: Validations | null) {
 				case 'minLength':
 					if (value.length < validations[validation]!) {
 						setValid(false);
-						setErrorMessages(err => [
-							...err,
-							`Мин. длина - ${validations[validation]}`,
-						]);
+						setErrorMessages(err => [...err, `Мин. длина - ${validations[validation]}`]);
 					}
 					break;
 				case 'maxLength':
 					if (value.length > validations[validation]!) {
 						setValid(false);
-						setErrorMessages(err => [
-							...err,
-							`Макс. длина - ${validations[validation]}`,
-						]);
+						setErrorMessages(err => [...err, `Макс. длина - ${validations[validation]}`]);
 					}
 					break;
-				case 'required':
+				case 'isEmpty':
 					if (value.trim() === '') {
 						setValid(false);
 						setErrorMessages(err => [...err, 'Поле не должно быть пустым']);
@@ -70,8 +66,16 @@ function useValidation(value: string, validations: Validations | null) {
 					break;
 				case 'isNumber':
 					if (Number.isNaN(+value)) {
+						console.log(+value);
+
 						setValid(false);
 						setErrorMessages(err => [...err, 'Значение не является числом']);
+					}
+					break;
+				case 'isPositiveNumber':
+					if (Number.isNaN(+value) || +value <= 0) {
+						setValid(false);
+						setErrorMessages(err => [...err, 'Значение должно быть больше 0']);
 					}
 					break;
 			}
@@ -95,18 +99,22 @@ export const useInput = (config: Config, validations: Validations = {}) => {
 	};
 
 	const clearValue = () => {
-		setValue('')
-	}
+		setValue('');
+	};
 
-	// const onTouched = (e: React.SyntheticEvent) => {
-	// 	setTouched(true);
-	// };
+	const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+		if (validations.required) {
+			setTouched(true);
+		} else {
+			setTouched(false);
+		}
+	};
 
 	return {
 		value,
 		onChange,
+		onBlur,
 		clearValue,
-		// onTouched,
 		touched,
 		...valid,
 	};

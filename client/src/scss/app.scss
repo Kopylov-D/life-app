@@ -4,13 +4,34 @@
 @import './variables';
 @import 'react-calendar/dist/Calendar';
 
+html {
+	font-size: 10px;
+}
+
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';
 	background: $c-background;
-	color: #0d0d0d;
+	color: $c-black;
 	box-sizing: border-box;
+	font-size: 1.6rem;
+}
+
+a {
+	text-decoration: none;
+	color: $c-black;
+
+	&:focus {
+		outline: none;
+	}
+
+	&:active {
+		outline: none;
+	}
+
+	&:hover {
+		color: rgba($color: $c-black, $alpha: 0.8);
+	}
 }
 
 .app {
@@ -50,11 +71,7 @@ body {
 
 		background: rgba(255, 255, 255, 0.6);
 		border: 5px solid
-			linear-gradient(
-				220deg,
-				rgba(255, 0, 0, 0.2) 100%,
-				rgba(5, 0, 0, 0.6) 100%
-			);
+			linear-gradient(220deg, rgba(255, 0, 0, 0.2) 100%, rgba(5, 0, 0, 0.6) 100%);
 	}
 
 	&__inputs {
@@ -71,10 +88,8 @@ body {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		// align-items: center;
 
 		& > button {
-			// margin-right: 10px;
 			margin-bottom: 15px;
 		}
 
@@ -100,15 +115,22 @@ body {
 	&__header {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
 		height: $header-height;
 		background: $c-white;
 		border: $c-secondary;
 		border-radius: $block-radius;
 
+		&-navigation {
+			display: flex;
+			align-items: center;
+			margin-left: 2rem;
+		}
+
 		& h1 {
-			font-size: 24px;
-			margin-right: 60px;
-			margin-left: 20px;
+			font-size: 2.5rem;
+			margin-right: 6rem;
+			margin-left: 2rem;
 		}
 
 		& nav {
@@ -119,7 +141,7 @@ body {
 				border-radius: $border-radius;
 
 				&:hover {
-					box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+					box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
 				}
 			}
 
@@ -128,24 +150,94 @@ body {
 				color: white;
 			}
 		}
+
+		&-controls {
+			display: flex;
+			align-items: center;
+			color: $c-black;
+			stroke: $c-black;
+			margin-right: 2rem;
+
+			cursor: pointer;
+
+			.icon {
+				color: $c-black;
+				height: 25px;
+			}
+		}
+
+		&-logout {
+			& :hover {
+				color: $c-invalid;
+				stroke: $c-invalid;
+			}
+
+			& :focus {
+				box-shadow: 0 0 0 2px rgba($color: $c-invalid, $alpha: 0.5);
+				border-radius: 7px;
+			}
+
+			& :active {
+				transform: $scale;
+			}
+		}
+
+		&-screen {
+			margin-right: 2rem;
+			color: $c-black;
+
+			& :hover {
+				color: $c-primary;
+				stroke: $c-primary;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 2px rgba($color: $c-primary, $alpha: 0.5);
+				border-radius: 7px;
+			}
+
+			&:active {
+				transform: $scale;
+			}
+		}
 	}
 
 	&__content {
+		padding: 15px;
+		min-width: 600px;
+		overflow: auto;
 		position: absolute;
-		top: $header-height + $gap;
-		left: 0;
-		right: 0;
 		bottom: $footer-height + $gap;
-		// background: $c-white;
+		top: $header-height + $gap;
+		right: 0;
+		left: $menu-width + $gap;
+		background: $c-white;
 		border-radius: $block-radius;
+	}
+
+	&__toggle-menu {
+		z-index: 10;
+		position: relative;
+		background: $c-white;
+		border: 2px solid $c-primary;
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+		color: $c-black;
+		display: inline-block;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		top: -8px;
+		cursor: pointer;
 	}
 
 	&__menu {
 		width: $menu-width;
 		position: absolute;
-		top: 0;
+		top: $header-height + $gap;
 		left: 0;
-		bottom: 0;
+		bottom: $footer-height + $gap;
 		background: $c-white;
 		border-radius: $block-radius;
 		margin-right: $gap;
@@ -174,7 +266,6 @@ body {
 	}
 
 	&__component-frame {
-		// background: $c-white;
 		border-radius: $block-radius;
 		flex-grow: 1;
 	}
@@ -192,34 +283,13 @@ body {
 		height: $footer-height;
 		background: $c-white;
 		border-radius: $block-radius;
-		// z-index: 1;
 	}
 }
 
 .react-calendar {
 	border-radius: 4px;
-	z-index: 110;
-	position: fixed;
-	transform: translate(-50%, 0);
-	left: 50%;
-	top: 20%;
-}
 
-.color-income {
-	background-color: $c-income;
-}
-
-.color-expense {
-	background-color: $c-expense;
-}
-
-.primary {
-	color: $c-white;
-	background-color: $c-primary;
-}
-
-.secondary {
-	color: $c-primary;
-	background-color: $c-secondary;
-	border: $c-primary 1px solid;
+	&__modal {
+		padding: 0;
+	}
 }

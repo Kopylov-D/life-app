@@ -1,0 +1,33 @@
+@import '../../variables';
+
+.target-editor {
+	&__modal {
+		min-width: 250px;
+	}
+
+	& textarea {
+		width: 100%;
+		margin-bottom: 2rem;
+		height: 100px;
+	}
+
+	&__checkbox {
+		height: 20px;
+	}
+
+	&__options {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: stretch;
+		margin: 2rem 0;
+	}
+
+	&__buttons {
+		display: flex;
+
+		& :first-child {
+			flex-grow: 1;
+			margin-right: 2rem;
+		}
+	}
+}

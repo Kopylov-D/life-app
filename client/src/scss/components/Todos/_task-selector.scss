@@ -1,0 +1,53 @@
+@import '../../variables';
+
+.task-selector {
+	&__modal {
+		min-width: 350px;
+		min-height: 300px;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	&__list {
+		overflow: auto;
+		overflow-x: hidden;
+		max-height: 300px;
+		min-height: 100px;
+		margin-bottom: 20px;
+	}
+
+	&__task {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 32px;
+		background: $c-background;
+		border-radius: $border-radius;
+		padding: 3px 5px;
+		margin-bottom: 2px;
+		cursor: pointer;
+
+		transition: all 0.1s ease-in-out;
+
+		&.active {
+			background: $c-primary;
+			color: $c-white;
+			transform: translate(10px);
+		}
+
+		&:hover {
+			background: rgba($color: $c-background, $alpha: 0.5);
+			color: $c-black;
+		}
+	}
+
+	&__buttons {
+		display: flex;
+
+		& :first-child {
+			flex-grow: 1;
+			margin-right: 20px;
+		}
+	}
+}

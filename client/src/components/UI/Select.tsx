@@ -1,70 +1,68 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Selector } from '../../types';
-import Backdrop from './Backdrop';
+import React, { useEffect, useState } from 'react';
+import useOutsideClick from '../../hooks/outsideClick.hook';
+import Icon from './Icons/Icon';
+import { ChevronIcon } from './Icons';
+import { SelectItems } from '../../types';
 
-interface Props extends Selector {
-	// items: props.type[];
-	// type: 'month' | 'year' | 'category';
-	initialId: string;
+interface Props {
+	items: SelectItems[];
+	initialId?: string;
+	initialValue?: string;
 	onItemClick(id: string): void;
 }
 
-// export type Select = ReturnType<typeof rootReducer>;
-
-const Select: React.FC<Props> = ({ items, initialId, onItemClick }) => {
-	const [isOpen, setIsOpen] = useState<boolean>(false);
-	const [label, setLabel] = useState<string>('');
+const Select: React.FC<Props> = ({
+	items,
+	initialId,
+	onItemClick,
+	initialValue = '',
+}) => {
+	const [label, setLabel] = useState<string>(initialValue);
+	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
 	useEffect(() => {
 		if (initialId && items.length > 0) {
-			const item = items.find(item => item._id === initialId);
+			const item = items.find(item => item.id === initialId);
 			if (item) {
-				setLabel(item.name);
+				setLabel(item.value);
 			} else {
-				setLabel(items[0].name);
-				onItemClick(items[0]._id);
+				setLabel(items[0].value);
+				onItemClick(items[0].id);
 			}
-		} else {
-			// setLabel('sdfsdf')
 		}
 	}, [items]);
 
 	const toggleDropdown = () => {
-		setIsOpen(isOpen => !isOpen);
+		setIsVisible(!isVisible);
 	};
 
 	const onClickHandler = (id: string) => {
 		onItemClick(id);
 		toggleDropdown();
-		const currentItem = items.find(item => item._id === id);
-		setLabel(currentItem!.name);
+		const currentItem = items.find(item => item.id === id);
+		setLabel(currentItem!.value);
 	};
 
 	return (
-		<Fragment>
-			<div className="select">
-				<div className="select__input" onClick={toggleDropdown}>
-					<span>{label}</span>
-					<span className="material-icons">{`arrow_drop_${
-						isOpen ? 'up' : 'down'
-					}`}</span>
-				</div>
-
-				{isOpen && (
-					<Fragment>
-						<div className="select__dropdown">
-							{items &&
-								items.map(item => (
-									<li key={item._id} onClick={() => onClickHandler(item._id)}>
-										{item.name}
-									</li>
-								))}
-						</div>
-					</Fragment>
-				)}
+		<div className="select" ref={ref}>
+			<div className="select__input" onClick={toggleDropdown}>
+				<span>{label}</span>
+				<Icon classNames="chevron" direction={isVisible ? 'up' : undefined}>
+					<ChevronIcon />
+				</Icon>
 			</div>
-			{isOpen && <Backdrop onClick={toggleDropdown} />}
-		</Fragment>
+
+			{isVisible && (
+				<div className="select__dropdown">
+					{items &&
+						items.map(item => (
+							<li key={item.id} onClick={() => onClickHandler(item.id)}>
+								{item.value}
+							</li>
+						))}
+				</div>
+			)}
+		</div>
 	);
 };
 

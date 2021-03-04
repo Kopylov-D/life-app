@@ -5,29 +5,24 @@ import Toggle from '../UI/Toggle';
 import YearChanger from './YearChanger';
 
 export const months: Month[] = [
-	{ _id: '0', name: 'Январь' },
-	{ _id: '1', name: 'Февраль' },
-	{ _id: '2', name: 'Март' },
-	{ _id: '3', name: 'Апрель' },
-	{ _id: '4', name: 'Май' },
-	{ _id: '5', name: 'Июнь' },
-	{ _id: '6', name: 'Июль' },
-	{ _id: '7', name: 'Август' },
-	{ _id: '8', name: 'Сентябрь' },
-	{ _id: '9', name: 'Октябрь' },
-	{ _id: '10', name: 'Ноябрь' },
-	{ _id: '11', name: 'Декабрь' },
+	{ id: '0', value: 'Январь' },
+	{ id: '1', value: 'Февраль' },
+	{ id: '2', value: 'Март' },
+	{ id: '3', value: 'Апрель' },
+	{ id: '4', value: 'Май' },
+	{ id: '5', value: 'Июнь' },
+	{ id: '6', value: 'Июль' },
+	{ id: '7', value: 'Август' },
+	{ id: '8', value: 'Сентябрь' },
+	{ id: '9', value: 'Октябрь' },
+	{ id: '10', value: 'Ноябрь' },
+	{ id: '11', value: 'Декабрь' },
 ];
 
-type Props = {
+interface Props {
 	startDate: string;
-	changeDate(
-		year: string,
-		month: string,
-		all: boolean,
-		fullYear: boolean
-	): void;
-};
+	changeDate(year: string, month: string, all: boolean, fullYear: boolean): void;
+}
 
 const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 	const currentMonth = new Date().getMonth().toString();
@@ -62,18 +57,9 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 	};
 
 	return (
-		<div className="budget__panel-selectors">
-			<Select
-				items={months}
-				onItemClick={onMonthClickHandler}
-				initialId={month}
-			/>
-			<YearChanger
-				startDate={startDate}
-				changeYear={onChangeYearHandler}
-				year={year}
-			/>
-
+		<div className="date-panel">
+			<Select items={months} onItemClick={onMonthClickHandler} initialId={month} />
+			<YearChanger startDate={startDate} changeYear={onChangeYearHandler} year={year} />
 			<Toggle
 				type="btn"
 				colorPrimary="primary"
@@ -81,7 +67,6 @@ const DatePanel: React.FC<Props> = ({ startDate, changeDate }) => {
 				flag={allTime}
 				onSwitch={allTimeToggle}
 			/>
-
 			<Toggle
 				type="btn"
 				colorPrimary="primary"

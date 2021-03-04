@@ -1,0 +1,14 @@
+@import '../../variables';
+
+.operations {
+  &__table {
+		.table__header,
+		.table__item {	
+			grid-template-columns:
+				minmax(70px, 90px)
+				minmax(130px, 190px)
+				minmax(50px, 1fr)
+				minmax(200px, 1.5fr);
+		}
+	}
+}

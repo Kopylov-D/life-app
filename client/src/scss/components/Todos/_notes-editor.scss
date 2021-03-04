@@ -1,0 +1,28 @@
+@import '../../variables';
+
+.notes-editor {
+	&__modal {
+		min-width: 300px;
+	}
+
+	&__header {
+		margin-bottom: 2rem;
+		font-size: 2rem;
+		text-align: center;
+	}
+
+	&__textarea {
+		margin-bottom: 1rem;
+		min-height: 20rem;
+		width: -webkit-fill-available;
+	}
+
+	&__footer {
+		display: flex;
+
+		& :first-child {
+			flex-grow: 1;
+			margin-right: 1rem;
+		}
+	}
+}
