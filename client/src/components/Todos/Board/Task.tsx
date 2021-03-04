@@ -68,6 +68,7 @@ const Task: React.FC<Props> = props => {
 					...props.task,
 					isDone: !props.isDone,
 					inArchive: !props.inArchive,
+					level: 0
 				}),
 			1000
 		);
