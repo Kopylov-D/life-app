@@ -5,291 +5,291 @@
 @import 'react-calendar/dist/Calendar';
 
 html {
-	font-size: 10px;
+  font-size: 10px;
 }
 
 body {
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-		'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';
-	background: $c-background;
-	color: $c-black;
-	box-sizing: border-box;
-	font-size: 1.6rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'sans-serif';
+  background: $c-background;
+  color: $c-black;
+  box-sizing: border-box;
+  font-size: 1.6rem;
 }
 
 a {
-	text-decoration: none;
-	color: $c-black;
+  text-decoration: none;
+  color: $c-black;
 
-	&:focus {
-		outline: none;
-	}
+  &:focus {
+    outline: none;
+  }
 
-	&:active {
-		outline: none;
-	}
+  &:active {
+    outline: none;
+  }
 
-	&:hover {
-		color: rgba($color: $c-black, $alpha: 0.8);
-	}
+  &:hover {
+    color: rgba($color: $c-black, $alpha: 0.8);
+  }
 }
 
 .app {
-	position: absolute;
-	min-width: 540px;
-	min-height: 220px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	margin: $gap;
+  position: absolute;
+  min-width: 540px;
+  min-height: 220px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: $gap;
 }
 
 .auth {
-	height: 100vh;
+  height: 100vh;
 
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-	&__bg {
-		position: fixed;
-		top: 0;
-		right: 0;
-		left: 0;
-		bottom: 0;
-	}
+  &__bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
 
-	&__main {
-		width: 380px;
-		border-radius: 5px;
-		box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-		box-sizing: border-box;
-		padding: 30px 30px;
+  &__main {
+    width: 380px;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    padding: 30px 30px;
 
-		background: $c-background;
+    background: $c-background;
 
-		background: rgba(255, 255, 255, 0.6);
-		border: 5px solid
-			linear-gradient(220deg, rgba(255, 0, 0, 0.2) 100%, rgba(5, 0, 0, 0.6) 100%);
-	}
+    background: rgba(255, 255, 255, 0.6);
+    border: 5px solid
+      linear-gradient(220deg, rgba(255, 0, 0, 0.2) 100%, rgba(5, 0, 0, 0.6) 100%);
+  }
 
-	&__inputs {
-		margin: 50px 0;
-	}
+  &__inputs {
+    margin: 50px 0;
+  }
 
-	&__input {
-		&:first-child {
-			margin: 15px 0;
-		}
-	}
+  &__input {
+    &:first-child {
+      margin: 15px 0;
+    }
+  }
 
-	&__buttons {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-		& > button {
-			margin-bottom: 15px;
-		}
+    & > button {
+      margin-bottom: 15px;
+    }
 
-		& div {
-			text-align: center;
-			cursor: pointer;
-			opacity: 0.7;
-		}
-	}
+    & div {
+      text-align: center;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+  }
 
-	& header {
-		font-size: 24px;
-		text-align: center;
-		margin-bottom: 30px;
-	}
+  & header {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
 }
 
 .main {
-	position: absolute;
-	height: 100%;
-	width: 100%;
+  position: absolute;
+  height: 100%;
+  width: 100%;
 
-	&__header {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		height: $header-height;
-		background: $c-white;
-		border: $c-secondary;
-		border-radius: $block-radius;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: $header-height;
+    background: $c-white;
+    border: $c-secondary;
+    border-radius: $block-radius;
 
-		&-navigation {
-			display: flex;
-			align-items: center;
-			margin-left: 2rem;
-		}
+    &-navigation {
+      display: flex;
+      align-items: center;
+      margin-left: 2rem;
+    }
 
-		& h1 {
-			font-size: 2.5rem;
-			margin-right: 6rem;
-			margin-left: 2rem;
-		}
+    & h1 {
+      font-size: 2.5rem;
+      margin-right: 6rem;
+      margin-left: 2rem;
+    }
 
-		& nav {
-			& a {
-				padding: 5px 10px;
-				margin-right: 30px;
-				color: black;
-				border-radius: $border-radius;
+    & nav {
+      & a {
+        padding: 5px 10px;
+        margin-right: 30px;
+        color: black;
+        border-radius: $border-radius;
 
-				&:hover {
-					box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-				}
-			}
+        &:hover {
+          box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        }
+      }
 
-			& .active {
-				background: $c-primary;
-				color: white;
-			}
-		}
+      & .active {
+        background: $c-primary;
+        color: white;
+      }
+    }
 
-		&-controls {
-			display: flex;
-			align-items: center;
-			color: $c-black;
-			stroke: $c-black;
-			margin-right: 2rem;
+    &-controls {
+      display: flex;
+      align-items: center;
+      color: $c-black;
+      stroke: $c-black;
+      margin-right: 2rem;
 
-			cursor: pointer;
+      cursor: pointer;
 
-			.icon {
-				color: $c-black;
-				height: 25px;
-			}
-		}
+      .icon {
+        color: $c-black;
+        height: 25px;
+      }
+    }
 
-		&-logout {
-			& :hover {
-				color: $c-invalid;
-				stroke: $c-invalid;
-			}
+    &-logout {
+      & :hover {
+        color: $c-invalid;
+        stroke: $c-invalid;
+      }
 
-			& :focus {
-				box-shadow: 0 0 0 2px rgba($color: $c-invalid, $alpha: 0.5);
-				border-radius: 7px;
-			}
+      & :focus {
+        box-shadow: 0 0 0 2px rgba($color: $c-invalid, $alpha: 0.5);
+        border-radius: 7px;
+      }
 
-			& :active {
-				transform: $scale;
-			}
-		}
+      & :active {
+        transform: $scale;
+      }
+    }
 
-		&-screen {
-			margin-right: 2rem;
-			color: $c-black;
+    &-screen {
+      margin-right: 2rem;
+      color: $c-black;
 
-			& :hover {
-				color: $c-primary;
-				stroke: $c-primary;
-			}
+      & :hover {
+        color: $c-primary;
+        stroke: $c-primary;
+      }
 
-			&:focus {
-				box-shadow: 0 0 0 2px rgba($color: $c-primary, $alpha: 0.5);
-				border-radius: 7px;
-			}
+      &:focus {
+        box-shadow: 0 0 0 2px rgba($color: $c-primary, $alpha: 0.5);
+        border-radius: 7px;
+      }
 
-			&:active {
-				transform: $scale;
-			}
-		}
-	}
+      &:active {
+        transform: $scale;
+      }
+    }
+  }
 
-	&__content {
-		padding: 15px;
-		min-width: 600px;
-		overflow: auto;
-		position: absolute;
-		bottom: $footer-height + $gap;
-		top: $header-height + $gap;
-		right: 0;
-		left: $menu-width + $gap;
-		background: $c-white;
-		border-radius: $block-radius;
-	}
+  &__content {
+    padding: 15px;
+    min-width: 600px;
+    overflow: auto;
+    position: absolute;
+    bottom: $footer-height + $gap;
+    top: $header-height + $gap;
+    right: 0;
+    left: $menu-width + $gap;
+    background: $c-white;
+    border-radius: $block-radius;
+  }
 
-	&__toggle-menu {
-		z-index: 10;
-		position: relative;
-		background: $c-white;
-		border: 2px solid $c-primary;
-		width: 20px;
-		height: 20px;
-		border-radius: 50%;
-		color: $c-black;
-		display: inline-block;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		top: -8px;
-		cursor: pointer;
-	}
+  &__toggle-menu {
+    z-index: 10;
+    position: relative;
+    background: $c-white;
+    border: 2px solid $c-primary;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: $c-black;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -8px;
+    cursor: pointer;
+  }
 
-	&__menu {
-		width: $menu-width;
-		position: absolute;
-		top: $header-height + $gap;
-		left: 0;
-		bottom: $footer-height + $gap;
-		background: $c-white;
-		border-radius: $block-radius;
-		margin-right: $gap;
+  &__menu {
+    width: $menu-width;
+    position: absolute;
+    top: $header-height + $gap;
+    left: 0;
+    bottom: $footer-height + $gap;
+    background: $c-white;
+    border-radius: $block-radius;
+    margin-right: $gap;
 
-		& ul {
-			margin: 25px;
-			display: flex;
-			flex-direction: column;
-		}
+    & ul {
+      margin: 25px;
+      display: flex;
+      flex-direction: column;
+    }
 
-		& a {
-			padding: 8px 5px;
-			border-radius: $border-radius;
-			color: black;
+    & a {
+      padding: 8px 5px;
+      border-radius: $border-radius;
+      color: black;
 
-			&:hover {
-				background: $c-background;
-				cursor: pointer;
-			}
+      &:hover {
+        background: $c-background;
+        cursor: pointer;
+      }
 
-			&.active {
-				background: $c-primary;
-				color: white;
-			}
-		}
-	}
+      &.active {
+        background: $c-primary;
+        color: white;
+      }
+    }
+  }
 
-	&__component-frame {
-		border-radius: $block-radius;
-		flex-grow: 1;
-	}
+  &__component-frame {
+    border-radius: $block-radius;
+    flex-grow: 1;
+  }
 
-	& .resizer {
-		background: $c-secondary;
-		width: 10px;
-	}
+  & .resizer {
+    background: $c-secondary;
+    width: 10px;
+  }
 
-	&__footer {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: $footer-height;
-		background: $c-white;
-		border-radius: $block-radius;
-	}
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: $footer-height;
+    background: $c-white;
+    border-radius: $block-radius;
+  }
 }
 
 .react-calendar {
-	border-radius: 4px;
+  border-radius: 4px;
 
-	&__modal {
-		padding: 0;
-	}
+  &__modal {
+    padding: 0;
+  }
 }

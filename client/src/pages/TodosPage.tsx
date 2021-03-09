@@ -14,53 +14,53 @@ import Icon from '../components/UI/Icons/Icon';
 import { ChevronIcon } from '../components/UI/Icons';
 
 const menuItems: MenuItem[] = [
-	{ title: 'Доска', to: '/todos/board', component: Board, icon: Icons.board },
-	{ title: 'Бэклог', to: '/todos/backlog', component: Backlog, icon: Icons.backlog },
-	{ title: 'Задачи', to: '/todos/issues', component: Issues, icon: Icons.issues },
+  { title: 'Доска', to: '/todos/board', component: Board, icon: Icons.board },
+  { title: 'Бэклог', to: '/todos/backlog', component: Backlog, icon: Icons.backlog },
+  { title: 'Задачи', to: '/todos/issues', component: Issues, icon: Icons.issues },
 ];
 
 const TodosPage = () => {
-	const dispatch = useDispatch();
-	const loading = useSelector(selectLoadingStatus);
-	const [menuIsOpen, setMenuIsOpen] = useState(true);
+  const dispatch = useDispatch();
+  const loading = useSelector(selectLoadingStatus);
+  const [menuIsOpen, setMenuIsOpen] = useState(true);
 
-	const toggleMenu = () => {
-		setMenuIsOpen(!menuIsOpen);
-	};
+  const toggleMenu = () => {
+    setMenuIsOpen(!menuIsOpen);
+  };
 
-	useEffect(() => {
-		dispatch(getTodosData());
-	}, []);
+  useEffect(() => {
+    dispatch(getTodosData());
+  }, []);
 
-	let routes = (
-		<Switch>
-			{menuItems.map(item => (
-				<Route key={item.to} path={item.to} component={item.component} />
-			))}
-			<Redirect to="/todos/board" />
-		</Switch>
-	);
-	return (
-		<BrowserRouter>
-			<Menu items={menuItems} isOpen={menuIsOpen} />
-			<div
-				className="main__toggle-menu"
-				style={{ left: menuIsOpen ? '240px' : 0 }}
-				onClick={toggleMenu}
-			>
-				<Icon classNames="arrow" direction={menuIsOpen ? 'left' : 'right'}>
-					<ChevronIcon />
-				</Icon>
-			</div>
-			<div className="main__content" style={{ left: menuIsOpen ? '253px' : 0 }}>
-				{loading === LoadingStatus.LOADING ? (
-					<Loader size="small" type="cube-grid" />
-				) : (
-					<div className="todos">{routes}</div>
-				)}
-			</div>
-		</BrowserRouter>
-	);
+  let routes = (
+    <Switch>
+      {menuItems.map(item => (
+        <Route key={item.to} path={item.to} component={item.component} />
+      ))}
+      <Redirect to="/todos/board" />
+    </Switch>
+  );
+  return (
+    <BrowserRouter>
+      <Menu items={menuItems} isOpen={menuIsOpen} />
+      <div
+        className="main__toggle-menu"
+        style={{ left: menuIsOpen ? '240px' : 0 }}
+        onClick={toggleMenu}
+      >
+        <Icon classNames="arrow" direction={menuIsOpen ? 'left' : 'right'}>
+          <ChevronIcon />
+        </Icon>
+      </div>
+      <div className="main__content" style={{ left: menuIsOpen ? '253px' : 0 }}>
+        {loading === LoadingStatus.LOADING ? (
+          <Loader size="small" type="cube-grid" />
+        ) : (
+          <div className="todos">{routes}</div>
+        )}
+      </div>
+    </BrowserRouter>
+  );
 };
 
 export default TodosPage;

@@ -1,26 +1,26 @@
 @import '../../variables';
 
 .issues {
-	&__panel {
-		display: flex;
-		margin-bottom: 2rem;
+  &__panel {
+    display: flex;
+    margin-bottom: 2rem;
 
-		& :first-child {
-			margin-right: 1rem;
-		}
-	}
-	&__table {
-		max-width: auto;
-		.table__header,
-		.table__item {
-			grid-template-columns:
-				minmax(20px, 20px)
-				minmax(50px, 3fr)
-				minmax(50px, 1fr)
-				minmax(50px, 1fr)
-				minmax(110px, 1fr)
-				minmax(110px, 1fr)
-				minmax(20px, 20px);
-		}
-	}
+    & :first-child {
+      margin-right: 1rem;
+    }
+  }
+  &__table {
+    max-width: auto;
+    .table__header,
+    .table__item {
+      grid-template-columns:
+        minmax(20px, 20px)
+        minmax(50px, 3fr)
+        minmax(50px, 1fr)
+        minmax(50px, 1fr)
+        minmax(110px, 1fr)
+        minmax(110px, 1fr)
+        minmax(20px, 20px);
+    }
+  }
 }

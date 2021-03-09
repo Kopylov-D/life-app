@@ -1,21 +1,21 @@
 @import '../variables';
 
 .error {
-	display: flex;
-	align-items: center;
-	background: rgba(255, 255, 255, 0.7);
-	border-radius: $border-radius;
-	padding: 10px 15px;
-	margin-bottom: 20px;
-	box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: $border-radius;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 
-	&__logo {
-		color: $c-red;
-		margin-right: 15px;
-	}
+  &__logo {
+    color: $c-red;
+    margin-right: 15px;
+  }
 
-	& footer {
-		font-size: $f-small;
-		opacity: 0.7;
-	}
+  & footer {
+    font-size: $f-small;
+    opacity: 0.7;
+  }
 }

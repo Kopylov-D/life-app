@@ -19,29 +19,29 @@ let PORT: string | number = config.get('port') || 8008;
 const uri: string = config.get('mongoUri');
 
 if (process.env.NODE_ENV === 'production') {
-	app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
+  app.use(express.static(path.join(__dirname, '../', 'client', 'build')));
 
-	app.get('*', (req: Request, res: Response) => {
-		res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'index.html'));
-	});
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.resolve(__dirname, '../', 'client', 'build', 'index.html'));
+  });
 
-	PORT = process.env.PORT || 8008;
+  PORT = process.env.PORT || 8008;
 }
 
 async function start() {
-	try {
-		await mongoose.connect(uri, {
-			useFindAndModify: false,
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-			useCreateIndex: true,
-		});
+  try {
+    await mongoose.connect(uri, {
+      useFindAndModify: false,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
 
-		app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`));
-	} catch (e) {
-		console.log('Server error', e);
-		process.exit(1);
-	}
+    app.listen(PORT, () => console.log(`App has been started on port ${PORT}...`));
+  } catch (e) {
+    console.log('Server error', e);
+    process.exit(1);
+  }
 }
 
 start();

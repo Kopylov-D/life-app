@@ -1,67 +1,67 @@
 @import '../variables';
 
 .table {
-	$parent: &;
+  $parent: &;
 
-	white-space: nowrap;
+  white-space: nowrap;
 
-	&__header,
-	&__item {
-		display: grid;
-		gap: 10px;
-		align-items: center;
+  &__header,
+  &__item {
+    display: grid;
+    gap: 10px;
+    align-items: center;
 
-		grid-template-columns:
-			minmax(90px, 1fr)
-			minmax(50px, 1fr)
-			minmax(50px, 1fr)
-			minmax(150px, 1.5fr);
-	}
+    grid-template-columns:
+      minmax(90px, 1fr)
+      minmax(50px, 1fr)
+      minmax(50px, 1fr)
+      minmax(150px, 1.5fr);
+  }
 
-	&__header {
-		padding: 0 10px;
-	}
-	&__item {
-		height: 40px;
-		padding: 2px 10px;
-		margin-bottom: 2px;
-		background: #f0f0f0;
-		box-sizing: border-box;
-		border-radius: 5px;
-	}
+  &__header {
+    padding: 0 10px;
+  }
+  &__item {
+    height: 40px;
+    padding: 2px 10px;
+    margin-bottom: 2px;
+    background: #f0f0f0;
+    box-sizing: border-box;
+    border-radius: 5px;
+  }
 
-	&__input input {
-		height: 25px;
-		margin: 5px 0;
-		border: 1px solid rgba(0, 0, 0, 0.2);
-		border-radius: 2px;
-		font-size: 14px;
-	}
+  &__input input {
+    height: 25px;
+    margin: 5px 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    font-size: 14px;
+  }
 
-	&__options {
-		display: flex;
-		justify-content: flex-end;
-	}
+  &__options {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 
 .header-item {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 1rem;
-	margin-bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 2px;
 
-	cursor: pointer;
+  cursor: pointer;
 
-	&__sort-icons {
-		display: flex;
-		flex-direction: column;
-		color: #f0f0f0;
-	}
+  &__sort-icons {
+    display: flex;
+    flex-direction: column;
+    color: #f0f0f0;
+  }
 
-	&--active {
-		background: $c-background;
-		border-bottom: 2px solid $c-primary;
-		margin-bottom: 0;
-	}
+  &--active {
+    background: $c-background;
+    border-bottom: 2px solid $c-primary;
+    margin-bottom: 0;
+  }
 }

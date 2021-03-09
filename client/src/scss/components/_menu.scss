@@ -1,57 +1,57 @@
 @import '../variables';
 
 .menu {
-	width: $menu-width;
-	position: absolute;
-	top: $header-height + $gap;
-	left: 0;
-	bottom: $footer-height + $gap;
-	background: $c-white;
-	border-radius: $block-radius;
-	margin-right: $gap;
+  width: $menu-width;
+  position: absolute;
+  top: $header-height + $gap;
+  left: 0;
+  bottom: $footer-height + $gap;
+  background: $c-white;
+  border-radius: $block-radius;
+  margin-right: $gap;
 
-	&__left-group {
-		display: flex;
-		align-items: center;
-	}
+  &__left-group {
+    display: flex;
+    align-items: center;
+  }
 
-	&__icon {
-		margin-right: 2rem;
-	}
+  &__icon {
+    margin-right: 2rem;
+  }
 
-	& .icon {
-		height: 20px;
-	}
+  & .icon {
+    height: 20px;
+  }
 
-	& ul {
-		margin: 25px;
-		display: flex;
-		flex-direction: column;
-	}
+  & ul {
+    margin: 25px;
+    display: flex;
+    flex-direction: column;
+  }
 
-	& a {
-		padding: 8px 5px;
-		border-radius: $border-radius;
-		color: black;
-		display: flex;
-		justify-content: space-between;
+  & a {
+    padding: 8px 5px;
+    border-radius: $border-radius;
+    color: black;
+    display: flex;
+    justify-content: space-between;
 
-		&:hover {
-			cursor: pointer;
-			background: $c-background;
+    &:hover {
+      cursor: pointer;
+      background: $c-background;
 
-			& .icon {
-				color: $c-black;
-			}
-		}
+      & .icon {
+        color: $c-black;
+      }
+    }
 
-		&.active {
-			background: $c-primary;
-			color: white;
+    &.active {
+      background: $c-primary;
+      color: white;
 
-			& .icon {
-				color: $c-white;
-			}
-		}
-	}
+      & .icon {
+        color: $c-white;
+      }
+    }
+  }
 }

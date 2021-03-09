@@ -1,71 +1,71 @@
 @import 'variables';
 
 .icon {
-	cursor: pointer;
-	color: grey;
-	height: 25px;
-	width: auto;
+  cursor: pointer;
+  color: grey;
+  height: 25px;
+  width: auto;
 
-	transition: all 100ms ease-out;
+  transition: all 100ms ease-out;
 
-	&--hidden {
-		display: none;
-	}
+  &--hidden {
+    display: none;
+  }
 
-	&--ghost {
-		opacity: 0.3;
-	}
+  &--ghost {
+    opacity: 0.3;
+  }
 
-	&--left {
-		transform: rotate(90deg);
-	}
-	&--right {
-		transform: rotate(-90deg);
-	}
-	&--up {
-		transform: rotate(180deg);
-	}
+  &--left {
+    transform: rotate(90deg);
+  }
+  &--right {
+    transform: rotate(-90deg);
+  }
+  &--up {
+    transform: rotate(180deg);
+  }
 
-	&--red {
-		color: $c-red;
-	}
-	&--orange {
-		color: $c-orange;
-	}
-	&--blue {
-		color: $c-blue;
-	}
+  &--red {
+    color: $c-red;
+  }
+  &--orange {
+    color: $c-orange;
+  }
+  &--blue {
+    color: $c-blue;
+  }
 
-	& :hover {
-		color: #08001a;
-	}
+  & :hover {
+    color: #08001a;
+  }
 
-	& svg {
-		width: auto;
-		height: 100%;
-	}
+  & svg {
+    width: auto;
+    height: 100%;
+  }
 
-	&__trash {
-		color: brown;
+  &__trash {
+    color: brown;
 
-		& :hover {
-			color: $c-invalid;
-		}
-	}
+    & :hover {
+      color: $c-invalid;
+    }
+  }
 
-	&__chevron {
-		height: 16px;
-		width: auto;
-		color: #000000;
-	}
+  &__chevron {
+    height: 16px;
+    width: auto;
+    color: #000000;
+  }
 
-	&__arrow {
-		height: 16px;
-		width: auto;
+  &__arrow {
+    height: 16px;
+    width: auto;
 
-		&--active {
-			color: $c-black;
-			opacity: 1;
-		}
-	}
+    &--active {
+      color: $c-black;
+      opacity: 1;
+    }
+  }
 }

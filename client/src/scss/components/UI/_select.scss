@@ -1,54 +1,54 @@
 @import '../../variables';
 
 .select {
-	min-width: 80px;
-	display: block;
-	position: relative;
-	user-select: none;
+  min-width: 80px;
+  display: block;
+  position: relative;
+  user-select: none;
 
-	&__input {
-		height: $element-height;
-		border: $border;
-		border-radius: $border-radius;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 0 5px;
-		cursor: pointer;
-		background: $c-white;
+  &__input {
+    height: $element-height;
+    border: $border;
+    border-radius: $border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+    cursor: pointer;
+    background: $c-white;
 
-		&:hover {
-			background: $c-background;
-		}
+    &:hover {
+      background: $c-background;
+    }
 
-		& span {
-			display: flex;
-			align-items: center;
-			vertical-align: middle;
-			margin-right: 5px;
-		}
-	}
+    & span {
+      display: flex;
+      align-items: center;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+  }
 
-	&__dropdown {
-		position: absolute;
-		background: $c-white;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		min-width: 100%;
-		z-index: 1100;
-		top: $element-height;
-		right: 0;
-		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  &__dropdown {
+    position: absolute;
+    background: $c-white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 100%;
+    z-index: 1100;
+    top: $element-height;
+    right: 0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 
-		& li {
-			list-style-type: none;
-			cursor: pointer;
-			padding: 2px 1rem;
+    & li {
+      list-style-type: none;
+      cursor: pointer;
+      padding: 2px 1rem;
 
-			&:hover {
-				background-color: $c-background;
-				border-radius: $border-radius;
-			}
-		}
-	}
+      &:hover {
+        background-color: $c-background;
+        border-radius: $border-radius;
+      }
+    }
+  }
 }

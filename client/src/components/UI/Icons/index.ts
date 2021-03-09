@@ -29,13 +29,13 @@ import { ReactComponent as LogoIcon } from '../../../assets/icons/logo.svg';
 import { ReactComponent as LogoutIcon } from '../../../assets/icons/log-out-outline.svg';
 
 export const icons = [
-	{ name: Icons.board, component: BoardIcon },
-	{ name: Icons.backlog, component: BacklogIcon },
-	{ name: Icons.issues, component: IssuesIcon },
-	{ name: Icons.accounting, component: PieChartIcon },
-	{ name: Icons.categories, component: AppsIcon },
-	{ name: Icons.operations, component: WalletIcon },
-	{ name: Icons.report, component: StatsChartIcon },
+  { name: Icons.board, component: BoardIcon },
+  { name: Icons.backlog, component: BacklogIcon },
+  { name: Icons.issues, component: IssuesIcon },
+  { name: Icons.accounting, component: PieChartIcon },
+  { name: Icons.categories, component: AppsIcon },
+  { name: Icons.operations, component: WalletIcon },
+  { name: Icons.report, component: StatsChartIcon },
 ];
 
 export { ReactComponent as BoardIcon } from '../../../assets/icons/clipboard-outline.svg';
@@ -66,11 +66,3 @@ export { ReactComponent as ContractIcon } from '../../../assets/icons/contract-o
 export { ReactComponent as LogoIcon } from '../../../assets/icons/logo.svg';
 export { ReactComponent as LogoutIcon } from '../../../assets/icons/log-out-outline.svg';
 export { ReactComponent as ExpandIcon } from '../../../assets/icons/expand-outline.svg';
-
-
-
-
-
-
-
-

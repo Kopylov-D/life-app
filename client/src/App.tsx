@@ -14,43 +14,43 @@ import Alert from './components/UI/Alert';
 import { selectIsAuth } from './store/ducks/auth/selectors';
 
 function App() {
-	const dispatch = useDispatch();
-	const isAuth = useSelector(selectIsAuth);
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectIsAuth);
 
-	useEffect(() => {
-		dispatch(autoLogin());
-	}, []);
+  useEffect(() => {
+    dispatch(autoLogin());
+  }, []);
 
-	let routes = (
-		<Switch>
-			<Route path="/login" component={Auth} />
-			<Route path="/registration" component={Auth} />
+  let routes = (
+    <Switch>
+      <Route path="/login" component={Auth} />
+      <Route path="/registration" component={Auth} />
 
-			<Redirect to="/login" />
-		</Switch>
-	);
+      <Redirect to="/login" />
+    </Switch>
+  );
 
-	if (isAuth) {
-		routes = (
-			<Main>
-				<Switch>
-					<Route path="/budget" component={BudgetPage} />
-					{/* <Route path="/notes" component={NotesPage} /> */}
-					<Route path="/todos" component={TodosPage} />
-					{/* <Route path="/statistic" component={StatisticPage} /> */}
+  if (isAuth) {
+    routes = (
+      <Main>
+        <Switch>
+          <Route path="/budget" component={BudgetPage} />
+          {/* <Route path="/notes" component={NotesPage} /> */}
+          <Route path="/todos" component={TodosPage} />
+          {/* <Route path="/statistic" component={StatisticPage} /> */}
 
-					<Redirect to="/todos" />
-				</Switch>
-			</Main>
-		);
-	}
+          <Redirect to="/todos" />
+        </Switch>
+      </Main>
+    );
+  }
 
-	return (
-		<div className="app">
-			<Alert />
-			<BrowserRouter>{routes}</BrowserRouter>
-		</div>
-	);
+  return (
+    <div className="app">
+      <Alert />
+      <BrowserRouter>{routes}</BrowserRouter>
+    </div>
+  );
 }
 
 export default App;
