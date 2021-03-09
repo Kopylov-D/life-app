@@ -59,6 +59,10 @@ const Auth = () => {
     dispatch(login(email.value, password.value));
   };
 
+  const demoLoginHandler = () => {
+    dispatch(login('q@q.ru', '123456'));
+  }
+
   return (
     <div
       className="auth__bg"
@@ -110,6 +114,10 @@ const Auth = () => {
               ) : (
                 <NavLink to="/login">Выполнить вход</NavLink>
               )}
+            </div>
+
+            <div className="auth__demo">
+              <Button onClick={demoLoginHandler} color='danger'>Демо вход</Button>
             </div>
           </div>
         </form>
