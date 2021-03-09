@@ -30,9 +30,9 @@ Typescript (клиент и сервер).
 
 ## Демонстрация:
 
-![logina13023dac30c0362.gif](https://s4.gifyu.com/images/logina13023dac30c0362.gif)
-![budget345d32fbb38eba42.gif](https://s4.gifyu.com/images/budget345d32fbb38eba42.gif)
-![todosa8df97f7537f419b.gif](https://s4.gifyu.com/images/todosa8df97f7537f419b.gif)
+![logina06986c9dc84e0c8.gif](https://s4.gifyu.com/images/logina06986c9dc84e0c8.gif)
+![budget4c3b90070296b392.gif](https://s4.gifyu.com/images/budget4c3b90070296b392.gif)
+![todos660b8f4e99a4a90b.gif](https://s4.gifyu.com/images/todos660b8f4e99a4a90b.gif)
 
 ## Установка
 
