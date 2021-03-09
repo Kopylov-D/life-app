@@ -5,65 +5,65 @@ import { ChevronIcon } from './Icons';
 import { SelectItems } from '../../types';
 
 interface Props {
-	items: SelectItems[];
-	initialId?: string;
-	initialValue?: string;
-	onItemClick(id: string): void;
+  items: SelectItems[];
+  initialId?: string;
+  initialValue?: string;
+  onItemClick(id: string): void;
 }
 
 const Select: React.FC<Props> = ({
-	items,
-	initialId,
-	onItemClick,
-	initialValue = '',
+  items,
+  initialId,
+  onItemClick,
+  initialValue = '',
 }) => {
-	const [label, setLabel] = useState<string>(initialValue);
-	const { ref, isVisible, setIsVisible } = useOutsideClick(false);
+  const [label, setLabel] = useState<string>(initialValue);
+  const { ref, isVisible, setIsVisible } = useOutsideClick(false);
 
-	useEffect(() => {
-		if (initialId && items.length > 0) {
-			const item = items.find(item => item.id === initialId);
-			if (item) {
-				setLabel(item.value);
-			} else {
-				setLabel(items[0].value);
-				onItemClick(items[0].id);
-			}
-		}
-	}, [items]);
+  useEffect(() => {
+    if (initialId && items.length > 0) {
+      const item = items.find(item => item.id === initialId);
+      if (item) {
+        setLabel(item.value);
+      } else {
+        setLabel(items[0].value);
+        onItemClick(items[0].id);
+      }
+    }
+  }, [items]);
 
-	const toggleDropdown = () => {
-		setIsVisible(!isVisible);
-	};
+  const toggleDropdown = () => {
+    setIsVisible(!isVisible);
+  };
 
-	const onClickHandler = (id: string) => {
-		onItemClick(id);
-		toggleDropdown();
-		const currentItem = items.find(item => item.id === id);
-		setLabel(currentItem!.value);
-	};
+  const onClickHandler = (id: string) => {
+    onItemClick(id);
+    toggleDropdown();
+    const currentItem = items.find(item => item.id === id);
+    setLabel(currentItem!.value);
+  };
 
-	return (
-		<div className="select" ref={ref}>
-			<div className="select__input" onClick={toggleDropdown}>
-				<span>{label}</span>
-				<Icon classNames="chevron" direction={isVisible ? 'up' : undefined}>
-					<ChevronIcon />
-				</Icon>
-			</div>
+  return (
+    <div className="select" ref={ref}>
+      <div className="select__input" onClick={toggleDropdown}>
+        <span>{label}</span>
+        <Icon classNames="chevron" direction={isVisible ? 'up' : undefined}>
+          <ChevronIcon />
+        </Icon>
+      </div>
 
-			{isVisible && (
-				<div className="select__dropdown">
-					{items &&
-						items.map(item => (
-							<li key={item.id} onClick={() => onClickHandler(item.id)}>
-								{item.value}
-							</li>
-						))}
-				</div>
-			)}
-		</div>
-	);
+      {isVisible && (
+        <div className="select__dropdown">
+          {items &&
+            items.map(item => (
+              <li key={item.id} onClick={() => onClickHandler(item.id)}>
+                {item.value}
+              </li>
+            ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Select;

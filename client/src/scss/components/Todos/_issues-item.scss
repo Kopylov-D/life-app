@@ -1,16 +1,16 @@
 @import '../../variables';
 
 .issues-item {
-	&__status {
-		color: $c-green;
-	}
+  &__status {
+    color: $c-green;
+  }
 
-	&__task {
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	&__target {
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
+  &__task {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &__target {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

@@ -2,43 +2,43 @@ import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 
 type Item = {
-	id: string | number;
-	name: string;
-	isSelected?: boolean;
+  id: string | number;
+  name: string;
+  isSelected?: boolean;
 };
 
 type Props = {
-	items: Item[];
-	onClick(id: number | string): void;
-	value?: string | number;
+  items: Item[];
+  onClick(id: number | string): void;
+  value?: string | number;
 };
 
 const Dropdown: React.FC<Props> = ({ items, value, onClick }) => {
-	const [selectedId, setSelectedId] = useState<string | number | undefined>(value);
+  const [selectedId, setSelectedId] = useState<string | number | undefined>(value);
 
-	useEffect(() => {
-		setSelectedId(value);
-	}, [value]);
+  useEffect(() => {
+    setSelectedId(value);
+  }, [value]);
 
-	return (
-		<div className="dropdown">
-			<ul className="dropdown__content">
-				{items.map(item => {
-					return (
-						<li
-							className={classNames('dropdown__item', {
-								'dropdown__item--active': item.id === selectedId,
-							})}
-							key={item.id}
-							onClick={() => onClick(item.id)}
-						>
-							{item.name}
-						</li>
-					);
-				})}
-			</ul>
-		</div>
-	);
+  return (
+    <div className="dropdown">
+      <ul className="dropdown__content">
+        {items.map(item => {
+          return (
+            <li
+              className={classNames('dropdown__item', {
+                'dropdown__item--active': item.id === selectedId,
+              })}
+              key={item.id}
+              onClick={() => onClick(item.id)}
+            >
+              {item.name}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 };
 
 export default Dropdown;

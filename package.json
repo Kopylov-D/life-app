@@ -1,51 +1,51 @@
 {
-	"name": "life-app",
-	"version": "1.0.0",
-	"description": "LifeUp",
-	"main": "app.js",
-	"scripts": {
-		"start": "cross-env NODE_ENV=production node dist/app.js",
-		"server": "nodemon app.ts",
-		"client": "npm run start --prefix client",
-		"client:install": "npm install --prefix client",
-		"client:build": "npm run build --prefix client",
-		"dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
-		"build": "tsc -p .",
-		"heroku-postbuild": "npm install --prefix client && npm run build --prefix client && npm run build"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Kopylov-D/life-app.git"
-	},
-	"author": "Dmitrii Kopylov <dimonanos@gmail.com>",
-	"license": "ISC",
-	"engines": {
-		"node": "15.x"
-	},
-	"bugs": {
-		"url": "https://github.com/Kopylov-D/life-app/issues"
-	},
-	"homepage": "https://github.com/Kopylov-D/life-app#readme",
-	"dependencies": {
-		"bcrypt": "^5.0.0",
-		"config": "^3.3.2",
-		"cross-env": "^7.0.3",
-		"express": "^4.17.1",
-		"express-validator": "^6.6.1",
-		"jsonwebtoken": "^8.5.1",
-		"mongoose": "^5.10.13"
-	},
-	"devDependencies": {
-		"@types/bcrypt": "^3.0.0",
-		"@types/config": "0.0.36",
-		"@types/express": "^4.17.9",
-		"@types/express-validator": "^3.0.0",
-		"@types/jsonwebtoken": "^8.5.0",
-		"@types/mongoose": "^5.10.0",
-		"@types/node": "^14.14.7",
-		"concurrently": "^5.3.0",
-		"nodemon": "^2.0.6",
-		"ts-node": "^9.0.0",
-		"typescript": "^4.0.5"
-	}
+  "name": "life-app",
+  "version": "1.0.0",
+  "description": "LifeUp",
+  "main": "app.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node dist/app.js",
+    "server": "nodemon app.ts",
+    "client": "npm run start --prefix client",
+    "client:install": "npm install --prefix client",
+    "client:build": "npm run build --prefix client",
+    "dev": "cross-env NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
+    "build": "tsc -p .",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kopylov-D/life-app.git"
+  },
+  "author": "Dmitrii Kopylov <dimonanos@gmail.com>",
+  "license": "ISC",
+  "engines": {
+    "node": "15.x"
+  },
+  "bugs": {
+    "url": "https://github.com/Kopylov-D/life-app/issues"
+  },
+  "homepage": "https://github.com/Kopylov-D/life-app#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "config": "^3.3.2",
+    "cross-env": "^7.0.3",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.13"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/config": "0.0.36",
+    "@types/express": "^4.17.9",
+    "@types/express-validator": "^3.0.0",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/mongoose": "^5.10.0",
+    "@types/node": "^14.14.7",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  }
 }

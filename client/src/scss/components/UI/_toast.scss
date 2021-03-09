@@ -1,28 +1,24 @@
 @import '../../variables';
 
 .toast {
-	position: absolute;
-	// top: 50px;
-	// right: 10px;
-
-	background: $c-white;
-	border: 1px solid $c-black;
-	// color: white;
-	padding: 1rem;
-	border-radius: $border-radius;
+  position: absolute;
+  background: $c-white;
+  border: 1px solid $c-black;
+  padding: 1rem;
+  border-radius: $border-radius;
   max-width: 300px;
   z-index: 101;
 
-	&__body {
-		margin-bottom: 2rem;
-	}
+  &__body {
+    margin-bottom: 2rem;
+  }
 
-	&__footer {
-		display: flex;
-		justify-content: flex-end;
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
 
-		& :first-child {
-			margin-right: 1rem;
-		}
-	}
+    & :first-child {
+      margin-right: 1rem;
+    }
+  }
 }

@@ -1,13 +1,13 @@
 @import '../../variables';
 
 .board {
-	position: absolute;
-	left: 20px;
+  position: absolute;
+  left: 20px;
 
-	&__cards {
-		display: flex;
-		justify-content: flex-start;
-		flex-shrink: 1;
-		margin-bottom: 20px;
-	}
+  &__cards {
+    display: flex;
+    justify-content: flex-start;
+    flex-shrink: 1;
+    margin-bottom: 20px;
+  }
 }

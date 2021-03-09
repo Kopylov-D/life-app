@@ -1,36 +1,36 @@
 @import '../../variables';
 
 .with-dropdown {
-	position: relative;
+  position: relative;
 }
 
 .dropdown {
-	position: absolute;
-	right: 20%;
+  position: absolute;
+  right: 20%;
 
-	&__content {
-		min-width: max-content;
-		background: $c-white;
-		border: 1px solid #ccc;
-		border-radius: 5px;
-		box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-	}
+  &__content {
+    min-width: max-content;
+    background: $c-white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
 
-	&__item {
-		cursor: pointer;
-		padding: 2px 1rem;
+  &__item {
+    cursor: pointer;
+    padding: 2px 1rem;
 
-		&--active {
-			background-color: $c-primary;
-			color: $c-white;
-			border-radius: $border-radius;
-		}
+    &--active {
+      background-color: $c-primary;
+      color: $c-white;
+      border-radius: $border-radius;
+    }
 
-		&:hover {
-			&:not(.dropdown__item--active) {
-				background-color: $c-background;
-				border-radius: $border-radius;
-			}
-		}
-	}
+    &:hover {
+      &:not(.dropdown__item--active) {
+        background-color: $c-background;
+        border-radius: $border-radius;
+      }
+    }
+  }
 }

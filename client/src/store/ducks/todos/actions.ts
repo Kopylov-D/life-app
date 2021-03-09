@@ -5,513 +5,513 @@ import { LoadingStatus } from '../../types';
 import { showAlert } from '../common/actions';
 import { CommonActions } from '../common/contracts/actionTypes';
 import {
-	addCard,
-	addSubtask,
-	addTarget,
-	addTask,
-	changeCard,
-	changeSubtask,
-	changeTarget,
-	changeTask,
-	deleteCard,
-	deleteSubtask,
-	deleteTarget,
-	deleteTask,
-	setError,
-	setLoadingStatus,
-	setTargets,
-	setTasks,
-	setTasksToCard,
-	setTodosData,
-	syncState,
-	TodosActions,
+  addCard,
+  addSubtask,
+  addTarget,
+  addTask,
+  changeCard,
+  changeSubtask,
+  changeTarget,
+  changeTask,
+  deleteCard,
+  deleteSubtask,
+  deleteTarget,
+  deleteTask,
+  setError,
+  setLoadingStatus,
+  setTargets,
+  setTasks,
+  setTasksToCard,
+  setTodosData,
+  syncState,
+  TodosActions,
 } from './actionCreators';
 import {
-	SubtaskInterface,
-	TargetInterface,
-	TaskInterface,
-	TodosState,
+  SubtaskInterface,
+  TargetInterface,
+  TaskInterface,
+  TodosState,
 } from './contracts/state';
 
 function findChildsToDelete(initialId: string, todos: TodosState) {
-	const tasksFoDelete: string[] = [];
-	const subtasksFoDelete: string[] = [];
-	let { subtasks, tasks } = todos;
+  const tasksFoDelete: string[] = [];
+  const subtasksFoDelete: string[] = [];
+  let { subtasks, tasks } = todos;
 
-	findChilds(initialId);
+  findChilds(initialId);
 
-	function findChilds(id: string) {
-		subtasks = subtasks.filter(subtask => {
-			if (subtask.task === id) {
-				let subId = subtask._id;
-				let nextInitialId = '';
+  function findChilds(id: string) {
+    subtasks = subtasks.filter(subtask => {
+      if (subtask.task === id) {
+        let subId = subtask._id;
+        let nextInitialId = '';
 
-				subtasksFoDelete.push(subId);
+        subtasksFoDelete.push(subId);
 
-				tasks = tasks.filter(task => {
-					if (task.subtask === subId) {
-						nextInitialId = task._id;
-						tasksFoDelete.push(nextInitialId);
-					}
-					return task.subtask !== subId;
-				});
+        tasks = tasks.filter(task => {
+          if (task.subtask === subId) {
+            nextInitialId = task._id;
+            tasksFoDelete.push(nextInitialId);
+          }
+          return task.subtask !== subId;
+        });
 
-				findChilds(nextInitialId);
-			}
+        findChilds(nextInitialId);
+      }
 
-			return subtask.task !== id;
-		});
-	}
+      return subtask.task !== id;
+    });
+  }
 
-	return { tasksFoDelete, subtasksFoDelete, subtasks, tasks };
+  return { tasksFoDelete, subtasksFoDelete, subtasks, tasks };
 }
 
 type ThunkType = ThunkAction<
-	Promise<void>,
-	RootState,
-	unknown,
-	TodosActions | CommonActions
+  Promise<void>,
+  RootState,
+  unknown,
+  TodosActions | CommonActions
 >;
 
 export function getTodosData(): ThunkType {
-	return async dispatch => {
-		dispatch(setLoadingStatus(LoadingStatus.LOADING));
-		try {
-			const { data } = await todosApi.getTodosData();
-			dispatch(setTodosData(data));
-			dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    dispatch(setLoadingStatus(LoadingStatus.LOADING));
+    try {
+      const { data } = await todosApi.getTodosData();
+      dispatch(setTodosData(data));
+      dispatch(setLoadingStatus(LoadingStatus.SUCCESS));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function getTasks(): ThunkType {
-	return async dispatch => {
-		try {
-			const { data } = await todosApi.getTasks();
-			dispatch(setTasks(data));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const { data } = await todosApi.getTasks();
+      dispatch(setTasks(data));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function addTasksToCard(tasksList: string[], level: number): ThunkType {
-	return async dispatch => {
-		dispatch(setTasksToCard({ tasksList, level }));
-		dispatch(syncData());
-	};
+  return async dispatch => {
+    dispatch(setTasksToCard({ tasksList, level }));
+    dispatch(syncData());
+  };
 }
 
 export function syncCurrentData(todos: TodosState): ThunkType {
-	return async dispatch => {
-		try {
-			await todosApi.syncData(todos);
-		} catch (e) {
-			console.log(e);
-			dispatch(
-				showAlert({
-					text: 'Синхронизация не удалась. Повторите вручную',
-					type: 'error',
-					action: 'sync',
-				})
-			);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      await todosApi.syncData(todos);
+    } catch (e) {
+      console.log(e);
+      dispatch(
+        showAlert({
+          text: 'Синхронизация не удалась. Повторите вручную',
+          type: 'error',
+          action: 'sync',
+        })
+      );
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function syncData(): ThunkType {
-	return async (dispatch, getState) => {
-		try {
-			const todos = getState().todos;
-			await todosApi.syncData(todos);
-		} catch (e) {
-			console.log(e);
-			dispatch(
-				showAlert({
-					text: 'Синхронизация не удалась. Повторите вручную',
-					type: 'error',
-					action: 'sync',
-				})
-			);
-			dispatch(setError(e));
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async (dispatch, getState) => {
+    try {
+      const todos = getState().todos;
+      await todosApi.syncData(todos);
+    } catch (e) {
+      console.log(e);
+      dispatch(
+        showAlert({
+          text: 'Синхронизация не удалась. Повторите вручную',
+          type: 'error',
+          action: 'sync',
+        })
+      );
+      dispatch(setError(e));
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchAddTask(task: TaskInterface): ThunkType {
-	return async (dispatch, getState) => {
-		const tasks = getState().todos.tasks;
-		if (tasks.find(item => item.subtask === task.subtask && task.subtask !== undefined))
-			return;
-		try {
-			const { data } = await todosApi.addTask(task);
-			dispatch(addTask(data));
-		} catch (e) {
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-			dispatch(showAlert({ text: e.response.data.message, type: 'error', delay: 3000 }));
-			dispatch(setError(e));
-		}
-	};
+  return async (dispatch, getState) => {
+    const tasks = getState().todos.tasks;
+    if (tasks.find(item => item.subtask === task.subtask && task.subtask !== undefined))
+      return;
+    try {
+      const { data } = await todosApi.addTask(task);
+      dispatch(addTask(data));
+    } catch (e) {
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+      dispatch(showAlert({ text: e.response.data.message, type: 'error', delay: 3000 }));
+      dispatch(setError(e));
+    }
+  };
 }
 
 export function decomposeSubtask(subtask: SubtaskInterface): ThunkType {
-	return async (dispatch, getState) => {
-		try {
-			const state = getState().todos;
-			let { tasks } = state;
-			let parentTask = tasks.find(task => task._id === subtask.task);
-			const childTask = tasks.find(task => task.subtask === subtask._id);
+  return async (dispatch, getState) => {
+    try {
+      const state = getState().todos;
+      let { tasks } = state;
+      let parentTask = tasks.find(task => task._id === subtask.task);
+      const childTask = tasks.find(task => task.subtask === subtask._id);
 
-			if (subtask.isDone || childTask) {
-				dispatch(
-					showAlert({
-						text: 'Задача уже добавлена',
-						type: 'warning',
-						delay: 2000,
-					})
-				);
-				return;
-			}
+      if (subtask.isDone || childTask) {
+        dispatch(
+          showAlert({
+            text: 'Задача уже добавлена',
+            type: 'warning',
+            delay: 2000,
+          })
+        );
+        return;
+      }
 
-			if (parentTask) {
-				dispatch(updateTask({ ...parentTask, isDone: false }, false));
-			}
+      if (parentTask) {
+        dispatch(updateTask({ ...parentTask, isDone: false }, false));
+      }
 
-			const task: TaskInterface = {
-				_id: '',
-				date: new Date(),
-				isDone: false,
-				level: subtask.level - 1,
-				subtask: subtask._id,
-				name: subtask.name,
-				notes: '',
-				target: subtask.target,
-				color: subtask.color,
-			};
+      const task: TaskInterface = {
+        _id: '',
+        date: new Date(),
+        isDone: false,
+        level: subtask.level - 1,
+        subtask: subtask._id,
+        name: subtask.name,
+        notes: '',
+        target: subtask.target,
+        color: subtask.color,
+      };
 
-			dispatch(fetchAddTask(task));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+      dispatch(fetchAddTask(task));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function updateTask(
-	task: TaskInterface,
-	needCheckChilds: boolean = true
+  task: TaskInterface,
+  needCheckChilds: boolean = true
 ): ThunkType {
-	return async (dispatch, getState) => {
-		const state = getState().todos;
-		let { tasks, subtasks } = state;
+  return async (dispatch, getState) => {
+    const state = getState().todos;
+    let { tasks, subtasks } = state;
 
-		task.subtask && checkParents(task.subtask, task.isDone);
-		needCheckChilds && checkChilds(task._id, task.isDone);
+    task.subtask && checkParents(task.subtask, task.isDone);
+    needCheckChilds && checkChilds(task._id, task.isDone);
 
-		if (task.subtask) {
-			subtasks = subtasks.map(subtask => {
-				if (subtask._id === task.subtask) {
-					subtask.name = task.name;
-				}
-				return subtask;
-			});
-		}
+    if (task.subtask) {
+      subtasks = subtasks.map(subtask => {
+        if (subtask._id === task.subtask) {
+          subtask.name = task.name;
+        }
+        return subtask;
+      });
+    }
 
-		function checkParents(initialId: string | undefined, isDone: boolean) {
-			if (initialId) {
-				subtasks = subtasks.map(subtask => {
-					if (subtask._id === initialId) {
-						subtask.isDone = isDone;
-						initialId = subtask.task;
-					}
-					return subtask;
-				});
+    function checkParents(initialId: string | undefined, isDone: boolean) {
+      if (initialId) {
+        subtasks = subtasks.map(subtask => {
+          if (subtask._id === initialId) {
+            subtask.isDone = isDone;
+            initialId = subtask.task;
+          }
+          return subtask;
+        });
 
-				let hasUncheck = subtasks.filter(
-					subtask => subtask.task === initialId && subtask.isDone !== true
-				).length;
+        let hasUncheck = subtasks.filter(
+          subtask => subtask.task === initialId && subtask.isDone !== true
+        ).length;
 
-				if (hasUncheck) isDone = false;
+        if (hasUncheck) isDone = false;
 
-				tasks = tasks.map(task => {
-					if (task._id === initialId) {
-						task.isDone = isDone;
-						if (isDone === true) {
-							task.inArchive = true;
-							task.level = 0
-						} else task.inArchive = false;
-						initialId = task.subtask;
-					}
-					return task;
-				});
+        tasks = tasks.map(task => {
+          if (task._id === initialId) {
+            task.isDone = isDone;
+            if (isDone === true) {
+              task.inArchive = true;
+              task.level = 0;
+            } else task.inArchive = false;
+            initialId = task.subtask;
+          }
+          return task;
+        });
 
-				checkParents(initialId, isDone);
-			} else return;
-		}
+        checkParents(initialId, isDone);
+      } else return;
+    }
 
-		function checkChilds(initialId: string, isDone: boolean) {
-			subtasks = subtasks.map(subtask => {
-				if (subtask.task === initialId && subtask.isDone !== isDone) {
-					subtask.isDone = isDone;
+    function checkChilds(initialId: string, isDone: boolean) {
+      subtasks = subtasks.map(subtask => {
+        if (subtask.task === initialId && subtask.isDone !== isDone) {
+          subtask.isDone = isDone;
 
-					let subId = subtask._id;
-					let nextInitialId = '';
+          let subId = subtask._id;
+          let nextInitialId = '';
 
-					tasks = tasks.map(task => {
-						if (task.subtask === subId) {
-							task.isDone = isDone;
-							if (isDone === true) {
-								task.inArchive = true;
-								task.level = 0
-							} else task.inArchive = false;
-							nextInitialId = task._id;
-						}
-						return task;
-					});
+          tasks = tasks.map(task => {
+            if (task.subtask === subId) {
+              task.isDone = isDone;
+              if (isDone === true) {
+                task.inArchive = true;
+                task.level = 0;
+              } else task.inArchive = false;
+              nextInitialId = task._id;
+            }
+            return task;
+          });
 
-					checkChilds(nextInitialId, isDone);
-				}
+          checkChilds(nextInitialId, isDone);
+        }
 
-				return subtask;
-			});
-		}
+        return subtask;
+      });
+    }
 
-		try {
-			dispatch(syncState({ ...state, subtasks, tasks }));
-			dispatch(syncCurrentData({ ...state, subtasks, tasks }));
-			dispatch(changeTask(task));
-			//возвращает обновленную задачу
-			await todosApi.updateTask(task);
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+    try {
+      dispatch(syncState({ ...state, subtasks, tasks }));
+      dispatch(syncCurrentData({ ...state, subtasks, tasks }));
+      dispatch(changeTask(task));
+      //возвращает обновленную задачу
+      await todosApi.updateTask(task);
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchDeleteTask(id: string, isBacklogTask: boolean = false): ThunkType {
-	return async (dispatch, getState) => {
-		try {
-			const state = getState().todos;
-			const task = state.tasks.find(task => task._id === id);
+  return async (dispatch, getState) => {
+    try {
+      const state = getState().todos;
+      const task = state.tasks.find(task => task._id === id);
 
-			const { tasksFoDelete, subtasksFoDelete, subtasks, tasks } = findChildsToDelete(
-				id,
-				state
-			);
+      const { tasksFoDelete, subtasksFoDelete, subtasks, tasks } = findChildsToDelete(
+        id,
+        state
+      );
 
-			dispatch(syncState({ ...state, subtasks, tasks }));
+      dispatch(syncState({ ...state, subtasks, tasks }));
 
-			if (isBacklogTask) {
-				dispatch(deleteTask(id));
-				await todosApi.deleteTask(id);
-			}
+      if (isBacklogTask) {
+        dispatch(deleteTask(id));
+        await todosApi.deleteTask(id);
+      }
 
-			if (task!.subtask) {
-				dispatch(deleteTask(id));
-				await todosApi.deleteTask(id);
-			} else {
-				dispatch(updateTask({ ...task!, level: 0 }, false));
-			}
+      if (task!.subtask) {
+        dispatch(deleteTask(id));
+        await todosApi.deleteTask(id);
+      } else {
+        dispatch(updateTask({ ...task!, level: 0 }, false));
+      }
 
-			await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+      await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function getTargets(): ThunkType {
-	return async dispatch => {
-		try {
-			const targets = await todosApi.fetchTargets();
-			dispatch(setTargets(targets));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const targets = await todosApi.fetchTargets();
+      dispatch(setTargets(targets));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function updateTarget(target: TargetInterface): ThunkType {
-	return async dispatch => {
-		try {
-			const { data } = await todosApi.updateTarget(target);
-			dispatch(changeTarget(data));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const { data } = await todosApi.updateTarget(target);
+      dispatch(changeTarget(data));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchAddTarget(target: TargetInterface): ThunkType {
-	return async dispatch => {
-		try {
-			const { data } = await todosApi.addTarget(target);
-			dispatch(addTarget(data));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const { data } = await todosApi.addTarget(target);
+      dispatch(addTarget(data));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchDeleteSubtask(id: string): ThunkType {
-	return async (dispatch, getState) => {
-		const state = getState().todos;
-		const childTaskForDelete = state.tasks.find(task => task.subtask === id)?._id;
+  return async (dispatch, getState) => {
+    const state = getState().todos;
+    const childTaskForDelete = state.tasks.find(task => task.subtask === id)?._id;
 
-		try {
-			if (childTaskForDelete) {
-				const { tasksFoDelete, subtasksFoDelete, subtasks, tasks } = findChildsToDelete(
-					childTaskForDelete,
-					state
-				);
-				subtasksFoDelete.push(id);
-				tasksFoDelete.push(childTaskForDelete);
-				dispatch(syncState({ ...state, subtasks, tasks }));
-				dispatch(deleteTask(childTaskForDelete));
-				await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
-			}
-			dispatch(deleteSubtask(id));
-			await todosApi.deleteSubtask(id);
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+    try {
+      if (childTaskForDelete) {
+        const { tasksFoDelete, subtasksFoDelete, subtasks, tasks } = findChildsToDelete(
+          childTaskForDelete,
+          state
+        );
+        subtasksFoDelete.push(id);
+        tasksFoDelete.push(childTaskForDelete);
+        dispatch(syncState({ ...state, subtasks, tasks }));
+        dispatch(deleteTask(childTaskForDelete));
+        await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
+      }
+      dispatch(deleteSubtask(id));
+      await todosApi.deleteSubtask(id);
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function updateSubtask(subtask: SubtaskInterface): ThunkType {
-	return async dispatch => {
-		try {
-			dispatch(changeSubtask(subtask));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      dispatch(changeSubtask(subtask));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchDeleteTarget(id: string): ThunkType {
-	return async dispatch => {
-		try {
-			await todosApi.deleteTarget(id);
-			dispatch(deleteTarget(id));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      await todosApi.deleteTarget(id);
+      dispatch(deleteTarget(id));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchAddSubtask(subtask: SubtaskInterface): ThunkType {
-	return async dispatch => {
-		try {
-			const { data } = await todosApi.addSubtask(subtask);
-			dispatch(addSubtask(data));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const { data } = await todosApi.addSubtask(subtask);
+      dispatch(addSubtask(data));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchAddCard(level: number): ThunkType {
-	return async dispatch => {
-		try {
-			const { data } = await todosApi.addCard(level);
-			dispatch(addCard(data));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const { data } = await todosApi.addCard(level);
+      dispatch(addCard(data));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function updateCard(id: string, name: string): ThunkType {
-	return async dispatch => {
-		try {
-			const { data } = await todosApi.updateCard(id, name);
-			dispatch(changeCard(data));
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+  return async dispatch => {
+    try {
+      const { data } = await todosApi.updateCard(id, name);
+      dispatch(changeCard(data));
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }
 
 export function fetchDeleteCard(id: string): ThunkType {
-	return async (dispatch, getState) => {
-		const state = getState().todos;
-		let { subtasks, tasks } = state;
+  return async (dispatch, getState) => {
+    const state = getState().todos;
+    let { subtasks, tasks } = state;
 
-		const card = state.cards.find(card => card._id === id);
-		const tasksIdForDelete: string[] = [];
+    const card = state.cards.find(card => card._id === id);
+    const tasksIdForDelete: string[] = [];
 
-		tasks = tasks.map(task => {
-			if (task.level === card?.level) {
-				tasksIdForDelete.push(task._id);
-				task.level = 0;
-			}
-			return task;
-		});
+    tasks = tasks.map(task => {
+      if (task.level === card?.level) {
+        tasksIdForDelete.push(task._id);
+        task.level = 0;
+      }
+      return task;
+    });
 
-		const tasksFoDelete: string[] = [];
-		const subtasksFoDelete: string[] = [];
+    const tasksFoDelete: string[] = [];
+    const subtasksFoDelete: string[] = [];
 
-		tasksIdForDelete.forEach(item => {
-			if (item) {
-				findChildsToDelete(item, state);
-			}
-		});
+    tasksIdForDelete.forEach(item => {
+      if (item) {
+        findChildsToDelete(item, state);
+      }
+    });
 
-		function findChildsToDelete(initialId: string, todos: TodosState) {
-			findChilds(initialId);
+    function findChildsToDelete(initialId: string, todos: TodosState) {
+      findChilds(initialId);
 
-			function findChilds(id: string) {
-				subtasks = subtasks.filter(subtask => {
-					if (subtask.task === id) {
-						let subId = subtask._id;
-						let nextInitialId = '';
+      function findChilds(id: string) {
+        subtasks = subtasks.filter(subtask => {
+          if (subtask.task === id) {
+            let subId = subtask._id;
+            let nextInitialId = '';
 
-						subtasksFoDelete.push(subId);
+            subtasksFoDelete.push(subId);
 
-						tasks = tasks.filter(task => {
-							if (task.subtask === subId) {
-								nextInitialId = task._id;
-								tasksFoDelete.push(nextInitialId);
-							}
-							return task.subtask !== subId;
-						});
+            tasks = tasks.filter(task => {
+              if (task.subtask === subId) {
+                nextInitialId = task._id;
+                tasksFoDelete.push(nextInitialId);
+              }
+              return task.subtask !== subId;
+            });
 
-						findChilds(nextInitialId);
-					}
+            findChilds(nextInitialId);
+          }
 
-					return subtask.task !== id;
-				});
-			}
+          return subtask.task !== id;
+        });
+      }
 
-			return { tasksFoDelete, subtasksFoDelete, subtasks, tasks };
-		}
+      return { tasksFoDelete, subtasksFoDelete, subtasks, tasks };
+    }
 
-		try {
-			dispatch(syncState({ ...state, subtasks, tasks }));
-			dispatch(deleteCard(id));
-			dispatch(syncCurrentData({ ...state, subtasks, tasks }));
-			await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
-			await todosApi.deleteCard(id);
-		} catch (e) {
-			console.log(e);
-			dispatch(setLoadingStatus(LoadingStatus.ERROR));
-		}
-	};
+    try {
+      dispatch(syncState({ ...state, subtasks, tasks }));
+      dispatch(deleteCard(id));
+      dispatch(syncCurrentData({ ...state, subtasks, tasks }));
+      await todosApi.multiplyDelete(tasksFoDelete, subtasksFoDelete);
+      await todosApi.deleteCard(id);
+    } catch (e) {
+      console.log(e);
+      dispatch(setLoadingStatus(LoadingStatus.ERROR));
+    }
+  };
 }

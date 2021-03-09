@@ -1,16 +1,12 @@
 @import '../../variables';
 
 .tooltip {
-	--tooltip-margin: 30px;
-	--tooltip-arrow-size: 6px;
-
-	display: inline-block;
-	position: absolute;
-	z-index: 102;
-	border-radius: $border-radius;
-	font-size: 1rem;
-	padding: 6px;
-	color: $c-white;
-	background: $c-black;
-	// z-index: 10000;
+  display: inline-block;
+  position: absolute;
+  z-index: 102;
+  border-radius: $border-radius;
+  font-size: 1rem;
+  padding: 6px;
+  color: $c-white;
+  background: $c-black;
 }

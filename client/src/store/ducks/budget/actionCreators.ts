@@ -1,71 +1,71 @@
 import { LoadingStatus } from '../../types';
 import {
-	AddCategoryActionInterface,
-	AddTransactionActionInterface,
-	BudgetActionsTypes,
-	DeleteCategoryActionInterface,
-	DeleteTransactionActionInterface,
-	SetBudgetDataActionInterface,
-	SetLoadingStatusActionInterface,
-	ChangeCategoryActionInterface,
-	SetCategoriesActionInterface,
+  AddCategoryActionInterface,
+  AddTransactionActionInterface,
+  BudgetActionsTypes,
+  DeleteCategoryActionInterface,
+  DeleteTransactionActionInterface,
+  SetBudgetDataActionInterface,
+  SetLoadingStatusActionInterface,
+  ChangeCategoryActionInterface,
+  SetCategoriesActionInterface,
 } from './contracts/actionTypes';
 import {
-	BudgetDataInterface,
-	CategoryInterface,
-	TransactionInterface,
+  BudgetDataInterface,
+  CategoryInterface,
+  TransactionInterface,
 } from './contracts/state';
 
 export type BudgetActions =
-	| SetLoadingStatusActionInterface
-	| SetBudgetDataActionInterface
-	| AddTransactionActionInterface
-	| DeleteTransactionActionInterface
-	| DeleteCategoryActionInterface
-	| AddCategoryActionInterface
-	| ChangeCategoryActionInterface
-	| SetCategoriesActionInterface;
+  | SetLoadingStatusActionInterface
+  | SetBudgetDataActionInterface
+  | AddTransactionActionInterface
+  | DeleteTransactionActionInterface
+  | DeleteCategoryActionInterface
+  | AddCategoryActionInterface
+  | ChangeCategoryActionInterface
+  | SetCategoriesActionInterface;
 
 export const setLoadingStatus = (
-	payload: LoadingStatus
+  payload: LoadingStatus
 ): SetLoadingStatusActionInterface => ({
-	type: BudgetActionsTypes.SET_LOADING_STATUS,
-	payload,
+  type: BudgetActionsTypes.SET_LOADING_STATUS,
+  payload,
 });
 export const setBudgetData = (
-	payload: BudgetDataInterface
+  payload: BudgetDataInterface
 ): SetBudgetDataActionInterface => ({
-	type: BudgetActionsTypes.SET_BUDGETDATA,
-	payload,
+  type: BudgetActionsTypes.SET_BUDGETDATA,
+  payload,
 });
 export const addTransaction = (
-	payload: TransactionInterface
+  payload: TransactionInterface
 ): AddTransactionActionInterface => ({
-	type: BudgetActionsTypes.ADD_TRANSACTION,
-	payload,
+  type: BudgetActionsTypes.ADD_TRANSACTION,
+  payload,
 });
 export const deleteTransaction = (payload: string): DeleteTransactionActionInterface => ({
-	type: BudgetActionsTypes.DELETE_TRANSACTION,
-	payload,
+  type: BudgetActionsTypes.DELETE_TRANSACTION,
+  payload,
 });
 export const deleteCategory = (payload: string): DeleteCategoryActionInterface => ({
-	type: BudgetActionsTypes.DELETE_CATEGORY,
-	payload,
+  type: BudgetActionsTypes.DELETE_CATEGORY,
+  payload,
 });
 
 export const addCategory = (payload: CategoryInterface): AddCategoryActionInterface => ({
-	type: BudgetActionsTypes.ADD_CATEGORY,
-	payload,
+  type: BudgetActionsTypes.ADD_CATEGORY,
+  payload,
 });
 export const changeCategory = (
-	payload: CategoryInterface
+  payload: CategoryInterface
 ): ChangeCategoryActionInterface => ({
-	type: BudgetActionsTypes.CHANGE_CATEGORY,
-	payload,
+  type: BudgetActionsTypes.CHANGE_CATEGORY,
+  payload,
 });
 export const setCategories = (
-	payload: CategoryInterface[]
+  payload: CategoryInterface[]
 ): SetCategoriesActionInterface => ({
-	type: BudgetActionsTypes.SET_CATEGORIES,
-	payload,
+  type: BudgetActionsTypes.SET_CATEGORIES,
+  payload,
 });

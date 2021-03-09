@@ -1,192 +1,192 @@
 @import '../../variables';
 
 .loader {
-	height: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .lds-spinner {
-	$parent: &;
+  $parent: &;
 
-	margin: 30px auto;
-	color: #000000;
-	display: inline-block;
-	position: relative;
+  margin: 30px auto;
+  color: #000000;
+  display: inline-block;
+  position: relative;
 
-	& div {
-		animation: lds-spinner 1.2s linear infinite;
+  & div {
+    animation: lds-spinner 1.2s linear infinite;
 
-		&::after {
-			content: ' ';
-			display: block;
-			position: absolute;
-			background: #000000;
-		}
+    &::after {
+      content: ' ';
+      display: block;
+      position: absolute;
+      background: #000000;
+    }
 
-		@for $i from 1 through 8 {
-			&:nth-child(#{$i}) {
-				transform: rotate(#{($i - 1) * 45deg});
-				animation-delay: -1.05s * $i;
-			}
-		}
-	}
+    @for $i from 1 through 8 {
+      &:nth-child(#{$i}) {
+        transform: rotate(#{($i - 1) * 45deg});
+        animation-delay: -1.05s * $i;
+      }
+    }
+  }
 
-	&-small {
-		width: 24px;
-		height: 24px;
+  &-small {
+    width: 24px;
+    height: 24px;
 
-		& div {
-			transform-origin: 12px 12px;
+    & div {
+      transform-origin: 12px 12px;
 
-			&::after {
-				top: 1px;
-				left: 11px;
-				width: 2px;
-				height: 6px;
-				border-radius: 40%;
-			}
-		}
-	}
+      &::after {
+        top: 1px;
+        left: 11px;
+        width: 2px;
+        height: 6px;
+        border-radius: 40%;
+      }
+    }
+  }
 
-	&-normal {
-		width: 50px;
-		height: 50px;
+  &-normal {
+    width: 50px;
+    height: 50px;
 
-		& div {
-			transform-origin: 25px 25px;
+    & div {
+      transform-origin: 25px 25px;
 
-			&::after {
-				top: 8px;
-				left: 24px;
-				width: 2px;
-				height: 10px;
-				border-radius: 30%;
-			}
-		}
-	}
+      &::after {
+        top: 8px;
+        left: 24px;
+        width: 2px;
+        height: 10px;
+        border-radius: 30%;
+      }
+    }
+  }
 
-	&-primary {
-		& div {
-			&::after {
-				background: $c-primary;
-			}
-		}
-	}
+  &-primary {
+    & div {
+      &::after {
+        background: $c-primary;
+      }
+    }
+  }
 }
 
 @keyframes lds-spinner {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 .lds-circle {
-	display: inline-block;
-	transform: translateZ(1px);
+  display: inline-block;
+  transform: translateZ(1px);
 
-	& > div {
-		display: inline-block;
-		width: 40px;
-		height: 40px;
-		margin: 5px;
-		border-radius: 50%;
-		background: rgb(0, 0, 0);
-		animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-	}
+  & > div {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    border-radius: 50%;
+    background: rgb(0, 0, 0);
+    animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  }
 }
 
 @keyframes lds-circle {
-	0%,
-	100% {
-		animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
-	}
-	0% {
-		transform: rotateY(0deg);
-	}
-	50% {
-		transform: rotateY(1800deg);
-		animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
-	}
-	100% {
-		transform: rotateY(3600deg);
-	}
+  0%,
+  100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(1800deg);
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
+  100% {
+    transform: rotateY(3600deg);
+  }
 }
 
 $spinkit-size: 4em !default;
 $spinkit-spinner-color: #337ab7 !default;
 
 body {
-	background-color: #1d1f20;
-	min-height: 100vh;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-around;
-	align-content: space-around;
+  background-color: #1d1f20;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-content: space-around;
 }
 
 .lds-cube-grid {
-	$delayRange: 0.4s;
+  $delayRange: 0.4s;
 
-	width: $spinkit-size;
-	height: $spinkit-size;
-	margin: 0 auto;
+  width: $spinkit-size;
+  height: $spinkit-size;
+  margin: 0 auto;
 
-	.sk-cube {
-		width: 33%;
-		height: 33%;
-		background-color: $spinkit-spinner-color;
-		float: left;
-		animation: sk-cube-grid-scale-delay 1.3s infinite ease-in-out;
-	}
+  .sk-cube {
+    width: 33%;
+    height: 33%;
+    background-color: $spinkit-spinner-color;
+    float: left;
+    animation: sk-cube-grid-scale-delay 1.3s infinite ease-in-out;
+  }
 
-	/*
+  /*
    * Spinner positions
    * 1 2 3
    * 4 5 6
    * 7 8 9
    */
 
-	.sk-cube-1 {
-		animation-delay: ($delayRange * 0.5);
-	}
-	.sk-cube-2 {
-		animation-delay: ($delayRange * 0.75);
-	}
-	.sk-cube-3 {
-		animation-delay: $delayRange;
-	}
-	.sk-cube-4 {
-		animation-delay: ($delayRange * 0.25);
-	}
-	.sk-cube-5 {
-		animation-delay: ($delayRange * 0.5);
-	}
-	.sk-cube-6 {
-		animation-delay: ($delayRange * 0.75);
-	}
-	.sk-cube-7 {
-		animation-delay: 0s;
-	}
-	.sk-cube-8 {
-		animation-delay: ($delayRange * 0.25);
-	}
-	.sk-cube-9 {
-		animation-delay: ($delayRange * 0.5);
-	}
+  .sk-cube-1 {
+    animation-delay: ($delayRange * 0.5);
+  }
+  .sk-cube-2 {
+    animation-delay: ($delayRange * 0.75);
+  }
+  .sk-cube-3 {
+    animation-delay: $delayRange;
+  }
+  .sk-cube-4 {
+    animation-delay: ($delayRange * 0.25);
+  }
+  .sk-cube-5 {
+    animation-delay: ($delayRange * 0.5);
+  }
+  .sk-cube-6 {
+    animation-delay: ($delayRange * 0.75);
+  }
+  .sk-cube-7 {
+    animation-delay: 0s;
+  }
+  .sk-cube-8 {
+    animation-delay: ($delayRange * 0.25);
+  }
+  .sk-cube-9 {
+    animation-delay: ($delayRange * 0.5);
+  }
 }
 
 @keyframes sk-cube-grid-scale-delay {
-	0%,
-	70%,
-	100% {
-		transform: scale3D(1, 1, 1);
-	}
-	35% {
-		transform: scale3D(0, 0, 1);
-	}
+  0%,
+  70%,
+  100% {
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
+    transform: scale3D(0, 0, 1);
+  }
 }
