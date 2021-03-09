@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 import config from 'config';
 import path from 'path';
 
-import { authRouter, budgetRouter } from './routes';
 import todosRouter from './routes/todos.routes';
+import authRouter from './routes/auth.routes';
+import budgetRouter from './routes/budget.routes';
 
 const app: express.Application = express();
 
