@@ -3,7 +3,7 @@ import AuthCtrl from '../controllers/AuthController';
 import {
 	loginValidations,
 	registerValidations,
-} from '../middleware/validation.middleware';
+} from '../middlewares/validation.middleware';
 
 const router: Router = Router();
 

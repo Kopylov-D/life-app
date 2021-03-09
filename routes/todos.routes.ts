@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import TodosController from '../controllers/TodosController';
-import { auth } from '../middleware/auth.middleware';
+import { auth } from '../middlewares/auth.middleware';
 
 const router = Router();
 
